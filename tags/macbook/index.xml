@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MacBook on Ahamoment</title><link>https://ahamoment.cn/tags/macbook/</link><description>Recent content in MacBook on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 25 Mar 2021 16:03:00 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/macbook/index.xml" rel="self" type="application/rss+xml"/><item><title>Mac 命令汇总</title><link>https://ahamoment.cn/post/tool-mac-os-commands/</link><pubDate>Thu, 25 Mar 2021 16:03:00 +0800</pubDate><guid>https://ahamoment.cn/post/tool-mac-os-commands/</guid><description>
+&lt;h2 id="常用快捷键">常用快捷键&lt;/h2>
+&lt;h3 id="overall">Overall&lt;/h3>
+&lt;p>&lt;a href="https://support.apple.com/zh-cn/HT201236">Mac 键盘快捷键&lt;/a>&lt;/p>
+&lt;h3 id="修饰键">修饰键&lt;/h3>
+&lt;ul>
+&lt;li>Command（或 Cmd）⌘&lt;/li>
+&lt;li>Shift ⇧&lt;/li>
+&lt;li>Option（或 Alt）⌥&lt;/li>
+&lt;li>Control（或 Ctrl）⌃&lt;/li>
+&lt;li>Caps Lock ⇪&lt;/li>
+&lt;li>Fn&lt;/li>
+&lt;/ul>
+&lt;p>在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。&lt;/p>
+&lt;h3 id="截图">截图&lt;/h3>
+&lt;ol>
+&lt;li>
+&lt;p>全屏&lt;/p>
+&lt;p>&lt;code>shift + command + 3&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>截取部分&lt;/p>
+&lt;p>&lt;code>shift + command + 4&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>打开截屏工具&lt;/p>
+&lt;p>&lt;code>shift + command + 5&lt;/code>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="文稿编辑">文稿编辑&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>Fn-上箭头&lt;/strong>：Page Up：向上滚动一页。&lt;/li>
+&lt;li>&lt;strong>Fn–下箭头&lt;/strong>：Page Down：向下滚动一页。&lt;/li>
+&lt;li>**Fn–左箭头：**Home：滚动到文稿开头。&lt;/li>
+&lt;li>&lt;strong>Fn–右箭头&lt;/strong>：End：滚动到文稿末尾。&lt;/li>
+&lt;li>&lt;strong>Command–上箭头&lt;/strong>：将插入点移至文稿开头。&lt;/li>
+&lt;li>&lt;strong>Command–下箭头&lt;/strong>：将插入点移至文稿末尾。&lt;/li>
+&lt;li>&lt;strong>Command–左箭头&lt;/strong>：将插入点移至当前行的行首。&lt;/li>
+&lt;li>&lt;strong>Command–右箭头&lt;/strong>：将插入点移至当前行的行尾。&lt;/li>
+&lt;li>&lt;strong>Option–左箭头&lt;/strong>：将插入点移至上一字词的词首。&lt;/li>
+&lt;li>&lt;strong>Option–右箭头&lt;/strong>：将插入点移至下一字词的词尾。&lt;/li>
+&lt;/ul></description></item></channel></rss>

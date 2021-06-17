@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>面试题 on Ahamoment</title><link>https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/</link><description>Recent content in 面试题 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 22 Dec 2020 14:00:47 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/index.xml" rel="self" type="application/rss+xml"/><item><title>面试题目录</title><link>https://ahamoment.cn/post/interview-questions/</link><pubDate>Tue, 22 Dec 2020 14:00:47 +0800</pubDate><guid>https://ahamoment.cn/post/interview-questions/</guid><description>
+&lt;blockquote>
+&lt;p>面试题目录&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-数据结构">1. 数据结构&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="../algorithm-sort">排序算法&lt;/a>&lt;/li>
+&lt;li>链表和数组的区别？跳表的实现&lt;/li>
+&lt;li>二分查找的时间复杂度和优点？&lt;/li>
+&lt;li>哈希表，解决冲突的方式&lt;/li>
+&lt;li>二叉树和B+树&lt;/li>
+&lt;li>&lt;a href="https://flykite.me/?p=41">二个亿的无序整数，如何找到中间值&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;p>常见的编程题：链表反转、动态规划、二叉树遍历&lt;/p>
+&lt;h2 id="2-操作系统">2. 操作系统&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>进程与线程&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>进程间的通信方式&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>进程调度&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>死锁的条件与解除&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>僵尸进程是什么&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>用户态与内核态&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="3-linux">3. Linux&lt;/h2>
+&lt;ol>
+&lt;li>select 与 epoll 的区别&lt;/li>
+&lt;li>fork的底层原理&lt;/li>
+&lt;li>查看文件中的100-200行，其中有error相关的附近日志&lt;/li>
+&lt;li>top分析&lt;/li>
+&lt;li>查看端口占用&lt;/li>
+&lt;li>查看打开的文件&lt;/li>
+&lt;li>tcpdump 抓包&lt;/li>
+&lt;li>awk，grep的使用&lt;/li>
+&lt;/ol>
+&lt;h2 id="4-计算机网络">4. 计算机网络&lt;/h2>
+&lt;ol>
+&lt;li>七层协议与tcp四层协议？五层协议&lt;/li>
+&lt;/ol>
+&lt;h3 id="41-tcp">4.1. TCP&lt;/h3>
+&lt;ol>
+&lt;li>tcp与udp的区别&lt;/li>
+&lt;li>tcp的三次握手和四次挥手&lt;/li>
+&lt;li>syn包丢了最多会重传多少次&lt;/li>
+&lt;li>time_wait 的作用与危害，tcp_reuse 的机制&lt;/li>
+&lt;li>TCP 如何确保可靠传输&lt;/li>
+&lt;li>TCP 拥塞控制和流量控制&lt;/li>
+&lt;li>TCP 的negla算法，如何解决粘包和半包(丢包？)问题&lt;/li>
+&lt;li>TCP的链接保活计时器&lt;/li>
+&lt;li>基于UDP设计一个可靠的传输协议(参考quic)&lt;/li>
+&lt;/ol>
+&lt;h3 id="42-http">4.2. HTTP&lt;/h3>
+&lt;ol>
+&lt;li>一次url访问会经过什么过程&lt;/li>
+&lt;li>GET 和 POST 的区别，PUT 和 POST 的区别&lt;/li>
+&lt;li>http 常见错误码&lt;/li>
+&lt;li>http与https，https的原理&lt;/li>
+&lt;li>session与cookie&lt;/li>
+&lt;/ol>
+&lt;h2 id="5-数据库">5. 数据库&lt;/h2>
+&lt;h3 id="51-mysql">5.1. MySQL&lt;/h3>
+&lt;ol>
+&lt;li>常见的存储引擎有哪些，他们有什么区别&lt;/li>
+&lt;li>常见的索引实现方式，B+树索引，哈希索引他们分别适用什么场景&lt;/li>
+&lt;li>Innodb 引擎的索引存储方式，聚簇索引与非聚簇索引&lt;/li>
+&lt;li>什么情况下索引不命中？MySQL 如何优化联合索引不满足最左规则的查询(索引下推)&lt;/li>
+&lt;li>一级索引与二级索引的查询方式，如何优化(覆盖索引)&lt;/li>
+&lt;li>如何优化慢查询(explain 分析)&lt;/li>
+&lt;li>事务的隔离级别&lt;/li>
+&lt;li>innodb 引擎是如何解决RR级别下的幻读问题(mvcc,next-key)&lt;/li>
+&lt;li>MySQL为什么RC级别下会出现不可重复度的问题，而RR不会（read View）&lt;/li>
+&lt;li>乐观锁与悲观锁&lt;/li>
+&lt;li>mysql的锁机制（对索引加锁）（共享锁，排他锁，意向锁，gap锁）&lt;/li>
+&lt;li>mysql如何保证事务的正确性（redolog，undo log）&lt;/li>
+&lt;li>mysql是怎么保证数据持久，不丢失的（binlog）&lt;/li>
+&lt;li>mysql主从复制的方式（同步复制，半同步复制，异步复制），如何解决主从延迟（多线程执行，组提交）&lt;/li>
+&lt;li>MySQL 查询的IN和EXIST有什么区别？&lt;/li>
+&lt;li>MySQL 死锁是如何形成的？MySQL是如何解决死锁问题的？&lt;/li>
+&lt;/ol>
+&lt;h3 id="52-redis">5.2. Redis&lt;/h3>
+&lt;ol>
+&lt;li>常见的数据类型(String, List, Hash, Set, Sort Set)&lt;/li>
+&lt;li>字符串类型是怎么实现(sds结构)&lt;/li>
+&lt;li>hash 是怎么实现（渐进性hash）&lt;/li>
+&lt;li>sort set 是怎么实现的（跳表）&lt;/li>
+&lt;li>redis 实现分布式锁，实现可重入锁（lua,setnxex），如何解决宿主机宕机后，主从切换可能会导致同时有两个线程获取锁（红锁）&lt;/li>
+&lt;li>redis实现乐观锁（Multi，watch，Exec）&lt;/li>
+&lt;li>redis 持久化机制&lt;/li>
+&lt;li>redis 主从复制（全量复制，增量复制，runid，复制缓冲区，复制偏移量）&lt;/li>
+&lt;li>sentinel是如何做到高可用的（主观下线，客观下线，raft选主，主从切换）&lt;/li>
+&lt;li>redis cluster是如何做到高可用的&lt;/li>
+&lt;/ol>
+&lt;h2 id="6-java">6. Java&lt;/h2>
+&lt;h3 id="61-基础">6.1. 基础&lt;/h3>
+&lt;h3 id="62-多线程">6.2. 多线程&lt;/h3>
+&lt;ol>
+&lt;li>什么是线程安全问题？&lt;/li>
+&lt;li>实现多线程的几种方式？&lt;/li>
+&lt;li>线程池的关闭方式有哪些？&lt;/li>
+&lt;/ol>
+&lt;h2 id="7-常用框架与第三方组件">7. 常用框架与第三方组件&lt;/h2>
+&lt;h3 id="71-spring">7.1. Spring&lt;/h3>
+&lt;ol>
+&lt;li>Spring AOP的实现原理&lt;/li>
+&lt;li>spring IOC 的好处&lt;/li>
+&lt;li>spring 用了什么设计模式&lt;/li>
+&lt;li>Transaction 什么时候会生效？事务的实现原理是什么？&lt;/li>
+&lt;li>spring mvc的controller参数是如何映射的？&lt;/li>
+&lt;li>多例注入的实现原理及其生命周期&lt;/li>
+&lt;li>Spring 中的 Controller 注解是单例的还是多例的？会不会有并发问题？&lt;/li>
+&lt;/ol>
+&lt;h3 id="72-springbootinterview-spring">7.2. &lt;a href="../interview-spring">SpringBoot&lt;/a>&lt;/h3>
+&lt;ol>
+&lt;li>常用的SpringBoot的注解有哪些？&lt;/li>
+&lt;/ol>
+&lt;h3 id="73-mybatis">7.3 Mybatis&lt;/h3>
+&lt;ol>
+&lt;li>Mybatis 的一级缓存和二级缓存&lt;/li>
+&lt;li>Mybatis 插件的原理，用到了什么设计模式&lt;/li>
+&lt;li>Mybatis 是怎么找到指定的mapper的&lt;/li>
+&lt;/ol>
+&lt;h3 id="74-本地缓存">7.4. 本地缓存&lt;/h3>
+&lt;ol>
+&lt;li>guava，caffeine，ohc&lt;/li>
+&lt;/ol>
+&lt;h2 id="8-分布式">8. 分布式&lt;/h2>
+&lt;ol>
+&lt;li>CAP理论&lt;/li>
+&lt;li>BASE理论&lt;/li>
+&lt;/ol>
+&lt;h3 id="81-缓存">8.1. 缓存&lt;/h3>
+&lt;ol>
+&lt;li>穿透，击穿，雪崩是什么，如何避免（随机过期时间，异步刷新，单线程回源）&lt;/li>
+&lt;/ol>
+&lt;h3 id="82-一致性协议">8.2. 一致性协议&lt;/h3>
+&lt;ol>
+&lt;li>raft协议原理&lt;/li>
+&lt;li>Paxos 算法&lt;/li>
+&lt;li>如何解决脑裂问题&lt;/li>
+&lt;li>多主一致性协议 gossip 原理&lt;/li>
+&lt;/ol>
+&lt;h3 id="83-负载均衡">8.3. 负载均衡&lt;/h3>
+&lt;ol>
+&lt;li>常见的负载均衡算法（轮询，加权轮询，哈希，一致性哈希）&lt;/li>
+&lt;li>一致性哈希&lt;/li>
+&lt;/ol>
+&lt;h3 id="84-分布式锁">8.4 分布式锁&lt;/h3>
+&lt;ol>
+&lt;li>使用zk怎么实现分布式锁&lt;/li>
+&lt;li>使用redis怎么实现分布式锁&lt;/li>
+&lt;/ol>
+&lt;h3 id="85-分布式事务">8.5. 分布式事务&lt;/h3>
+&lt;ol>
+&lt;li>2pc，3pc提交&lt;/li>
+&lt;/ol>
+&lt;h3 id="86-分布式会话">8.6. 分布式会话&lt;/h3>
+&lt;ol>
+&lt;li>分布式 session 如何设计（集成redis）&lt;/li>
+&lt;/ol>
+&lt;h3 id="87-分布式id">8.7 分布式ID&lt;/h3>
+&lt;h3 id="88-zookeeper">8.8 Zookeeper&lt;/h3>
+&lt;h2 id="9-开发相关">9. 开发相关&lt;/h2>
+&lt;ol>
+&lt;li>常见的设计模式有哪些？&lt;/li>
+&lt;li>单例模式的实现方式？&lt;/li>
+&lt;/ol>
+&lt;h2 id="10-微服务">10. 微服务&lt;/h2>
+&lt;h2 id="11-系统设计">11. 系统设计&lt;/h2>
+&lt;h3 id="111-高并发">11.1. 高并发&lt;/h3>
+&lt;ol>
+&lt;li>消息队列&lt;/li>
+&lt;li>读写分离&lt;/li>
+&lt;li>分库分表&lt;/li>
+&lt;li>负载均衡&lt;/li>
+&lt;/ol>
+&lt;h3 id="112-高可用">11.2. 高可用&lt;/h3>
+&lt;ol>
+&lt;li>限流&lt;/li>
+&lt;li>降级&lt;/li>
+&lt;li>熔断&lt;/li>
+&lt;li>排队&lt;/li>
+&lt;/ol>
+&lt;h2 id="12-消息中间件">12. 消息中间件&lt;/h2>
+&lt;ol>
+&lt;li>Kafka是如何保证消息的有效性的？&lt;/li>
+&lt;li>使用 Kafka 的过程中有没有遇到过什么问题?如何解决？&lt;/li>
+&lt;/ol>
+&lt;h2 id="13-容器云">13. 容器云&lt;/h2>
+&lt;ol>
+&lt;li>&lt;/li>
+&lt;/ol></description></item></channel></rss>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>调试 on Ahamoment</title><link>https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/</link><description>Recent content in 调试 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 21 Nov 2019 20:04:16 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/index.xml" rel="self" type="application/rss+xml"/><item><title>IntellJ IDEA 远程调试 Java 程序</title><link>https://ahamoment.cn/post/java-remote-debug/</link><pubDate>Thu, 21 Nov 2019 20:04:16 +0800</pubDate><guid>https://ahamoment.cn/post/java-remote-debug/</guid><description>
+&lt;p>&lt;img src="https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_20,color_FFFFFF,t_70" alt="java remote debug">&lt;/p>
+&lt;h2 id="1-前言">1. 前言&lt;/h2>
+&lt;p>当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。&lt;/p>
+&lt;h2 id="2-配置">2. 配置&lt;/h2>
+&lt;p>在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：&lt;/p>
+&lt;ul>
+&lt;li>应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 &lt;code>java -jar test.jar&lt;/code> 命令启动应用。&lt;/li>
+&lt;li>调试工具用的是IntelliJ idea&lt;/li>
+&lt;/ul>
+&lt;h3 id="21-java-启动参数配置">2.1 Java 启动参数配置&lt;/h3>
+&lt;p>Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。&lt;/p>
+&lt;p>JDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。&lt;/p>
+&lt;p>要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。&lt;/p>
+&lt;p>&lt;code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test&lt;/code>&lt;/p>
+&lt;p>这些参数要做的事情就是启用远程调试和配置有效的选项：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>-Xdebug&lt;/code>：参数启用debug调试特性&lt;/li>
+&lt;li>&lt;code>-Xrunjdwp&lt;/code>：使用几个重要参数配置JDWP协议。&lt;/li>
+&lt;/ul>
+&lt;p>从 JDK5 开始，可以使用 &lt;code>-agentlib:jdwp&lt;/code> 选项，而不是 &lt;code>-Xdebug&lt;/code> 和 &lt;code>-Xrunjdwp&lt;/code>。但如果连接到 JDK5 以前的 VM，只能选择 &lt;code>-Xdebug&lt;/code> 和 &lt;code>-Xrunjdwp&lt;/code>。&lt;/p>
+&lt;p>&lt;code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test&lt;/code>&lt;/p>
+&lt;p>JDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a href="https://www.oracle.com/technetwork/java/javase/9-notes-3745703.html#JDK-8041435">JDK 9 Realease Notes&lt;/a>
+core-svc/debugger
+JDWP socket connector accept only local connections by default
+The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line. A hostname of asterisk (*) may be used to achieve the old behavior which is to bind the JDWP socket connector to all available interfaces; this is not secure and not recommended.&lt;/p>
+&lt;/blockquote>
+&lt;p>因此对于 JDK 9 及更高的版本，启动debug的命令如下：&lt;/p>
+&lt;p>&lt;code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 Test&lt;/code>&lt;/p>
+&lt;p>下面介绍一下jdwp提供的一些子选项参数：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;code>transport&lt;/code>：指定运行的被调试应用和调试者之间的通信协议。这里通常使用套接字传输。但是在 Windows 平台上也可以使用共享内存传输。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>server&lt;/code>：如果值为 y，目标应用程序监听将要连接的调试器应用程序。否则，它将连接到特定地址上的调试器应用程序。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>suspend&lt;/code>：如果值为 n 用来告知 JVM 立即执行，不要等待未来将要附着上/连上（attached）的调试者。如果设成 y, 则应用将暂停不运行，直到有调试者连接上&lt;/p>
+&lt;blockquote>
+&lt;p>suspend=y的一个比较适用的场景是，当debug一个会阻止应用成功启动的问题时， 通过suspend=y可以确保调试者连上来之后再启动应用，否则应用已经启动报错了再调试也没意义了。&lt;/p>
+&lt;/blockquote>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>address&lt;/code>：远程被调试应用开通的端口，可定义其他端口。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>服务端使用jdwp的调试参数成功启动后，我们可以看到java进程如下所示：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@test&lt;span class="o">]&lt;/span>$ ps -ef &lt;span class="p">|&lt;/span> grep java
+&lt;span class="ln">2&lt;/span>root &lt;span class="m">1323&lt;/span> &lt;span class="m">0&lt;/span> &lt;span class="m">99&lt;/span> 11:36 ? 00:00:30 java -Dspring.profiles.active&lt;span class="o">=&lt;/span>default -agentlib:jdwp&lt;span class="o">=&lt;/span>&lt;span class="nv">transport&lt;/span>&lt;span class="o">=&lt;/span>dt_socket,server&lt;span class="o">=&lt;/span>y,suspend&lt;span class="o">=&lt;/span>n,address&lt;span class="o">=&lt;/span>&lt;span class="m">2222&lt;/span> -jar ./test.jar
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="22-intellij-idea-配置">2.2 IntelliJ idea 配置&lt;/h3>
+&lt;p>首先保证 IDEA 里面已经打开了需要远程调试的代码，注意代码要与线上的代码一致，这里也可以用war/jar包来调。
+然后点击 Run ➝ Edit Configurations ➝ **+ **按钮 ➝ Remote
+&lt;img src="https://img-blog.csdnimg.cn/20191121114403417.png" alt="在这里插入图片描述">
+&lt;img src="https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+这里只需要填好服务器的地址和debug端口后，点击&amp;quot;debug&amp;quot;按钮启动即可。
+&lt;img src="https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+当我们看到打印出这行信息时，就可以对需要调试的代码打断点调试了。&lt;/p>
+&lt;h2 id="3-远程-jvm-调试的工作原理">3. 远程 JVM 调试的工作原理&lt;/h2>
+&lt;p>一切源于被称作 Agents 的东西。&lt;/p>
+&lt;p>运行着各种编译过的 .class 文件的JVM， 有一种特性，可以允许外部的库（Java或C++写的libraries）在运行时注入到 JVM 中。这些外部的库就称作 Agents, 他们有能力修改运行中 .class 文件的内容。&lt;/p>
+&lt;p>这些 Agents 拥有的这些 JVM 的功能权限， 是在 JVM 内运行的 Java Code 所无法获取的， 他们能用来做一些有趣的事情，比如修改运行中的源码， 性能分析等。 像 JRebel 工具就是用了这些功能达到魔术般的效果。&lt;/p>
+&lt;p>传递一个 Agent Lib 给 JVM, 通过添加 &lt;code>agentlib:libname[=options]&lt;/code> 格式的启动参数即可办到。像上面的远程调试我们用的就是
+&lt;code>-agentlib:jdwp=transport=dt_socket,address=1043,server=y,suspend=n&lt;/code>来引入 jdwp 这个 Agent 的。&lt;/p>
+&lt;p>jdwp 是一个 JVM 特定的 JDWP（Java Debug Wire Protocol） 可选实现，用来定义调试者与运行JVM之间的通讯，它的是通过 JVM 本地库的 jdwp.so 或者 jdwp.dll 支持实现的。&lt;/p>
+&lt;p>JPDA 由两个接口（分别是 JVM Tool Interface 和 JDI）、一个协议（Java Debug Wire Protocol）和两个用于合并它们的软件组件（后端和前端）组成。
+&lt;img src="https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="Java 调试平台架构">&lt;/p>
+&lt;ul>
+&lt;li>JVM TI-Java VM工具接口。JVM TI是J2SE 5.0中引入的新接口，它替代了JVMDI。它定义了VM提供的调试服务。&lt;/li>
+&lt;li>JDWP-Java调试线协议。定义调试对象和调试器进程之间的通信。&lt;/li>
+&lt;li>JDI-Java调试接口。定义高级Java语言界面，工具开发人员可以轻松地使用该界面来编写远程调试器应用程序。&lt;/li>
+&lt;/ul>
+&lt;p>简单来说， jdwp agent 会建立运行应用的 JVM 和调试者（本地或者远程）之间的桥梁。既然他是一个Agent Library, 它就有能力拦截运行的代码。&lt;/p>
+&lt;p>在 JVM 架构里， debugging 功能在 JVM 本身的内部是找不到的，它是一种抽象到外部工具的方式（也称作调试者 debugger）。这些调试工具或者运行在 JVM 的本地 或者在远程。这是一种解耦，模块化的架构。&lt;/p>
+&lt;p>概述此模块化体系结构的所有规范都包含在Java平台中，调试器体系结构，JPDA，您可以在此处阅读其详细介绍： &lt;a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html">Java Platform Debugger Architecture Overview.&lt;/a>&lt;/p>
+&lt;h2 id="4-总结">4. 总结&lt;/h2>
+&lt;p>在本文中，我们简单介绍了如何配置Java服务器以进行远程调试，以及如何使用简单的控制台工具来调试应用程序。但是需要注意的是，调试模式会降低服务器的速度，因为它会禁用一些JVM优化。另外，调试模式可能会带来潜在的安全风险。您需要通过特定端口向调试器提供对服务器的访问权限，这对于用心不良的人来说是另一个潜在的安全漏洞。所以并不建议长期开着调试模式跑应用。&lt;/p>
+&lt;h2 id="参考文档">参考文档&lt;/h2>
+&lt;p>[1] &lt;a href="https://www.jianshu.com/p/d168ecdce022">Java远程调试（Remote Debugging）的那些事&lt;/a>&lt;/p>
+&lt;p>[2] &lt;a href="https://blog.trifork.com/2014/07/14/how-to-remotely-debug-application-running-on-tomcat-from-within-intellij-idea/">How to Remotely Debug Application Running on Tomcat From Within Intellij IDEA&lt;/a>&lt;/p>
+&lt;p>[3] &lt;a href="https://stackify.com/java-remote-debugging/">A Practical Guide to Java Remote Debugging&lt;/a>&lt;/p>
+&lt;p>[4] &lt;a href="https://www.ibm.com/developerworks/cn/opensource/os-eclipse-javadebug/index.html">使用 Eclipse 远程调试 Java 应用程序&lt;/a>&lt;/p>
+&lt;p>[5] &lt;a href="https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html">JPDA&lt;/a>&lt;/p>
+&lt;p>[6] &lt;a href="https://www.ibm.com/developerworks/cn/java/j-lo-jpda1/index.html">深入 Java 调试体系&lt;/a>&lt;/p>
+&lt;p>[7] &lt;a href="http://dev-aux.com/java/java-local-and-remote-jvm-debugging-jdk-8-and-later">Java: local and remote JVM debugging — JDK 8, 9 and later&lt;/a>&lt;/p></description></item></channel></rss>

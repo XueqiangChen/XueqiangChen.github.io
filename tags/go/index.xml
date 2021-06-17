@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>go on Ahamoment</title><link>https://ahamoment.cn/tags/go/</link><description>Recent content in go on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 01 Apr 2021 16:23:40 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go 语言中的 new 关键字和 make 关键字的区别</title><link>https://ahamoment.cn/post/go-new-vs-make/</link><pubDate>Thu, 01 Apr 2021 16:23:40 +0800</pubDate><guid>https://ahamoment.cn/post/go-new-vs-make/</guid><description>
+&lt;p>Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。&lt;/p>
+&lt;p>对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="ln">6&lt;/span> &lt;span class="kd">var&lt;/span> &lt;span class="nx">i&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;span class="ln">7&lt;/span> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">8&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
+&lt;span class="ln">2&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">10&lt;/span> &lt;span class="c1">//panic: runtime error: invalid memory address or nil pointer dereference
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
+&lt;span class="ln">2&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">new&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">10&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>0xc00000a0e0
+&lt;span class="ln">2&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="m">10&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。&lt;/p>
+&lt;p>我们来看一下new函数&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// The new built-in function allocates memory. The first argument is a type,
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="c1">// not a value, and the value returned is a pointer to a newly
+&lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">// allocated zero value of that type.
+&lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">func&lt;/span> &lt;span class="nb">new&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">Type&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">Type&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>它只接受一个参数，这个参数是一个类型，分配好内存后，返回一个指向该类型内存地址的指针。同时把分配的内存置为零，也就是类型的零值。&lt;/p>
+&lt;p>接着，我们来看一下make函数。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">// The make built-in function allocates and initializes an object of type
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="c1">// slice, map, or chan (only). Like new, the first argument is a type, not a
+&lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">// value. Unlike new, make&amp;#39;s return type is the same as the type of its
+&lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">// argument, not a pointer to it. The specification of the result depends on
+&lt;/span>&lt;span class="ln"> 5&lt;/span>&lt;span class="c1">// the type:
+&lt;/span>&lt;span class="ln"> 6&lt;/span>&lt;span class="c1">// Slice: The size specifies the length. The capacity of the slice is
+&lt;/span>&lt;span class="ln"> 7&lt;/span>&lt;span class="c1">// equal to its length. A second integer argument may be provided to
+&lt;/span>&lt;span class="ln"> 8&lt;/span>&lt;span class="c1">// specify a different capacity; it must be no smaller than the
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="c1">// length. For example, make([]int, 0, 10) allocates an underlying array
+&lt;/span>&lt;span class="ln">10&lt;/span>&lt;span class="c1">// of size 10 and returns a slice of length 0 and capacity 10 that is
+&lt;/span>&lt;span class="ln">11&lt;/span>&lt;span class="c1">// backed by this underlying array.
+&lt;/span>&lt;span class="ln">12&lt;/span>&lt;span class="c1">// Map: An empty map is allocated with enough space to hold the
+&lt;/span>&lt;span class="ln">13&lt;/span>&lt;span class="c1">// specified number of elements. The size may be omitted, in which case
+&lt;/span>&lt;span class="ln">14&lt;/span>&lt;span class="c1">// a small starting size is allocated.
+&lt;/span>&lt;span class="ln">15&lt;/span>&lt;span class="c1">// Channel: The channel&amp;#39;s buffer is initialized with the specified
+&lt;/span>&lt;span class="ln">16&lt;/span>&lt;span class="c1">// buffer capacity. If zero, or the size is omitted, the channel is
+&lt;/span>&lt;span class="ln">17&lt;/span>&lt;span class="c1">// unbuffered.
+&lt;/span>&lt;span class="ln">18&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">func&lt;/span> &lt;span class="nb">make&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">t&lt;/span> &lt;span class="nx">Type&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">size&lt;/span> &lt;span class="o">...&lt;/span>&lt;span class="nx">IntegerType&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="nx">Type&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>make 是分配内存并初始化，初始化并不是置为零值。&lt;/li>
+&lt;li>与new一样，它的第一个参数也是一个类型，但是不一样的是，make返回的是传入的类型，而不是指针！&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">c&lt;/span> &lt;span class="kd">chan&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;span class="ln">2&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%#v \n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">c&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">//(chan int)(nil)
+&lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">c&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">make&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">chan&lt;/span> &lt;span class="kt">int&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%#v&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">//(chan int)(0xc000062060)
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>声明管道类型变量c，此时c还是nil，不可用；通过make来分配内存并初始化，c就获得了内存可以使用了。&lt;/p></description></item></channel></rss>

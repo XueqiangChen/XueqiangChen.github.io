@@ -1,0 +1,935 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>面试题 on Ahamoment</title><link>https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/</link><description>Recent content in 面试题 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Mon, 28 Dec 2020 11:16:35 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker 和 Kubernetes 面试题</title><link>https://ahamoment.cn/post/interview-docker-k8s/</link><pubDate>Mon, 28 Dec 2020 11:16:35 +0800</pubDate><guid>https://ahamoment.cn/post/interview-docker-k8s/</guid><description>
+&lt;h2 id="1-docker-问题">1. Docker 问题&lt;/h2>
+&lt;h3 id="11-docker-后端存储驱动-devicemapperoverlay-几种的区别">1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？&lt;/h3>
+&lt;p>刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。&lt;/p>
+&lt;p>&lt;strong>AUFS&lt;/strong>&lt;/p>
+&lt;p>AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/aufs.webp" alt="">&lt;/p>
+&lt;p>&lt;strong>Overlay&lt;/strong>&lt;/p>
+&lt;p>Overlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/overlay.webp" alt="">&lt;/p>
+&lt;p>&lt;strong>Devicemapper&lt;/strong>&lt;/p>
+&lt;p>Device mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/devicemapper.webp" alt="">&lt;/p>
+&lt;p>详细内容请参考：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1513">Docker 五种存储驱动&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1765">深入了解 Docker 存储驱动&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="12-容器隔离不彻底memory-和-cpu-隔离不彻底怎么处理解决这个问题">1.2. 容器隔离不彻底，Memory 和 CPU 隔离不彻底，怎么处理解决这个问题？&lt;/h3>
+&lt;p>由于 /proc 文件系统是以只读的方式挂载到容器内部，所以在容器内看到的都是宿主机的信息，包括 CPU 和 Memory，docker 是以 cgroups 来进行资源限制的，而 jdk1.9 以下版本目前无法自动识别容器的资源配额，1.9以上版本会自动识别和正常读取 cgroups 中为容器限制的资源大小。&lt;/p>
+&lt;p>&lt;em>&lt;strong>Memory 隔离不彻底&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>Docker 通过 cgroups 完成对内存的限制，而 /proc 文件目录是以只读的形式挂载到容器中，由于默认情况下，Java 压根就看不到 cgroups 限制的内容的大小，而默认使用 /proc/meminfo 中的信息作为内存信息进行启动，默认情况下，JVM 初始堆大小为内存总量的 1/4，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。&lt;/p>
+&lt;p>那么目前有几种解决方式：&lt;/p>
+&lt;p>（1）升级 JDK 版本到1.9以上，让 JVM 能自动识别 cgroups 对容器的资源限制，从而自动调整 JVM 的参数并启动 JVM 进程。&lt;/p>
+&lt;p>（2）对于较低版本的JDK，一定要设置 JVM 初始堆大小，并且JVM 的最大堆内存不能超过容器的最大内存值，正常理论值应该是：容器 limit-memory = JVM 最大堆内存 + 750MB。&lt;/p>
+&lt;p>（3）使用 lxcfs ，这是一种用户态文件系统，用来支持LXC 容器，lxcfs 通过用户态文件系统，在容器中提供下列 procfs 的文件，启动时，把宿主机对应的目录 /var/lib/lxcfu/proc/meminfo 文件挂载到 Docker 容器的 /proc/meminfo 位置后，容器中进程（JVM）读取相应文件内容时，lxcfs 的 fuse 将会从容器对应的 cgroups 中读取正确的内存限制，从而获得正确的资源约束设定。&lt;/p>
+&lt;p>&lt;em>&lt;strong>CPU 隔离不彻底&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>JVM GC （垃圾回收）对于 java 程序执行性能有一定的影响，默认的 JVM 使用如下公式： ParallelGCThreads = ( ncpu &amp;lt;= 8 ) ? ncpu：3 + （ncpu * 5）/ 8 来计算并行 GC 的线程数，但是在容器里面，ncpu 获取的就是所在宿主机的 cpu 个数，这会导致 JVM 启动过多的 GC 线程，直接的结果就是 GC 的性能下降，java 服务的感受就是：延时增加， TPS 吞度量下降，针对这种问题，也有以下几种解决方案：&lt;/p>
+&lt;p>（1）显示传递 JVM 启动参数：“-XX: ParallelGCThreads&amp;quot; 告诉 JVM 应该启动多少个并行 GC 线程，缺点是需要业务感知，而且需要为不同配置的容器传递不同的 JVM 参数。&lt;/p>
+&lt;p>（2）在容器内使用 Hack 过的 glibc ，使 JVM 通过 sysconf 系统调用能正确获取容器内 CPU 资源核数，优点是业务无感知，并且能自动适配不同配置的容器，缺点是有一定的维护成本。具体参考：&lt;a href="https://chenxq.xyz/post/cloud-container-get-cpu/">容器内获取 CPU 核数问题&lt;/a>&lt;/p>
+&lt;h3 id="13-介绍一下容器实现的基础-namespace-and-cgroups">1.3. 介绍一下容器实现的基础: Namespace and Cgroups&lt;/h3>
+&lt;p>主要用到了Linux的两种技术：Namespace 和 CGroup。Namespace 做隔离，Cgroups 做限制。&lt;/p>
+&lt;p>Namespace 技术实际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容。在创建进程的时候，Linux 系统提供了Mount、UTS、IPC、Network和User这些Namespace，用来对各种不同的进程上下文进行隔离操作。所以，Docker 容器实际上是在创建容器进程时，指定了这个进程所需要启用的一组 Namespace 参数。这样，容器就只能“看”到当前 Namespace 所限定的资源、文件、设备、状态，或者配置。而对于宿主机以及其他不相关的程序，它就完全看不到了。所以说，容器，其实是一种特殊的进程而已。&lt;/p>
+&lt;p>Linux Cgroups 就是 Linux 内核中用来为进程设置资源限制的一个重要功能。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。&lt;/p>
+&lt;p>一个正在运行的 Docker 容器，其实就是一个启用了多个 Linux Namespace 的应用进程，而这个进程能够使用的资源量，则受 Cgroups 配置的限制。&lt;/p>
+&lt;p>详情请参考：https://coolshell.cn/articles/17049.html&lt;/p>
+&lt;h3 id="14-docker-load-加载一个镜像-docker-images-查看不到是哪些原因">1.4. docker load 加载一个镜像， docker images 查看不到，是哪些原因？&lt;/h3>
+&lt;h3 id="14-有没有遇到容器-oom-的问题怎么处理的">1.4 有没有遇到容器 OOM 的问题？怎么处理的？&lt;/h3>
+&lt;p>OOM 可能的原因：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>容器隔离不彻底。默认情况下，JVM 初始堆大小为内存总量的 1/4，例如这台宿主机的内存为32G，那么初始堆的大小为8G，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。&lt;/p>
+&lt;/li>
+&lt;li>&lt;/li>
+&lt;/ol>
+&lt;p>处理方法：&lt;/p>
+&lt;ol>
+&lt;li>升级jdk版本或者设置初始堆大小和堆内存最大值，即-Xms 和 -Xmx。&lt;/li>
+&lt;/ol>
+&lt;h2 id="2-kubernetes-问题">2. Kubernetes 问题&lt;/h2>
+&lt;h3 id="21-k8s-的架构体系了解吗简单描述一下">2.1. k8s 的架构体系了解吗？简单描述一下&lt;/h3>
+&lt;p>这道题主要考察 k8s 体系，涉及的范围其实太广泛，可以从本身 k8s 组件、存储、网络、监控等方面阐述，当时我主要将 k8s 的每个组件功能都大概说了一下。&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/k8s-infra.png" alt="">&lt;/p>
+&lt;p>&lt;strong>Master节点&lt;/strong>&lt;/p>
+&lt;p>Master节点主要有四个组件，分别是：api-server、controller-manager、kube-scheduler 和 etcd。&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>&lt;strong>api-server&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责API服务。kube-apiserver 作为 k8s 集群的核心，负责整个集群功能模块的交互和通信，集群内的各个功能模块如 kubelet、controller、scheduler 等都通过 api-server 提供的接口将信息存入到 etcd 中，当需要这些信息时，又通过 api-server 提供的 restful 接口，如get、watch 接口来获取，从而实现整个 k8s 集群功能模块的数据交互。&lt;/p>
+&lt;p>&lt;em>&lt;strong>controller-manager&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责容器编排。controller-manager 作为 k8s 集群的管理控制中心，负责集群内 Node、Namespace、Service、Token、Replication 等资源对象的管理，使集群内的资源对象维持在预期的工作状态。&lt;/p>
+&lt;p>每一个 controller 通过 api-server 提供的 restful 接口实时监控集群内每个资源对象的状态，当发生故障，导致资源对象的工作状态发生变化，就进行干预，尝试将资源对象从当前状态恢复为预期的工作状态，常见的 controller 有 Namespace Controller、Node Controller、Service Controller、ServiceAccount Controller、Token Controller、ResourceQuote Controller、Replication Controller等。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kube-scheduler&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>kube-scheduler 简单理解为通过特定的调度算法和策略为待调度的 Pod 列表中的每个 Pod 选择一个最合适的节点进行调度，调度主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略和限制筛选出候选节点，优选阶段是在第一步的基础上，通过相应的策略为每一个候选节点进行打分，分数最高者胜出，随后目标节点的 kubelet 进程通过 api-server 提供的接口监控到 kube-scheduler 产生的 pod 绑定事件，从 etcd 中获取 Pod 的清单，然后下载镜像，启动容器。&lt;/p>
+&lt;p>&lt;strong>预选阶段的策略有：&lt;/strong>&lt;/p>
+&lt;p>(1) MatchNodeSelector：判断节点的 label 是否满足 Pod 的 nodeSelector 属性值。&lt;/p>
+&lt;p>(2) PodFitResource：判断节点的资源是否满足 Pod 的需求，批判的标准是：当前节点已运行的所有 Pod 的 request值 + 待调度的 Pod 的 request 值是否超过节点的资源容量。&lt;/p>
+&lt;p>(3) PodFitHostName：判断节点的主机名称是否满足 Pod 的 nodeName 属性值。&lt;/p>
+&lt;p>(4) PodFitHostPort：判断 Pod 的端口所映射的节点端口是否被节点其他 Pod 所占用。&lt;/p>
+&lt;p>(5) CheckNodeMemoryPressure：判断 Pod 是否可以调度到内存有压力的节点，这取决于 Pod 的 Qos 配置，如果是 BestEffort（尽量满足，优先级最低），则不允许调度。&lt;/p>
+&lt;p>(6) CheckNodeDiskPressure：如果当前节点磁盘有压力，则不允许调度。&lt;/p>
+&lt;p>&lt;strong>优选阶段的策略有：&lt;/strong>&lt;/p>
+&lt;p>(1) SelectorSpreadPriority：尽量减少节点上同属一个 SVC/RC/RS 的 Pod 副本数，为了更好的实现容灾，对于同属一个 SVC/RC/RS 的 Pod 实例，应尽量调度到不同的 node 节点。&lt;/p>
+&lt;p>(2) LeastRequestPriority：优先调度到请求资源较少的节点，节点的优先级由节点的空闲资源与节点总容量的比值决定的，即（节点总容量 - 已经运行的 Pod 所需资源）/ 节点总容量，CPU 和 Memory 具有相同的权重，最终的值由这两部分组成。&lt;/p>
+&lt;p>(3) BalancedResourceAllocation：该策略不能单独使用，必须和 LeaseRequestPriority 策略一起结合使用，尽量调度到 CPU 和 Memory 使用均衡的节点上。&lt;/p>
+&lt;p>&lt;em>&lt;strong>ETCD&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>强一致性的键值对存储，k8s 集群中的所有资源对象都存储在 etcd 中。&lt;/p>
+&lt;p>&lt;strong>Node节点&lt;/strong>&lt;/p>
+&lt;hr>
+&lt;p>在 Kubernetes 项目中，kubelet 主要负责同容器运行时（比如 Docker 项目）打交道。而这个交互所依赖的，是一个称作 CRI（Container Runtime Interface）的远程调用接口，这个接口定义了容器运行时的各项核心操作。而具体的容器运行时，比如 Docker 项目，则一般通过 OCI 这个容器运行时规范同底层的 Linux 操作系统进行交互。此外，kubelet 还通过 gRPC 协议同一个叫作 Device Plugin 的插件进行交互。这个插件，是 Kubernetes 项目用来管理 GPU 等宿主机物理设备的主要组件，也是基于 Kubernetes 项目进行机器学习训练、高性能作业支持等工作必须关注的功能。而 kubelet 的另一个重要功能，则是调用网络插件和存储插件为容器配置网络和持久化存储。这两个插件与 kubelet 进行交互的接口，分别是 CNI（Container Networking Interface）和 CSI（Container Storage Interface）。&lt;/p>
+&lt;p>Node节点主要有三个组件：分别是 kubelet、kube-proxy 和 容器运行时 docker 或者 rkt。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kubelet&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>在 k8s 集群中，每个 node 节点都会运行一个 kubelet 进程，该进程用来处理 Master 节点下达到该节点的任务，同时，通过 api-server 提供的接口定期向 Master 节点报告自身的资源使用情况，并通过 cadvisor 组件监控节点和容器的使用情况。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kube-proxy&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>kube-proxy 就是一个智能的软件负载均衡器，将 service 的请求转发到后端具体的 Pod 实例上，并提供负载均衡和会话保持机制，目前有三种工作模式，分别是：用户模式（userspace）、iptables 模式和 IPVS 模式。&lt;/p>
+&lt;p>&lt;em>&lt;strong>容器运行时——docker&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责管理 node 节点上的所有容器和容器 IP 的分配。&lt;/p>
+&lt;h3 id="22-k8s-创建一个pod的详细流程涉及的组件怎么通信的">2.2. k8s 创建一个pod的详细流程，涉及的组件怎么通信的？&lt;/h3>
+&lt;p>k8s 创建一个 Pod 的详细流程如下：&lt;/p>
+&lt;p>(1) 客户端提交创建请求，可以通过 api-server 提供的 restful 接口，或者是通过 kubectl 命令行工具，支持的数据类型包括 JSON 和 YAML。&lt;/p>
+&lt;p>(2) api-server 处理用户请求，将 pod 信息存储至 etcd 中。&lt;/p>
+&lt;p>(3) kube-scheduler 通过 api-server 提供的接口监控到未绑定的 pod，尝试为 pod 分配 node 节点，主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略筛选出候选节点，而优选阶段是在第一步的基础上，为每一个候选节点进行打分，分数最高者胜出。&lt;/p>
+&lt;p>(4) 选择分数最高的节点，进行 pod binding 操作，并将结果存储至 etcd 中。&lt;/p>
+&lt;p>(5) 随后目标节点的 kubelet 进程通过 api-server 提供的接口监测到 kube-scheduler 产生的 pod 绑定事件，然后从 etcd 获取 pod 清单，下载镜像并启动容器。&lt;/p>
+&lt;hr>
+&lt;p>整个事件流可以参考下图：&lt;/p>
+&lt;p>&lt;img src="https:////upload-images.jianshu.io/upload_images/16605471-363ddd93976fbd60.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/759/format/webp" alt="img">&lt;/p>
+&lt;p>参考文章：&lt;a href="http://dockone.io/article/9134">kubectl 创建 Pod 背后到底发生了什么？&lt;/a>&lt;/p>
+&lt;h3 id="23-k8s-中服务级别怎样设置服务的级别才是最高的">2.3. k8s 中服务级别，怎样设置服务的级别才是最高的&lt;/h3>
+&lt;p>这道题主要考察 k8s Qos 类别。在 k8s 中，Qos 主要有三种类别，分别是 BestEffort、Burstable 和 Guaranteed，三种类别区别如下：&lt;/p>
+&lt;p>&lt;em>&lt;strong>BestEffort&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>什么都不设置（CPU or Memory），佛系申请资源。&lt;/p>
+&lt;p>&lt;em>&lt;strong>Burstable&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>Pod 中的容器至少一个设置了CPU 或者 Memory 的请求&lt;/p>
+&lt;p>&lt;em>&lt;strong>Guaranteed&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>Pod 中的所有容器必须设置 CPU 和 Memory，并且 request 和 limit 值相等。&lt;/p>
+&lt;p>详情可以参考这篇博客：&lt;a href="https://www.jianshu.com/p/b02e6bb20f03">K8s Qos&lt;/a>&lt;/p>
+&lt;h3 id="24-有状态的容器如何上云">2.4. 有状态的容器如何上云？&lt;/h3>
+&lt;h3 id="25-解释一下crd和operator有没有自己开发过crd或者operator">2.5. 解释一下CRD和Operator？有没有自己开发过CRD或者Operator？&lt;/h3>
+&lt;h3 id="26-什么是-cni-平时-k8s-集群用的是哪个网络插件">2.6. 什么是 CNI? 平时 K8S 集群用的是哪个网络插件？&lt;/h3>
+&lt;h3 id="27-为什么-pod-中关于资源有-request-和-limit-两个字段有想过这么设计的原因吗">2.7. 为什么 Pod 中关于资源有 request 和 limit 两个字段？有想过这么设计的原因吗？&lt;/h3>
+&lt;h3 id="28-pod被调度到一个节点上的具体过程">2.8. Pod被调度到一个节点上的具体过程？&lt;/h3>
+&lt;h3 id="29-一个请求到-pod-接收响应中间经历了哪些过程">2.9. 一个请求到 Pod 接收响应，中间经历了哪些过程？&lt;/h3>
+&lt;h2 id="3-参考资料">3. 参考资料&lt;/h2>
+&lt;p>[1] &lt;a href="https://www.jianshu.com/p/2de643caefc1">docker &amp;amp; kubernetes 面试&lt;/a>&lt;/p></description></item><item><title>面试题目录</title><link>https://ahamoment.cn/post/interview-questions/</link><pubDate>Tue, 22 Dec 2020 14:00:47 +0800</pubDate><guid>https://ahamoment.cn/post/interview-questions/</guid><description>
+&lt;blockquote>
+&lt;p>面试题目录&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-数据结构">1. 数据结构&lt;/h2>
+&lt;ol>
+&lt;li>&lt;a href="../algorithm-sort">排序算法&lt;/a>&lt;/li>
+&lt;li>链表和数组的区别？跳表的实现&lt;/li>
+&lt;li>二分查找的时间复杂度和优点？&lt;/li>
+&lt;li>哈希表，解决冲突的方式&lt;/li>
+&lt;li>二叉树和B+树&lt;/li>
+&lt;li>&lt;a href="https://flykite.me/?p=41">二个亿的无序整数，如何找到中间值&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;p>常见的编程题：链表反转、动态规划、二叉树遍历&lt;/p>
+&lt;h2 id="2-操作系统">2. 操作系统&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>进程与线程&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>进程间的通信方式&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>进程调度&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>死锁的条件与解除&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>僵尸进程是什么&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>用户态与内核态&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="3-linux">3. Linux&lt;/h2>
+&lt;ol>
+&lt;li>select 与 epoll 的区别&lt;/li>
+&lt;li>fork的底层原理&lt;/li>
+&lt;li>查看文件中的100-200行，其中有error相关的附近日志&lt;/li>
+&lt;li>top分析&lt;/li>
+&lt;li>查看端口占用&lt;/li>
+&lt;li>查看打开的文件&lt;/li>
+&lt;li>tcpdump 抓包&lt;/li>
+&lt;li>awk，grep的使用&lt;/li>
+&lt;/ol>
+&lt;h2 id="4-计算机网络">4. 计算机网络&lt;/h2>
+&lt;ol>
+&lt;li>七层协议与tcp四层协议？五层协议&lt;/li>
+&lt;/ol>
+&lt;h3 id="41-tcp">4.1. TCP&lt;/h3>
+&lt;ol>
+&lt;li>tcp与udp的区别&lt;/li>
+&lt;li>tcp的三次握手和四次挥手&lt;/li>
+&lt;li>syn包丢了最多会重传多少次&lt;/li>
+&lt;li>time_wait 的作用与危害，tcp_reuse 的机制&lt;/li>
+&lt;li>TCP 如何确保可靠传输&lt;/li>
+&lt;li>TCP 拥塞控制和流量控制&lt;/li>
+&lt;li>TCP 的negla算法，如何解决粘包和半包(丢包？)问题&lt;/li>
+&lt;li>TCP的链接保活计时器&lt;/li>
+&lt;li>基于UDP设计一个可靠的传输协议(参考quic)&lt;/li>
+&lt;/ol>
+&lt;h3 id="42-http">4.2. HTTP&lt;/h3>
+&lt;ol>
+&lt;li>一次url访问会经过什么过程&lt;/li>
+&lt;li>GET 和 POST 的区别，PUT 和 POST 的区别&lt;/li>
+&lt;li>http 常见错误码&lt;/li>
+&lt;li>http与https，https的原理&lt;/li>
+&lt;li>session与cookie&lt;/li>
+&lt;/ol>
+&lt;h2 id="5-数据库">5. 数据库&lt;/h2>
+&lt;h3 id="51-mysql">5.1. MySQL&lt;/h3>
+&lt;ol>
+&lt;li>常见的存储引擎有哪些，他们有什么区别&lt;/li>
+&lt;li>常见的索引实现方式，B+树索引，哈希索引他们分别适用什么场景&lt;/li>
+&lt;li>Innodb 引擎的索引存储方式，聚簇索引与非聚簇索引&lt;/li>
+&lt;li>什么情况下索引不命中？MySQL 如何优化联合索引不满足最左规则的查询(索引下推)&lt;/li>
+&lt;li>一级索引与二级索引的查询方式，如何优化(覆盖索引)&lt;/li>
+&lt;li>如何优化慢查询(explain 分析)&lt;/li>
+&lt;li>事务的隔离级别&lt;/li>
+&lt;li>innodb 引擎是如何解决RR级别下的幻读问题(mvcc,next-key)&lt;/li>
+&lt;li>MySQL为什么RC级别下会出现不可重复度的问题，而RR不会（read View）&lt;/li>
+&lt;li>乐观锁与悲观锁&lt;/li>
+&lt;li>mysql的锁机制（对索引加锁）（共享锁，排他锁，意向锁，gap锁）&lt;/li>
+&lt;li>mysql如何保证事务的正确性（redolog，undo log）&lt;/li>
+&lt;li>mysql是怎么保证数据持久，不丢失的（binlog）&lt;/li>
+&lt;li>mysql主从复制的方式（同步复制，半同步复制，异步复制），如何解决主从延迟（多线程执行，组提交）&lt;/li>
+&lt;li>MySQL 查询的IN和EXIST有什么区别？&lt;/li>
+&lt;li>MySQL 死锁是如何形成的？MySQL是如何解决死锁问题的？&lt;/li>
+&lt;/ol>
+&lt;h3 id="52-redis">5.2. Redis&lt;/h3>
+&lt;ol>
+&lt;li>常见的数据类型(String, List, Hash, Set, Sort Set)&lt;/li>
+&lt;li>字符串类型是怎么实现(sds结构)&lt;/li>
+&lt;li>hash 是怎么实现（渐进性hash）&lt;/li>
+&lt;li>sort set 是怎么实现的（跳表）&lt;/li>
+&lt;li>redis 实现分布式锁，实现可重入锁（lua,setnxex），如何解决宿主机宕机后，主从切换可能会导致同时有两个线程获取锁（红锁）&lt;/li>
+&lt;li>redis实现乐观锁（Multi，watch，Exec）&lt;/li>
+&lt;li>redis 持久化机制&lt;/li>
+&lt;li>redis 主从复制（全量复制，增量复制，runid，复制缓冲区，复制偏移量）&lt;/li>
+&lt;li>sentinel是如何做到高可用的（主观下线，客观下线，raft选主，主从切换）&lt;/li>
+&lt;li>redis cluster是如何做到高可用的&lt;/li>
+&lt;/ol>
+&lt;h2 id="6-java">6. Java&lt;/h2>
+&lt;h3 id="61-基础">6.1. 基础&lt;/h3>
+&lt;h3 id="62-多线程">6.2. 多线程&lt;/h3>
+&lt;ol>
+&lt;li>什么是线程安全问题？&lt;/li>
+&lt;li>实现多线程的几种方式？&lt;/li>
+&lt;li>线程池的关闭方式有哪些？&lt;/li>
+&lt;/ol>
+&lt;h2 id="7-常用框架与第三方组件">7. 常用框架与第三方组件&lt;/h2>
+&lt;h3 id="71-spring">7.1. Spring&lt;/h3>
+&lt;ol>
+&lt;li>Spring AOP的实现原理&lt;/li>
+&lt;li>spring IOC 的好处&lt;/li>
+&lt;li>spring 用了什么设计模式&lt;/li>
+&lt;li>Transaction 什么时候会生效？事务的实现原理是什么？&lt;/li>
+&lt;li>spring mvc的controller参数是如何映射的？&lt;/li>
+&lt;li>多例注入的实现原理及其生命周期&lt;/li>
+&lt;li>Spring 中的 Controller 注解是单例的还是多例的？会不会有并发问题？&lt;/li>
+&lt;/ol>
+&lt;h3 id="72-springbootinterview-spring">7.2. &lt;a href="../interview-spring">SpringBoot&lt;/a>&lt;/h3>
+&lt;ol>
+&lt;li>常用的SpringBoot的注解有哪些？&lt;/li>
+&lt;/ol>
+&lt;h3 id="73-mybatis">7.3 Mybatis&lt;/h3>
+&lt;ol>
+&lt;li>Mybatis 的一级缓存和二级缓存&lt;/li>
+&lt;li>Mybatis 插件的原理，用到了什么设计模式&lt;/li>
+&lt;li>Mybatis 是怎么找到指定的mapper的&lt;/li>
+&lt;/ol>
+&lt;h3 id="74-本地缓存">7.4. 本地缓存&lt;/h3>
+&lt;ol>
+&lt;li>guava，caffeine，ohc&lt;/li>
+&lt;/ol>
+&lt;h2 id="8-分布式">8. 分布式&lt;/h2>
+&lt;ol>
+&lt;li>CAP理论&lt;/li>
+&lt;li>BASE理论&lt;/li>
+&lt;/ol>
+&lt;h3 id="81-缓存">8.1. 缓存&lt;/h3>
+&lt;ol>
+&lt;li>穿透，击穿，雪崩是什么，如何避免（随机过期时间，异步刷新，单线程回源）&lt;/li>
+&lt;/ol>
+&lt;h3 id="82-一致性协议">8.2. 一致性协议&lt;/h3>
+&lt;ol>
+&lt;li>raft协议原理&lt;/li>
+&lt;li>Paxos 算法&lt;/li>
+&lt;li>如何解决脑裂问题&lt;/li>
+&lt;li>多主一致性协议 gossip 原理&lt;/li>
+&lt;/ol>
+&lt;h3 id="83-负载均衡">8.3. 负载均衡&lt;/h3>
+&lt;ol>
+&lt;li>常见的负载均衡算法（轮询，加权轮询，哈希，一致性哈希）&lt;/li>
+&lt;li>一致性哈希&lt;/li>
+&lt;/ol>
+&lt;h3 id="84-分布式锁">8.4 分布式锁&lt;/h3>
+&lt;ol>
+&lt;li>使用zk怎么实现分布式锁&lt;/li>
+&lt;li>使用redis怎么实现分布式锁&lt;/li>
+&lt;/ol>
+&lt;h3 id="85-分布式事务">8.5. 分布式事务&lt;/h3>
+&lt;ol>
+&lt;li>2pc，3pc提交&lt;/li>
+&lt;/ol>
+&lt;h3 id="86-分布式会话">8.6. 分布式会话&lt;/h3>
+&lt;ol>
+&lt;li>分布式 session 如何设计（集成redis）&lt;/li>
+&lt;/ol>
+&lt;h3 id="87-分布式id">8.7 分布式ID&lt;/h3>
+&lt;h3 id="88-zookeeper">8.8 Zookeeper&lt;/h3>
+&lt;h2 id="9-开发相关">9. 开发相关&lt;/h2>
+&lt;ol>
+&lt;li>常见的设计模式有哪些？&lt;/li>
+&lt;li>单例模式的实现方式？&lt;/li>
+&lt;/ol>
+&lt;h2 id="10-微服务">10. 微服务&lt;/h2>
+&lt;h2 id="11-系统设计">11. 系统设计&lt;/h2>
+&lt;h3 id="111-高并发">11.1. 高并发&lt;/h3>
+&lt;ol>
+&lt;li>消息队列&lt;/li>
+&lt;li>读写分离&lt;/li>
+&lt;li>分库分表&lt;/li>
+&lt;li>负载均衡&lt;/li>
+&lt;/ol>
+&lt;h3 id="112-高可用">11.2. 高可用&lt;/h3>
+&lt;ol>
+&lt;li>限流&lt;/li>
+&lt;li>降级&lt;/li>
+&lt;li>熔断&lt;/li>
+&lt;li>排队&lt;/li>
+&lt;/ol>
+&lt;h2 id="12-消息中间件">12. 消息中间件&lt;/h2>
+&lt;ol>
+&lt;li>Kafka是如何保证消息的有效性的？&lt;/li>
+&lt;li>使用 Kafka 的过程中有没有遇到过什么问题?如何解决？&lt;/li>
+&lt;/ol>
+&lt;h2 id="13-容器云">13. 容器云&lt;/h2>
+&lt;ol>
+&lt;li>&lt;/li>
+&lt;/ol></description></item><item><title>分布式面试题</title><link>https://ahamoment.cn/post/interview-distributed-system/</link><pubDate>Fri, 18 Dec 2020 09:12:07 +0800</pubDate><guid>https://ahamoment.cn/post/interview-distributed-system/</guid><description>
+&lt;blockquote>
+&lt;p>本文收集有关分布式面试题的内容&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-分布式理论">1. 分布式理论&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>CAP 理论和 BASE 理论&lt;/p>
+&lt;p>任何一个分布式系统都无法同时满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance），最多只能同时满足两项。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>一致性协议&lt;/p>
+&lt;p>raft 协议、paxos 算法&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>如何解决脑裂问题&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>gossip 原理&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h2 id="2-分布式锁">2. 分布式锁&lt;/h2>
+&lt;h2 id="3-分布式事务">3. 分布式事务&lt;/h2>
+&lt;h2 id="4-分布式会话">4. 分布式会话&lt;/h2>
+&lt;h2 id="5-分布式id">5. 分布式id&lt;/h2>
+&lt;h2 id="6-负载均衡">6. 负载均衡&lt;/h2>
+&lt;h2 id="7-zookeeper-vs-etcd">7. zookeeper vs etcd&lt;/h2>
+&lt;p>存储数据时，zookeeper 使用树形结构，其中的每个节点称作 ZNode，访问一个 ZNode 时，需要提供从 root 开始的绝对路径。&lt;/p>
+&lt;p>&lt;a href="https://zhuanlan.zhihu.com/p/96690890">https://zhuanlan.zhihu.com/p/96690890&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://imesha.me/apache-curator-vs-etcd3-9c1362600b26">https://imesha.me/apache-curator-vs-etcd3-9c1362600b26&lt;/a>&lt;/p></description></item><item><title>Spring系列面试题</title><link>https://ahamoment.cn/post/interview-spring/</link><pubDate>Thu, 17 Dec 2020 14:21:46 +0800</pubDate><guid>https://ahamoment.cn/post/interview-spring/</guid><description>
+&lt;blockquote>
+&lt;p>本文包含spring, spring boot, spring mvc 以及 mybatis的面试题&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-spring">1. Spring&lt;/h2>
+&lt;h2 id="2-springboot">2. SpringBoot&lt;/h2>
+&lt;h3 id="21-springboot-的常用注解有哪些">2.1. SpringBoot 的常用注解有哪些？&lt;/h3>
+&lt;p>&lt;code>@SpringBootApplication&lt;/code>: 标识springboot项目的启动类。&lt;/p>
+&lt;p>&lt;code>@Configuration&lt;/code>: 用于定义配置类，指出该类是 Bean 配置的信息源，相当于传统的xml配置文件，一般加在主类上。如果有些第三方库需要用到xml文件，建议仍然通过@Configuration类作为项目的配置主类——可以使用@ImportResource注解加载xml配置文件。&lt;/p>
+&lt;p>&lt;code>@ComponentScan&lt;/code>: 组件扫描。让spring Boot扫描到Configuration类并把它加入到程序上下文。默认就会装配标识了&lt;code>@Controller&lt;/code>，&lt;code>@Service&lt;/code>，&lt;code>@Repository&lt;/code>，&lt;code>@Component&lt;/code>注解的类到spring容器中。&lt;/p>
+&lt;p>&lt;code>@EnableAutoConfiguration&lt;/code>: 允许 Spring Boot 自动配置注解，开启这个注解之后，Spring Boot 就能根据当前类路径下的包或者类来配置 Spring Bean。&lt;/p>
+&lt;p>&lt;code>@RestController&lt;/code>: 用于标注控制层组件，表示这是个控制器bean，并且是将函数的返回值直接填入HTTP响应体中，是REST风格的控制器；它是&lt;code>@Controller&lt;/code>和@&lt;code>ResponseBody&lt;/code>的合集。&lt;/p>
+&lt;p>&lt;code>@ResponseBody&lt;/code>: 表示该方法的返回结果直接写入HTTP response body中。一般在异步获取数据时使用，在使用&lt;code>@RequestMapping&lt;/code>后，返回值通常解析为跳转路径，加上&lt;code>@responsebody&lt;/code>后返回结果不会被解析为跳转路径，而是直接写入HTTP response body中。比如异步获取json数据，加上&lt;code>@Responsebody&lt;/code>后，会直接返回json数据。&lt;/p>
+&lt;p>&lt;code>@RequestMapping&lt;/code>: RequestMapping是一个用来处理请求地址映射的注解；提供路由信息，负责URL到Controller中的具体函数的映射，可用于类或方法上。用于类上，表示类中的所有响应请求的方法都是以该地址作为父路径。&lt;/p>
+&lt;p>&lt;code>@AutoWired&lt;/code>: 把配置好的Bean拿来用，完成属性、方法的组装，它可以对类成员变量、方法及构造函数进行标注，完成自动装配的工作。&lt;/p>
+&lt;p>&lt;code>@Qualifier&lt;/code>: 当有多个同一类型的Bean时，可以用@Qualifier(&amp;quot;name&amp;quot;)来指定。与&lt;code>@Autowired&lt;/code>配合使用。&lt;/p>
+&lt;p>&lt;code>@Bean&lt;/code>: 放在方法上面，而不是类上面，意思是该方法产生的Bean，交给 Spring 来管理。&lt;/p>
+&lt;p>&lt;code>@Component&lt;/code>: 泛指组件，当组件不好归类的时候，我们可以使用这个注解来标注。&lt;/p>
+&lt;p>&lt;code>@Service&lt;/code>: 一般作用于 service 层的组件。&lt;/p>
+&lt;p>&lt;code>@Repository&lt;/code>: 用于标注数据访问组件，即DAO组件。&lt;/p>
+&lt;h3 id="22-springboot-异常处理">2.2. SpringBoot 异常处理&lt;/h3>
+&lt;p>通过&lt;code>@ControllerAdvice&lt;/code>和&lt;code>@ExceptionHandler&lt;/code>来处理全局异常。&lt;/p>
+&lt;p>详细内容参考文章：&lt;a href="https://snailclimb.gitee.io/springboot-guide/#/./docs/advanced/springboot-handle-exception">《SpringBoot异常处理》&lt;/a>&lt;/p>
+&lt;h3 id="23-springboot-中如何实现过滤器和拦截器">2.3. SpringBoot 中如何实现过滤器和拦截器？&lt;/h3>
+&lt;p>&lt;strong>（1）过滤器&lt;/strong>&lt;/p>
+&lt;p>spring boot 中自定义过滤器只需要实现 Filter 接口，重写里面的&lt;code>init()&lt;/code> ,&lt;code>doFilter()&lt;/code>,&lt;code>destroy()&lt;/code>方法即可。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Filter&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="c1">//初始化过滤器后执行的操作
+&lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">init&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">FilterConfig&lt;/span> &lt;span class="n">filterConfig&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="kd">throws&lt;/span> &lt;span class="n">ServletException&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="c1">// 对请求进行过滤
+&lt;/span>&lt;span class="ln"> 7&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">doFilter&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">ServletRequest&lt;/span> &lt;span class="n">var1&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">ServletResponse&lt;/span> &lt;span class="n">var2&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">FilterChain&lt;/span> &lt;span class="n">var3&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="kd">throws&lt;/span> &lt;span class="n">IOException&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">ServletException&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="c1">// 销毁过滤器后执行的操作，主要用户对某些资源的回收
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">destroy&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">11&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>在配置中注册自定义的过滤器。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Configuration&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MyFilterConfig&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="nd">@Autowired&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="n">MyFilter&lt;/span> &lt;span class="n">myFilter&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="nd">@Bean&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">FilterRegistrationBean&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">MyFilter&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nf">thirdFilter&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="n">FilterRegistrationBean&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">MyFilter&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">filterRegistrationBean&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">FilterRegistrationBean&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;();&lt;/span>
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="n">filterRegistrationBean&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">setFilter&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">myFilter&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">10&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="n">filterRegistrationBean&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">setUrlPatterns&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;(&lt;/span>&lt;span class="n">Arrays&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">asList&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;/api/*&amp;#34;&lt;/span>&lt;span class="o">)));&lt;/span>
+&lt;span class="ln">12&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">filterRegistrationBean&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">15&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果有多个过滤器，可以在配置中设置一下顺序，&lt;code>filterRegistrationBean.setOrder(xx);&lt;/code>&lt;/p>
+&lt;p>详情可以参考文章：&lt;a href="https://snailclimb.gitee.io/springboot-guide/#/./docs/basis/springboot-filter">《SpringBoot 实现过滤器》&lt;/a>&lt;/p>
+&lt;p>&lt;strong>（2）拦截器&lt;/strong>&lt;/p>
+&lt;p>如果你需要自定义 &lt;strong>Interceptor&lt;/strong> 的话必须实现 &lt;code>org.springframework.web.servlet.HandlerInterceptor&lt;/code>接口或继承 &lt;code>org.springframework.web.servlet.handler.HandlerInterceptorAdapter&lt;/code>类，并且需要重写下面下面3个方法：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">preHandle&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">HttpServletRequest&lt;/span> &lt;span class="n">request&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="n">HttpServletResponse&lt;/span> &lt;span class="n">response&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="n">Object&lt;/span> &lt;span class="n">handler&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;span class="ln"> 4&lt;/span>
+&lt;span class="ln"> 5&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">postHandle&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">HttpServletRequest&lt;/span> &lt;span class="n">request&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="n">HttpServletResponse&lt;/span> &lt;span class="n">response&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="n">Object&lt;/span> &lt;span class="n">handler&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="n">ModelAndView&lt;/span> &lt;span class="n">modelAndView&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;span class="ln">10&lt;/span>
+&lt;span class="ln">11&lt;/span>
+&lt;span class="ln">12&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">afterCompletion&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">HttpServletRequest&lt;/span> &lt;span class="n">request&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="n">HttpServletResponse&lt;/span> &lt;span class="n">response&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="n">Object&lt;/span> &lt;span class="n">handler&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="n">Exception&lt;/span> &lt;span class="n">ex&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>注意： &lt;strong>preHandle&lt;/strong>方法返回 &lt;strong>true&lt;/strong>或 &lt;strong>false&lt;/strong>。如果返回 &lt;strong>true&lt;/strong>，则意味着请求将继续到达 &lt;strong>Controller&lt;/strong> 被处理。&lt;/p>
+&lt;h2 id="3-mybatis">3. MyBatis&lt;/h2></description></item><item><title>Java 基础面试题</title><link>https://ahamoment.cn/post/interview-java/</link><pubDate>Wed, 16 Dec 2020 09:44:34 +0800</pubDate><guid>https://ahamoment.cn/post/interview-java/</guid><description>
+&lt;blockquote>
+&lt;p>本文收集Java基础知识点相关的面试题目&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-java-基础">1. Java 基础&lt;/h2>
+&lt;h3 id="11-语法">1.1. 语法&lt;/h3>
+&lt;h4 id="111-java-泛型了解么什么是类型擦除介绍一下常用的通配符">1.1.1 Java 泛型了解么？什么是类型擦除？介绍一下常用的通配符？&lt;/h4>
+&lt;p>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许开发者在编译时检测到非法的类型。泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。&lt;/p>
+&lt;p>&lt;strong>Java 的泛型是伪泛型，这是因为 Java 在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说类型擦除 。&lt;/strong> 更多关于类型擦除的问题，可以查看这篇文章：&lt;a href="https://www.cnblogs.com/wuqinglong/p/9456193.html">《Java 泛型类型擦除以及类型擦除带来的问题》&lt;/a> 。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;();&lt;/span>
+&lt;span class="ln"> 2&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">12&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">//这里直接添加会报错
+&lt;/span>&lt;span class="ln"> 5&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;a&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="n">Class&lt;/span>&lt;span class="o">&amp;lt;?&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">clazz&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">list&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">getClass&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="n">Method&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">clazz&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">getDeclaredMethod&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;add&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">Object&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">class&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln"> 8&lt;/span>&lt;span class="c1">//但是通过反射添加，是可以的
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">invoke&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="s">&amp;#34;kl&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">10&lt;/span>
+&lt;span class="ln">11&lt;/span>&lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>泛型一般有三种使用方式:泛型类、泛型接口、泛型方法。&lt;/p>
+&lt;p>&lt;strong>1.泛型类&lt;/strong>：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="c1">//在实例化泛型类时，必须指定T的具体类型
+&lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;span class="ln"> 4&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 6&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">Generic&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">key&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">10&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">getKey&lt;/span>&lt;span class="o">(){&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">key&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">14&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如何实例化泛型类：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">genericInteger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;(&lt;/span>&lt;span class="n">123456&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>2.泛型接口&lt;/strong> ：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>实现泛型接口，不指定类型：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;span class="ln">2&lt;/span> &lt;span class="nd">@Override&lt;/span>
+&lt;span class="ln">3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">4&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">5&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>实现泛型接口，指定类型：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;span class="ln">2&lt;/span> &lt;span class="nd">@Override&lt;/span>
+&lt;span class="ln">3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">4&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s">&amp;#34;hello&amp;#34;&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">5&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>3.泛型方法&lt;/strong> ：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">E&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">E&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">inputArray&lt;/span> &lt;span class="o">)&lt;/span>
+&lt;span class="ln">2&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">3&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="o">(&lt;/span> &lt;span class="n">E&lt;/span> &lt;span class="n">element&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="n">inputArray&lt;/span> &lt;span class="o">){&lt;/span>
+&lt;span class="ln">4&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">printf&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="s">&amp;#34;%s &amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">element&lt;/span> &lt;span class="o">);&lt;/span>
+&lt;span class="ln">5&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">6&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;span class="ln">7&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>使用：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// 创建不同类型数组： Integer, Double 和 Character
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">intArray&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">2&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">3&lt;/span> &lt;span class="o">};&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">stringArray&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="s">&amp;#34;Hello&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="s">&amp;#34;World&amp;#34;&lt;/span> &lt;span class="o">};&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="n">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">intArray&lt;/span> &lt;span class="o">);&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="n">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">stringArray&lt;/span> &lt;span class="o">);&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>常用的通配符为： T，E，K，V，？&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>？ 表示不确定的 java 类型&lt;/li>
+&lt;li>T (type) 表示具体的一个 java 类型&lt;/li>
+&lt;li>K V (key value) 分别代表 java 键值中的 Key Value&lt;/li>
+&lt;li>E (element) 代表 Element&lt;/li>
+&lt;/ul>
+&lt;p>更多关于 Java 泛型中的通配符可以查看这篇文章：&lt;a href="https://juejin.im/post/5d5789d26fb9a06ad0056bd9">《聊一聊-JAVA 泛型中的通配符 T，E，K，V，？》&lt;/a>&lt;/p>
+&lt;h4 id="112--和-equals-的区别">1.1.2. == 和 equals 的区别&lt;/h4>
+&lt;p>&lt;strong>&lt;code>==&lt;/code>&lt;/strong> : 它的作用是判断两个对象的地址是不是相等。即判断两个对象是不是同一个对象。(&lt;strong>基本数据类型&lt;code>==&lt;/code>比较的是值，引用数据类型&lt;code>==&lt;/code>比较的是内存地址&lt;/strong>)&lt;/p>
+&lt;blockquote>
+&lt;p>因为 Java 只有值传递，所以，对于 == 来说，不管是比较基本数据类型，还是引用数据类型的变量，其本质比较的都是值，只是引用类型变量存的值是对象的地址。&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;strong>&lt;code>equals()&lt;/code>&lt;/strong> : 它的作用也是判断两个对象是否相等，它不能用于比较基本数据类型的变量。&lt;code>equals()&lt;/code>方法存在于&lt;code>Object&lt;/code>类中，而&lt;code>Object&lt;/code>类是所有类的直接或间接父类。&lt;/p>
+&lt;p>&lt;code>Object&lt;/code>类&lt;code>equals()&lt;/code>方法：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">obj&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">2&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">obj&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>equals()&lt;/code> 方法存在两种使用情况：&lt;/p>
+&lt;ul>
+&lt;li>情况 1：类没有覆盖 &lt;code>equals()&lt;/code>方法。则通过&lt;code>equals()&lt;/code>比较该类的两个对象时，等价于通过“==”比较这两个对象。使用的默认是 &lt;code>Object&lt;/code>类&lt;code>equals()&lt;/code>方法。&lt;/li>
+&lt;li>情况 2：类覆盖了 &lt;code>equals()&lt;/code>方法，是对对象内容的比较。一般，我们都覆盖 &lt;code>equals()&lt;/code>方法来两个对象的内容相等；若它们的内容相等，则返回 true(即，认为这两个对象相等)。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>举个例子：&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">test1&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span> &lt;span class="c1">// a 为一个引用
+&lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span> &lt;span class="c1">// b为另一个引用,对象的内容一样
+&lt;/span>&lt;span class="ln"> 5&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">aa&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">// 放在常量池中
+&lt;/span>&lt;span class="ln"> 6&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">bb&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">// 从常量池中查找
+&lt;/span>&lt;span class="ln"> 7&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">aa&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">bb&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="c1">// true
+&lt;/span>&lt;span class="ln"> 8&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;aa==bb&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">a&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="c1">// false，非同一对象
+&lt;/span>&lt;span class="ln">10&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;a==b&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">a&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">b&lt;/span>&lt;span class="o">))&lt;/span> &lt;span class="c1">// true
+&lt;/span>&lt;span class="ln">12&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;aEQb&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">42&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">42&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">0&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="c1">// true
+&lt;/span>&lt;span class="ln">14&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;true&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">16&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">17&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>说明：&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>String&lt;/code> 中的 &lt;code>equals&lt;/code> 方法是被重写过的，因为 &lt;code>Object&lt;/code> 的 &lt;code>equals&lt;/code> 方法是比较的对象的内存地址，而 &lt;code>String&lt;/code> 的 &lt;code>equals&lt;/code> 方法比较的是对象的值。&lt;/li>
+&lt;li>当创建 &lt;code>String&lt;/code> 类型的对象时，虚拟机会在常量池中查找有没有已经存在的值和要创建的值相同的对象，如果有就把它赋给当前引用。如果没有就在常量池中重新创建一个 &lt;code>String&lt;/code> 对象。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;code>String&lt;/code>类&lt;code>equals()&lt;/code>方法：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">anObject&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">anObject&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">anObject&lt;/span> &lt;span class="k">instanceof&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">anotherString&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">)&lt;/span>&lt;span class="n">anObject&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">n&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">anotherString&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">value&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">v1&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="kt">char&lt;/span> &lt;span class="n">v2&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">anotherString&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">value&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">n&lt;/span>&lt;span class="o">--&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">v1&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">]&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">v2&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">i&lt;/span>&lt;span class="o">])&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">++;&lt;/span>
+&lt;span class="ln">16&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">17&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">18&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">19&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">20&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">false&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">21&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="113-hashcode-与-equals">1.1.3. hashCode() 与 equals()&lt;/h4>
+&lt;p>面试官可能会问你：“你重写过 &lt;code>hashcode&lt;/code> 和 &lt;code>equals&lt;/code>么，为什么重写 &lt;code>equals&lt;/code> 时必须重写 &lt;code>hashCode&lt;/code> 方法？”&lt;/p>
+&lt;p>&lt;strong>1)hashCode()介绍:&lt;/strong>&lt;/p>
+&lt;p>&lt;code>hashCode()&lt;/code> 的作用是获取哈希码，也称为散列码；它实际上是返回一个 int 整数。这个哈希码的作用是确定该对象在哈希表中的索引位置。&lt;code>hashCode()&lt;/code>定义在 JDK 的 &lt;code>Object&lt;/code> 类中，这就意味着 Java 中的任何类都包含有 &lt;code>hashCode()&lt;/code> 函数。另外需要注意的是： &lt;code>Object&lt;/code> 的 hashcode 方法是本地方法，也就是用 c 语言或 c++ 实现的，该方法通常用来将对象的 内存地址 转换为整数之后返回。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">native&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">hashCode&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>散列表存储的是键值对(key-value)，它的特点是：能根据“键”快速的检索出对应的“值”。这其中就利用到了散列码！（可以快速找到所需要的对象）&lt;/p>
+&lt;p>&lt;strong>2)为什么要有 hashCode？&lt;/strong>&lt;/p>
+&lt;p>我们以&lt;code>HashSet&lt;/code> 如何检查重复”为例子来说明为什么要有 hashCode？&lt;/p>
+&lt;p>当你把对象加入 &lt;code>HashSet&lt;/code> 时，&lt;code>HashSet&lt;/code> 会先计算对象的 hashcode 值来判断对象加入的位置，同时也会与其他已经加入的对象的 hashcode 值作比较，如果没有相符的 hashcode，&lt;code>HashSet&lt;/code> 会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调用 &lt;code>equals()&lt;/code> 方法来检查 hashcode 相等的对象是否真的相同。如果两者相同，&lt;code>HashSet&lt;/code> 就不会让其加入操作成功。如果不同的话，就会重新散列到其他位置。这样我们就大大减少了 equals 的次数，相应就大大提高了执行速度。&lt;/p>
+&lt;p>&lt;strong>3) 为什么重写 &lt;code>equals&lt;/code> 时必须重写 &lt;code>hashCode&lt;/code> 方法？&lt;/strong>&lt;/p>
+&lt;p>如果两个对象相等，则 hashcode 一定也是相同的。两个对象相等，对两个对象分别调用 equals 方法都返回 true。但是，两个对象有相同的 hashcode 值，它们也不一定是相等的 。&lt;strong>因此，equals 方法被覆盖过，则 &lt;code>hashCode&lt;/code> 方法也必须被覆盖。&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;code>hashCode()&lt;/code>的默认行为是对堆上的对象产生独特值。如果没有重写 &lt;code>hashCode()&lt;/code>，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）&lt;/p>
+&lt;/blockquote>
+&lt;p>&lt;strong>4)为什么两个对象有相同的 hashcode 值，它们也不一定是相等的？&lt;/strong>&lt;/p>
+&lt;p>在这里解释一位小伙伴的问题。以下内容摘自《Head Fisrt Java》。&lt;/p>
+&lt;p>因为 &lt;code>hashCode()&lt;/code> 所使用的杂凑算法也许刚好会让多个对象传回相同的杂凑值。越糟糕的杂凑算法越容易碰撞，但这也与数据值域分布的特性有关（所谓碰撞也就是指的是不同的对象得到相同的 &lt;code>hashCode&lt;/code>。&lt;/p>
+&lt;p>我们刚刚也提到了 &lt;code>HashSet&lt;/code>,如果 &lt;code>HashSet&lt;/code> 在对比的时候，同样的 hashcode 有多个对象，它会使用 &lt;code>equals()&lt;/code> 来判断是否真的相同。也就是说 &lt;code>hashcode&lt;/code> 只是用来缩小查找成本。&lt;/p>
+&lt;p>更多关于 &lt;code>hashcode()&lt;/code> 和 &lt;code>equals()&lt;/code> 的内容可以查看：&lt;a href="https://www.cnblogs.com/skywang12345/p/3324958.html">Java hashCode() 和 equals()的若干问题解答&lt;/a>&lt;/p>
+&lt;h3 id="12-数据类型">1.2. 数据类型&lt;/h3>
+&lt;h4 id="121-string-stringbuffer-和-stringbuilder-的区别是什么-string-为什么是不可变的">1.2.1 String StringBuffer 和 StringBuilder 的区别是什么? String 为什么是不可变的?&lt;/h4>
+&lt;p>简单的来说：&lt;code>String&lt;/code> 类中使用 final 关键字修饰字符数组来保存字符串，&lt;code>private final char value[]&lt;/code>，所以&lt;code>String&lt;/code> 对象是不可变的。&lt;/p>
+&lt;blockquote>
+&lt;p>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串 &lt;code>private final byte[] value&lt;/code>;&lt;/p>
+&lt;/blockquote>
+&lt;p>而 &lt;code>StringBuilder&lt;/code> 与 &lt;code>StringBuffer&lt;/code> 都继承自 &lt;code>AbstractStringBuilder&lt;/code> 类，在 &lt;code>AbstractStringBuilder&lt;/code> 中也是使用字符数组保存字符串&lt;code>char[] value&lt;/code> 但是没有用 &lt;code>final&lt;/code> 关键字修饰，所以这两种对象都是可变的。&lt;/p>
+&lt;p>&lt;strong>线程安全性&lt;/strong>&lt;/p>
+&lt;p>&lt;code>String&lt;/code> 中的对象是不可变的，也就可以理解为常量，线程安全。&lt;/p>
+&lt;p>&lt;code>StringBuffer&lt;/code> 对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。&lt;/p>
+&lt;p>&lt;code>StringBuilder&lt;/code> 并没有对方法进行加同步锁，所以是非线程安全的。&lt;/p>
+&lt;p>&lt;strong>性能&lt;/strong>&lt;/p>
+&lt;p>每次对 &lt;code>String&lt;/code> 类型进行改变的时候，都会生成一个新的 &lt;code>String&lt;/code> 对象，然后将指针指向新的 &lt;code>String&lt;/code> 对象。&lt;code>StringBuffer&lt;/code> 每次都会对 &lt;code>StringBuffer&lt;/code> 对象本身进行操作，而不是生成新的对象并改变对象引用。相同情况下使用 &lt;code>StringBuilder&lt;/code> 相比使用 &lt;code>StringBuffer&lt;/code> 仅能获得 10%~15% 左右的性能提升，但却要冒多线程不安全的风险。&lt;/p>
+&lt;p>&lt;strong>对于三者使用的总结：&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>操作少量的数据: 适用 &lt;code>String&lt;/code>&lt;/li>
+&lt;li>单线程操作字符串缓冲区下操作大量数据: 适用 &lt;code>StringBuilder&lt;/code>&lt;/li>
+&lt;li>多线程操作字符串缓冲区下操作大量数据: 适用 &lt;code>StringBuffer&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="13-方法">1.3. 方法&lt;/h3>
+&lt;h4 id="131-重载和重写的区别">1.3.1 重载和重写的区别&lt;/h4>
+&lt;p>重载就是同样的一个方法能够根据输入数据的不同，做出不同的处理。&lt;/p>
+&lt;p>重写就是当子类继承自父类的相同方法，输入数据一样，但要做出有别于父类的响应时，你就要覆盖父类方法。&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>区别点&lt;/th>
+&lt;th>重载方法&lt;/th>
+&lt;th>重写方法&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>发生范围&lt;/td>
+&lt;td>同一个类&lt;/td>
+&lt;td>子类&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>参数列表&lt;/td>
+&lt;td>必须修改&lt;/td>
+&lt;td>一定不能修改&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>返回类型&lt;/td>
+&lt;td>可修改&lt;/td>
+&lt;td>子类方法返回值类型应比父类方法返回值类型更小或相等&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>异常&lt;/td>
+&lt;td>可修改&lt;/td>
+&lt;td>子类方法声明抛出的异常类应比父类方法声明抛出的异常类更小或相等；&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>访问修饰符&lt;/td>
+&lt;td>可修改&lt;/td>
+&lt;td>一定不能做更严格的限制（可以降低限制）&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>发生阶段&lt;/td>
+&lt;td>编译期&lt;/td>
+&lt;td>运行期&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="14-面向对象">1.4 面向对象&lt;/h3>
+&lt;h4 id="141-在-java-中定义一个不做事且没有参数的构造方法的作用">1.4.1. 在 Java 中定义一个不做事且没有参数的构造方法的作用&lt;/h4>
+&lt;p>Java 程序在执行子类的构造方法之前，如果没有用 &lt;code>super()&lt;/code>来调用父类特定的构造方法，则会调用父类中“没有参数的构造方法”。因此，如果父类中只定义了有参数的构造方法，而在子类的构造方法中又没有用 &lt;code>super()&lt;/code>来调用父类中特定的构造方法，则编译时将发生错误，因为 Java 程序在父类中找不到没有参数的构造方法可供执行。解决办法是在父类里加上一个不做事且没有参数的构造方法。&lt;/p>
+&lt;h4 id="142-面对对象的三大特性">1.4.2. 面对对象的三大特性&lt;/h4>
+&lt;p>封装、继承和多态。&lt;/p>
+&lt;p>封装是指把一个对象的状态信息（也就是属性）隐藏在对象内部，不允许外部对象直接访问对象的内部信息。&lt;/p>
+&lt;p>继承：不同类型的对象，相互之间经常有一定数量的共同点。&lt;/p>
+&lt;p>多态，顾名思义，表示一个对象具有多种的状态。具体表现为父类的引用指向子类的实例。&lt;/p>
+&lt;h3 id="14-反射机制">1.4. 反射机制&lt;/h3>
+&lt;p>JAVA 反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为 java 语言的反射机制。&lt;/p>
+&lt;p>&lt;strong>反射机制优缺点&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>优点：&lt;/strong> 运行期类型的判断，动态加载类，提高代码灵活度。&lt;/li>
+&lt;li>&lt;strong>缺点：&lt;/strong> 1,性能瓶颈：反射相当于一系列解释操作，通知 JVM 要做的事情，性能比直接的 java 代码要慢很多。2,安全问题，让我们可以动态操作改变类的属性同时也增加了类的安全隐患。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>反射的应用场景&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>反射是框架设计的灵魂。&lt;/strong>&lt;/p>
+&lt;p>在我们平时的项目开发过程中，基本上很少会直接使用到反射机制，但这不能说明反射机制没有用，实际上有很多设计、开发都与反射机制有关，例如模块化的开发，通过反射去调用对应的字节码；动态代理设计模式也采用了反射机制，还有我们日常使用的 Spring／Hibernate 等框架也大量使用到了反射机制。&lt;/p>
+&lt;p>举例：&lt;/p>
+&lt;ol>
+&lt;li>我们在使用 JDBC 连接数据库时使用 &lt;code>Class.forName()&lt;/code>通过反射加载数据库的驱动程序；&lt;/li>
+&lt;li>Spring 框架的 IOC（动态加载管理 Bean）创建对象以及 AOP（动态代理）功能都和反射有联系；&lt;/li>
+&lt;li>动态配置实例的属性；&lt;/li>
+&lt;/ol>
+&lt;h3 id="15-文件与io流">1.5. 文件与IO流&lt;/h3>
+&lt;h4 id="151-bionioaio-有什么区别">1.5.1. BIO,NIO,AIO 有什么区别?&lt;/h4>
+&lt;ul>
+&lt;li>&lt;strong>BIO (Blocking I/O):&lt;/strong> 同步阻塞 I/O 模式，数据的读取写入必须阻塞在一个线程内等待其完成。在活动连接数不是特别高（小于单机 1000）的情况下，这种模型是比较不错的，可以让每一个连接专注于自己的 I/O 并且编程模型简单，也不用过多考虑系统的过载、限流等问题。线程池本身就是一个天然的漏斗，可以缓冲一些系统处理不了的连接或请求。但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。&lt;/li>
+&lt;li>&lt;strong>NIO (Non-blocking/New I/O):&lt;/strong> NIO 是一种同步非阻塞的 I/O 模型，在 Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel , Selector，Buffer 等抽象。NIO 中的 N 可以理解为 Non-blocking，不单纯是 New。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 &lt;code>Socket&lt;/code> 和 &lt;code>ServerSocket&lt;/code> 相对应的 &lt;code>SocketChannel&lt;/code> 和 &lt;code>ServerSocketChannel&lt;/code> 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发&lt;/li>
+&lt;li>&lt;strong>AIO (Asynchronous I/O):&lt;/strong> AIO 也就是 NIO 2。在 Java 7 中引入了 NIO 的改进版 NIO 2,它是异步非阻塞的 IO 模型。异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。AIO 是异步 IO 的缩写，虽然 NIO 在网络操作中，提供了非阻塞的方法，但是 NIO 的 IO 行为还是同步的。对于 NIO 来说，我们的业务线程是在 IO 操作准备好时，得到通知，接着就由这个线程自行进行 IO 操作，IO 操作本身是同步的。查阅网上相关资料，我发现就目前来说 AIO 的应用还不是很广泛，Netty 之前也尝试使用过 AIO，不过又放弃了。&lt;/li>
+&lt;/ul>
+&lt;h2 id="2-容器">2. 容器&lt;/h2>
+&lt;h2 id="3-参考">3. 参考&lt;/h2>
+&lt;p>[1] &lt;a href="https://github.com/Snailclimb/JavaGuide">JavaGuide&lt;/a>&lt;/p></description></item><item><title>计算机网络面试题</title><link>https://ahamoment.cn/post/interview-network/</link><pubDate>Thu, 10 Dec 2020 09:43:05 +0800</pubDate><guid>https://ahamoment.cn/post/interview-network/</guid><description>
+&lt;blockquote>
+&lt;p>本文主要收集面试过程中遇到的计算机网络的面试题。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-osi-与-tcpip-各层的结构与功能都有哪些协议">1. OSI 与 TCP/IP 各层的结构与功能，都有哪些协议？&lt;/h2>
+&lt;p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="">&lt;/p>
+&lt;p>结合互联网的情况，自上而下地，非常简要的介绍一下各层的作用。&lt;/p>
+&lt;h3 id="11-应用层">1.1. 应用层&lt;/h3>
+&lt;p>&lt;strong>应用层(application-layer）的任务是通过应用进程间的交互来完成特定网络应用。&lt;strong>应用层协议定义的是应用进程（进程：主机中正在运行的程序）间的通信和交互的规则。对于不同的网络应用需要不同的应用层协议。在互联网中应用层协议很多，如&lt;/strong>域名系统DNS&lt;/strong>，支持万维网应用的 &lt;strong>HTTP协议&lt;/strong>，支持电子邮件的 &lt;strong>SMTP协议&lt;/strong>等等。我们把应用层交互的数据单元称为报文。&lt;/p>
+&lt;h3 id="12-运输层">1.2. 运输层&lt;/h3>
+&lt;p>&lt;strong>运输层(transport layer)的主要任务就是负责向两台主机进程之间的通信提供通用的数据传输服务&lt;/strong>。应用进程利用该服务传送应用层报文。“通用的”是指并不针对某一个特定的网络应用，而是多种应用可以使用同一个运输层服务。由于一台主机可同时运行多个线程，因此运输层有复用和分用的功能。所谓复用就是指多个应用层进程可同时使用下面运输层的服务，分用和复用相反，是运输层把收到的信息分别交付上面应用层中的相应进程。&lt;/p>
+&lt;p>&lt;strong>运输层主要使用以下两种协议:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>传输控制协议 TCP&lt;/strong>（Transmission Control Protocol）--提供&lt;strong>面向连接&lt;/strong>的，&lt;strong>可靠的&lt;/strong>数据传输服务。&lt;/li>
+&lt;li>&lt;strong>用户数据协议 UDP&lt;/strong>（User Datagram Protocol）--提供&lt;strong>无连接&lt;/strong>的，尽最大努力的数据传输服务（&lt;strong>不保证数据传输的可靠性&lt;/strong>）。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>TCP 与 UDP 的对比见问题三。&lt;/strong>&lt;/p>
+&lt;h3 id="13-网络层">1.3. 网络层&lt;/h3>
+&lt;p>&lt;strong>在 计算机网络中进行通信的两个计算机之间可能会经过很多个数据链路，也可能还要经过很多通信子网。网络层的任务就是选择合适的网间路由和交换结点， 确保数据及时传送。&lt;/strong> 在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 &lt;strong>IP 协议&lt;/strong>，因此分组也叫 &lt;strong>IP 数据报&lt;/strong> ，简称 &lt;strong>数据报&lt;/strong>。&lt;/p>
+&lt;p>这里要注意：&lt;strong>不要把运输层的“用户数据报 UDP ”和网络层的“ IP 数据报”弄混&lt;/strong>。另外，无论是哪一层的数据单元，都可笼统地用“分组”来表示。&lt;/p>
+&lt;p>这里强调指出，网络层中的“网络”二字已经不是我们通常谈到的具体网络，而是指计算机网络体系结构模型中第三层的名称.&lt;/p>
+&lt;p>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Internet Protocol）和许多路由选择协议，因此互联网的网络层也叫做&lt;strong>网际层&lt;/strong>或&lt;strong>IP层&lt;/strong>。&lt;/p>
+&lt;h3 id="14-数据链路层">1.4. 数据链路层&lt;/h3>
+&lt;p>&lt;strong>数据链路层(data link layer)通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。&lt;/strong> 在两个相邻节点之间传送数据时，&lt;strong>数据链路层将网络层交下来的 IP 数据报组装成帧&lt;/strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。&lt;/p>
+&lt;p>在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结束。这样，数据链路层在收到一个帧后，就可从中提出数据部分，上交给网络层。 控制信息还使接收端能够检测到所收到的帧中有无差错。如果发现差错，数据链路层就简单地丢弃这个出了差错的帧，以避免继续在网络中传送下去白白浪费网络资源。如果需要改正数据在链路层传输时出现差错（这就是说，数据链路层不仅要检错，而且还要纠错），那么就要采用可靠性传输协议来纠正出现的差错。这种方法会使链路层的协议复杂些。&lt;/p>
+&lt;h3 id="15-物理层">1.5. 物理层&lt;/h3>
+&lt;p>在物理层上所传送的数据单位是比特。&lt;/p>
+&lt;p>&lt;strong>物理层(physical layer)的作用是实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异，&lt;/strong> 使其上面的数据链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化，对传送的比特流来说，这个电路好像是看不见的。&lt;/p>
+&lt;p>在互联网使用的各种协中最重要和最著名的就是 TCP/IP 两个协议。现在人们经常提到的TCP/IP并不一定单指TCP和IP这两个具体的协议，而往往表示互联网所使用的整个TCP/IP协议族。&lt;/p>
+&lt;h2 id="2-tcp-三次握手和四次挥手">2. TCP 三次握手和四次挥手&lt;/h2>
+&lt;blockquote>
+&lt;ul>
+&lt;li>Q1: 什么是三次握手和四次挥手？&lt;/li>
+&lt;li>Q2: 为什么要三次握手？如果是两次握手会发生什么？&lt;/li>
+&lt;li>Q4: 为什么需要四次挥手？&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;p>这部分的内容网上有很多文章都讲的很不错，可以直接借鉴。&lt;/p>
+&lt;blockquote>
+&lt;ol>
+&lt;li>&lt;a href="https://blog.csdn.net/qzcsu/article/details/72861891">两张动图-彻底明白TCP的三次握手与四次挥手&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://juejin.cn/post/6844903958624878606">面试官，不要再问我三次握手和四次挥手&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;p>上面的两篇文章都没有讲清楚为什么两次握手会有问题，我从&lt;code>谢希仁的《计算机网络》&lt;/code> 一书中找到了比较完整的答案。&lt;/p>
+&lt;blockquote>
+&lt;p>为什么客户端还要发送一次确认呢？这主要是为了防止已失效的连接请求报文突然又传送到了服务端，因而产生错误。&lt;/p>
+&lt;p>所谓的“已失效的连接请求报文段”是这样产生的。考虑一种正常情况。客户端发出连接请求，但因为连接请求报文丢失而未收到确认。于是客户端再重传了一次连接请求。后来收到了确认，建立了连接。数据传输完毕后，就释放了连接。客户端共发送了两个连接请求报文段，其中第一个丢失，第二个到达了服务端。没有“已失效的连接请求报文段”。&lt;/p>
+&lt;p>现在假设一种异常情况，即客户端发送出的第一个连接请求报文段并没有丢失，而是在某些网络结点长时间滞留了，以至延误到连接释放后的某个时间才到达服务端。本来这是一个早已失效的报文段。但是服务端收到此失效的连接报文段后，就误以为是客户端又发送一次新的请求。于是就向客户端发出确认报文段，同意建立连接。假定不采用三次握手，那么只要客户端发出确认，新的连接就建立了。&lt;/p>
+&lt;p>由于现在客户端并没有发送建立连接的请求，因此不会理睬服务端的确认，也不会向服务端发送数据。但服务端却认为新的运输连接已经建立了，并一直等待客户端发送数据。服务端的许多资源就这样白白浪费了。&lt;/p>
+&lt;p>采用三次握手可以防止上述现象。例如在刚才的情况下，客户端不会向服务端确认发送确认。服务端由于收不到确认，就知道客户端没有建立连接的要求。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="3-tcp-协议如何保证可靠传输">3. TCP 协议如何保证可靠传输&lt;/h2>
+&lt;ol>
+&lt;li>应用数据被分割成 TCP 认为最适合发送的数据块。&lt;/li>
+&lt;li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。&lt;/li>
+&lt;li>&lt;strong>校验和：&lt;/strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。&lt;/li>
+&lt;li>TCP 的接收端会丢弃重复的数据。&lt;/li>
+&lt;li>&lt;strong>流量控制：&lt;/strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）&lt;/li>
+&lt;li>&lt;strong>拥塞控制：&lt;/strong> 当网络拥塞时，减少数据的发送。&lt;/li>
+&lt;li>&lt;strong>ARQ协议：&lt;/strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。&lt;/li>
+&lt;li>&lt;strong>超时重传：&lt;/strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。&lt;/li>
+&lt;/ol>
+&lt;h3 id="31-流量控制">3.1. 流量控制&lt;/h3>
+&lt;p>&lt;strong>（1）什么是流量控制？流量控制的目的？&lt;/strong>&lt;/p>
+&lt;p>如果发送者发送数据过快，接收者来不及接收，那么就会有分组丢失。为了避免分组丢失，控制发送者的发送速度，使得接收者来得及接收，这就是流量控制。流量控制根本目的是防止分组丢失，它是构成TCP可靠性的一方面。&lt;/p>
+&lt;p>&lt;strong>（2）如何实现流量控制？&lt;/strong>&lt;/p>
+&lt;p>由滑动窗口协议（连续ARQ协议）实现。滑动窗口协议既保证了分组无差错、有序接收，也实现了流量控制。主要的方式就是接收方返回的 ACK 中会包含自己的接收窗口的大小，并且利用大小来控制发送方的数据发送。&lt;/p>
+&lt;p>&lt;strong>（3）流量控制引发的死锁？怎么避免死锁的发生？&lt;/strong>&lt;/p>
+&lt;p>当发送者收到了一个窗口为0的应答，发送者便停止发送，等待接收者的下一个应答。但是如果这个窗口不为0的应答在传输过程丢失，发送者一直等待下去，而接收者以为发送者已经收到该应答，等待接收新数据，这样双方就相互等待，从而产生死锁。
+为了避免流量控制引发的死锁，TCP使用了持续计时器。每当发送者收到一个零窗口的应答后就启动该计时器。时间一到便主动发送报文询问接收者的窗口大小。若接收者仍然返回零窗口，则重置该计时器继续等待；若窗口不为0，则表示应答报文丢失了，此时重置发送窗口后开始发送，这样就避免了死锁的产生。&lt;/p>
+&lt;h3 id="32--拥塞控制">3.2 . 拥塞控制&lt;/h3>
+&lt;blockquote>
+&lt;p>&lt;a href="https://zhuanlan.zhihu.com/p/37379780">https://zhuanlan.zhihu.com/p/37379780&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="4-tcp-的粘包和拆包">4. TCP 的粘包和拆包&lt;/h2>
+&lt;p>参考: &lt;a href="https://zhuanlan.zhihu.com/p/77275039">TCP 的粘包和拆包&lt;/a>&lt;/p>
+&lt;p>拆包和粘包是在socket编程中经常出现的情况，在socket通讯过程中，如果通讯的一端一次性连续发送多条数据包，tcp协议会将多个数据包打包成一个tcp报文发送出去，这就是所谓的&lt;strong>粘包&lt;/strong>。而如果通讯的一端发送的数据包超过一次tcp报文所能传输的最大值时，就会将一个数据包拆成多个最大tcp长度的tcp报文分开传输，这就叫做&lt;strong>拆包&lt;/strong>。&lt;/p>
+&lt;p>&lt;strong>总结出现粘包的原因&lt;/strong>：&lt;/p>
+&lt;ol>
+&lt;li>要发送的数据小于TCP发送缓冲区的大小，TCP将多次写入缓冲区的数据一次发送出去；&lt;/li>
+&lt;li>接收数据端的应用层没有及时读取接收缓冲区中的数据；&lt;/li>
+&lt;li>数据发送过快，数据包堆积导致缓冲区积压多个数据后才一次性发送出去(如果客户端每发送一条数据就睡眠一段时间就不会发生粘包)；&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>解决方案&lt;/strong>&lt;/p>
+&lt;p>对于粘包的情况，要对粘在一起的包进行拆包。对于拆包的情况，要对被拆开的包进行粘包，即将一个被拆开的完整应用包再组合成一个完整包。比较通用的做法就是每次发送一个应用数据包前在前面加上四个字节的包长度值，指明这个应用包的真实长度。如下图就是应用数据包格式。&lt;/p>
+&lt;p>&lt;img src="https://pic1.zhimg.com/80/v2-bb7b769a7187cd5fc146c79c5ae9d208_720w.jpg" alt="img">&lt;/p>
+&lt;p>实现解决拆包粘包问题，有两种实现方式：&lt;/p>
+&lt;ol>
+&lt;li>一种方式是引入netty库，netty封装了多种拆包粘包的方式，只需要对接口熟悉并调用即可，减少自己处理数据协议的繁琐流程；&lt;/li>
+&lt;li>自己写协议封装和解析流程，相当于实现了netty库拆粘包的简易版本.&lt;/li>
+&lt;/ol>
+&lt;h2 id="5-在浏览器中输入url地址到显示主页的过程">5. 在浏览器中输入url地址到显示主页的过程&lt;/h2>
+&lt;p>大致上分为以下几个过程：&lt;/p>
+&lt;ol>
+&lt;li>DNS解析&lt;/li>
+&lt;li>TCP连接&lt;/li>
+&lt;li>发送HTTP请求&lt;/li>
+&lt;li>服务器处理请求并返回HTTP报文&lt;/li>
+&lt;li>浏览器解析渲染页面&lt;/li>
+&lt;li>连接结束&lt;/li>
+&lt;/ol>
+&lt;p>可以参考下面这篇文章: &lt;a href="https://segmentfault.com/a/1190000006879700">前端经典面试题: 从输入URL到页面加载发生了什么？&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/network/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/network/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md&lt;/a>&lt;/p></description></item><item><title>MySQL 面试题</title><link>https://ahamoment.cn/post/interview-mysql/</link><pubDate>Wed, 09 Dec 2020 11:48:24 +0800</pubDate><guid>https://ahamoment.cn/post/interview-mysql/</guid><description>
+&lt;h2 id="1-什么是mysql">1. 什么是MySQL？&lt;/h2>
+&lt;p>MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是&lt;strong>3306&lt;/strong>。&lt;/p>
+&lt;h2 id="2-存储引擎">2. 存储引擎&lt;/h2>
+&lt;h3 id="21-myisam-和-innodb-的区别">2.1. MyISAM 和 InnoDB 的区别&lt;/h3>
+&lt;p>MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括&lt;strong>全文索引、压缩、空间函数&lt;/strong>等，但&lt;strong>MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复&lt;/strong>。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。&lt;/p>
+&lt;p>大多数时候我们使用的都是 InnoDB 存储引擎，但是在某些情况下使用 MyISAM 也是合适的比如读密集的情况下。（如果你不介意 MyISAM 崩溃恢复问题的话）。&lt;/p>
+&lt;p>&lt;strong>两者的对比：&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>是否支持行级锁&lt;/strong> : MyISAM 只有表级锁(table-level locking)，而InnoDB 支持行级锁(row-level locking)和表级锁，默认为行级锁。&lt;/li>
+&lt;li>&lt;strong>是否支持事务和崩溃后的安全恢复： MyISAM&lt;/strong> 强调的是性能，每次查询具有原子性,其执行速度比InnoDB类型更快，但是不提供事务支持。但是&lt;strong>InnoDB&lt;/strong> 提供事务支持，外部键等高级数据库功能。 具有事务(commit)、回滚(rollback)和崩溃修复能力(crash recovery capabilities)的事务安全(transaction-safe (ACID compliant))型表。&lt;/li>
+&lt;li>&lt;strong>是否支持外键：&lt;/strong> MyISAM不支持，而InnoDB支持。&lt;/li>
+&lt;li>&lt;strong>是否支持MVCC&lt;/strong> ：仅 InnoDB 支持。应对高并发事务, MVCC比单纯的加锁更高效;MVCC只在 &lt;code>READ COMMITTED&lt;/code> 和 &lt;code>REPEATABLE READ&lt;/code> 两个隔离级别下工作;MVCC可以使用 乐观(optimistic)锁 和 悲观(pessimistic)锁来实现;各数据库中MVCC实现并不统一。推荐阅读：&lt;a href="https://segmentfault.com/a/1190000012650596">MySQL-InnoDB-MVCC多版本并发控制&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h2 id="3-索引">3. 索引&lt;/h2>
+&lt;h3 id="31-什么是索引">3.1. 什么是索引&lt;/h3>
+&lt;p>&lt;strong>索引是一种用于快速查询和检索数据的数据结构。常见的索引结构有: B树， B+树和Hash。&lt;/strong>&lt;/p>
+&lt;p>索引的作用就相当于目录的作用。打个比方: 我们在查字典的时候，如果没有目录，那我们就只能一页一页的去找我们需要查的那个字，速度很慢。如果有目录了，我们只需要先去目录里查找字的位置，然后直接翻到那一页就行了。&lt;strong>索引是一种用于快速查询和检索数据的数据结构。常见的索引结构有: B树， B+树和Hash。&lt;/strong>&lt;/p>
+&lt;h3 id="32-为什么用索引">3.2. 为什么用索引？&lt;/h3>
+&lt;p>&lt;strong>索引的优点&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>可以大大加快检索的速度&lt;/strong>，这也是创建索引的最主要的原因。毕竟大部分系统的读请求总是大于写请求的。 另外，通过创建唯一性索引，可以保证数据库表中每一行数据的唯一性。&lt;/p>
+&lt;p>&lt;strong>索引的缺点&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>创建索引和维护索引需要耗费许多时间&lt;/strong>：当对表中的数据进行增删改的时候，如果数据有索引，那么索引也需要动态的修改，会降低SQL执行效率。&lt;/li>
+&lt;li>&lt;strong>占用物理存储空间&lt;/strong> ：索引需要使用物理文件存储，也会耗费一定空间。&lt;/li>
+&lt;/ol>
+&lt;h3 id="33-索引的原理">3.3. 索引的原理&lt;/h3>
+&lt;p>InnoDB 的索引使用的是 B+ 树。&lt;/p>
+&lt;p>为什么要用B+树作为索引？而不是B树？&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;a href="https://tech.meituan.com/2014/06/30/mysql-index.html">MySQL索引原理及慢查询优化&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="34-索引类型">3.4 索引类型&lt;/h3>
+&lt;h4 id="341-主键索引与二级索引">3.4.1. 主键索引与二级索引&lt;/h4>
+&lt;p>&lt;strong>（1）主键索引&lt;/strong>&lt;/p>
+&lt;p>数据表的主键列使用的就是主键索引。一张数据表有只能有一个主键，并且主键不能为null，不能重复。在mysql的InnoDB的表中，当没有显示的指定表的主键时，InnoDB会自动先检查表中是否有唯一索引的字段，如果有，则选择该字段为默认的主键，否则InnoDB将会自动创建一个6Byte的自增主键。&lt;/p>
+&lt;p>&lt;strong>（2）二级索引&lt;/strong>&lt;/p>
+&lt;p>又称为辅助索引，是因为二级索引的叶子节点存储的数据是主键。也就是说，通过二级索引，可以定位主键的位置。唯一索引，普通索引，前缀索引等索引属于二级索引。&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>唯一索引(Unique Key)&lt;/strong> ：唯一索引也是一种约束。**唯一索引的属性列不能出现重复的数据，但是允许数据为NULL，一张表允许创建多个唯一索引。**建立唯一索引的目的大部分时候都是为了该属性列的数据的唯一性，而不是为了查询效率。&lt;/li>
+&lt;li>&lt;strong>普通索引(Index)&lt;/strong> ：&lt;strong>普通索引的唯一作用就是为了快速查询数据，一张表允许创建多个普通索引，并允许数据重复和NULL。&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>前缀索引(Prefix)&lt;/strong> ：前缀索引只适用于字符串类型的数据。前缀索引是对文本的前几个字符创建索引，相比普通索引建立的数据更小， 因为只取前几个字符。&lt;/li>
+&lt;li>&lt;strong>全文索引(Full Text)&lt;/strong> ：全文索引主要是为了检索大文本数据中的关键字的信息，是目前搜索引擎数据库使用的一种技术。Mysql5.6之前只有MYISAM引擎支持全文索引，5.6之后InnoDB也支持了全文索引。&lt;/li>
+&lt;/ol>
+&lt;h4 id="342-聚集索引与非聚集索引">3.4.2. 聚集索引与非聚集索引&lt;/h4>
+&lt;p>&lt;strong>（1）聚集索引&lt;/strong>&lt;/p>
+&lt;p>聚集索引即索引结构和数据一起存放的索引。主键索引属于聚集索引。&lt;/p>
+&lt;p>聚集索引的优点:&lt;/p>
+&lt;p>聚集索引的查询速度非常的快，因为整个B+树本身就是一颗多叉平衡树，叶子节点也都是有序的，定位到索引的节点，就相当于定位到了数据。&lt;/p>
+&lt;p>聚集索引的缺点:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>依赖于有序的数据&lt;/strong> ：因为B+树是多路平衡树，如果索引的数据不是有序的，那么就需要在插入时排序，如果数据是整型还好，否则类似于字符串或UUID这种又长又难比较的数据，插入或查找的速度肯定比较慢。&lt;/li>
+&lt;li>&lt;strong>更新代价大&lt;/strong> ： 如果对索引列的数据被修改时，那么对应的索引也将会被修改， 而且况聚集索引的叶子节点还存放着数据，修改代价肯定是较大的， 所以对于主键索引来说，主键一般都是不可被修改的。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>（2）非聚集索引&lt;/strong>&lt;/p>
+&lt;p>非聚集索引即索引结构和数据分开存放的索引。&lt;/p>
+&lt;p>非聚集索引的叶子节点并不一定存放数据的指针， 因为二级索引的叶子节点就存放的是主键，根据主键再回表查数据。&lt;/p>
+&lt;p>非聚集索引的优点:&lt;/p>
+&lt;p>&lt;strong>更新代价比聚集索引要小&lt;/strong> 。非聚集索引的更新代价就没有聚集索引那么大了，非聚集索引的叶子节点是不存放数据的&lt;/p>
+&lt;p>非聚集索引的缺点:&lt;/p>
+&lt;ol>
+&lt;li>跟聚集索引一样，非聚集索引也依赖于有序的数据&lt;/li>
+&lt;li>&lt;strong>可能会二次查询(回表)&lt;/strong> :这应该是非聚集索引最大的缺点了。 当查到索引对应的指针或主键后，可能还需要根据指针或主键再到数据文件或表中查询。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>（3）非聚集索引一定回表查询吗(覆盖索引)?&lt;/strong>&lt;/p>
+&lt;p>&lt;strong>非聚集索引不一定回表查询。&lt;/strong>&lt;/p>
+&lt;blockquote>
+&lt;p>试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span> SELECT name FROM table WHERE username=&amp;#39;guang19&amp;#39;;
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>那么这个索引的key本身就是name，查到对应的name直接返回就行了，无需回表查询。&lt;/p>
+&lt;/blockquote>
+&lt;p>主键索引本身的key就是主键，查到返回就行了。这种情况就称之为覆盖索引了。&lt;/p>
+&lt;h3 id="35-索引创建原则">3.5. 索引创建原则&lt;/h3>
+&lt;p>&lt;strong>（1）单列索引&lt;/strong>&lt;/p>
+&lt;p>单列索引即由一列属性组成的索引。&lt;/p>
+&lt;p>&lt;strong>（2）联合索引(多列索引)&lt;/strong>&lt;/p>
+&lt;p>联合索引既由多列属性组成索引。&lt;/p>
+&lt;p>&lt;strong>（3）最左前缀原则&lt;/strong>&lt;/p>
+&lt;p>假设创建的联合索引由三个字段组成:&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>ALTER TABLE table ADD INDEX index_name (num,name,age)
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>那么当查询的条件有为:num / (num AND name) / (num AND name AND age)时，索引才生效。所以在创建联合索引时，尽量把查询最频繁的那个字段作为最左(第一个)字段。查询的时候也尽量以这个字段为第一条件。&lt;/p>
+&lt;h2 id="4-事务">4. 事务&lt;/h2>
+&lt;p>&lt;strong>事务是逻辑上的一组操作，要么都执行，要么都不执行。&lt;/strong>&lt;/p>
+&lt;p>事务最经典也经常被拿出来说例子就是转账了。假如小明要给小红转账1000元，这个转账会涉及到两个关键操作就是：将小明的余额减少1000元，将小红的余额增加1000元。万一在这两个操作之间突然出现错误比如银行系统崩溃，导致小明余额减少而小红的余额没有增加，这样就不对了。事务就是保证这两个关键操作要么都成功，要么都要失败。&lt;/p>
+&lt;h3 id="41-事务的四大特性">4.1. 事务的四大特性&lt;/h3>
+&lt;ol>
+&lt;li>&lt;strong>原子性（Atomicity）：&lt;/strong> 事务是最小的执行单位，不允许分割。事务的原子性确保动作要么全部完成，要么完全不起作用；&lt;/li>
+&lt;li>&lt;strong>一致性（Consistency）：&lt;/strong> 执行事务后，数据库从一个正确的状态变化到另一个正确的状态；&lt;/li>
+&lt;li>&lt;strong>隔离性（Isolation）：&lt;/strong> 并发访问数据库时，一个用户的事务不被其他事务所干扰，各并发事务之间数据库是独立的；&lt;/li>
+&lt;li>&lt;strong>持久性（Durability）：&lt;/strong> 一个事务被提交之后。它对数据库中数据的改变是持久的，即使数据库发生故障也不应该对其有任何影响。&lt;/li>
+&lt;/ol>
+&lt;h3 id="42-并发事务带来了哪些问题">4.2. 并发事务带来了哪些问题&lt;/h3>
+&lt;p>在典型的应用程序中，多个事务并发运行，经常会操作相同的数据来完成各自的任务（多个用户对同一数据进行操作）。并发虽然是必须的，但可能会导致以下的问题。&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>脏读（Dirty read）:&lt;/strong> 当一个事务正在访问数据并且对数据进行了修改，而这种修改还没有提交到数据库中，这时另外一个事务也访问了这个数据，然后使用了这个数据（A 写 B 读）。因为这个数据是还没有提交的数据，那么另外一个事务读到的这个数据是“脏数据”，依据“脏数据”所做的操作可能是不正确的。&lt;/li>
+&lt;li>&lt;strong>丢失修改（Lost to modify）:&lt;/strong> 指在一个事务读取一个数据时，另外一个事务也访问了该数据，那么在第一个事务中修改了这个数据后，第二个事务也修改了这个数据。这样第一个事务内的修改结果就被丢失，因此称为丢失修改（A写 B 写）。 例如：事务1读取某表中的数据A=20，事务2也读取A=20，事务1修改A=A-1，事务2也修改A=A-1，最终结果A=19，事务1的修改被丢失。&lt;/li>
+&lt;li>&lt;strong>不可重复读（Unrepeatableread）:&lt;/strong> 指在一个事务内多次读同一数据。在这个事务还没有结束时，另一个事务也访问该数据。那么，在第一个事务中的两次读数据之间，由于第二个事务的修改导致第一个事务两次读取的数据可能不太一样。这就发生了在一个事务内两次读到的数据是不一样的情况，因此称为不可重复读（A 读 B 写 A 读）。&lt;/li>
+&lt;li>&lt;strong>幻读（Phantom read）:&lt;/strong> 幻读与不可重复读类似。它发生在一个事务（T1）读取了几行数据，接着另一个并发事务（T2）插入了一些数据时。在随后的查询中，第一个事务（T1）就会发现多了一些原本不存在的记录，就好像发生了幻觉一样，所以称为幻读。（A 读 B 写 A 读）&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>不可重复读和幻读区别：&lt;/strong>&lt;/p>
+&lt;p>不可重复读的重点是修改比如多次读取一条记录发现其中某些列的值被修改，幻读的重点在于新增或者删除比如多次读取一条记录发现记录增多或减少了。&lt;/p>
+&lt;h3 id="43-事务的隔离级别">4.3. 事务的隔离级别&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>READ-UNCOMMITTED(读取未提交)：&lt;/strong> 最低的隔离级别，允许读取尚未提交的数据变更，&lt;strong>可能会导致脏读、幻读或不可重复读&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>READ-COMMITTED(读取已提交)：&lt;/strong> 允许读取并发事务已经提交的数据，&lt;strong>可以阻止脏读，但是幻读或不可重复读仍有可能发生&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>REPEATABLE-READ(可重复读)：&lt;/strong> 对同一字段的多次读取结果都是一致的，除非数据是被本身事务自己所修改，&lt;strong>可以阻止脏读和不可重复读，但幻读仍有可能发生&lt;/strong>。&lt;/li>
+&lt;li>&lt;strong>SERIALIZABLE(可串行化)：&lt;/strong> 最高的隔离级别，完全服从ACID的隔离级别。所有的事务依次逐个执行，这样事务之间就完全不可能产生干扰，也就是说，&lt;strong>该级别可以防止脏读、不可重复读以及幻读&lt;/strong>。&lt;/li>
+&lt;/ul>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>隔离级别&lt;/th>
+&lt;th>脏读&lt;/th>
+&lt;th>不可重复读&lt;/th>
+&lt;th>幻影读&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>READ-UNCOMMITTED&lt;/td>
+&lt;td>√&lt;/td>
+&lt;td>√&lt;/td>
+&lt;td>√&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>READ-COMMITTED&lt;/td>
+&lt;td>×&lt;/td>
+&lt;td>√&lt;/td>
+&lt;td>√&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>REPEATABLE-READ&lt;/td>
+&lt;td>×&lt;/td>
+&lt;td>×&lt;/td>
+&lt;td>√&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>SERIALIZABLE&lt;/td>
+&lt;td>×&lt;/td>
+&lt;td>×&lt;/td>
+&lt;td>×&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 &lt;strong>REPEATABLE-READ（可重读）&lt;/strong>。我们可以通过&lt;code>SELECT @@tx_isolation;&lt;/code>命令来查看，MySQL 8.0 该命令改为&lt;code>SELECT @@transaction_isolation;&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="ln">1&lt;/span>&lt;span class="n">mysql&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">tx_isolation&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="c1">-----------------+
+&lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">tx_isolation&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="c1">-----------------+
+&lt;/span>&lt;span class="ln">5&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">REPEATABLE&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="k">READ&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="ln">6&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="c1">-----------------+
+&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里需要注意的是：与 SQL 标准不同的地方在于 InnoDB 存储引擎在 &lt;strong>REPEATABLE-READ（可重读）&lt;/strong> 事务隔离级别下使用的是&lt;strong>Next-Key Lock&lt;/strong> 锁算法，因此可以避免幻读的产生，这与其他数据库系统(如 SQL Server) 是不同的。所以说InnoDB 存储引擎的默认支持的隔离级别是 &lt;strong>REPEATABLE-READ（可重读）&lt;/strong> 已经可以完全保证事务的隔离性要求，即达到了 SQL标准的 &lt;strong>SERIALIZABLE(可串行化)&lt;/strong> 隔离级别。因为隔离级别越低，事务请求的锁越少，所以大部分数据库系统的隔离级别都是 &lt;strong>READ-COMMITTED(读取提交内容)&lt;/strong> ，但是你要知道的是InnoDB 存储引擎默认使用 &lt;strong>REPEAaTABLE-READ（可重读）&lt;/strong> 并不会有任何性能损失。&lt;/p>
+&lt;p>InnoDB 存储引擎在 &lt;strong>分布式事务&lt;/strong> 的情况下一般会用到 &lt;strong>SERIALIZABLE(可串行化)&lt;/strong> 隔离级别。N,MF. ÔV &lt;/p></description></item></channel></rss>

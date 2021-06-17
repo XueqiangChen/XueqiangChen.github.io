@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>计算机网络 on Ahamoment</title><link>https://ahamoment.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link><description>Recent content in 计算机网络 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 10 Dec 2020 09:43:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>计算机网络面试题</title><link>https://ahamoment.cn/post/interview-network/</link><pubDate>Thu, 10 Dec 2020 09:43:05 +0800</pubDate><guid>https://ahamoment.cn/post/interview-network/</guid><description>
+&lt;blockquote>
+&lt;p>本文主要收集面试过程中遇到的计算机网络的面试题。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-osi-与-tcpip-各层的结构与功能都有哪些协议">1. OSI 与 TCP/IP 各层的结构与功能，都有哪些协议？&lt;/h2>
+&lt;p>学习计算机网络时我们一般采用折中的办法，也就是中和 OSI 和 TCP/IP 的优点，采用一种只有五层协议的体系结构，这样既简洁又能将概念阐述清楚。&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/%E7%BD%91%E7%BB%9C%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png" alt="">&lt;/p>
+&lt;p>结合互联网的情况，自上而下地，非常简要的介绍一下各层的作用。&lt;/p>
+&lt;h3 id="11-应用层">1.1. 应用层&lt;/h3>
+&lt;p>&lt;strong>应用层(application-layer）的任务是通过应用进程间的交互来完成特定网络应用。&lt;strong>应用层协议定义的是应用进程（进程：主机中正在运行的程序）间的通信和交互的规则。对于不同的网络应用需要不同的应用层协议。在互联网中应用层协议很多，如&lt;/strong>域名系统DNS&lt;/strong>，支持万维网应用的 &lt;strong>HTTP协议&lt;/strong>，支持电子邮件的 &lt;strong>SMTP协议&lt;/strong>等等。我们把应用层交互的数据单元称为报文。&lt;/p>
+&lt;h3 id="12-运输层">1.2. 运输层&lt;/h3>
+&lt;p>&lt;strong>运输层(transport layer)的主要任务就是负责向两台主机进程之间的通信提供通用的数据传输服务&lt;/strong>。应用进程利用该服务传送应用层报文。“通用的”是指并不针对某一个特定的网络应用，而是多种应用可以使用同一个运输层服务。由于一台主机可同时运行多个线程，因此运输层有复用和分用的功能。所谓复用就是指多个应用层进程可同时使用下面运输层的服务，分用和复用相反，是运输层把收到的信息分别交付上面应用层中的相应进程。&lt;/p>
+&lt;p>&lt;strong>运输层主要使用以下两种协议:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>传输控制协议 TCP&lt;/strong>（Transmission Control Protocol）--提供&lt;strong>面向连接&lt;/strong>的，&lt;strong>可靠的&lt;/strong>数据传输服务。&lt;/li>
+&lt;li>&lt;strong>用户数据协议 UDP&lt;/strong>（User Datagram Protocol）--提供&lt;strong>无连接&lt;/strong>的，尽最大努力的数据传输服务（&lt;strong>不保证数据传输的可靠性&lt;/strong>）。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>TCP 与 UDP 的对比见问题三。&lt;/strong>&lt;/p>
+&lt;h3 id="13-网络层">1.3. 网络层&lt;/h3>
+&lt;p>&lt;strong>在 计算机网络中进行通信的两个计算机之间可能会经过很多个数据链路，也可能还要经过很多通信子网。网络层的任务就是选择合适的网间路由和交换结点， 确保数据及时传送。&lt;/strong> 在发送数据时，网络层把运输层产生的报文段或用户数据报封装成分组和包进行传送。在 TCP/IP 体系结构中，由于网络层使用 &lt;strong>IP 协议&lt;/strong>，因此分组也叫 &lt;strong>IP 数据报&lt;/strong> ，简称 &lt;strong>数据报&lt;/strong>。&lt;/p>
+&lt;p>这里要注意：&lt;strong>不要把运输层的“用户数据报 UDP ”和网络层的“ IP 数据报”弄混&lt;/strong>。另外，无论是哪一层的数据单元，都可笼统地用“分组”来表示。&lt;/p>
+&lt;p>这里强调指出，网络层中的“网络”二字已经不是我们通常谈到的具体网络，而是指计算机网络体系结构模型中第三层的名称.&lt;/p>
+&lt;p>互联网是由大量的异构（heterogeneous）网络通过路由器（router）相互连接起来的。互联网使用的网络层协议是无连接的网际协议（Internet Protocol）和许多路由选择协议，因此互联网的网络层也叫做&lt;strong>网际层&lt;/strong>或&lt;strong>IP层&lt;/strong>。&lt;/p>
+&lt;h3 id="14-数据链路层">1.4. 数据链路层&lt;/h3>
+&lt;p>&lt;strong>数据链路层(data link layer)通常简称为链路层。两台主机之间的数据传输，总是在一段一段的链路上传送的，这就需要使用专门的链路层的协议。&lt;/strong> 在两个相邻节点之间传送数据时，&lt;strong>数据链路层将网络层交下来的 IP 数据报组装成帧&lt;/strong>，在两个相邻节点间的链路上传送帧。每一帧包括数据和必要的控制信息（如同步信息，地址信息，差错控制等）。&lt;/p>
+&lt;p>在接收数据时，控制信息使接收端能够知道一个帧从哪个比特开始和到哪个比特结束。这样，数据链路层在收到一个帧后，就可从中提出数据部分，上交给网络层。 控制信息还使接收端能够检测到所收到的帧中有无差错。如果发现差错，数据链路层就简单地丢弃这个出了差错的帧，以避免继续在网络中传送下去白白浪费网络资源。如果需要改正数据在链路层传输时出现差错（这就是说，数据链路层不仅要检错，而且还要纠错），那么就要采用可靠性传输协议来纠正出现的差错。这种方法会使链路层的协议复杂些。&lt;/p>
+&lt;h3 id="15-物理层">1.5. 物理层&lt;/h3>
+&lt;p>在物理层上所传送的数据单位是比特。&lt;/p>
+&lt;p>&lt;strong>物理层(physical layer)的作用是实现相邻计算机节点之间比特流的透明传送，尽可能屏蔽掉具体传输介质和物理设备的差异，&lt;/strong> 使其上面的数据链路层不必考虑网络的具体传输介质是什么。“透明传送比特流”表示经实际电路传送后的比特流没有发生变化，对传送的比特流来说，这个电路好像是看不见的。&lt;/p>
+&lt;p>在互联网使用的各种协中最重要和最著名的就是 TCP/IP 两个协议。现在人们经常提到的TCP/IP并不一定单指TCP和IP这两个具体的协议，而往往表示互联网所使用的整个TCP/IP协议族。&lt;/p>
+&lt;h2 id="2-tcp-三次握手和四次挥手">2. TCP 三次握手和四次挥手&lt;/h2>
+&lt;blockquote>
+&lt;ul>
+&lt;li>Q1: 什么是三次握手和四次挥手？&lt;/li>
+&lt;li>Q2: 为什么要三次握手？如果是两次握手会发生什么？&lt;/li>
+&lt;li>Q4: 为什么需要四次挥手？&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;p>这部分的内容网上有很多文章都讲的很不错，可以直接借鉴。&lt;/p>
+&lt;blockquote>
+&lt;ol>
+&lt;li>&lt;a href="https://blog.csdn.net/qzcsu/article/details/72861891">两张动图-彻底明白TCP的三次握手与四次挥手&lt;/a>&lt;/li>
+&lt;li>&lt;a href="https://juejin.cn/post/6844903958624878606">面试官，不要再问我三次握手和四次挥手&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;p>上面的两篇文章都没有讲清楚为什么两次握手会有问题，我从&lt;code>谢希仁的《计算机网络》&lt;/code> 一书中找到了比较完整的答案。&lt;/p>
+&lt;blockquote>
+&lt;p>为什么客户端还要发送一次确认呢？这主要是为了防止已失效的连接请求报文突然又传送到了服务端，因而产生错误。&lt;/p>
+&lt;p>所谓的“已失效的连接请求报文段”是这样产生的。考虑一种正常情况。客户端发出连接请求，但因为连接请求报文丢失而未收到确认。于是客户端再重传了一次连接请求。后来收到了确认，建立了连接。数据传输完毕后，就释放了连接。客户端共发送了两个连接请求报文段，其中第一个丢失，第二个到达了服务端。没有“已失效的连接请求报文段”。&lt;/p>
+&lt;p>现在假设一种异常情况，即客户端发送出的第一个连接请求报文段并没有丢失，而是在某些网络结点长时间滞留了，以至延误到连接释放后的某个时间才到达服务端。本来这是一个早已失效的报文段。但是服务端收到此失效的连接报文段后，就误以为是客户端又发送一次新的请求。于是就向客户端发出确认报文段，同意建立连接。假定不采用三次握手，那么只要客户端发出确认，新的连接就建立了。&lt;/p>
+&lt;p>由于现在客户端并没有发送建立连接的请求，因此不会理睬服务端的确认，也不会向服务端发送数据。但服务端却认为新的运输连接已经建立了，并一直等待客户端发送数据。服务端的许多资源就这样白白浪费了。&lt;/p>
+&lt;p>采用三次握手可以防止上述现象。例如在刚才的情况下，客户端不会向服务端确认发送确认。服务端由于收不到确认，就知道客户端没有建立连接的要求。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="3-tcp-协议如何保证可靠传输">3. TCP 协议如何保证可靠传输&lt;/h2>
+&lt;ol>
+&lt;li>应用数据被分割成 TCP 认为最适合发送的数据块。&lt;/li>
+&lt;li>TCP 给发送的每一个包进行编号，接收方对数据包进行排序，把有序数据传送给应用层。&lt;/li>
+&lt;li>&lt;strong>校验和：&lt;/strong> TCP 将保持它首部和数据的检验和。这是一个端到端的检验和，目的是检测数据在传输过程中的任何变化。如果收到段的检验和有差错，TCP 将丢弃这个报文段和不确认收到此报文段。&lt;/li>
+&lt;li>TCP 的接收端会丢弃重复的数据。&lt;/li>
+&lt;li>&lt;strong>流量控制：&lt;/strong> TCP 连接的每一方都有固定大小的缓冲空间，TCP的接收端只允许发送端发送接收端缓冲区能接纳的数据。当接收方来不及处理发送方的数据，能提示发送方降低发送的速率，防止包丢失。TCP 使用的流量控制协议是可变大小的滑动窗口协议。 （TCP 利用滑动窗口实现流量控制）&lt;/li>
+&lt;li>&lt;strong>拥塞控制：&lt;/strong> 当网络拥塞时，减少数据的发送。&lt;/li>
+&lt;li>&lt;strong>ARQ协议：&lt;/strong> 也是为了实现可靠传输的，它的基本原理就是每发完一个分组就停止发送，等待对方确认。在收到确认后再发下一个分组。&lt;/li>
+&lt;li>&lt;strong>超时重传：&lt;/strong> 当 TCP 发出一个段后，它启动一个定时器，等待目的端确认收到这个报文段。如果不能及时收到一个确认，将重发这个报文段。&lt;/li>
+&lt;/ol>
+&lt;h3 id="31-流量控制">3.1. 流量控制&lt;/h3>
+&lt;p>&lt;strong>（1）什么是流量控制？流量控制的目的？&lt;/strong>&lt;/p>
+&lt;p>如果发送者发送数据过快，接收者来不及接收，那么就会有分组丢失。为了避免分组丢失，控制发送者的发送速度，使得接收者来得及接收，这就是流量控制。流量控制根本目的是防止分组丢失，它是构成TCP可靠性的一方面。&lt;/p>
+&lt;p>&lt;strong>（2）如何实现流量控制？&lt;/strong>&lt;/p>
+&lt;p>由滑动窗口协议（连续ARQ协议）实现。滑动窗口协议既保证了分组无差错、有序接收，也实现了流量控制。主要的方式就是接收方返回的 ACK 中会包含自己的接收窗口的大小，并且利用大小来控制发送方的数据发送。&lt;/p>
+&lt;p>&lt;strong>（3）流量控制引发的死锁？怎么避免死锁的发生？&lt;/strong>&lt;/p>
+&lt;p>当发送者收到了一个窗口为0的应答，发送者便停止发送，等待接收者的下一个应答。但是如果这个窗口不为0的应答在传输过程丢失，发送者一直等待下去，而接收者以为发送者已经收到该应答，等待接收新数据，这样双方就相互等待，从而产生死锁。
+为了避免流量控制引发的死锁，TCP使用了持续计时器。每当发送者收到一个零窗口的应答后就启动该计时器。时间一到便主动发送报文询问接收者的窗口大小。若接收者仍然返回零窗口，则重置该计时器继续等待；若窗口不为0，则表示应答报文丢失了，此时重置发送窗口后开始发送，这样就避免了死锁的产生。&lt;/p>
+&lt;h3 id="32--拥塞控制">3.2 . 拥塞控制&lt;/h3>
+&lt;blockquote>
+&lt;p>&lt;a href="https://zhuanlan.zhihu.com/p/37379780">https://zhuanlan.zhihu.com/p/37379780&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="4-tcp-的粘包和拆包">4. TCP 的粘包和拆包&lt;/h2>
+&lt;p>参考: &lt;a href="https://zhuanlan.zhihu.com/p/77275039">TCP 的粘包和拆包&lt;/a>&lt;/p>
+&lt;p>拆包和粘包是在socket编程中经常出现的情况，在socket通讯过程中，如果通讯的一端一次性连续发送多条数据包，tcp协议会将多个数据包打包成一个tcp报文发送出去，这就是所谓的&lt;strong>粘包&lt;/strong>。而如果通讯的一端发送的数据包超过一次tcp报文所能传输的最大值时，就会将一个数据包拆成多个最大tcp长度的tcp报文分开传输，这就叫做&lt;strong>拆包&lt;/strong>。&lt;/p>
+&lt;p>&lt;strong>总结出现粘包的原因&lt;/strong>：&lt;/p>
+&lt;ol>
+&lt;li>要发送的数据小于TCP发送缓冲区的大小，TCP将多次写入缓冲区的数据一次发送出去；&lt;/li>
+&lt;li>接收数据端的应用层没有及时读取接收缓冲区中的数据；&lt;/li>
+&lt;li>数据发送过快，数据包堆积导致缓冲区积压多个数据后才一次性发送出去(如果客户端每发送一条数据就睡眠一段时间就不会发生粘包)；&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>解决方案&lt;/strong>&lt;/p>
+&lt;p>对于粘包的情况，要对粘在一起的包进行拆包。对于拆包的情况，要对被拆开的包进行粘包，即将一个被拆开的完整应用包再组合成一个完整包。比较通用的做法就是每次发送一个应用数据包前在前面加上四个字节的包长度值，指明这个应用包的真实长度。如下图就是应用数据包格式。&lt;/p>
+&lt;p>&lt;img src="https://pic1.zhimg.com/80/v2-bb7b769a7187cd5fc146c79c5ae9d208_720w.jpg" alt="img">&lt;/p>
+&lt;p>实现解决拆包粘包问题，有两种实现方式：&lt;/p>
+&lt;ol>
+&lt;li>一种方式是引入netty库，netty封装了多种拆包粘包的方式，只需要对接口熟悉并调用即可，减少自己处理数据协议的繁琐流程；&lt;/li>
+&lt;li>自己写协议封装和解析流程，相当于实现了netty库拆粘包的简易版本.&lt;/li>
+&lt;/ol>
+&lt;h2 id="5-在浏览器中输入url地址到显示主页的过程">5. 在浏览器中输入url地址到显示主页的过程&lt;/h2>
+&lt;p>大致上分为以下几个过程：&lt;/p>
+&lt;ol>
+&lt;li>DNS解析&lt;/li>
+&lt;li>TCP连接&lt;/li>
+&lt;li>发送HTTP请求&lt;/li>
+&lt;li>服务器处理请求并返回HTTP报文&lt;/li>
+&lt;li>浏览器解析渲染页面&lt;/li>
+&lt;li>连接结束&lt;/li>
+&lt;/ol>
+&lt;p>可以参考下面这篇文章: &lt;a href="https://segmentfault.com/a/1190000006879700">前端经典面试题: 从输入URL到页面加载发生了什么？&lt;/a>&lt;/p>
+&lt;p>&lt;a href="https://github.com/Snailclimb/JavaGuide/blob/master/docs/network/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md">https://github.com/Snailclimb/JavaGuide/blob/master/docs/network/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md&lt;/a>&lt;/p></description></item></channel></rss>

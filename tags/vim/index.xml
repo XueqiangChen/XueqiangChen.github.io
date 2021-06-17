@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>vim on Ahamoment</title><link>https://ahamoment.cn/tags/vim/</link><description>Recent content in vim on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Tue, 16 Mar 2021 16:12:24 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/vim/index.xml" rel="self" type="application/rss+xml"/><item><title>Vim 折腾记</title><link>https://ahamoment.cn/post/tool-vim/</link><pubDate>Tue, 16 Mar 2021 16:12:24 +0800</pubDate><guid>https://ahamoment.cn/post/tool-vim/</guid><description>
+&lt;p>折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上&lt;/p>
+&lt;h2 id="环境">环境&lt;/h2>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="c1"># cat /etc/*release&lt;/span>
+&lt;span class="ln">2&lt;/span>CentOS Linux release 7.9.2009 &lt;span class="o">(&lt;/span>Core&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>系统自带的vim是&lt;code>7.x&lt;/code>，对于很多的插件来说(例如 ycm)都已经不兼容了，所以第一步就是要将 vim 的版本更新到 8.0 以上&lt;/p>
+&lt;h2 id="安装软件">安装软件&lt;/h2>
+&lt;p>编译vim之前先卸载掉旧版本的vim&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>yum remove vim-enhanced vim-common vim-filesystem vim-minimal
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>为了编译能够正常，需要安装上一些依赖和常用的工具包：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="c1"># install devtoolset-8&lt;/span>
+&lt;span class="ln">2&lt;/span>yum install centos-release-scl
+&lt;span class="ln">3&lt;/span>yum-config-manager --enable rhel-server-rhscl-7-rpms
+&lt;span class="ln">4&lt;/span>yum install devtoolset-8
+&lt;span class="ln">5&lt;/span>scl &lt;span class="nb">enable&lt;/span> devtoolset-8 bash
+&lt;span class="ln">6&lt;/span>
+&lt;span class="ln">7&lt;/span>&lt;span class="c1"># install cmake, python3-devel, etc.&lt;/span>
+&lt;span class="ln">8&lt;/span>yum -y install git ncurses-devel ruby ruby-devel lua lua-devel perl perl-devel python3 python3-devel python2-devel perl-ExtUtils-Embed lrzsz cmake wget gcc gcc-c++ unzi
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中有部分工具是给后面安装插件使用的。&lt;/p>
+&lt;p>下载vim的源代码：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>git clone https://github.com/vim/vim.git
+&lt;span class="ln"> 2&lt;/span>&lt;span class="nb">cd&lt;/span> vim
+&lt;span class="ln"> 3&lt;/span>&lt;span class="c1"># if you build vim before&lt;/span>
+&lt;span class="ln"> 4&lt;/span>make distclean
+&lt;span class="ln"> 5&lt;/span>&lt;span class="c1"># config&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="c1"># --enable-fail-if-missing 表示问题会提示报错，并停止&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="c1"># --enable-***interp=yes 表示加入***支持&lt;/span>
+&lt;span class="ln"> 8&lt;/span>&lt;span class="c1"># --with-***-config-dir=*** 表示指定配置文件路径&lt;/span>
+&lt;span class="ln"> 9&lt;/span>./configure --with-features&lt;span class="o">=&lt;/span>huge &lt;span class="se">\
+&lt;/span>&lt;span class="ln">10&lt;/span>&lt;span class="se">&lt;/span> --enable-rubyinterp&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">11&lt;/span>&lt;span class="se">&lt;/span> --enable-luainterp&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">12&lt;/span>&lt;span class="se">&lt;/span> --enable-perlinterp&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">13&lt;/span>&lt;span class="se">&lt;/span> --enable-python3interp&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">14&lt;/span>&lt;span class="se">&lt;/span> --enable-pythoninterp&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">15&lt;/span>&lt;span class="se">&lt;/span> --with-python-config-dir&lt;span class="o">=&lt;/span>/usr/lib64/python2.7/config &lt;span class="se">\
+&lt;/span>&lt;span class="ln">16&lt;/span>&lt;span class="se">&lt;/span> --with-python3-config-dir&lt;span class="o">=&lt;/span>/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu &lt;span class="se">\
+&lt;/span>&lt;span class="ln">17&lt;/span>&lt;span class="se">&lt;/span> --enable-fontset&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">18&lt;/span>&lt;span class="se">&lt;/span> --enable-cscope&lt;span class="o">=&lt;/span>yes &lt;span class="se">\
+&lt;/span>&lt;span class="ln">19&lt;/span>&lt;span class="se">&lt;/span> --enable-multibyte &lt;span class="se">\
+&lt;/span>&lt;span class="ln">20&lt;/span>&lt;span class="se">&lt;/span> --disable-gui &lt;span class="se">\
+&lt;/span>&lt;span class="ln">21&lt;/span>&lt;span class="se">&lt;/span> --enable-fail-if-missing &lt;span class="se">\
+&lt;/span>&lt;span class="ln">22&lt;/span>&lt;span class="se">&lt;/span> --prefix&lt;span class="o">=&lt;/span>/usr/local &lt;span class="se">\
+&lt;/span>&lt;span class="ln">23&lt;/span>&lt;span class="se">&lt;/span> --with-compiledby&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;Professional operations&amp;#39;&lt;/span>
+&lt;span class="ln">24&lt;/span>&lt;span class="c1"># 编译&lt;/span>
+&lt;span class="ln">25&lt;/span>&lt;span class="c1"># make VIMRUNTIMEDIR=*** 表示指定VIM可执行文件的位置&lt;/span>
+&lt;span class="ln">26&lt;/span>make &lt;span class="nv">VIMRUNTIMEDIR&lt;/span>&lt;span class="o">=&lt;/span>/usr/local/share/vim/vim82 &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> make install
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>编译完成之后，查看一下vim的版本：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ vim --version
+&lt;span class="ln">2&lt;/span>VIM - Vi IMproved 8.2 &lt;span class="o">(&lt;/span>&lt;span class="m">2019&lt;/span> Dec 12, compiled Mar &lt;span class="m">16&lt;/span> &lt;span class="m">2021&lt;/span> 16:12:42&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="配置与插件">配置与插件&lt;/h2>
+&lt;p>为了支持go代码的开发，这里先以go的IDE环境为示例，&lt;/p>
+&lt;p>首先，插件的管理工具，这里选择 vim-plug。在Linux环境下直接用curl下载即可：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>curl -fLo ~/.vim/autoload/plug.vim --create-dirs &lt;span class="se">\
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="se">&lt;/span> https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>插件的配置也非常简单，只要将所有的插件配置在 &lt;code>call plug#begin('~/.vim/plugged')&lt;/code> 和 &lt;code>call plug#end()&lt;/code> 之间即可，常见的插件基本上都可以从 github 中找到，如果 github 找不到的话基本上 vim.org 的脚本都可以在 &lt;a href="https://github.com/vim-scripts">vim-script&lt;/a> 中找到备份&lt;/p>
+&lt;p>来看一下 &lt;code>~/.vimrc&lt;/code> 的最终配置：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="s2">&amp;#34; 显示行数
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="s2">set number
+&lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 显示光标所在的当前行的行号，其他行都为相对于该行的相对行号。
+&lt;span class="ln"> 5&lt;/span>&lt;span class="s2">&amp;#34; set relativenumber
+&lt;/span>&lt;span class="ln"> 6&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 7&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 光标所在当前行高亮
+&lt;span class="ln"> 8&lt;/span>&lt;span class="s2">&amp;#34; set cursorline
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 10&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 自动折行，即太长的行分成几行显示。
+&lt;span class="ln"> 11&lt;/span>&lt;span class="s2">&amp;#34; 关闭自动折行
+&lt;/span>&lt;span class="ln"> 12&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="nb">set&lt;/span> nowrap
+&lt;span class="ln"> 13&lt;/span>&lt;span class="nb">set&lt;/span> wrap
+&lt;span class="ln"> 14&lt;/span>
+&lt;span class="ln"> 15&lt;/span>&lt;span class="s2">&amp;#34; 只有遇到指定的符号（比如空格、连词号和其他标点符号），才发生折行。也就是说，不会在单词内部折行。
+&lt;/span>&lt;span class="ln"> 16&lt;/span>&lt;span class="s2">set linebreak
+&lt;/span>&lt;span class="ln"> 17&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 18&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 指定折行处与编辑窗口的右边缘之间空出的字符数。
+&lt;span class="ln"> 19&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">wrapmargin&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;span class="ln"> 20&lt;/span>
+&lt;span class="ln"> 21&lt;/span>&lt;span class="s2">&amp;#34; 避免 backspace 不能使用
+&lt;/span>&lt;span class="ln"> 22&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="m">0&lt;/span> same as “:set &lt;span class="nv">backspace&lt;/span>&lt;span class="o">=&lt;/span>” &lt;span class="o">(&lt;/span>Vi compatible&lt;span class="o">)&lt;/span>
+&lt;span class="ln"> 23&lt;/span>&lt;span class="s2">&amp;#34; 1 same as “:set backspace=indent,eol”
+&lt;/span>&lt;span class="ln"> 24&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="m">2&lt;/span> same as “:set &lt;span class="nv">backspace&lt;/span>&lt;span class="o">=&lt;/span>indent,eol,start”
+&lt;span class="ln"> 25&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">backspace&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;span class="ln"> 26&lt;/span>
+&lt;span class="ln"> 27&lt;/span>&lt;span class="s2">&amp;#34; 自动将tab键转为空格
+&lt;/span>&lt;span class="ln"> 28&lt;/span>&lt;span class="s2">set expandtab
+&lt;/span>&lt;span class="ln"> 29&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 30&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> tab 转为多少个空格
+&lt;span class="ln"> 31&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">softtabstop&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">4&lt;/span>
+&lt;span class="ln"> 32&lt;/span>
+&lt;span class="ln"> 33&lt;/span>&lt;span class="s2">&amp;#34; 设置语法高亮
+&lt;/span>&lt;span class="ln"> 34&lt;/span>&lt;span class="s2">syntax enable
+&lt;/span>&lt;span class="ln"> 35&lt;/span>&lt;span class="s2">syntax on
+&lt;/span>&lt;span class="ln"> 36&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 37&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 按下回车键后，下一行的缩进会自动跟上一行的缩进保持一致。
+&lt;span class="ln"> 38&lt;/span>&lt;span class="nb">set&lt;/span> autoindent
+&lt;span class="ln"> 39&lt;/span>
+&lt;span class="ln"> 40&lt;/span>&lt;span class="s2">&amp;#34; 光标遇到圆括号、方括号、大括号时，自动高亮对应的另一个圆括号、方括号和大括号
+&lt;/span>&lt;span class="ln"> 41&lt;/span>&lt;span class="s2">set showmatch
+&lt;/span>&lt;span class="ln"> 42&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 43&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 按下tab键时，vim显示的空格数
+&lt;span class="ln"> 44&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">tabstop&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">4&lt;/span>
+&lt;span class="ln"> 45&lt;/span>
+&lt;span class="ln"> 46&lt;/span>&lt;span class="s2">&amp;#34; 统一缩进为4
+&lt;/span>&lt;span class="ln"> 47&lt;/span>&lt;span class="s2">set shiftwidth=4
+&lt;/span>&lt;span class="ln"> 48&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 49&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 在底部显示，当前处于命令模式还是插入模式
+&lt;span class="ln"> 50&lt;/span>&lt;span class="nb">set&lt;/span> showmode
+&lt;span class="ln"> 51&lt;/span>
+&lt;span class="ln"> 52&lt;/span>&lt;span class="s2">&amp;#34; 支持使用鼠标
+&lt;/span>&lt;span class="ln"> 53&lt;/span>&lt;span class="s2">set mouse-=a
+&lt;/span>&lt;span class="ln"> 54&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 55&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 使用 utf-8 编码
+&lt;span class="ln"> 56&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">encoding&lt;/span>&lt;span class="o">=&lt;/span>utf-8
+&lt;span class="ln"> 57&lt;/span>
+&lt;span class="ln"> 58&lt;/span>&lt;span class="s2">&amp;#34; 开启文件类型检查，并且载入与该类型对应的缩进规则。比如，如果编辑的是.py文件，Vim 就是会找 Python 的缩进规则~/.vim/indent/python.vim。
+&lt;/span>&lt;span class="ln"> 59&lt;/span>&lt;span class="s2">filetype indent on
+&lt;/span>&lt;span class="ln"> 60&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 61&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>--------------------------------------
+&lt;span class="ln"> 62&lt;/span>&lt;span class="s2">&amp;#34; 搜索
+&lt;/span>&lt;span class="ln"> 63&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>--------------------------------------
+&lt;span class="ln"> 64&lt;/span>&lt;span class="s2">&amp;#34; 搜索时，高亮显示匹配结果
+&lt;/span>&lt;span class="ln"> 65&lt;/span>&lt;span class="s2">set hlsearch
+&lt;/span>&lt;span class="ln"> 66&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 67&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 搜索时忽略大小写
+&lt;span class="ln"> 68&lt;/span>&lt;span class="nb">set&lt;/span> ignorecase
+&lt;span class="ln"> 69&lt;/span>&lt;span class="s2">&amp;#34;--------------------------------------
+&lt;/span>&lt;span class="ln"> 70&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 搜索&lt;span class="o">(&lt;/span>END&lt;span class="o">)&lt;/span>
+&lt;span class="ln"> 71&lt;/span>&lt;span class="s2">&amp;#34;--------------------------------------
+&lt;/span>&lt;span class="ln"> 72&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 73&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>--------------------------------------
+&lt;span class="ln"> 74&lt;/span>&lt;span class="s2">&amp;#34; 编辑
+&lt;/span>&lt;span class="ln"> 75&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>--------------------------------------
+&lt;span class="ln"> 76&lt;/span>&lt;span class="s2">&amp;#34; 打开英语单词的拼写检查
+&lt;/span>&lt;span class="ln"> 77&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="nb">set&lt;/span> spell &lt;span class="nv">spelllang&lt;/span>&lt;span class="o">=&lt;/span>en_us
+&lt;span class="ln"> 78&lt;/span>
+&lt;span class="ln"> 79&lt;/span>&lt;span class="s2">&amp;#34; 不创建交换文件。交换文件主要用于系统崩溃时恢复文件，文件名的开头是.、结尾是.swp。
+&lt;/span>&lt;span class="ln"> 80&lt;/span>&lt;span class="s2">set noswapfile
+&lt;/span>&lt;span class="ln"> 81&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln"> 82&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 启用自动补全
+&lt;span class="ln"> 83&lt;/span>filetype plugin indent on
+&lt;span class="ln"> 84&lt;/span>
+&lt;span class="ln"> 85&lt;/span>&lt;span class="s2">&amp;#34; 退出插入模式指定类型的文件自动保存
+&lt;/span>&lt;span class="ln"> 86&lt;/span>&lt;span class="s2">au InsertLeave *.go,*.sh,*.php write
+&lt;/span>&lt;span class="ln"> 87&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>--------------------------------------
+&lt;span class="ln"> 88&lt;/span>&lt;span class="s2">&amp;#34; 编辑(结束)
+&lt;/span>&lt;span class="ln"> 89&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>-------------------------------------
+&lt;span class="ln"> 90&lt;/span>&lt;span class="nb">set&lt;/span> nocompatible &lt;span class="s2">&amp;#34; 去除VI一致性,必须
+&lt;/span>&lt;span class="ln"> 91&lt;/span>&lt;span class="s2">filetype off &amp;#34;&lt;/span> 必须
+&lt;span class="ln"> 92&lt;/span>
+&lt;span class="ln"> 93&lt;/span>
+&lt;span class="ln"> 94&lt;/span>&lt;span class="s2">&amp;#34;--------------------------------------
+&lt;/span>&lt;span class="ln"> 95&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> vim-plug
+&lt;span class="ln"> 96&lt;/span>&lt;span class="s2">&amp;#34;--------------------------------------
+&lt;/span>&lt;span class="ln"> 97&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34; 插件开始的位置
+&lt;/span>&lt;span class="ln"> 98&lt;/span>&lt;span class="s2">call plug#begin(&amp;#39;~/.vim/plugged&amp;#39;)
+&lt;/span>&lt;span class="ln"> 99&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">100&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> Shorthand notation&lt;span class="p">;&lt;/span> fetches https://github.com/junegunn/vim-easy-align
+&lt;span class="ln">101&lt;/span>&lt;span class="s2">&amp;#34; 可以快速对齐的插件
+&lt;/span>&lt;span class="ln">102&lt;/span>&lt;span class="s2">Plug &amp;#39;junegunn/vim-easy-align&amp;#39;
+&lt;/span>&lt;span class="ln">103&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">104&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 用来提供一个导航目录的侧边栏
+&lt;span class="ln">105&lt;/span>Plug &lt;span class="s1">&amp;#39;scrooloose/nerdtree&amp;#39;&lt;/span>
+&lt;span class="ln">106&lt;/span>
+&lt;span class="ln">107&lt;/span>&lt;span class="s2">&amp;#34; 可以使 nerdtree 的 tab 更加友好些
+&lt;/span>&lt;span class="ln">108&lt;/span>&lt;span class="s2">Plug &amp;#39;jistr/vim-nerdtree-tabs&amp;#39;
+&lt;/span>&lt;span class="ln">109&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">110&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 可以在导航目录中看到 git 版本信息
+&lt;span class="ln">111&lt;/span>Plug &lt;span class="s1">&amp;#39;Xuyuanp/nerdtree-git-plugin&amp;#39;&lt;/span>
+&lt;span class="ln">112&lt;/span>
+&lt;span class="ln">113&lt;/span>&lt;span class="s2">&amp;#34; 查看当前代码文件中的变量和函数列表的插件，
+&lt;/span>&lt;span class="ln">114&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 可以切换和跳转到代码中对应的变量和函数的位置
+&lt;span class="ln">115&lt;/span>&lt;span class="s2">&amp;#34; 大纲式导航, Go 需要 https://github.com/jstemmer/gotags 支持
+&lt;/span>&lt;span class="ln">116&lt;/span>&lt;span class="s2">Plug &amp;#39;majutsushi/tagbar&amp;#39;
+&lt;/span>&lt;span class="ln">117&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">118&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 自动补全括号的插件，包括小括号，中括号，以及花括号
+&lt;span class="ln">119&lt;/span>Plug &lt;span class="s1">&amp;#39;jiangmiao/auto-pairs&amp;#39;&lt;/span>
+&lt;span class="ln">120&lt;/span>
+&lt;span class="ln">121&lt;/span>&lt;span class="s2">&amp;#34; Vim状态栏插件，包括显示行号，列号，文件类型，文件名，以及Git状态
+&lt;/span>&lt;span class="ln">122&lt;/span>&lt;span class="s2">Plug &amp;#39;vim-airline/vim-airline&amp;#39;
+&lt;/span>&lt;span class="ln">123&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">124&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 有道词典在线翻译
+&lt;span class="ln">125&lt;/span>&lt;span class="s2">&amp;#34; Plug &amp;#39;ianva/vim-youdao-translater&amp;#39;
+&lt;/span>&lt;span class="ln">126&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">127&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 代码自动完成，安装完插件还需要额外配置才可以使用
+&lt;span class="ln">128&lt;/span>Plug &lt;span class="s1">&amp;#39;Valloric/YouCompleteMe&amp;#39;&lt;/span>
+&lt;span class="ln">129&lt;/span>
+&lt;span class="ln">130&lt;/span>&lt;span class="s2">&amp;#34; 可以在文档中显示 git 信息
+&lt;/span>&lt;span class="ln">131&lt;/span>&lt;span class="s2">Plug &amp;#39;airblade/vim-gitgutter&amp;#39;
+&lt;/span>&lt;span class="ln">132&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">133&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">134&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 下面两个插件要配合使用，可以自动生成代码块
+&lt;span class="ln">135&lt;/span>&lt;span class="s2">&amp;#34;Plug &amp;#39;SirVer/ultisnips&amp;#39;
+&lt;/span>&lt;span class="ln">136&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>Plug &lt;span class="s1">&amp;#39;honza/vim-snippets&amp;#39;&lt;/span>
+&lt;span class="ln">137&lt;/span>
+&lt;span class="ln">138&lt;/span>&lt;span class="s2">&amp;#34; 可以在 vim 中使用 tab 补全
+&lt;/span>&lt;span class="ln">139&lt;/span>&lt;span class="s2">Plug &amp;#39;vim-scripts/SuperTab&amp;#39;
+&lt;/span>&lt;span class="ln">140&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">141&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 可以在 vim 中自动完成
+&lt;span class="ln">142&lt;/span>&lt;span class="s2">&amp;#34;Plug &amp;#39;Shougo/neocomplete.vim&amp;#39;
+&lt;/span>&lt;span class="ln">143&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">144&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">145&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 配色方案
+&lt;span class="ln">146&lt;/span>&lt;span class="s2">&amp;#34; colorscheme neodark
+&lt;/span>&lt;span class="ln">147&lt;/span>&lt;span class="s2">Plug &amp;#39;KeitaNakamura/neodark.vim&amp;#39;
+&lt;/span>&lt;span class="ln">148&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> colorscheme monokai
+&lt;span class="ln">149&lt;/span>Plug &lt;span class="s1">&amp;#39;crusoexia/vim-monokai&amp;#39;&lt;/span>
+&lt;span class="ln">150&lt;/span>&lt;span class="s2">&amp;#34; colorscheme github
+&lt;/span>&lt;span class="ln">151&lt;/span>&lt;span class="s2">Plug &amp;#39;acarapetis/vim-colors-github&amp;#39;
+&lt;/span>&lt;span class="ln">152&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> colorscheme one
+&lt;span class="ln">153&lt;/span>Plug &lt;span class="s1">&amp;#39;rakr/vim-one&amp;#39;&lt;/span>
+&lt;span class="ln">154&lt;/span>
+&lt;span class="ln">155&lt;/span>&lt;span class="s2">&amp;#34; go 主要插件
+&lt;/span>&lt;span class="ln">156&lt;/span>&lt;span class="s2">Plug &amp;#39;fatih/vim-go&amp;#39;, { &amp;#39;tag&amp;#39;: &amp;#39;*&amp;#39; }
+&lt;/span>&lt;span class="ln">157&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> go 中的代码追踪，输入 gd 就可以自动跳转
+&lt;span class="ln">158&lt;/span>&lt;span class="s2">&amp;#34; Plug &amp;#39;dgryski/vim-godef&amp;#39;
+&lt;/span>&lt;span class="ln">159&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">160&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> markdown 插件
+&lt;span class="ln">161&lt;/span>Plug &lt;span class="s1">&amp;#39;iamcco/mathjax-support-for-mkdp&amp;#39;&lt;/span>
+&lt;span class="ln">162&lt;/span>Plug &lt;span class="s1">&amp;#39;iamcco/markdown-preview.vim&amp;#39;&lt;/span>
+&lt;span class="ln">163&lt;/span>
+&lt;span class="ln">164&lt;/span>&lt;span class="s2">&amp;#34; 插件结束的位置，插件全部放在此行上面
+&lt;/span>&lt;span class="ln">165&lt;/span>&lt;span class="s2">call plug#end()
+&lt;/span>&lt;span class="ln">166&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>-------------------------------------
+&lt;span class="ln">167&lt;/span>&lt;span class="s2">&amp;#34; VIM-PLUG(end)
+&lt;/span>&lt;span class="ln">168&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>-------------------------------------
+&lt;span class="ln">169&lt;/span>
+&lt;span class="ln">170&lt;/span>&lt;span class="s2">&amp;#34;==============================================================================
+&lt;/span>&lt;span class="ln">171&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 主题配色
+&lt;span class="ln">172&lt;/span>&lt;span class="s2">&amp;#34;==============================================================================
+&lt;/span>&lt;span class="ln">173&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 使用256色
+&lt;span class="ln">174&lt;/span>&lt;span class="s2">&amp;#34; set t_Co=256
+&lt;/span>&lt;span class="ln">175&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">176&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 开启24bit的颜色，开启这个颜色会更漂亮一些
+&lt;span class="ln">177&lt;/span>&lt;span class="nb">set&lt;/span> termguicolors
+&lt;span class="ln">178&lt;/span>&lt;span class="s2">&amp;#34; 配色方案, 可以从上面插件安装中的选择一个使用
+&lt;/span>&lt;span class="ln">179&lt;/span>&lt;span class="s2">colorscheme one &amp;#34;&lt;/span> 主题
+&lt;span class="ln">180&lt;/span>&lt;span class="nb">set&lt;/span> &lt;span class="nv">background&lt;/span>&lt;span class="o">=&lt;/span>dark &lt;span class="s2">&amp;#34; 主题背景 dark-深色; light-浅色
+&lt;/span>&lt;span class="ln">181&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">182&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">183&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">184&lt;/span>&lt;span class="s2">&amp;#34; vim-go 插件
+&lt;/span>&lt;span class="ln">185&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">186&lt;/span>&lt;span class="nb">let&lt;/span> g:go_fmt_command &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;goimports&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34; 格式化将默认的 gofmt 替换
+&lt;/span>&lt;span class="ln">187&lt;/span>&lt;span class="s2">let g:go_autodetect_gopath = 1
+&lt;/span>&lt;span class="ln">188&lt;/span>&lt;span class="s2">let g:go_list_type = &amp;#34;&lt;/span>quickfix&lt;span class="s2">&amp;#34;
+&lt;/span>&lt;span class="ln">189&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">190&lt;/span>&lt;span class="s2">let g:go_version_warning = 1
+&lt;/span>&lt;span class="ln">191&lt;/span>&lt;span class="s2">let g:go_highlight_types = 1
+&lt;/span>&lt;span class="ln">192&lt;/span>&lt;span class="s2">let g:go_highlight_fields = 1
+&lt;/span>&lt;span class="ln">193&lt;/span>&lt;span class="s2">let g:go_highlight_functions = 1
+&lt;/span>&lt;span class="ln">194&lt;/span>&lt;span class="s2">let g:go_highlight_function_calls = 1
+&lt;/span>&lt;span class="ln">195&lt;/span>&lt;span class="s2">let g:go_highlight_operators = 1
+&lt;/span>&lt;span class="ln">196&lt;/span>&lt;span class="s2">let g:go_highlight_extra_types = 1
+&lt;/span>&lt;span class="ln">197&lt;/span>&lt;span class="s2">let g:go_highlight_methods = 1
+&lt;/span>&lt;span class="ln">198&lt;/span>&lt;span class="s2">let g:go_highlight_generate_tags = 1
+&lt;/span>&lt;span class="ln">199&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">200&lt;/span>&lt;span class="s2">let g:godef_split=2
+&lt;/span>&lt;span class="ln">201&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">202&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">203&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">204&lt;/span>&lt;span class="s2">&amp;#34; NERDTree 插件
+&lt;/span>&lt;span class="ln">205&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">206&lt;/span>
+&lt;span class="ln">207&lt;/span>&lt;span class="s2">&amp;#34; 打开和关闭NERDTree快捷键
+&lt;/span>&lt;span class="ln">208&lt;/span>&lt;span class="s2">map &amp;lt;F3&amp;gt; :NERDTreeToggle&amp;lt;CR&amp;gt;
+&lt;/span>&lt;span class="ln">209&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 显示行号
+&lt;span class="ln">210&lt;/span>&lt;span class="nb">let&lt;/span> &lt;span class="nv">NERDTreeShowLineNumbers&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span>
+&lt;span class="ln">211&lt;/span>&lt;span class="s2">&amp;#34; 打开文件时是否显示目录
+&lt;/span>&lt;span class="ln">212&lt;/span>&lt;span class="s2">let NERDTreeAutoCenter=1
+&lt;/span>&lt;span class="ln">213&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 是否显示隐藏文件
+&lt;span class="ln">214&lt;/span>&lt;span class="nb">let&lt;/span> &lt;span class="nv">NERDTreeShowHidden&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="ln">215&lt;/span>&lt;span class="s2">&amp;#34; 设置宽度
+&lt;/span>&lt;span class="ln">216&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="nb">let&lt;/span> &lt;span class="nv">NERDTreeWinSize&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">31&lt;/span>
+&lt;span class="ln">217&lt;/span>&lt;span class="s2">&amp;#34; 忽略一下文件的显示
+&lt;/span>&lt;span class="ln">218&lt;/span>&lt;span class="s2">let NERDTreeIgnore=[&amp;#39;\.pyc&amp;#39;,&amp;#39;\~&lt;/span>$&lt;span class="s2">&amp;#39;,&amp;#39;\.swp&amp;#39;]
+&lt;/span>&lt;span class="ln">219&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> 打开 vim 文件及显示书签列表
+&lt;span class="ln">220&lt;/span>&lt;span class="nb">let&lt;/span> &lt;span class="nv">NERDTreeShowBookmarks&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;span class="ln">221&lt;/span>
+&lt;span class="ln">222&lt;/span>&lt;span class="s2">&amp;#34; 在终端启动vim时，共享NERDTree
+&lt;/span>&lt;span class="ln">223&lt;/span>&lt;span class="s2">let g:nerdtree_tabs_open_on_console_startup=1
+&lt;/span>&lt;span class="ln">224&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">225&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">226&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">227&lt;/span>&lt;span class="s2">&amp;#34; majutsushi/tagbar 插件
+&lt;/span>&lt;span class="ln">228&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">229&lt;/span>
+&lt;span class="ln">230&lt;/span>&lt;span class="s2">&amp;#34; majutsushi/tagbar 插件打开关闭快捷键
+&lt;/span>&lt;span class="ln">231&lt;/span>&lt;span class="s2">nmap &amp;lt;F9&amp;gt; :TagbarToggle&amp;lt;CR&amp;gt;
+&lt;/span>&lt;span class="ln">232&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">233&lt;/span>&lt;span class="s2">let g:tagbar_type_go = {
+&lt;/span>&lt;span class="ln">234&lt;/span>&lt;span class="s2"> \ &amp;#39;ctagstype&amp;#39; : &amp;#39;go&amp;#39;,
+&lt;/span>&lt;span class="ln">235&lt;/span>&lt;span class="s2"> \ &amp;#39;kinds&amp;#39; : [
+&lt;/span>&lt;span class="ln">236&lt;/span>&lt;span class="s2"> \ &amp;#39;p:package&amp;#39;,
+&lt;/span>&lt;span class="ln">237&lt;/span>&lt;span class="s2"> \ &amp;#39;i:imports:1&amp;#39;,
+&lt;/span>&lt;span class="ln">238&lt;/span>&lt;span class="s2"> \ &amp;#39;c:constants&amp;#39;,
+&lt;/span>&lt;span class="ln">239&lt;/span>&lt;span class="s2"> \ &amp;#39;v:variables&amp;#39;,
+&lt;/span>&lt;span class="ln">240&lt;/span>&lt;span class="s2"> \ &amp;#39;t:types&amp;#39;,
+&lt;/span>&lt;span class="ln">241&lt;/span>&lt;span class="s2"> \ &amp;#39;n:interfaces&amp;#39;,
+&lt;/span>&lt;span class="ln">242&lt;/span>&lt;span class="s2"> \ &amp;#39;w:fields&amp;#39;,
+&lt;/span>&lt;span class="ln">243&lt;/span>&lt;span class="s2"> \ &amp;#39;e:embedded&amp;#39;,
+&lt;/span>&lt;span class="ln">244&lt;/span>&lt;span class="s2"> \ &amp;#39;m:methods&amp;#39;,
+&lt;/span>&lt;span class="ln">245&lt;/span>&lt;span class="s2"> \ &amp;#39;r:constructor&amp;#39;,
+&lt;/span>&lt;span class="ln">246&lt;/span>&lt;span class="s2"> \ &amp;#39;f:functions&amp;#39;
+&lt;/span>&lt;span class="ln">247&lt;/span>&lt;span class="s2"> \ ],
+&lt;/span>&lt;span class="ln">248&lt;/span>&lt;span class="s2"> \ &amp;#39;sro&amp;#39; : &amp;#39;.&amp;#39;,
+&lt;/span>&lt;span class="ln">249&lt;/span>&lt;span class="s2"> \ &amp;#39;kind2scope&amp;#39; : {
+&lt;/span>&lt;span class="ln">250&lt;/span>&lt;span class="s2"> \ &amp;#39;t&amp;#39; : &amp;#39;ctype&amp;#39;,
+&lt;/span>&lt;span class="ln">251&lt;/span>&lt;span class="s2"> \ &amp;#39;n&amp;#39; : &amp;#39;ntype&amp;#39;
+&lt;/span>&lt;span class="ln">252&lt;/span>&lt;span class="s2"> \ },
+&lt;/span>&lt;span class="ln">253&lt;/span>&lt;span class="s2"> \ &amp;#39;scope2kind&amp;#39; : {
+&lt;/span>&lt;span class="ln">254&lt;/span>&lt;span class="s2"> \ &amp;#39;ctype&amp;#39; : &amp;#39;t&amp;#39;,
+&lt;/span>&lt;span class="ln">255&lt;/span>&lt;span class="s2"> \ &amp;#39;ntype&amp;#39; : &amp;#39;n&amp;#39;
+&lt;/span>&lt;span class="ln">256&lt;/span>&lt;span class="s2"> \ },
+&lt;/span>&lt;span class="ln">257&lt;/span>&lt;span class="s2"> \ &amp;#39;ctagsbin&amp;#39; : &amp;#39;gotags&amp;#39;,
+&lt;/span>&lt;span class="ln">258&lt;/span>&lt;span class="s2"> \ &amp;#39;ctagsargs&amp;#39; : &amp;#39;-sort -silent&amp;#39;
+&lt;/span>&lt;span class="ln">259&lt;/span>&lt;span class="s2">\ }
+&lt;/span>&lt;span class="ln">260&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">261&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">262&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">263&lt;/span>&lt;span class="s2">&amp;#34; nerdtree-git-plugin 插件
+&lt;/span>&lt;span class="ln">264&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">265&lt;/span>&lt;span class="nb">let&lt;/span> g:NERDTreeGitStatusIndicatorMapCustom &lt;span class="o">=&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">266&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Modified&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✹&amp;#34;&lt;/span>,
+&lt;span class="ln">267&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Staged&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✚&amp;#34;&lt;/span>,
+&lt;span class="ln">268&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Untracked&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✭&amp;#34;&lt;/span>,
+&lt;span class="ln">269&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Renamed&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;➜&amp;#34;&lt;/span>,
+&lt;span class="ln">270&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Unmerged&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;═&amp;#34;&lt;/span>,
+&lt;span class="ln">271&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Deleted&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✖&amp;#34;&lt;/span>,
+&lt;span class="ln">272&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Dirty&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✗&amp;#34;&lt;/span>,
+&lt;span class="ln">273&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Clean&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;✔︎&amp;#34;&lt;/span>,
+&lt;span class="ln">274&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s1">&amp;#39;Ignored&amp;#39;&lt;/span> : &lt;span class="s1">&amp;#39;☒&amp;#39;&lt;/span>,
+&lt;span class="ln">275&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="s2">&amp;#34;Unknown&amp;#34;&lt;/span> : &lt;span class="s2">&amp;#34;?&amp;#34;&lt;/span>
+&lt;span class="ln">276&lt;/span> &lt;span class="se">\ &lt;/span>&lt;span class="o">}&lt;/span>
+&lt;span class="ln">277&lt;/span>
+&lt;span class="ln">278&lt;/span>&lt;span class="nb">let&lt;/span> g:NERDTreeGitStatusShowIgnored &lt;span class="o">=&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;span class="ln">279&lt;/span>
+&lt;span class="ln">280&lt;/span>
+&lt;span class="ln">281&lt;/span>
+&lt;span class="ln">282&lt;/span>&lt;span class="s2">&amp;#34;==============================================================================
+&lt;/span>&lt;span class="ln">283&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> Valloric/YouCompleteMe 插件
+&lt;span class="ln">284&lt;/span>&lt;span class="s2">&amp;#34;==============================================================================
+&lt;/span>&lt;span class="ln">285&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">286&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> make YCM compatible with UltiSnips &lt;span class="o">(&lt;/span>using supertab&lt;span class="o">)&lt;/span>
+&lt;span class="ln">287&lt;/span>&lt;span class="nb">let&lt;/span> g:ycm_key_list_select_completion &lt;span class="o">=&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;C-n&amp;gt;&amp;#39;&lt;/span>, &lt;span class="s1">&amp;#39;&amp;lt;space&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;span class="ln">288&lt;/span>&lt;span class="nb">let&lt;/span> g:ycm_key_list_previous_completion &lt;span class="o">=&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="s1">&amp;#39;&amp;lt;C-p&amp;gt;&amp;#39;&lt;/span>, &lt;span class="s1">&amp;#39;&amp;lt;Up&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">]&lt;/span>
+&lt;span class="ln">289&lt;/span>&lt;span class="nb">let&lt;/span> g:SuperTabDefaultCompletionType &lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;&amp;lt;C-n&amp;gt;&amp;#39;&lt;/span>
+&lt;span class="ln">290&lt;/span>
+&lt;span class="ln">291&lt;/span>&lt;span class="s2">&amp;#34; better key bindings for UltiSnipsExpandTrigger
+&lt;/span>&lt;span class="ln">292&lt;/span>&lt;span class="s2">let g:UltiSnipsExpandTrigger = &amp;#34;&lt;/span>&amp;lt;tab&amp;gt;&lt;span class="s2">&amp;#34;
+&lt;/span>&lt;span class="ln">293&lt;/span>&lt;span class="s2">let g:UltiSnipsJumpForwardTrigger = &amp;#34;&lt;/span>&amp;lt;tab&amp;gt;&lt;span class="s2">&amp;#34;
+&lt;/span>&lt;span class="ln">294&lt;/span>&lt;span class="s2">let g:UltiSnipsJumpBackwardTrigger = &amp;#34;&lt;/span>&amp;lt;s-tab&amp;gt;&lt;span class="s2">&amp;#34;
+&lt;/span>&lt;span class="ln">295&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">296&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">297&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">298&lt;/span>&lt;span class="s2">&amp;#34; 其他插件配置
+&lt;/span>&lt;span class="ln">299&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="o">==============================================================================&lt;/span>
+&lt;span class="ln">300&lt;/span>
+&lt;span class="ln">301&lt;/span>&lt;span class="s2">&amp;#34; markdwon 的快捷键
+&lt;/span>&lt;span class="ln">302&lt;/span>&lt;span class="s2">map &amp;lt;silent&amp;gt; &amp;lt;F5&amp;gt; &amp;lt;Plug&amp;gt;MarkdownPreview
+&lt;/span>&lt;span class="ln">303&lt;/span>&lt;span class="s2">map &amp;lt;silent&amp;gt; &amp;lt;F6&amp;gt; &amp;lt;Plug&amp;gt;StopMarkdownPreview
+&lt;/span>&lt;span class="ln">304&lt;/span>&lt;span class="s2">
+&lt;/span>&lt;span class="ln">305&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> tab 标签页切换快捷键
+&lt;span class="ln">306&lt;/span>:nn &amp;lt;Leader&amp;gt;1 1gt
+&lt;span class="ln">307&lt;/span>:nn &amp;lt;Leader&amp;gt;2 2gt
+&lt;span class="ln">308&lt;/span>:nn &amp;lt;Leader&amp;gt;3 3gt
+&lt;span class="ln">309&lt;/span>:nn &amp;lt;Leader&amp;gt;4 4gt
+&lt;span class="ln">310&lt;/span>:nn &amp;lt;Leader&amp;gt;5 5gt
+&lt;span class="ln">311&lt;/span>:nn &amp;lt;Leader&amp;gt;6 6gt
+&lt;span class="ln">312&lt;/span>:nn &amp;lt;Leader&amp;gt;7 7gt
+&lt;span class="ln">313&lt;/span>:nn &amp;lt;Leader&amp;gt;8 8gt
+&lt;span class="ln">314&lt;/span>:nn &amp;lt;Leader&amp;gt;9 8gt
+&lt;span class="ln">315&lt;/span>:nn &amp;lt;Leader&amp;gt;0 :tablast&amp;lt;CR&amp;gt;
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="参考">参考&lt;/h2>
+&lt;p>&lt;a href="https://learnku.com/articles/24924">将 VIM 打造成 go 语言的 ide&lt;/a>&lt;/p></description></item></channel></rss>

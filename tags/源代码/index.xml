@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>源代码 on Ahamoment</title><link>https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/</link><description>Recent content in 源代码 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Mon, 11 May 2020 18:57:51 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/index.xml" rel="self" type="application/rss+xml"/><item><title>JDK1.8 源代码阅读环境搭建</title><link>https://ahamoment.cn/post/java-source-code-learn/</link><pubDate>Mon, 11 May 2020 18:57:51 +0800</pubDate><guid>https://ahamoment.cn/post/java-source-code-learn/</guid><description>
+&lt;h2 id="一准备">一、准备&lt;/h2>
+&lt;p>Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)&lt;/p>
+&lt;h2 id="二项目结构">二、项目结构&lt;/h2>
+&lt;p>IDEA 创建一个普通的 java 项目
+&lt;img src="https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+把解压得到的 jdk1.8 的源代码复制到 source 目录下：
+&lt;img src="https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+test 目录用来写测试用例, 这里用不到 Main 方法。&lt;/p>
+&lt;h2 id="三idea-设置">三、IDEA 设置&lt;/h2>
+&lt;ol>
+&lt;li>Project Structure -&amp;gt; Project 设置项目的 SDK (jdk8u221)，language level 选择 &lt;code>8 - Lambdas, type annotations etc.&lt;/code>
+&lt;img src="https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/li>
+&lt;li>Project Structure -&amp;gt; Dependencies 选择 Modules，SDK 选择 1.8_221
+&lt;img src="https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/li>
+&lt;li>设置平台的 SDK 源代码路径为自己项目的 source 目录
+&lt;img src="https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/li>
+&lt;li>调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。
+&lt;img src="https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/li>
+&lt;li>IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包
+&lt;img src="https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">
+到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。&lt;/li>
+&lt;/ol>
+&lt;h2 id="四编译调式">四、编译调式&lt;/h2>
+&lt;p>创建一个测试类进行调试：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.util.HashMap&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.util.Map&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 3&lt;/span>
+&lt;span class="ln"> 4&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Test&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 5&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="n">Map&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">Double&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">hashMap&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">HashMap&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;();&lt;/span>
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="n">hashMap&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">put&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;k1&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">1&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="n">hashMap&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">put&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;k2&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">2&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="n">hashMap&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">put&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;k3&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">3&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="n">hashMap&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">put&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;k4&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">4&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">14&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>进入 debug 之后，就可以在源代码里写一些笔记了。
+&lt;img src="https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/p>
+&lt;h2 id="五编译问题">五、编译问题&lt;/h2>
+&lt;p>经常碰到的几个问题：&lt;/p>
+&lt;blockquote>
+&lt;ol>
+&lt;li>缺少com.sun.tools包&lt;/li>
+&lt;li>缺少sun.awt.UNIXToolkit 和 sun.font.FontConfigManager这两个类&lt;/li>
+&lt;/ol>
+&lt;/blockquote>
+&lt;p>解决办法可以参考这篇博客：&lt;a href="https://www.jianshu.com/p/c00db010265b">JDK1.8源码分析03之idea搭建源码阅读环境&lt;/a>&lt;/p></description></item></channel></rss>

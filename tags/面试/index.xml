@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>面试 on Ahamoment</title><link>https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95/</link><description>Recent content in 面试 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Wed, 11 Nov 2020 10:41:32 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95/index.xml" rel="self" type="application/rss+xml"/><item><title>Java 多线程面试题总结</title><link>https://ahamoment.cn/post/java-multithread-interview-questions/</link><pubDate>Wed, 11 Nov 2020 10:41:32 +0800</pubDate><guid>https://ahamoment.cn/post/java-multithread-interview-questions/</guid><description>
+&lt;blockquote>
+&lt;p>&lt;a href="https://github.com/Snailclimb/JavaGuide#%E5%B9%B6%E5%8F%91">JavaGuide&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-请简要描述线程与进程的关系区别及优缺点">1. 请简要描述线程与进程的关系，区别及优缺点？&lt;/h2>
+&lt;p>&lt;strong>从 JVM 角度说进程和线程之间的关系&lt;/strong>&lt;/p>
+&lt;p>一个进程中可以有多个线程，多个线程共享进程的&lt;strong>堆&lt;/strong>和**方法区 (JDK1.8 之后的元空间)*&lt;em>资源，但是每个线程有自己的*&lt;em>程序计数器&lt;/em>&lt;/em>、&lt;strong>虚拟机栈&lt;/strong> 和 &lt;strong>本地方法栈&lt;/strong>。&lt;/p>
+&lt;p>&lt;strong>总结：&lt;/strong> &lt;strong>线程是进程划分成的更小的运行单位。线程和进程最大的不同在于基本上各进程是独立的，而各线程则不一定，因为同一进程中的线程极有可能会相互影响。线程执行开销小，但不利于资源的管理和保护；而进程正相反。&lt;/strong>&lt;/p>
+&lt;p>下面是该知识点的扩展内容！&lt;/p>
+&lt;p>下面来思考这样一个问题：为什么&lt;strong>程序计数器&lt;/strong>、&lt;strong>虚拟机栈&lt;/strong>和&lt;strong>本地方法栈&lt;/strong>是线程私有的呢？为什么堆和方法区是线程共享的呢？&lt;/p>
+&lt;h3 id="11-程序计数器为什么是私有的">1.1. 程序计数器为什么是私有的?&lt;/h3>
+&lt;p>程序计数器主要有下面两个作用：&lt;/p>
+&lt;ol>
+&lt;li>字节码解释器通过改变程序计数器来依次读取指令，从而实现代码的流程控制，如：顺序执行、选择、循环、异常处理。&lt;/li>
+&lt;li>在多线程的情况下，程序计数器用于记录当前线程执行的位置，从而当线程被切换回来的时候能够知道该线程上次运行到哪儿了。&lt;/li>
+&lt;/ol>
+&lt;p>需要注意的是，如果执行的是 native 方法，那么程序计数器记录的是 undefined 地址，只有执行的是 Java 代码时程序计数器记录的才是下一条指令的地址。&lt;/p>
+&lt;p>所以，程序计数器私有主要是为了&lt;strong>线程切换后能恢复到正确的执行位置&lt;/strong>。&lt;/p>
+&lt;h3 id="12-虚拟机栈和本地方法栈为什么是私有的">1.2. 虚拟机栈和本地方法栈为什么是私有的?&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>虚拟机栈：&lt;/strong> 每个 Java 方法在执行的同时会创建一个栈帧用于存储局部变量表、操作数栈、常量池引用等信息。从方法调用直至执行完成的过程，就对应着一个栈帧在 Java 虚拟机栈中入栈和出栈的过程。&lt;/li>
+&lt;li>&lt;strong>本地方法栈：&lt;/strong> 和虚拟机栈所发挥的作用非常相似，区别是： &lt;strong>虚拟机栈为虚拟机执行 Java 方法 （也就是字节码）服务，而本地方法栈则为虚拟机使用到的 Native 方法服务。&lt;/strong> 在 HotSpot 虚拟机中和 Java 虚拟机栈合二为一。&lt;/li>
+&lt;/ul>
+&lt;p>所以，为了&lt;strong>保证线程中的局部变量不被别的线程访问到&lt;/strong>，虚拟机栈和本地方法栈是线程私有的。&lt;/p>
+&lt;h3 id="13-一句话简单了解堆和方法区">1.3. 一句话简单了解堆和方法区&lt;/h3>
+&lt;p>堆和方法区是所有线程共享的资源，其中堆是进程中最大的一块内存，主要用于存放新创建的对象 (几乎所有对象都在这里分配内存)，方法区主要用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。&lt;/p>
+&lt;h2 id="2-说说并发与并行的区别">2. 说说并发与并行的区别?&lt;/h2>
+&lt;ul>
+&lt;li>&lt;strong>并发：&lt;/strong> 同一时间段，多个任务都在执行 (单位时间内不一定同时执行)；&lt;/li>
+&lt;li>&lt;strong>并行：&lt;/strong> 单位时间内，多个任务同时执行。&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-说说线程的生命周期">3. 说说线程的生命周期&lt;/h2>
+&lt;blockquote>
+&lt;p>参考文章：&lt;a href="http://chenxq.xyz/post/java-lifecycle-of-thread/">Java 多线程 - 线程生命周期&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="4-什么是上下文切换">4. 什么是上下文切换?&lt;/h2>
+&lt;p>多线程编程中一般线程的个数都大于 CPU 核心的个数，而一个 CPU 核心在任意时刻只能被一个线程使用，为了让这些线程都能得到有效执行，CPU 采取的策略是为每个线程分配时间片并轮转的形式。当一个线程的时间片用完的时候就会重新处于就绪状态让给其他线程使用，这个过程就属于一次上下文切换。&lt;/p>
+&lt;p>概括来说就是：当前任务在执行完 CPU 时间片切换到另一个任务之前会先保存自己的状态，以便下次再切换回这个任务时，可以再加载这个任务的状态。&lt;strong>任务从保存到再加载的过程就是一次上下文切换&lt;/strong>。&lt;/p>
+&lt;p>上下文切换通常是计算密集型的。也就是说，它需要相当可观的处理器时间，在每秒几十上百次的切换中，每次切换都需要纳秒量级的时间。所以，上下文切换对系统来说意味着消耗大量的 CPU 时间，事实上，可能是操作系统中时间消耗最大的操作。&lt;/p>
+&lt;p>Linux 相比与其他操作系统（包括其他类 Unix 系统）有很多的优点，其中有一项就是，其上下文切换和模式切换的时间消耗非常少。&lt;/p>
+&lt;h2 id="5-什么是线程死锁如何避免死锁">5. 什么是线程死锁？如何避免死锁？&lt;/h2>
+&lt;blockquote>
+&lt;p>参考文章：https://chenxq.xyz/post/java-multithread-dead-lock/&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="6-说说-sleep-方法和-wait-方法区别和共同点">6. 说说 sleep() 方法和 wait() 方法区别和共同点?&lt;/h2>
+&lt;p>&lt;strong>共同点&lt;/strong>：&lt;/p>
+&lt;ul>
+&lt;li>wait 和 sleep 方法都可以使线程进入阻塞状态&lt;/li>
+&lt;li>wait 和 sleep 方法均是可中断方法，被中断后都会收到中断异常。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>区别：&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>wait是Object的方法，而sleep是Thread特有的方法。&lt;/li>
+&lt;/ul>
+&lt;ul>
+&lt;li>&lt;strong>sleep 方法没有释放锁，而 wait 方法释放了锁&lt;/strong> 。&lt;/li>
+&lt;li>wait方法的执行必须在同步方法中进行，而sleep则不需要。&lt;/li>
+&lt;li>sleep方法短暂休眠之后会主动退出阻塞，而wait方法（没有指定wait时间）则需要被其他线程中断后才能退出阻塞。&lt;/li>
+&lt;/ul>
+&lt;h2 id="7-为什么我们调用-start-方法时会执行-run-方法为什么我们不能直接调用-run-方法">7. 为什么我们调用 start() 方法时会执行 run() 方法，为什么我们不能直接调用 run() 方法？&lt;/h2>
+&lt;p>这是另一个非常经典的 java 多线程面试问题，而且在面试中会经常被问到。很简单，但是很多人都会答不上来！&lt;/p>
+&lt;p>new 一个 Thread，线程进入了新建状态;调用 start() 方法，会启动一个线程并使线程进入了就绪状态，当分配到时间片后就可以开始运行了。 start() 会执行线程的相应准备工作，然后自动执行 run() 方法的内容，这是真正的多线程工作。 而直接执行 run() 方法，会把 run 方法当成一个 main 线程下的普通方法去执行，并不会在某个线程中执行它，所以这并不是多线程工作。&lt;/p>
+&lt;p>&lt;strong>总结： 调用 start 方法方可启动线程并使线程进入就绪状态，而 run 方法只是 thread 的一个普通方法调用，还是在主线程里执行。&lt;/strong>&lt;/p></description></item></channel></rss>

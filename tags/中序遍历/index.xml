@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>中序遍历 on Ahamoment</title><link>https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/</link><description>Recent content in 中序遍历 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 15 Apr 2021 10:03:48 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/index.xml" rel="self" type="application/rss+xml"/><item><title>二叉树的中序遍历</title><link>https://ahamoment.cn/post/algorithm-tree-inorder/</link><pubDate>Thu, 15 Apr 2021 10:03:48 +0800</pubDate><guid>https://ahamoment.cn/post/algorithm-tree-inorder/</guid><description>
+&lt;p>二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章---&amp;gt;&lt;a href="https://chenxq.xyz/post/algorithm-binary-tree/#5-%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86">传送门&lt;/a>&lt;/p>
+&lt;p>这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln"> 1&lt;/span>leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/]
+&lt;span class="ln"> 2&lt;/span>给定一个二叉树的根节点 root ，返回它的 中序 遍历。
+&lt;span class="ln"> 3&lt;/span>
+&lt;span class="ln"> 4&lt;/span>示例1：
+&lt;span class="ln"> 5&lt;/span> 1
+&lt;span class="ln"> 6&lt;/span> \
+&lt;span class="ln"> 7&lt;/span> 2
+&lt;span class="ln"> 8&lt;/span> /
+&lt;span class="ln"> 9&lt;/span> 3
+&lt;span class="ln">10&lt;/span>输入：root = [1,null,2,3]
+&lt;span class="ln">11&lt;/span>输出：[1,3,2]
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="1-递归">1. 递归&lt;/h2>
+&lt;p>首先我们需要了解什么是二叉树的中序遍历：按照访问&lt;strong>左子树——根节点——右子树&lt;/strong>的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。&lt;/p>
+&lt;p>定义 &lt;code>inorder(root)&lt;/code> 表示当前遍历到&lt;code>root&lt;/code>节点的答案，那么按照定义，我们只要递归调用 &lt;code>inorder(root.left)&lt;/code> 来遍历 &lt;code>root&lt;/code> 节点的左子树，然后将 &lt;code>root&lt;/code> 节点的值加入答案，再递归调用 &lt;code>inorder(root.right)&lt;/code> 来遍历 &lt;code>root&lt;/code> 节点的右子树即可，递归终止的条件为碰到空节点。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">Solution&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;();&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="n">inorder&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln"> 7&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">inorder&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="n">inorder&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">left&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">val&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="n">inorder&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">16&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="2-迭代">2. 迭代&lt;/h2>
+&lt;p>方法一的递归函数我们也可以用迭代的方式实现，两种方式是等价的，区别在于递归的时候隐式地维护了一个栈，而我们在迭代的时候需要显式地将这个栈模拟出来，其他都相同，具体实现可以看下面的代码。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">Solution&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;();&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="c1">// 定义一个栈
+&lt;/span>&lt;span class="ln"> 5&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">Deque&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TreeNode&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">stk&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">LinkedList&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">TreeNode&lt;/span>&lt;span class="o">&amp;gt;();&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="c1">// 节点不为空，并且栈不为空
+&lt;/span>&lt;span class="ln"> 7&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="o">!&lt;/span>&lt;span class="n">stk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">isEmpty&lt;/span>&lt;span class="o">())&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="c1">// 一直走到最左的节点，边走边压栈
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="n">stk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">push&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">left&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="c1">// 从最左的节点开始弹栈,并且判断右节点是否为空
+&lt;/span>&lt;span class="ln">14&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">stk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">pop&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">val&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">16&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">17&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">18&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">19&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">20&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="3-morris-中序遍历">3. Morris 中序遍历&lt;/h2>
+&lt;p>Morris 遍历算法是另一种遍历二叉树的方法，它能将非递归的中序遍历空间复杂度降为 &lt;code>O(1)&lt;/code>。&lt;/p>
+&lt;p>Morris 遍历算法整体步骤如下（假设当前遍历到的节点为 &lt;code>x&lt;/code>）：&lt;/p>
+&lt;ol>
+&lt;li>如果 x 无左孩子，先将 x 的值加入答案数组，再访问 x 的右孩子，即 &lt;code>x=x.right&lt;/code>。&lt;/li>
+&lt;li>如果 x 有左孩子，则找到 x 左子树上最右的节点（即左子树中序遍历的最后一个节点，x 在中序遍历中的前驱节点），我们记为 predecessor。根据 predecessor 的右孩子是否为空，进行如下操作。
+如果 predecessor 的右孩子为空，则将其右孩子指向 x，然后访问 x 的左孩子，即 x=x.left。
+如果 predecessor 的右孩子不为空，则此时其右孩子指向 x，说明我们已经遍历完 x 的左子树，我们将 predecessor 的右孩子置空，将 x 的值加入答案数组，然后访问 x 的右孩子，即 x=x.right。&lt;/li>
+&lt;li>重复上述操作，直至访问完整棵树。&lt;/li>
+&lt;/ol>
+&lt;p>其实整个过程我们就多做一步：假设当前遍历到的节点为 x，将 x 的左子树中最右边的节点的右孩子指向 x，这样在左子树遍历完成后我们通过这个指向走回了 x，且能通过这个指向知晓我们已经遍历完成了左子树，而不用再通过栈来维护，省去了栈的空间复杂度。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">Solution&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nf">inorderTraversal&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">TreeNode&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">res&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;();&lt;/span>
+&lt;span class="ln"> 4&lt;/span> &lt;span class="n">TreeNode&lt;/span> &lt;span class="n">predecessor&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 5&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">left&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="c1">// predecessor 节点就是当前 root 节点向左走一步，然后一直向右走至无法走为止
+&lt;/span>&lt;span class="ln"> 9&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">predecessor&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">left&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="kc">null&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="n">predecessor&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">13&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="c1">// 让 predecessor 的右指针指向 root，继续遍历左子树
+&lt;/span>&lt;span class="ln">15&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">16&lt;/span> &lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">17&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">left&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">18&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">19&lt;/span> &lt;span class="c1">// 说明左子树已经访问完了，我们需要断开链接
+&lt;/span>&lt;span class="ln">20&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">21&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">val&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">22&lt;/span> &lt;span class="n">predecessor&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">23&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">24&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">25&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">26&lt;/span> &lt;span class="c1">// 如果没有左孩子，则直接访问右孩子
+&lt;/span>&lt;span class="ln">27&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">28&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">val&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">29&lt;/span> &lt;span class="n">root&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">root&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">right&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">30&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">31&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">32&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">res&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">33&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">34&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>复杂度分析&lt;/strong>&lt;/p>
+&lt;p>时间复杂度：O(n)，其中 n 为二叉搜索树的节点个数。Morris 遍历中每个节点会被访问两次，因此总时间复杂度为 O(2n)=O(n)。&lt;/p>
+&lt;p>空间复杂度：O(1)。&lt;/p></description></item></channel></rss>

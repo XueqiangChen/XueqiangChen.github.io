@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>shell on Ahamoment</title><link>https://ahamoment.cn/tags/shell/</link><description>Recent content in shell on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 27 Aug 2020 16:03:59 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/shell/index.xml" rel="self" type="application/rss+xml"/><item><title>Linux Shell Script 基础教程</title><link>https://ahamoment.cn/post/linux-bash-tutorials/</link><pubDate>Thu, 27 Aug 2020 16:03:59 +0800</pubDate><guid>https://ahamoment.cn/post/linux-bash-tutorials/</guid><description>
+&lt;p>&lt;img src="https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述">&lt;/p>
+&lt;blockquote>
+&lt;p>本文翻译自&lt;a href="https://www.tutorialspoint.com/unix/unix-what-is-shell.htm">LEARN UNIX&lt;/a>，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 &lt;strong>&lt;a href="https://www.tutorialspoint.com/execute_ksh_online.php">https://www.tutorialspoint.com/execute_ksh_online.php&lt;/a>&lt;/strong> 作为shell在线demo的环境。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-shell-是什么">1. Shell 是什么&lt;/h2>
+&lt;p>Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。
+Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。&lt;/p>
+&lt;h3 id="11-shell-类型">1.1 Shell 类型&lt;/h3>
+&lt;p>Linux 系统中，主要有两种类型的Shell：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>&lt;code>Bourne shell&lt;/code>&lt;/strong> - 如果使用Bourne类型的shell，默认的提示符就是&lt;code>$&lt;/code>，可以通过修改环境变量&lt;code>PS1&lt;/code>来更改你的提示符。&lt;/li>
+&lt;li>&lt;strong>&lt;code>C shell&lt;/code>&lt;/strong> - C 类型的shell，默认的提示符是&lt;code>%&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;p>&lt;em>&lt;strong>Bourne Shell&lt;/strong>&lt;/em> 又有下面几种类型：&lt;/p>
+&lt;ul>
+&lt;li>Bourne shell (sh)&lt;/li>
+&lt;li>Korn shell (ksh)&lt;/li>
+&lt;li>Bourne Again shell (bash)&lt;/li>
+&lt;li>POSIX shell (sh)&lt;/li>
+&lt;/ul>
+&lt;p>&lt;em>&lt;strong>C 类型&lt;/strong>&lt;/em> 的Shell包括以下两种：&lt;/p>
+&lt;ul>
+&lt;li>C shell (csh)&lt;/li>
+&lt;li>TENEX/TOPS C shell (tcsh)&lt;/li>
+&lt;/ul>
+&lt;p>在大多数 Linux 版本中，Bourne shell 通常都安装为&lt;code>/bin/sh&lt;/code>。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。&lt;/p>
+&lt;h3 id="12-shell-脚本">1.2 Shell 脚本&lt;/h3>
+&lt;p>&lt;strong>Shell脚本的基本概念是命令列表，按执行顺序列出命令。&lt;/strong>
+Shell 脚本文件以 &lt;strong>.sh&lt;/strong> 结尾，例如 &lt;strong>test.sh&lt;/strong> 。Shell 脚本的内容以 &lt;strong>&lt;code>#!&lt;/code>&lt;/strong> 开头，告诉系统接下来的命令将会被 Bourne Shell 执行。我们来创建一个Shell脚本，并往脚本中添加一点注释，注释以 &lt;strong>&lt;code>#&lt;/code>&lt;/strong> 开头：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="c1"># Author: xueqiang.chen&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="c1"># Script follows here:&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="nb">pwd&lt;/span>
+&lt;span class="ln">6&lt;/span>ls
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>保存命令并执行脚本，可以看到以下输出内容：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ chmod +x test.sh
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span>$ ./test.sh
+&lt;span class="ln">4&lt;/span>/home/centos
+&lt;span class="ln">5&lt;/span>go.sh test.sh
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>Shell 脚本可以有很复杂的结构，毕竟，shell是一种真正的编程语言，它包括变量，控制结构等。无论脚本变得多么复杂，它仍然只是顺序执行的命令的列表。&lt;/p>
+&lt;h2 id="2-shell-变量">2. Shell 变量&lt;/h2>
+&lt;p>变量是我们为其分配值的字符串，变量的值包括数字，文本，文件名，设备，或是任意的数据类型。变量只是实际数据的一个指针，我们可以创建，赋值，删除变量。&lt;/p>
+&lt;h3 id="21-变量类型">2.1 变量类型&lt;/h3>
+&lt;p>当Shell运行时，存在三种主要类型的变量：&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>局部变量&lt;/strong>：局部变量是存在于Shell当前实例中的变量。它不适用于由 Shell 启动的程序。它们在命令提示符下设置。&lt;/li>
+&lt;li>&lt;strong>环境变量&lt;/strong>：环境变量可用于Shell的任何子进程。某些程序需要环境变量才能正常运行。通常，shell脚本仅定义其运行的程序所需的那些环境变量。&lt;/li>
+&lt;li>&lt;strong>Shell变量&lt;/strong>：Shell变量是Shell设置的特殊变量，shell要求Shell变量才能正常运行。这些变量中的一些是环境变量，而另一些是局部变量。&lt;/li>
+&lt;/ul>
+&lt;h3 id="22-变量名">2.2 变量名&lt;/h3>
+&lt;p>变量名称只能包含字母（a到z或A到Z），数字（0到9）或下划线字符（_）。按照约定，Unix shell变量将以大写字母命名。
+下面的例子是一些有效和无效的变量名：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="c1"># valid variable names&lt;/span>
+&lt;span class="ln"> 4&lt;/span>_ALL
+&lt;span class="ln"> 5&lt;/span>TOKEN_A
+&lt;span class="ln"> 6&lt;/span>VAR_1
+&lt;span class="ln"> 7&lt;/span>VAR_2
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span>&lt;span class="c1"># invaild variable names&lt;/span>
+&lt;span class="ln">10&lt;/span>2_VAR
+&lt;span class="ln">11&lt;/span>-VARIABLE
+&lt;span class="ln">12&lt;/span>VAR1-VAR2
+&lt;span class="ln">13&lt;/span>VAR_A!
+&lt;span class="ln">14&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>在shell 中，&lt;strong>&lt;code>!, *, -&lt;/code>&lt;/strong> 是含有特殊意义的，因此不能在变量名中使用。&lt;/p>
+&lt;h3 id="23-定义变量">2.3 定义变量&lt;/h3>
+&lt;p>变量的定义方式如下：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nv">variable_name&lt;/span>&lt;span class="o">=&lt;/span>variable_value
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;em>注意，&lt;strong>&lt;code>=&lt;/code>&lt;/strong> 号两边不能有空格。&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Zara Ali&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>这个例子中定义了一个变量，并给这个变量赋值，这种变量的类型称为&lt;strong>标量&lt;/strong>， 标量只一次只能有一个值。&lt;/p>
+&lt;h3 id="24-使用变量">2.4 使用变量&lt;/h3>
+&lt;p>Shell 中通过 &lt;strong>&lt;code>$&lt;/code>&lt;/strong> 符号获取变量的值。例如，下面的例子将获取变量&lt;code>NAME&lt;/code>的值并将其打印在标准输出中：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Zara Ali&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$NAME&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="25-只读变量">2.5 只读变量&lt;/h3>
+&lt;p>Shell 允许通过 &lt;strong>&lt;code>readonly&lt;/code>&lt;/strong> 命令将一个变量变成只读变量。当变量成为只读变量后，它的值就不能更改了。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Zara Ali&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nb">readonly&lt;/span> NAME
+&lt;span class="ln">5&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Qadiri&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面的脚本会发生错误。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>/bin/sh: NAME: This variable is &lt;span class="nb">read&lt;/span> only.
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="26-重置变量">2.6 重置变量&lt;/h3>
+&lt;p>重置或删除变量将指示Shell程序从其跟踪的变量列表中删除该变量。重置变量后，将无法访问该变量中的存储值。
+以下是使用 &lt;strong>&lt;code>unset&lt;/code>&lt;/strong> 命令取消定义的变量的语法：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nb">unset&lt;/span> variable_name
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面的命令重置定义的变量的值，下面的这个例子简单说明这个命令是如何工作的：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Zara Ali&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nb">unset&lt;/span> NAME
+&lt;span class="ln">5&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="nv">$NAME&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面的例子不会打印出任何内容，你可以使用 &lt;strong>&lt;code>unset&lt;/code>&lt;/strong> 命令来重置被标记为 &lt;strong>&lt;code>readonly&lt;/code>&lt;/strong> 的变量。&lt;/p>
+&lt;h2 id="3-特殊变量">3. 特殊变量&lt;/h2>
+&lt;p>在上一节中，我们了解了在变量名称中使用某些非字母数字字符时应注意的事项。这是因为这些字符用在特殊的Unix变量的名称中。这些变量保留用于特定功能。&lt;/p>
+&lt;p>下面的表格列出了可以在我们的脚本中使用的特殊变量：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>变量&lt;/th>
+&lt;th>说明&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$0&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>当前脚本的文件名&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$n&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>这个变量对应于调用脚本的参数。其中参数 &lt;strong>n&lt;/strong> 是正整数，代表参数的位置。例如第一个参数就是 &lt;code>$1&lt;/code> ， 第二个参数就是 &lt;code>$2&lt;/code>， 以此类推。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$#&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>脚本参数的数量&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$*&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>输出整个参数列表，将整个列表作为一个参数，且之间使用空格隔开。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$@&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>与&lt;code>$*&lt;/code> 的作用是一致的，不同的是该变量输出时会将参数列表分成单独的参数。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$$&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>当前shell的进程号。对于Shell脚本，这是它们执行时的进程ID。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>$!&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>最后一个后台命令的进程号。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>以下脚本使用与命令行相关的各种特殊变量:&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;File Name: &lt;/span>&lt;span class="nv">$0&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;First Parameter : &lt;/span>&lt;span class="nv">$1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Second Parameter : &lt;/span>&lt;span class="nv">$2&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Quoted Values: &lt;/span>&lt;span class="nv">$@&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">7&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Quoted Values: &lt;/span>&lt;span class="nv">$*&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">8&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Total Number of Parameters : &lt;/span>&lt;span class="nv">$#&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行结果：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$./test.sh Zara Ali
+&lt;span class="ln">2&lt;/span>File Name : ./test.sh
+&lt;span class="ln">3&lt;/span>First Parameter : Zara
+&lt;span class="ln">4&lt;/span>Second Parameter : Ali
+&lt;span class="ln">5&lt;/span>Quoted Values: Zara Ali
+&lt;span class="ln">6&lt;/span>Quoted Values: Zara Ali
+&lt;span class="ln">7&lt;/span>Total Number of Parameters : &lt;span class="m">2&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="31-错误状态">3.1 错误状态&lt;/h3>
+&lt;p>&lt;strong>&lt;code>$?&lt;/code>&lt;/strong> 变量表示上一个命令的退出状态。
+退出状态是每个命令完成后返回的数值。通常，如果大多数命令成功，则返回退出状态0；如果不成功，则返回1。
+某些命令出于特殊原因会返回其他退出状态。例如，某些命令区分错误的种类，并将根据故障的特定类型返回各种退出值。&lt;/p>
+&lt;p>下面的这个例子返回的是成功命令的状态：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$./test.sh Zara Ali
+&lt;span class="ln"> 2&lt;/span>File Name : ./test.sh
+&lt;span class="ln"> 3&lt;/span>First Parameter : Zara
+&lt;span class="ln"> 4&lt;/span>Second Parameter : Ali
+&lt;span class="ln"> 5&lt;/span>Quoted Values: Zara Ali
+&lt;span class="ln"> 6&lt;/span>Quoted Values: Zara Ali
+&lt;span class="ln"> 7&lt;/span>Total Number of Parameters : &lt;span class="m">2&lt;/span>
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span>&lt;span class="nv">$echo&lt;/span> &lt;span class="nv">$?&lt;/span>
+&lt;span class="ln">10&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="ln">11&lt;/span>$
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="4-数组">4. 数组&lt;/h2>
+&lt;p>Shell变量足以容纳单个值。这些变量称为标量变量。&lt;/p>
+&lt;p>Shell支持另一种类型的变量，称为&lt;strong>数组变量&lt;/strong>。它可以同时保存多个值。数组提供了一种对一组变量进行分组的方法。数组的命名参考变量的命名规则。&lt;/p>
+&lt;h3 id="41-定义数组">4.1 定义数组&lt;/h3>
+&lt;p>数组变量和标量变量之间的差异可以解释如下。
+假设您尝试将各个学生的姓名表示为一组变量。每个单独的变量都是标量变量，如下所示：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>&lt;span class="nv">NAME01&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Zara&amp;#34;&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nv">NAME02&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Qadir&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nv">NAME03&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Mahnaz&amp;#34;&lt;/span>
+&lt;span class="ln">5&lt;/span>&lt;span class="nv">NAME04&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Ayan&amp;#34;&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="nv">NAME05&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Daisy&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们可以使用单个数组来存储所有上述名称。以下是创建数组变量的最简单方法。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>array_name&lt;span class="o">[&lt;/span>index&lt;span class="o">]=&lt;/span>value
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里 &lt;em>array_name&lt;/em> 是数组的名字，&lt;em>index&lt;/em> 是要设置的数组中的索引， &lt;em>value&lt;/em> 就是你要为该元素设置的值。如下所示：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>NAME&lt;span class="o">[&lt;/span>0&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Zara&amp;#34;&lt;/span>
+&lt;span class="ln">4&lt;/span>NAME&lt;span class="o">[&lt;/span>1&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Qadir&amp;#34;&lt;/span>
+&lt;span class="ln">5&lt;/span>NAME&lt;span class="o">[&lt;/span>2&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Mahnaz&amp;#34;&lt;/span>
+&lt;span class="ln">6&lt;/span>NAME&lt;span class="o">[&lt;/span>3&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Ayan&amp;#34;&lt;/span>
+&lt;span class="ln">7&lt;/span>NAME&lt;span class="o">[&lt;/span>4&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Daisy&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果使用的是 &lt;strong>bash shell&lt;/strong> ，也可以通过以下这种方法进行数组初始化：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nv">array_name&lt;/span>&lt;span class="o">=(&lt;/span>value1 ... valuen&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="42-使用数组">4.2 使用数组&lt;/h3>
+&lt;p>为变量赋值之后，访问变量可以使用以下方式：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">array_name&lt;/span>&lt;span class="p">[index]&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>这里 &lt;em>array_name&lt;/em> 是数组名， &lt;em>index&lt;/em> 是要访问那个数组项的索引。具体的例子如下：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="cp">&lt;/span>NAME&lt;span class="o">[&lt;/span>0&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Zara&amp;#34;&lt;/span>
+&lt;span class="ln"> 3&lt;/span>NAME&lt;span class="o">[&lt;/span>1&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Qadir&amp;#34;&lt;/span>
+&lt;span class="ln"> 4&lt;/span>NAME&lt;span class="o">[&lt;/span>2&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Mahnaz&amp;#34;&lt;/span>
+&lt;span class="ln"> 5&lt;/span>NAME&lt;span class="o">[&lt;/span>3&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Ayan&amp;#34;&lt;/span>
+&lt;span class="ln"> 6&lt;/span>NAME&lt;span class="o">[&lt;/span>4&lt;span class="o">]=&lt;/span>&lt;span class="s2">&amp;#34;Daisy&amp;#34;&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;First Index: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="p">[0]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln"> 8&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Second Index: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="p">[1]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln"> 9&lt;/span>
+&lt;span class="ln">10&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;First Method: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="p">[*]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln">11&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Second Method: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NAME&lt;/span>&lt;span class="p">[@]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行结果：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$./test.sh
+&lt;span class="ln">2&lt;/span>First Index: Zara
+&lt;span class="ln">3&lt;/span>Second Index: Qadir
+&lt;span class="ln">4&lt;/span>First Method: Zara Qadir Mahnaz Ayan Daisy
+&lt;span class="ln">5&lt;/span>Second Method: Zara Qadir Mahnaz Ayan Daisy
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面的示例中通过 &lt;strong>&lt;code>*&lt;/code>&lt;/strong> 和 &lt;strong>&lt;code>@&lt;/code>&lt;/strong> 来获取整个数组的值。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">array_name&lt;/span>&lt;span class="p">[*]&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;span class="ln">2&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">array_name&lt;/span>&lt;span class="p">[@]&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="5-运算符">5. 运算符&lt;/h2>
+&lt;p>每个Shell都支持不同的运算符，这里我们主要讨论的是 bash shell 的运算符。&lt;/p>
+&lt;h3 id="51-算术运算符">5.1 算术运算符&lt;/h3>
+&lt;p>&lt;strong>Bourne shell&lt;/strong> 最初没有任何执行简单算术运算的机制，它使用 &lt;em>awk&lt;/em> 或 &lt;em>expr&lt;/em> 来进行计算。如下所示：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="nv">val&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>expr &lt;span class="m">2&lt;/span> + 2&lt;span class="sb">`&lt;/span>
+&lt;span class="ln">4&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Total value : &lt;/span>&lt;span class="nv">$val&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行结果：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>Total value : &lt;span class="m">4&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>上面的例子我们需要注意的有两点：&lt;/p>
+&lt;ul>
+&lt;li>表达式和运算符之间必须用空格隔开，例如 &lt;code>2+2&lt;/code> 是错误的，应该写成 &lt;code>2 + 2&lt;/code>&lt;/li>
+&lt;li>整个表达式要用反引号 `` 来包起来。&lt;/li>
+&lt;/ul>
+&lt;p>假设变量 &lt;strong>a&lt;/strong> 等于 10， 变量 &lt;strong>b&lt;/strong> 等于 20， 我们来看一下 &lt;strong>bash shell&lt;/strong> 支持的算术运算符是如何计算这两个值得：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>运算符&lt;/th>
+&lt;th>示例&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>+&lt;/strong>&lt;/td>
+&lt;td>&lt;code>expr $a + $b&lt;/code> = 30&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-&lt;/strong>&lt;/td>
+&lt;td>&lt;code>expr $a - $b&lt;/code> = -10&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>&lt;code>*&lt;/code>&lt;/strong>&lt;/td>
+&lt;td>&lt;code>expr $a \* $b&lt;/code> = 200&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>/&lt;/strong>&lt;/td>
+&lt;td>&lt;code>expr $b / $a&lt;/code> = 2&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>%&lt;/strong>&lt;/td>
+&lt;td>&lt;code>expr $b % $a&lt;/code> = 0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>=&lt;/strong>&lt;/td>
+&lt;td>&lt;code>a = $b&lt;/code> 将b的值赋给a&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>==&lt;/strong>&lt;/td>
+&lt;td>&lt;code>[ $a == $b ]&lt;/code> 将会返回 false&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>！=&lt;/strong>&lt;/td>
+&lt;td>&lt;code>[ $a != $b ]&lt;/code>将会返回 true&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;em>注意：&lt;code>[ $a == $b ]&lt;/code> 不能写成&lt;code> [$a==$b]&lt;/code>。&lt;/em>&lt;/p>
+&lt;h3 id="52-关系运算符">5.2 关系运算符&lt;/h3>
+&lt;p>Bash 支持以下特定于数值的关系运算符。
+假设变量a = 10，变量b = 20,&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>运算符&lt;/th>
+&lt;th>描述&lt;/th>
+&lt;th>例子&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>-eq&lt;/strong>&lt;/td>
+&lt;td>检查运算符两边的值是否相等，相等返回 true&lt;/td>
+&lt;td>&lt;code>[ $a -eq $b ] is not true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-ne&lt;/strong>&lt;/td>
+&lt;td>检查运算符两边的值是否相等，不相等返回 true&lt;/td>
+&lt;td>&lt;code>[ $a -ne $b ] is true&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-gt&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>gt&lt;/strong> 是 &lt;strong>greater than&lt;/strong> 的缩写，检查运算符左边的值是否大于右边，是的话返回 true&lt;/td>
+&lt;td>&lt;code>[ $a -gt $b ] is not true&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-lt&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>lt&lt;/strong> 是 &lt;strong>less than&lt;/strong> 的缩写，检查运算符左边的值是否小于右边，是的话返回true&lt;/td>
+&lt;td>&lt;code>[ $a -lt $b ] is true&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-ge&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>ge&lt;/strong> 是 &lt;strong>greater than or equal&lt;/strong> 的缩写，检查运算符左边的值是否大于或等于右边的值，是的话返回true&lt;/td>
+&lt;td>&lt;code>[ $a -ge $b ] is not true&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-le&lt;/strong>&lt;/td>
+&lt;td>&lt;strong>le&lt;/strong> 是 &lt;strong>less than or equal&lt;/strong> 的缩写，检查运算符左边的值是否小于或等于右边的值，是的话返回true&lt;/td>
+&lt;td>&lt;code>[ $a -le $b ] is true&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;em>注意：所有条件表达式应放在方括号内并在其周围留有空格。&lt;/em>&lt;/p>
+&lt;h3 id="53-布尔运算符">5.3 布尔运算符&lt;/h3>
+&lt;p>Bash 支持以下布尔运算符。假设变量 &lt;strong>a&lt;/strong> 的值是 10， 变量 &lt;strong>b&lt;/strong> 的值是20：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>运算符&lt;/th>
+&lt;th>描述&lt;/th>
+&lt;th>示例&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>！&lt;/strong>&lt;/td>
+&lt;td>逻辑否。这会将真实条件转换为错误条件，反之亦然。&lt;/td>
+&lt;td>&lt;code>[ ! false ] is true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-o&lt;/strong>&lt;/td>
+&lt;td>逻辑或。如果运算符两边之一为真，则条件为真。&lt;/td>
+&lt;td>&lt;code>[ $a -lt 20 -o $b -gt 100 ] is true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-a&lt;/strong>&lt;/td>
+&lt;td>逻辑与。如果运算符两边都是真的，则条件为真。&lt;/td>
+&lt;td>&lt;code>[ $a -lt 20 -a $b -gt 100 ] is false.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="54-字符串运算符">5.4 字符串运算符&lt;/h3>
+&lt;p>Bash 运算符支持以下操作。
+假设变量 &lt;strong>a&lt;/strong> 的值为 &amp;quot;abc&amp;quot;，变量&lt;strong>b&lt;/strong>的值为 &amp;quot;efg&amp;quot;：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>运算符&lt;/th>
+&lt;th>描述&lt;/th>
+&lt;th>示例&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>=&lt;/strong>&lt;/td>
+&lt;td>检查运算符两边的值是否相等；如果是，则条件变为真。&lt;/td>
+&lt;td>&lt;code>[ $a = $b ] is not true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>!=&lt;/strong>&lt;/td>
+&lt;td>检查运算符两边的值是否相等；如果值不相等，则条件为真&lt;/td>
+&lt;td>&lt;code>[ $a != $b ] is true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-z&lt;/strong>&lt;/td>
+&lt;td>检查给定的字符串操作数大小是否为零；如果长度为零，则返回true。&lt;/td>
+&lt;td>&lt;code>[ -z $a ] is not true.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>-n&lt;/strong>&lt;/td>
+&lt;td>检查给定的字符串操作数大小是否为非零；如果长度非零，则返回true。&lt;/td>
+&lt;td>&lt;code>[ -n $a ] is not false.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>str&lt;/strong>&lt;/td>
+&lt;td>Checks if str is not the empty string; if it is empty, then it returns false.&lt;/td>
+&lt;td>&lt;code>[ $a ] is not false.&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="55-文件测试运算符">5.5 文件测试运算符&lt;/h3>
+&lt;p>我们有一些运算符可用于测试与文件相关的各种属性。
+假设有个文件变量 &lt;strong>file&lt;/strong> 的值为一个存在的名为 &amp;quot;test&amp;quot; 的文件，该文件的大小为100bytes，并且有读写和执行的权限。&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">运算符&lt;/th>
+&lt;th style="text-align:center">描述&lt;/th>
+&lt;th style="text-align:right">示例&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-b file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检查文件是否是一个块文件，如果是就返回true。&lt;/td>
+&lt;td style="text-align:right">[ -b $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-c file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否是字符设备文件，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -c $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-d file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否是目录，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -d $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-f file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -f $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-g file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否设置了 SGID 位，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -g $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-k file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -k $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-p file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否是有名管道，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -p $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-t file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检查文件描述符是否打开并与终端关联；如果是，则条件变为真。&lt;/td>
+&lt;td style="text-align:right">[ -t $file ] is false.&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-u file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否设置了 SUID 位，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -u $file ] 返回 false。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-r file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否可读，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -r $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-w file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否可写，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -w $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-x file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否可执行，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -x $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-s file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件是否为空（文件大小是否大于0），不为空返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -s $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>-e file&lt;/strong>&lt;/td>
+&lt;td style="text-align:center">检测文件（包括目录）是否存在，如果是，则返回 true。&lt;/td>
+&lt;td style="text-align:right">[ -e $file ] 返回 true。&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="56-其他shell的运算符">5.6 其他shell的运算符&lt;/h3>
+&lt;ul>
+&lt;li>C Shell 运算符：&lt;a href="https://www.tutorialspoint.com/unix/unix-c-shell-operators.htm">C Shell Operators&lt;/a>&lt;/li>
+&lt;li>Korn Shell 运算符：&lt;a href="https://www.tutorialspoint.com/unix/unix-korn-shell-operators.htm">Korn Shell Operators&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="6-条件表达式">6. 条件表达式&lt;/h2>
+&lt;p>在编写shell脚本时，可能需要从给定的两个路径中采用一个路径。因此，您需要使用条件语句，这些条件语句允许您的程序做出正确的决定并执行正确的操作。&lt;/p>
+&lt;h2 id="7-循环">7. 循环&lt;/h2>
+&lt;p>循环是功能强大的编程工具，使您能够重复执行一组命令。在本章中，我们将研究以下可供Shell程序员使用的循环类型-&lt;/p>
+&lt;ul>
+&lt;li>while 循环&lt;/li>
+&lt;li>for 循环&lt;/li>
+&lt;li>until 循环&lt;/li>
+&lt;li>select 循环&lt;/li>
+&lt;/ul>
+&lt;p>您将根据情况使用不同的循环。&lt;/p>
+&lt;h3 id="71-嵌套循环">7.1 嵌套循环&lt;/h3>
+&lt;p>所有循环都支持嵌套概念，这意味着您可以将一个循环放入另一个类似的或不同的循环中。根据您的要求，此嵌套最多可以无限次。&lt;/p>
+&lt;p>这是嵌套while循环的示例。其他循环可以根据编程要求以类似的方式嵌套-&lt;/p>
+&lt;p>可以将while循环用作另一个while循环主体的一部分。
+语法：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="k">while&lt;/span> command1 &lt;span class="p">;&lt;/span> &lt;span class="c1"># this is loop1, the outer loop&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="k">do&lt;/span>
+&lt;span class="ln"> 3&lt;/span> Statement&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span> to be executed &lt;span class="k">if&lt;/span> command1 is &lt;span class="nb">true&lt;/span>
+&lt;span class="ln"> 4&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="k">while&lt;/span> command2 &lt;span class="p">;&lt;/span> &lt;span class="c1"># this is loop2, the inner loop&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;span class="ln"> 7&lt;/span> Statement&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span> to be executed &lt;span class="k">if&lt;/span> command2 is &lt;span class="nb">true&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="k">done&lt;/span>
+&lt;span class="ln"> 9&lt;/span>
+&lt;span class="ln">10&lt;/span> Statement&lt;span class="o">(&lt;/span>s&lt;span class="o">)&lt;/span> to be executed &lt;span class="k">if&lt;/span> command1 is &lt;span class="nb">true&lt;/span>
+&lt;span class="ln">11&lt;/span>&lt;span class="k">done&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>示例：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="cp">#!/bin/sh
+&lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="nv">a&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 4&lt;/span>&lt;span class="k">while&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$a&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -lt &lt;span class="m">10&lt;/span> &lt;span class="o">]&lt;/span> &lt;span class="c1"># this is loop1&lt;/span>
+&lt;span class="ln"> 5&lt;/span>&lt;span class="k">do&lt;/span>
+&lt;span class="ln"> 6&lt;/span> &lt;span class="nv">b&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$a&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="k">while&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$b&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -ge &lt;span class="m">0&lt;/span> &lt;span class="o">]&lt;/span> &lt;span class="c1"># this is loop2&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="nb">echo&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$b&lt;/span>&lt;span class="s2"> &amp;#34;&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="nv">b&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>expr &lt;span class="nv">$b&lt;/span> - 1&lt;span class="sb">`&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="k">done&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="nb">echo&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="nv">a&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>expr &lt;span class="nv">$a&lt;/span> + 1&lt;span class="sb">`&lt;/span>
+&lt;span class="ln">14&lt;/span>&lt;span class="k">done&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>运行结果：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 2&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 4&lt;/span>&lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 5&lt;/span>&lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 6&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 7&lt;/span>&lt;span class="m">6&lt;/span> &lt;span class="m">5&lt;/span> &lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 8&lt;/span>&lt;span class="m">7&lt;/span> &lt;span class="m">6&lt;/span> &lt;span class="m">5&lt;/span> &lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln"> 9&lt;/span>&lt;span class="m">8&lt;/span> &lt;span class="m">7&lt;/span> &lt;span class="m">6&lt;/span> &lt;span class="m">5&lt;/span> &lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;span class="ln">10&lt;/span>&lt;span class="m">9&lt;/span> &lt;span class="m">8&lt;/span> &lt;span class="m">7&lt;/span> &lt;span class="m">6&lt;/span> &lt;span class="m">5&lt;/span> &lt;span class="m">4&lt;/span> &lt;span class="m">3&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="m">1&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Linux Shell 输入/输出重定向</title><link>https://ahamoment.cn/post/linux-shell-input-output-redirect/</link><pubDate>Tue, 26 Nov 2019 19:54:15 +0800</pubDate><guid>https://ahamoment.cn/post/linux-shell-input-output-redirect/</guid><description>
+&lt;p>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。&lt;/p>
+&lt;p>重定向命令列表如下：&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>命令&lt;/th>
+&lt;th>说明&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>command &amp;gt; file&lt;/td>
+&lt;td>将输出重定向到 file。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>command &amp;lt; file&lt;/td>
+&lt;td>将输入重定向到 file。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>command &amp;gt;&amp;gt; file&lt;/td>
+&lt;td>将输出以追加的方式重定向到 file。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>n &amp;gt; file&lt;/td>
+&lt;td>将文件描述符为 n 的文件重定向到 file。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>n &amp;gt;&amp;gt; file&lt;/td>
+&lt;td>将文件描述符为 n 的文件以追加的方式重定向到 file。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>n &amp;gt;&amp;amp; m&lt;/td>
+&lt;td>将输出文件 m 和 n 合并。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>n &amp;lt;&amp;amp; m&lt;/td>
+&lt;td>将输入文件 m 和 n 合并。&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&amp;lt;&amp;lt; tag&lt;/td>
+&lt;td>将开始标记 tag 和结束标记 tag 之间的内容作为输入。&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="输出重定向">输出重定向&lt;/h2>
+&lt;p>重定向一般通过在命令间插入特定的符号来实现。特别的，这些符号的语法如下所示:&lt;/p>
+&lt;p>&lt;code>command1 &amp;gt; file1&lt;/code>&lt;/p>
+&lt;p>上面这个命令执行command1然后将输出的内容存入file1。&lt;/p>
+&lt;p>注意任何file1内的已经存在的内容将被新内容替代。如果要将新内容添加在文件末尾，请使用&amp;gt;&amp;gt;操作符。&lt;/p>
+&lt;h3 id="实例">实例&lt;/h3>
+&lt;p>执行下面的 who 命令，它将命令的完整的输出重定向在用户文件中(users):&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ who &amp;gt; users
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行后，并没有在终端输出信息，这是因为输出已被从默认的标准输出设备（终端）重定向到指定的文件。&lt;/p>
+&lt;p>你可以使用 cat 命令查看文件内容：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ cat users
+&lt;span class="ln">2&lt;/span>_mbsetupuser console Oct &lt;span class="m">31&lt;/span> 17:35
+&lt;span class="ln">3&lt;/span>laolan console Oct &lt;span class="m">31&lt;/span> 17:35
+&lt;span class="ln">4&lt;/span>laolan ttys000 Dec &lt;span class="m">1&lt;/span> 11:33
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>输出重定向会覆盖文件内容，请看下面的例子：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;W3Cschool教程：www.w3cschool.cn&amp;#34;&lt;/span> &amp;gt; users
+&lt;span class="ln">2&lt;/span>$ cat users
+&lt;span class="ln">3&lt;/span>W3Cschool教程：www.w3cschool.cn
+&lt;span class="ln">4&lt;/span>$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如果不希望文件内容被覆盖，可以使用 &amp;gt;&amp;gt; 追加到文件末尾，例如：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;W3Cschool教程：www.w3cschool.cn&amp;#34;&lt;/span> &amp;gt;&amp;gt; users
+&lt;span class="ln">2&lt;/span>$ cat users
+&lt;span class="ln">3&lt;/span>W3Cschool教程：www.w3cschool.cn
+&lt;span class="ln">4&lt;/span>W3Cschool教程：www.w3cschool.cn
+&lt;span class="ln">5&lt;/span>$
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="输入重定向">输入重定向&lt;/h2>
+&lt;p>和输出重定向一样，Unix 命令也可以从文件获取输入，语法为：&lt;/p>
+&lt;p>&lt;code>command1 &amp;lt; file1&lt;/code>&lt;/p>
+&lt;p>这样，本来需要从键盘获取输入的命令会转移到文件读取内容。&lt;/p>
+&lt;p>注意：输出重定向是大于号(&amp;gt;)，输入重定向是小于号(&amp;lt;)。&lt;/p>
+&lt;h3 id="实例-1">实例&lt;/h3>
+&lt;p>接着以上实例，我们需要统计 users 文件的行数,执行以下命令：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ wc -l users
+&lt;span class="ln">2&lt;/span> &lt;span class="m">2&lt;/span> users
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>也可以将输入重定向到 users 文件：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ wc -l &amp;lt; users
+&lt;span class="ln">2&lt;/span> &lt;span class="m">2&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>注意：上面两个例子的结果不同：第一个例子，会输出文件名；第二个不会，因为它仅仅知道从标准输入读取内容。&lt;/p>
+&lt;p>&lt;code>command1 &amp;lt; infile &amp;gt; outfile&lt;/code>&lt;/p>
+&lt;p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中。&lt;/p>
+&lt;h2 id="重定向深入讲解">重定向深入讲解&lt;/h2>
+&lt;p>一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：&lt;/p>
+&lt;ul>
+&lt;li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。&lt;/li>
+&lt;li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。&lt;/li>
+&lt;li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。&lt;/li>
+&lt;/ul>
+&lt;p>默认情况下，command &amp;gt; file 将 stdout 重定向到 file，command &amp;lt; file 将stdin 重定向到 file。&lt;/p>
+&lt;p>如果希望 stderr 重定向到 file，可以这样写：&lt;/p>
+&lt;p>&lt;code>$ command 2 &amp;gt; file&lt;/code>&lt;/p>
+&lt;p>如果希望 stderr 追加到 file 文件末尾，可以这样写：&lt;/p>
+&lt;p>&lt;code>$ command 2 &amp;gt;&amp;gt; file&lt;/code>&lt;/p>
+&lt;p>2 表示标准错误文件(stderr)。&lt;/p>
+&lt;p>如果希望将 stdout 和 stderr 合并后重定向到 file，可以这样写：&lt;/p>
+&lt;p>&lt;code>$ command &amp;gt; file 2&amp;gt;&amp;amp;1&lt;/code>&lt;/p>
+&lt;p>或者&lt;/p>
+&lt;p>&lt;code>$ command &amp;gt;&amp;gt; file 2&amp;gt;&amp;amp;1&lt;/code>&lt;/p>
+&lt;p>如果希望对 stdin 和 stdout 都重定向，可以这样写：&lt;/p>
+&lt;p>&lt;code>$ command &amp;lt; file1 &amp;gt;file2&lt;/code>&lt;/p>
+&lt;p>command 命令将 stdin 重定向到 file1，将 stdout 重定向到 file2。&lt;/p>
+&lt;h2 id="here-document">Here Document&lt;/h2>
+&lt;p>Here Document 是 Shell 中的一种特殊的重定向方式，用来将输入重定向到一个交互式 Shell 脚本或程序。&lt;/p>
+&lt;p>它的基本的形式如下：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nb">command&lt;/span> &lt;span class="s">&amp;lt;&amp;lt; delimiter
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="s"> document
+&lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="s">delimiter&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>它的作用是将两个 delimiter 之间的内容(document) 作为输入传递给 command。&lt;/p>
+&lt;p>注意：&lt;/p>
+&lt;p>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。
+开始的delimiter前后的空格会被忽略掉。&lt;/p>
+&lt;h3 id="实例-2">实例&lt;/h3>
+&lt;p>在命令行中通过 wc -l 命令计算 Here Document 的行数：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ wc -l &lt;span class="s">&amp;lt;&amp;lt; EOF
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="s"> 欢迎来到
+&lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="s"> W3Cschool教程
+&lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="s"> www.w3cschool.cn
+&lt;/span>&lt;span class="ln">5&lt;/span>&lt;span class="s">EOF&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="m">3&lt;/span> &lt;span class="c1"># 输出结果为 3 行&lt;/span>
+&lt;span class="ln">7&lt;/span>$
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们也可以将 Here Document 用在脚本中，例如：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="cp">&lt;/span>&lt;span class="c1"># author:W3Cschool教程&lt;/span>
+&lt;span class="ln">3&lt;/span>&lt;span class="c1"># url:www.w3cschool.cn&lt;/span>
+&lt;span class="ln">4&lt;/span>
+&lt;span class="ln">5&lt;/span>cat &lt;span class="s">&amp;lt;&amp;lt; EOF
+&lt;/span>&lt;span class="ln">6&lt;/span>&lt;span class="s">欢迎来到
+&lt;/span>&lt;span class="ln">7&lt;/span>&lt;span class="s">W3Cschool教程
+&lt;/span>&lt;span class="ln">8&lt;/span>&lt;span class="s">www.w3cschool.cn
+&lt;/span>&lt;span class="ln">9&lt;/span>&lt;span class="s">EOF&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>执行以上脚本，输出结果：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>欢迎来到
+&lt;span class="ln">2&lt;/span>W3Cschool教程
+&lt;span class="ln">3&lt;/span>www.w3cschool.cn
+&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="devnull-文件">/dev/null 文件&lt;/h2>
+&lt;p>如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null：&lt;/p>
+&lt;p>&lt;code>$ command &amp;gt; /dev/null&lt;/code>&lt;/p>
+&lt;p>/dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到&amp;quot;禁止输出&amp;quot;的效果。&lt;/p>
+&lt;p>如果希望屏蔽 stdout 和 stderr，可以这样写：&lt;/p>
+&lt;p>&lt;code>$ command &amp;gt; /dev/null 2&amp;gt;&amp;amp;1&lt;/code>&lt;/p>
+&lt;blockquote>
+&lt;p>注意：0 是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

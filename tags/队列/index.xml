@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>队列 on Ahamoment</title><link>https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/</link><description>Recent content in 队列 on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 06 Aug 2020 20:04:38 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/index.xml" rel="self" type="application/rss+xml"/><item><title>队列及其实现</title><link>https://ahamoment.cn/post/algorithm-queue/</link><pubDate>Thu, 06 Aug 2020 20:04:38 +0800</pubDate><guid>https://ahamoment.cn/post/algorithm-queue/</guid><description>
+&lt;h2 id="1-什么是队列">1. 什么是队列&lt;/h2>
+&lt;blockquote>
+&lt;p>具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。&lt;/p>
+&lt;/blockquote>
+&lt;p>数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。&lt;/p>
+&lt;h2 id="2-队列的抽象数据类型描述">2. 队列的抽象数据类型描述&lt;/h2>
+&lt;p>与队列相关的操作主要包括以下几种：&lt;/p>
+&lt;ul>
+&lt;li>创建队列：生成长度为 size 的空队列。&lt;/li>
+&lt;li>判断队列是否满了。&lt;/li>
+&lt;li>判断队列是否为空。&lt;/li>
+&lt;li>将数据元素插入到队列中。&lt;/li>
+&lt;li>将数据元素从队列中删除。&lt;/li>
+&lt;/ul>
+&lt;h2 id="3-队列的顺序存储实现">3. 队列的顺序存储实现&lt;/h2>
+&lt;p>队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量&lt;strong>front&lt;/strong>以及一个记录队列尾元素位置的变量&lt;strong>rear&lt;/strong>组成。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">SeqQueue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Queue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">2&lt;/span>
+&lt;span class="ln">3&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">elementData&lt;/span>&lt;span class="o">[];&lt;/span>
+&lt;span class="ln">4&lt;/span>
+&lt;span class="ln">5&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">rear&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>如下图所示，用顺序存储实现队列，由于数组的元素从 0 开始，所以 front 和 rear 同时指向 -1 这个位置，添加 Job1，rear 往后移动一个位置，删除 Job1 ，front 往后移动一个位置。当队列满了的时候，就无法添加元素了，但是很明显就能发现，此时之前删除的位置还是空的，队列中还有位置，只是无法添加而已，这样的结构会造成空间浪费，我们需要用循环结构来解决。&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/seqqueue.png" alt="">&lt;/p>
+&lt;p>循环队列的机构如下图所示。循环结构中，front 和 rear 开始时同时指向 0 这个位置，之后，每一次入队，rear 向着顺时针方向移动一个位置，每一次出队列，front 向顺时针方向移动一个位置。那么这里就有个问题：队列空和满的判别条件是什么？队列空和满的时候，&lt;code>front=rear&lt;/code>，那么就造成无法判断队列空还是满了。那么要如何解决呢？这里提供两个解决方法：&lt;/p>
+&lt;ol>
+&lt;li>使用额外标记： &lt;strong>Size&lt;/strong>或者&lt;strong>tag&lt;/strong> 。size 用来记录当前元素的个数，当你加入一个元素的时候，size 加 1，删除一个元素的时候，size减1，所以只要根据size是0还是n就知道是空还是满的。tag （0，1）标记，添加一个元素，tag=1，删除一个元素 tag=0，当我们想判断队列是满还是空时，只要判断 tag 的值就知道最后一次操作是添加还是删除。&lt;/li>
+&lt;li>仅使用n-1个数组空间。&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/circlequeue.png" alt="">&lt;/p>
+&lt;p>我们采用第二种方案，使用求余函数来查看列队是否已满。&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">rear&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="n">size&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">front&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>看看具体的实现代码：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nn">leetcode.editor.datastructure.queue&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 2&lt;/span>
+&lt;span class="ln"> 3&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.io.Serializable&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 4&lt;/span>
+&lt;span class="ln"> 5&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">SeqQueue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Queue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;,&lt;/span> &lt;span class="n">Serializable&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 6&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">DEAFULT_SIZE&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">10&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 8&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">elementData&lt;/span>&lt;span class="o">[];&lt;/span>
+&lt;span class="ln">10&lt;/span>
+&lt;span class="ln">11&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">rear&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">12&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">size&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">14&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">SeqQueue&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">16&lt;/span> &lt;span class="n">elementData&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">[])&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Object&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">DEAFULT_SIZE&lt;/span>&lt;span class="o">];&lt;/span>
+&lt;span class="ln">17&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">18&lt;/span> &lt;span class="n">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">19&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">20&lt;/span>
+&lt;span class="ln">21&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">SeqQueue&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">size&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">22&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">size&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">size&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">23&lt;/span> &lt;span class="n">elementData&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">[])&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Object&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">size&lt;/span>&lt;span class="o">];&lt;/span>
+&lt;span class="ln">24&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">25&lt;/span> &lt;span class="n">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">26&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">27&lt;/span>
+&lt;span class="ln">28&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">29&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span>&lt;span class="n">rear&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">elementData&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">30&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;队列已满&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">31&lt;/span> &lt;span class="k">return&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">32&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">33&lt;/span> &lt;span class="n">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">rear&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">elementData&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">34&lt;/span> &lt;span class="n">elementData&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">rear&lt;/span>&lt;span class="o">]&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">35&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">36&lt;/span>
+&lt;span class="ln">37&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">isEmpty&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">38&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">elementData&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">0&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">39&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">40&lt;/span>
+&lt;span class="ln">41&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">delete&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">42&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">front&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">rear&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">43&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;队列为空&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">44&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">45&lt;/span> &lt;span class="o">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">46&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">front&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">%&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">elementData&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">length&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">47&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">elementData&lt;/span>&lt;span class="o">[&lt;/span>&lt;span class="n">front&lt;/span>&lt;span class="o">];&lt;/span>
+&lt;span class="ln">48&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">49&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">50&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;span class="ln">51&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;h1 id="4-队列的链式存储实现">4. 队列的链式存储实现&lt;/h1>
+&lt;blockquote>
+&lt;p>队列的链式存储结构也可以用一个&lt;strong>单链表&lt;/strong>实现。插入和删除操作分别在链表的两头进行；队列指针&lt;strong>front&lt;/strong>和&lt;strong>rear&lt;/strong>应该分别指向链表的表头和表尾。&lt;/p>
+&lt;/blockquote>
+&lt;p>整个队列的结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/linkqueue.png" alt="">&lt;/p>
+&lt;p>与顺序结构不同的是，链式存储实现的队列，出队需要在表头进行，因为是单向链表，如果在表尾进行删除操作，我们无法知道前一个元素是多少。因此入队和出队操作为：&lt;/p>
+&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">LinkedQueue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Queue&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 2&lt;/span>
+&lt;span class="ln"> 3&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">//指向队头节点
+&lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="ln"> 5&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">rear&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">//指向队尾节点
+&lt;/span>&lt;span class="ln"> 6&lt;/span>&lt;span class="c1">&lt;/span>
+&lt;span class="ln"> 7&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">LinkedQueue&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln"> 8&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln"> 9&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">10&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">11&lt;/span>
+&lt;span class="ln">12&lt;/span> &lt;span class="nd">@Override&lt;/span>
+&lt;span class="ln">13&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">14&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">node&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;(&lt;/span>&lt;span class="n">data&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">15&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">front&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>&lt;span class="c1">//空队列插入
+&lt;/span>&lt;span class="ln">16&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">node&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">17&lt;/span> &lt;span class="o">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="o">{&lt;/span>&lt;span class="c1">//非空队列,尾部插入
+&lt;/span>&lt;span class="ln">18&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">rear&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">node&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">19&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">20&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">node&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">21&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">22&lt;/span>
+&lt;span class="ln">23&lt;/span> &lt;span class="nd">@Override&lt;/span>
+&lt;span class="ln">24&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">isEmpty&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">25&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">rear&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">26&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">27&lt;/span>
+&lt;span class="ln">28&lt;/span> &lt;span class="nd">@Override&lt;/span>
+&lt;span class="ln">29&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">delete&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">30&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">frontCell&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">31&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">frontElem&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">32&lt;/span>
+&lt;span class="ln">33&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">front&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">34&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;队列为空&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;span class="ln">35&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">36&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">37&lt;/span> &lt;span class="n">frontCell&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">38&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="n">front&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">rear&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="c1">//若队列只有一个元素
+&lt;/span>&lt;span class="ln">39&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">rear&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">//删除后队列置为空
+&lt;/span>&lt;span class="ln">40&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">else&lt;/span>
+&lt;span class="ln">41&lt;/span> &lt;span class="n">front&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">front&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">next&lt;/span>&lt;span class="o">();&lt;/span>&lt;span class="c1">//front移动到下一个元素
+&lt;/span>&lt;span class="ln">42&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">frontElem&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">frontCell&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">data&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">43&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="n">frontElem&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">44&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">45&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;span class="ln">46&lt;/span>
+&lt;span class="ln">47&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">48&lt;/span>
+&lt;span class="ln">49&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">50&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">51&lt;/span>
+&lt;span class="ln">52&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">Node&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">53&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">54&lt;/span> &lt;span class="n">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">55&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">56&lt;/span>
+&lt;span class="ln">57&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">Node&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">T&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">58&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">59&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">next&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">next&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">60&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">61&lt;/span>
+&lt;span class="ln">62&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">Node&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="nf">next&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;span class="ln">63&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="k">this&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">next&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;span class="ln">64&lt;/span> &lt;span class="o">}&lt;/span>
+&lt;span class="ln">65&lt;/span>
+&lt;span class="ln">66&lt;/span>&lt;span class="o">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>参考：浙江大学陈越老师的&lt;a href="https://www.icourse163.org/learn/ZJU-93001?tid=1207006212#/learn/announce">数据结构课程&lt;/a>&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

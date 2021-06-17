@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubernetes on Ahamoment</title><link>https://ahamoment.cn/tags/kubernetes/</link><description>Recent content in kubernetes on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Mon, 28 Dec 2020 11:16:35 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker 和 Kubernetes 面试题</title><link>https://ahamoment.cn/post/interview-docker-k8s/</link><pubDate>Mon, 28 Dec 2020 11:16:35 +0800</pubDate><guid>https://ahamoment.cn/post/interview-docker-k8s/</guid><description>
+&lt;h2 id="1-docker-问题">1. Docker 问题&lt;/h2>
+&lt;h3 id="11-docker-后端存储驱动-devicemapperoverlay-几种的区别">1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？&lt;/h3>
+&lt;p>刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。&lt;/p>
+&lt;p>&lt;strong>AUFS&lt;/strong>&lt;/p>
+&lt;p>AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/aufs.webp" alt="">&lt;/p>
+&lt;p>&lt;strong>Overlay&lt;/strong>&lt;/p>
+&lt;p>Overlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/overlay.webp" alt="">&lt;/p>
+&lt;p>&lt;strong>Devicemapper&lt;/strong>&lt;/p>
+&lt;p>Device mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/devicemapper.webp" alt="">&lt;/p>
+&lt;p>详细内容请参考：&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1513">Docker 五种存储驱动&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1765">深入了解 Docker 存储驱动&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="12-容器隔离不彻底memory-和-cpu-隔离不彻底怎么处理解决这个问题">1.2. 容器隔离不彻底，Memory 和 CPU 隔离不彻底，怎么处理解决这个问题？&lt;/h3>
+&lt;p>由于 /proc 文件系统是以只读的方式挂载到容器内部，所以在容器内看到的都是宿主机的信息，包括 CPU 和 Memory，docker 是以 cgroups 来进行资源限制的，而 jdk1.9 以下版本目前无法自动识别容器的资源配额，1.9以上版本会自动识别和正常读取 cgroups 中为容器限制的资源大小。&lt;/p>
+&lt;p>&lt;em>&lt;strong>Memory 隔离不彻底&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>Docker 通过 cgroups 完成对内存的限制，而 /proc 文件目录是以只读的形式挂载到容器中，由于默认情况下，Java 压根就看不到 cgroups 限制的内容的大小，而默认使用 /proc/meminfo 中的信息作为内存信息进行启动，默认情况下，JVM 初始堆大小为内存总量的 1/4，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。&lt;/p>
+&lt;p>那么目前有几种解决方式：&lt;/p>
+&lt;p>（1）升级 JDK 版本到1.9以上，让 JVM 能自动识别 cgroups 对容器的资源限制，从而自动调整 JVM 的参数并启动 JVM 进程。&lt;/p>
+&lt;p>（2）对于较低版本的JDK，一定要设置 JVM 初始堆大小，并且JVM 的最大堆内存不能超过容器的最大内存值，正常理论值应该是：容器 limit-memory = JVM 最大堆内存 + 750MB。&lt;/p>
+&lt;p>（3）使用 lxcfs ，这是一种用户态文件系统，用来支持LXC 容器，lxcfs 通过用户态文件系统，在容器中提供下列 procfs 的文件，启动时，把宿主机对应的目录 /var/lib/lxcfu/proc/meminfo 文件挂载到 Docker 容器的 /proc/meminfo 位置后，容器中进程（JVM）读取相应文件内容时，lxcfs 的 fuse 将会从容器对应的 cgroups 中读取正确的内存限制，从而获得正确的资源约束设定。&lt;/p>
+&lt;p>&lt;em>&lt;strong>CPU 隔离不彻底&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>JVM GC （垃圾回收）对于 java 程序执行性能有一定的影响，默认的 JVM 使用如下公式： ParallelGCThreads = ( ncpu &amp;lt;= 8 ) ? ncpu：3 + （ncpu * 5）/ 8 来计算并行 GC 的线程数，但是在容器里面，ncpu 获取的就是所在宿主机的 cpu 个数，这会导致 JVM 启动过多的 GC 线程，直接的结果就是 GC 的性能下降，java 服务的感受就是：延时增加， TPS 吞度量下降，针对这种问题，也有以下几种解决方案：&lt;/p>
+&lt;p>（1）显示传递 JVM 启动参数：“-XX: ParallelGCThreads&amp;quot; 告诉 JVM 应该启动多少个并行 GC 线程，缺点是需要业务感知，而且需要为不同配置的容器传递不同的 JVM 参数。&lt;/p>
+&lt;p>（2）在容器内使用 Hack 过的 glibc ，使 JVM 通过 sysconf 系统调用能正确获取容器内 CPU 资源核数，优点是业务无感知，并且能自动适配不同配置的容器，缺点是有一定的维护成本。具体参考：&lt;a href="https://chenxq.xyz/post/cloud-container-get-cpu/">容器内获取 CPU 核数问题&lt;/a>&lt;/p>
+&lt;h3 id="13-介绍一下容器实现的基础-namespace-and-cgroups">1.3. 介绍一下容器实现的基础: Namespace and Cgroups&lt;/h3>
+&lt;p>主要用到了Linux的两种技术：Namespace 和 CGroup。Namespace 做隔离，Cgroups 做限制。&lt;/p>
+&lt;p>Namespace 技术实际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容。在创建进程的时候，Linux 系统提供了Mount、UTS、IPC、Network和User这些Namespace，用来对各种不同的进程上下文进行隔离操作。所以，Docker 容器实际上是在创建容器进程时，指定了这个进程所需要启用的一组 Namespace 参数。这样，容器就只能“看”到当前 Namespace 所限定的资源、文件、设备、状态，或者配置。而对于宿主机以及其他不相关的程序，它就完全看不到了。所以说，容器，其实是一种特殊的进程而已。&lt;/p>
+&lt;p>Linux Cgroups 就是 Linux 内核中用来为进程设置资源限制的一个重要功能。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。&lt;/p>
+&lt;p>一个正在运行的 Docker 容器，其实就是一个启用了多个 Linux Namespace 的应用进程，而这个进程能够使用的资源量，则受 Cgroups 配置的限制。&lt;/p>
+&lt;p>详情请参考：https://coolshell.cn/articles/17049.html&lt;/p>
+&lt;h3 id="14-docker-load-加载一个镜像-docker-images-查看不到是哪些原因">1.4. docker load 加载一个镜像， docker images 查看不到，是哪些原因？&lt;/h3>
+&lt;h3 id="14-有没有遇到容器-oom-的问题怎么处理的">1.4 有没有遇到容器 OOM 的问题？怎么处理的？&lt;/h3>
+&lt;p>OOM 可能的原因：&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>容器隔离不彻底。默认情况下，JVM 初始堆大小为内存总量的 1/4，例如这台宿主机的内存为32G，那么初始堆的大小为8G，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。&lt;/p>
+&lt;/li>
+&lt;li>&lt;/li>
+&lt;/ol>
+&lt;p>处理方法：&lt;/p>
+&lt;ol>
+&lt;li>升级jdk版本或者设置初始堆大小和堆内存最大值，即-Xms 和 -Xmx。&lt;/li>
+&lt;/ol>
+&lt;h2 id="2-kubernetes-问题">2. Kubernetes 问题&lt;/h2>
+&lt;h3 id="21-k8s-的架构体系了解吗简单描述一下">2.1. k8s 的架构体系了解吗？简单描述一下&lt;/h3>
+&lt;p>这道题主要考察 k8s 体系，涉及的范围其实太广泛，可以从本身 k8s 组件、存储、网络、监控等方面阐述，当时我主要将 k8s 的每个组件功能都大概说了一下。&lt;/p>
+&lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/k8s-infra.png" alt="">&lt;/p>
+&lt;p>&lt;strong>Master节点&lt;/strong>&lt;/p>
+&lt;p>Master节点主要有四个组件，分别是：api-server、controller-manager、kube-scheduler 和 etcd。&lt;/p>
+&lt;hr>
+&lt;p>&lt;em>&lt;strong>api-server&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责API服务。kube-apiserver 作为 k8s 集群的核心，负责整个集群功能模块的交互和通信，集群内的各个功能模块如 kubelet、controller、scheduler 等都通过 api-server 提供的接口将信息存入到 etcd 中，当需要这些信息时，又通过 api-server 提供的 restful 接口，如get、watch 接口来获取，从而实现整个 k8s 集群功能模块的数据交互。&lt;/p>
+&lt;p>&lt;em>&lt;strong>controller-manager&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责容器编排。controller-manager 作为 k8s 集群的管理控制中心，负责集群内 Node、Namespace、Service、Token、Replication 等资源对象的管理，使集群内的资源对象维持在预期的工作状态。&lt;/p>
+&lt;p>每一个 controller 通过 api-server 提供的 restful 接口实时监控集群内每个资源对象的状态，当发生故障，导致资源对象的工作状态发生变化，就进行干预，尝试将资源对象从当前状态恢复为预期的工作状态，常见的 controller 有 Namespace Controller、Node Controller、Service Controller、ServiceAccount Controller、Token Controller、ResourceQuote Controller、Replication Controller等。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kube-scheduler&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>kube-scheduler 简单理解为通过特定的调度算法和策略为待调度的 Pod 列表中的每个 Pod 选择一个最合适的节点进行调度，调度主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略和限制筛选出候选节点，优选阶段是在第一步的基础上，通过相应的策略为每一个候选节点进行打分，分数最高者胜出，随后目标节点的 kubelet 进程通过 api-server 提供的接口监控到 kube-scheduler 产生的 pod 绑定事件，从 etcd 中获取 Pod 的清单，然后下载镜像，启动容器。&lt;/p>
+&lt;p>&lt;strong>预选阶段的策略有：&lt;/strong>&lt;/p>
+&lt;p>(1) MatchNodeSelector：判断节点的 label 是否满足 Pod 的 nodeSelector 属性值。&lt;/p>
+&lt;p>(2) PodFitResource：判断节点的资源是否满足 Pod 的需求，批判的标准是：当前节点已运行的所有 Pod 的 request值 + 待调度的 Pod 的 request 值是否超过节点的资源容量。&lt;/p>
+&lt;p>(3) PodFitHostName：判断节点的主机名称是否满足 Pod 的 nodeName 属性值。&lt;/p>
+&lt;p>(4) PodFitHostPort：判断 Pod 的端口所映射的节点端口是否被节点其他 Pod 所占用。&lt;/p>
+&lt;p>(5) CheckNodeMemoryPressure：判断 Pod 是否可以调度到内存有压力的节点，这取决于 Pod 的 Qos 配置，如果是 BestEffort（尽量满足，优先级最低），则不允许调度。&lt;/p>
+&lt;p>(6) CheckNodeDiskPressure：如果当前节点磁盘有压力，则不允许调度。&lt;/p>
+&lt;p>&lt;strong>优选阶段的策略有：&lt;/strong>&lt;/p>
+&lt;p>(1) SelectorSpreadPriority：尽量减少节点上同属一个 SVC/RC/RS 的 Pod 副本数，为了更好的实现容灾，对于同属一个 SVC/RC/RS 的 Pod 实例，应尽量调度到不同的 node 节点。&lt;/p>
+&lt;p>(2) LeastRequestPriority：优先调度到请求资源较少的节点，节点的优先级由节点的空闲资源与节点总容量的比值决定的，即（节点总容量 - 已经运行的 Pod 所需资源）/ 节点总容量，CPU 和 Memory 具有相同的权重，最终的值由这两部分组成。&lt;/p>
+&lt;p>(3) BalancedResourceAllocation：该策略不能单独使用，必须和 LeaseRequestPriority 策略一起结合使用，尽量调度到 CPU 和 Memory 使用均衡的节点上。&lt;/p>
+&lt;p>&lt;em>&lt;strong>ETCD&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>强一致性的键值对存储，k8s 集群中的所有资源对象都存储在 etcd 中。&lt;/p>
+&lt;p>&lt;strong>Node节点&lt;/strong>&lt;/p>
+&lt;hr>
+&lt;p>在 Kubernetes 项目中，kubelet 主要负责同容器运行时（比如 Docker 项目）打交道。而这个交互所依赖的，是一个称作 CRI（Container Runtime Interface）的远程调用接口，这个接口定义了容器运行时的各项核心操作。而具体的容器运行时，比如 Docker 项目，则一般通过 OCI 这个容器运行时规范同底层的 Linux 操作系统进行交互。此外，kubelet 还通过 gRPC 协议同一个叫作 Device Plugin 的插件进行交互。这个插件，是 Kubernetes 项目用来管理 GPU 等宿主机物理设备的主要组件，也是基于 Kubernetes 项目进行机器学习训练、高性能作业支持等工作必须关注的功能。而 kubelet 的另一个重要功能，则是调用网络插件和存储插件为容器配置网络和持久化存储。这两个插件与 kubelet 进行交互的接口，分别是 CNI（Container Networking Interface）和 CSI（Container Storage Interface）。&lt;/p>
+&lt;p>Node节点主要有三个组件：分别是 kubelet、kube-proxy 和 容器运行时 docker 或者 rkt。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kubelet&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>在 k8s 集群中，每个 node 节点都会运行一个 kubelet 进程，该进程用来处理 Master 节点下达到该节点的任务，同时，通过 api-server 提供的接口定期向 Master 节点报告自身的资源使用情况，并通过 cadvisor 组件监控节点和容器的使用情况。&lt;/p>
+&lt;p>&lt;em>&lt;strong>kube-proxy&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>kube-proxy 就是一个智能的软件负载均衡器，将 service 的请求转发到后端具体的 Pod 实例上，并提供负载均衡和会话保持机制，目前有三种工作模式，分别是：用户模式（userspace）、iptables 模式和 IPVS 模式。&lt;/p>
+&lt;p>&lt;em>&lt;strong>容器运行时——docker&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>负责管理 node 节点上的所有容器和容器 IP 的分配。&lt;/p>
+&lt;h3 id="22-k8s-创建一个pod的详细流程涉及的组件怎么通信的">2.2. k8s 创建一个pod的详细流程，涉及的组件怎么通信的？&lt;/h3>
+&lt;p>k8s 创建一个 Pod 的详细流程如下：&lt;/p>
+&lt;p>(1) 客户端提交创建请求，可以通过 api-server 提供的 restful 接口，或者是通过 kubectl 命令行工具，支持的数据类型包括 JSON 和 YAML。&lt;/p>
+&lt;p>(2) api-server 处理用户请求，将 pod 信息存储至 etcd 中。&lt;/p>
+&lt;p>(3) kube-scheduler 通过 api-server 提供的接口监控到未绑定的 pod，尝试为 pod 分配 node 节点，主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略筛选出候选节点，而优选阶段是在第一步的基础上，为每一个候选节点进行打分，分数最高者胜出。&lt;/p>
+&lt;p>(4) 选择分数最高的节点，进行 pod binding 操作，并将结果存储至 etcd 中。&lt;/p>
+&lt;p>(5) 随后目标节点的 kubelet 进程通过 api-server 提供的接口监测到 kube-scheduler 产生的 pod 绑定事件，然后从 etcd 获取 pod 清单，下载镜像并启动容器。&lt;/p>
+&lt;hr>
+&lt;p>整个事件流可以参考下图：&lt;/p>
+&lt;p>&lt;img src="https:////upload-images.jianshu.io/upload_images/16605471-363ddd93976fbd60.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/759/format/webp" alt="img">&lt;/p>
+&lt;p>参考文章：&lt;a href="http://dockone.io/article/9134">kubectl 创建 Pod 背后到底发生了什么？&lt;/a>&lt;/p>
+&lt;h3 id="23-k8s-中服务级别怎样设置服务的级别才是最高的">2.3. k8s 中服务级别，怎样设置服务的级别才是最高的&lt;/h3>
+&lt;p>这道题主要考察 k8s Qos 类别。在 k8s 中，Qos 主要有三种类别，分别是 BestEffort、Burstable 和 Guaranteed，三种类别区别如下：&lt;/p>
+&lt;p>&lt;em>&lt;strong>BestEffort&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>什么都不设置（CPU or Memory），佛系申请资源。&lt;/p>
+&lt;p>&lt;em>&lt;strong>Burstable&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>Pod 中的容器至少一个设置了CPU 或者 Memory 的请求&lt;/p>
+&lt;p>&lt;em>&lt;strong>Guaranteed&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>Pod 中的所有容器必须设置 CPU 和 Memory，并且 request 和 limit 值相等。&lt;/p>
+&lt;p>详情可以参考这篇博客：&lt;a href="https://www.jianshu.com/p/b02e6bb20f03">K8s Qos&lt;/a>&lt;/p>
+&lt;h3 id="24-有状态的容器如何上云">2.4. 有状态的容器如何上云？&lt;/h3>
+&lt;h3 id="25-解释一下crd和operator有没有自己开发过crd或者operator">2.5. 解释一下CRD和Operator？有没有自己开发过CRD或者Operator？&lt;/h3>
+&lt;h3 id="26-什么是-cni-平时-k8s-集群用的是哪个网络插件">2.6. 什么是 CNI? 平时 K8S 集群用的是哪个网络插件？&lt;/h3>
+&lt;h3 id="27-为什么-pod-中关于资源有-request-和-limit-两个字段有想过这么设计的原因吗">2.7. 为什么 Pod 中关于资源有 request 和 limit 两个字段？有想过这么设计的原因吗？&lt;/h3>
+&lt;h3 id="28-pod被调度到一个节点上的具体过程">2.8. Pod被调度到一个节点上的具体过程？&lt;/h3>
+&lt;h3 id="29-一个请求到-pod-接收响应中间经历了哪些过程">2.9. 一个请求到 Pod 接收响应，中间经历了哪些过程？&lt;/h3>
+&lt;h2 id="3-参考资料">3. 参考资料&lt;/h2>
+&lt;p>[1] &lt;a href="https://www.jianshu.com/p/2de643caefc1">docker &amp;amp; kubernetes 面试&lt;/a>&lt;/p></description></item></channel></rss>
