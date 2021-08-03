@@ -24,7 +24,7 @@
 &lt;h3 id="23-springboot-中如何实现过滤器和拦截器">2.3. SpringBoot 中如何实现过滤器和拦截器？&lt;/h3>
 &lt;p>&lt;strong>（1）过滤器&lt;/strong>&lt;/p>
 &lt;p>spring boot 中自定义过滤器只需要实现 Filter 接口，重写里面的&lt;code>init()&lt;/code> ,&lt;code>doFilter()&lt;/code>,&lt;code>destroy()&lt;/code>方法即可。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Filter&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Filter&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">//初始化过滤器后执行的操作
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="k">default&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">init&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">FilterConfig&lt;/span> &lt;span class="n">filterConfig&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="kd">throws&lt;/span> &lt;span class="n">ServletException&lt;/span> &lt;span class="o">{&lt;/span>
@@ -36,7 +36,7 @@
 &lt;span class="ln">10&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">11&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>在配置中注册自定义的过滤器。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Configuration&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Configuration&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MyFilterConfig&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="nd">@Autowired&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="n">MyFilter&lt;/span> &lt;span class="n">myFilter&lt;/span>&lt;span class="o">;&lt;/span>
@@ -55,7 +55,7 @@
 &lt;p>详情可以参考文章：&lt;a href="https://snailclimb.gitee.io/springboot-guide/#/./docs/basis/springboot-filter">《SpringBoot 实现过滤器》&lt;/a>&lt;/p>
 &lt;p>&lt;strong>（2）拦截器&lt;/strong>&lt;/p>
 &lt;p>如果你需要自定义 &lt;strong>Interceptor&lt;/strong> 的话必须实现 &lt;code>org.springframework.web.servlet.HandlerInterceptor&lt;/code>接口或继承 &lt;code>org.springframework.web.servlet.handler.HandlerInterceptorAdapter&lt;/code>类，并且需要重写下面下面3个方法：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">preHandle&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">HttpServletRequest&lt;/span> &lt;span class="n">request&lt;/span>&lt;span class="o">,&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">preHandle&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">HttpServletRequest&lt;/span> &lt;span class="n">request&lt;/span>&lt;span class="o">,&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="n">HttpServletResponse&lt;/span> &lt;span class="n">response&lt;/span>&lt;span class="o">,&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="n">Object&lt;/span> &lt;span class="n">handler&lt;/span>&lt;span class="o">)&lt;/span>
 &lt;span class="ln"> 4&lt;/span>

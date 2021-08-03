@@ -24,7 +24,7 @@
 &lt;h2 id="最大堆的创建">最大堆的创建&lt;/h2>
 &lt;p>堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。&lt;/p>
 &lt;p>数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">abstract&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Heap&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">abstract&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Heap&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="c1">// 堆的类型定义
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">protected&lt;/span> &lt;span class="kt">int&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">;&lt;/span> &lt;span class="c1">//存储元素的数组
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">protected&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">size&lt;/span>&lt;span class="o">;&lt;/span>&lt;span class="c1">//堆中当前元素个数
@@ -66,7 +66,7 @@
 &lt;p>当插入的值为35的时候，当前堆的有序性被破坏了，将35和31的位置调换后就可以了。&lt;/p>
 &lt;p>&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200917113303675.png" alt="image-20200917113303675">&lt;img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200917113324619.png" alt="image-20200917113324619">&lt;/p>
 &lt;p>当插入的值为58的时候，58 &amp;gt; 31，跟31对调位置，58 &amp;gt; 44 继续跟根结点调换位置。调整后保证了有序性，同时，从58 -&amp;gt; 44 -&amp;gt; 31这条线也是按照从大到小的顺序。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">insert&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">element&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">insert&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">element&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="c1">// 将元素X插入最大堆H，其中H-&amp;gt;Data[0]已经定义为哨兵
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">i&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 4&lt;/span>
@@ -92,7 +92,7 @@
 &lt;li>找出 31 的较大的孩子&lt;/li>
 &lt;/ol>
 &lt;p>时间复杂度为： $T(N)=O(logN)$&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">deleteMax&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">deleteMax&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="c1">// 从最大堆中取出键值为最大的元素，并删除一个结点
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">parent&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">child&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">maxItem&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">temp&lt;/span>&lt;span class="o">;&lt;/span>&lt;span class="c1">//maxItem-堆顶元素，temp-临时变量
@@ -121,7 +121,7 @@
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="最大堆的建立">最大堆的建立&lt;/h2>
 &lt;p>建立最大堆是将已经存在的N个元素按最大堆的要求存放在一个一维数组中。&lt;/p>
 &lt;p>建堆的过程可以从树的从最后一个结点的父节点开始，到根结点1，将最后一个结点的父节点所在的小堆调整为最大堆，然后向左寻找有儿子的结点，每次调整一个最大堆，直到根结点。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">buildHeap&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">buildHeap&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="c1">//* 调整Data[]中的元素，使满足最大堆的有序性 *//*
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="c1">//* 这里假设所有Size个元素已经存在Data[]中 *//*
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span>
@@ -152,7 +152,7 @@
 &lt;span class="ln">29&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="最小堆">最小堆&lt;/h2>
 &lt;p>最小堆的建立和操作与最大堆大致上是一样的。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MinHeap&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">Heap&lt;/span>&lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MinHeap&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">Heap&lt;/span>&lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">MinHeap&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">maxSize&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">sentinalVal&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="kd">super&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">maxSize&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">sentinalVal&lt;/span>&lt;span class="o">);&lt;/span>

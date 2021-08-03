@@ -4,20 +4,20 @@
 &lt;ul>
 &lt;li>
 &lt;p>RHEL/CentOS&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>yum -y install nscd
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>yum -y install nscd
 &lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;li>
 &lt;p>Debian/Ubuntu&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>apt-get install nscd
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>apt-get install nscd
 &lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;li>
 &lt;p>RPM&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
 &lt;/code>&lt;/pre>&lt;/div>&lt;/li>
 &lt;/ul>
 &lt;p>CentOS7 之后 NSCD 使用 systemd 进行管理。&lt;/p>
 &lt;h2 id="nscd-命令选项">NSCD 命令选项&lt;/h2>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ nscd --help
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ nscd --help
 &lt;span class="ln"> 2&lt;/span>用法： nscd &lt;span class="o">[&lt;/span>选项...&lt;span class="o">]&lt;/span>
 &lt;span class="ln"> 3&lt;/span>Name Service Cache Daemon.
 &lt;span class="ln"> 4&lt;/span> -d, --debug Do not fork and display messages on the current
@@ -36,7 +36,7 @@
 &lt;p>NSCD配置文件为&lt;code>/etc/nscd.conf&lt;/code>，NSCD程序在启动的时候会读取&lt;code>/etc/nscd.conf&lt;/code>文件，每一行指定一个属性和对应的值，或者指定一个服务和对应的值，#表示注释。有效的服务设定是：passwd, group, hosts, services, or netgroup五个。&lt;/p>
 &lt;p>NSCD 的缓存文件路径默认为 &lt;code>/var/db/nscd/&lt;/code>。&lt;/p>
 &lt;p>NSCD 的配置文件相关参数&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">#设置日志文件&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">#设置日志文件&lt;/span>
 &lt;span class="ln"> 2&lt;/span>logfile debug-file-name
 &lt;span class="ln"> 3&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="c1">#设置debug记录的级别，默认是0&lt;/span>
@@ -117,9 +117,9 @@
 &lt;/ul>
 &lt;h3 id="配置dns缓存">配置DNS缓存&lt;/h3>
 &lt;p>通过编辑&lt;code>/etc/nscd.conf&lt;/code>文件，在其中增加如下一行可以开启本地DNS Cache&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>enable-cache hosts yes &lt;span class="c1">#这个服务除了dns缓存之外还可以缓存passwd,group,servers&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>enable-cache hosts yes &lt;span class="c1">#这个服务除了dns缓存之外还可以缓存passwd,group,servers&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>完整配置如下：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ cat /etc/nscd.conf
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ cat /etc/nscd.conf
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span>logfile /var/log/nscd.log
 &lt;span class="ln"> 4&lt;/span>threads &lt;span class="m">5&lt;/span>
@@ -139,30 +139,30 @@
 &lt;span class="ln">18&lt;/span>shared hosts yes
 &lt;span class="ln">19&lt;/span>max-db-size hosts &lt;span class="m">33554432&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="关于主动刷新">关于主动刷新&lt;/h4>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>reload-count &lt;span class="m">5&lt;/span> 默认值是5，代表SUCCESS的缓存在内存中会Reload 5次
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>reload-count &lt;span class="m">5&lt;/span> 默认值是5，代表SUCCESS的缓存在内存中会Reload 5次
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>reload的time是DNS应答&lt;code>TTL&lt;/code>+&lt;code>CACHE_PRUNE_INTERVAL&lt;/code>，reload过程中NSCD会主动发起DNS请求（非客户端发起），如果期间发生解析结果变更会将结果主动更新至NSCD缓存。这里的CACHE_PRUNE_INTERVAL来自于相关的宏定义：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>#define CACHE_PRUNE_INTERVAL 15
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>#define CACHE_PRUNE_INTERVAL 15
 &lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="关于非success域名的缓存">关于非success域名的缓存&lt;/h4>
 &lt;p>查看代码发现对于非success域名的缓存，NSCD会读取配置中的negative-time-to-live hosts，将缓存一个negative-time-to-live hosts+CACHE_PRUNE_INTERVAL的时间&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>dataset-&amp;gt;head.ttl = ttl == INT32_MAX ? db-&amp;gt;negtimeout : ttl;
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>dataset-&amp;gt;head.ttl = ttl == INT32_MAX ? db-&amp;gt;negtimeout : ttl;
 &lt;span class="ln">2&lt;/span> timeout = dataset-&amp;gt;head.timeout = t + dataset-&amp;gt;head.ttl;
 &lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="关于缓存的rr轮询">关于缓存的RR轮询&lt;/h4>
 &lt;p>NSCD是直接缓存了GETHOSTBYNAME/GETHOSTBYADD的应答结果，如果存在多条RR的情况下，将只会读取应答结果中的第一条结果作为函数的返回值。多条RR在NSCD的缓存中并没有RR轮询的效果，直到下一次reload更新缓存结果。这里可能导致域名原本的负载均衡机制失效。&lt;/p>
 &lt;h4 id="关于cnamea的结果">关于CNAME+A的结果&lt;/h4>
 &lt;p>GLIBC的GETHOSTBYNAME/GETHOSTBYADD返回的TTL中直接读取的是A类型的TTL，代码中并没有针对CNAME的TTL做特殊处理，因此在有CNAME+A的级联应答结果中，缓存的timeout将只会读取对应的A记录的TTL。
 当DNS应答结果只有CNAME时，DNS请求将被判定为失败，这时CNAME的TTL将不起作用，缓存的时间将遵循非success域名的timeout计算。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>return ((qtype == T_A || qtype == T_AAAA) &amp;amp;&amp;amp; ap != host_data-&amp;gt;aliases
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="ln">1&lt;/span>return ((qtype == T_A || qtype == T_AAAA) &amp;amp;&amp;amp; ap != host_data-&amp;gt;aliases
 &lt;span class="ln">2&lt;/span> ? NSS_STATUS_NOTFOUND : NSS_STATUS_TRYAGAIN);
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="启动-nscd-进程">启动 NSCD 进程&lt;/h3>
 &lt;p>默认该服务在Redhat或Centos下是关闭的，可以通过以下指令开启&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>$ systemctl start nscd
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>$ systemctl start nscd
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>查看进程，如下所示&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>$ ps aux | grep nscd
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>$ ps aux | grep nscd
 &lt;span class="ln">2&lt;/span>nscd 1284 0.1 0.3 708056 1580 ? Ssl 23:37 0:00 /usr/sbin/nscd
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>说明已经正常运行了。&lt;/p>
 &lt;h3 id="nscd服务查看和清除">NSCD服务查看和清除&lt;/h3>
 &lt;p>NSCD缓存DB文件在&lt;code>/var/db/nscd&lt;/code>下。可以通过&lt;code>nscd -g&lt;/code>查看统计的信息，这里列出部分：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ nscd -g
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>$ nscd -g
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span>nscd 配置：
 &lt;span class="ln"> 4&lt;/span>
@@ -202,11 +202,11 @@
 &lt;span class="ln">38&lt;/span>
 &lt;span class="ln">39&lt;/span>... 省略输出信息若干 ...
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="清除指定类型缓存">清除指定类型缓存&lt;/h3>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ nscd -i passwd
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ nscd -i passwd
 &lt;span class="ln">2&lt;/span>$ nscd -i group
 &lt;span class="ln">3&lt;/span>$ nscd -i hosts
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="关闭服务">关闭服务&lt;/h3>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ nscd -K
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ nscd -K
 &lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="参考文章">参考文章&lt;/h2>
 &lt;p>【1】&lt;a href="https://www.hi-linux.com/posts/9461.html">Linux 下开启缓存服务 NSCD&lt;/a>&lt;/p>
 &lt;p>【2】&lt;a href="https://zhuanlan.zhihu.com/p/44556919">阿里DNS: NSCD-DNS缓存详解&lt;/a>&lt;/p>

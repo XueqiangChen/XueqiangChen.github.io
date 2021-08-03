@@ -23,7 +23,7 @@ test 目录用来写测试用例, 这里用不到 Main 方法。&lt;/p>
 &lt;/ol>
 &lt;h2 id="四编译调式">四、编译调式&lt;/h2>
 &lt;p>创建一个测试类进行调试：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.util.HashMap&lt;/span>&lt;span class="o">;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.util.HashMap&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="nn">java.util.Map&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 3&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Test&lt;/span> &lt;span class="o">{&lt;/span>

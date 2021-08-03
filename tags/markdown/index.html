@@ -1,116 +1,428 @@
-<!doctype html><html lang=zh data-figures><head><title>markdown | Ahamoment</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta http-equiv=x-ua-compatible content="IE=edge"><script async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXX"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','XXXXXXXXXX')</script><meta property="og:locale" content="zh"><meta property="og:locale:alternate" content="pt"><meta property="og:type" content="article"><meta name=description content><meta name=twitter:card content="summary"><meta name=twitter:creator content="@xueqiang_chen"><meta name=twitter:title content="markdown"><meta property="og:url" content="https://ahamoment.cn/tags/markdown/"><meta property="og:title" content="markdown"><meta property="og:description" content><meta property="og:image" content="https://ahamoment.cn/images/thumbnail.png"><link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/icons/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/icons/favicon-32x32.png><link rel=manifest href=https://ahamoment.cn/icons/site.webmanifest><link rel=canonical href=https://ahamoment.cn/tags/markdown/><link rel=alternate type=application/rss+xml href=https://ahamoment.cn/tags/markdown/index.xml title=Ahamoment><link rel=preload href=https://ahamoment.cn/css/styles.44fa81034ff7ea86cc966ac19f3832410f69e9e3d934b6314f12db45aa441d85959a242feb02ce9c112be4b1d4df423eaccb9633ecba2c6204dda4cb4901fc55.css integrity="sha512-RPqBA0/36obMlmrBnzgyQQ9p6ePZNLYxTxLbRapEHYWVmiQv6wLOnBEr5LHU30I+rMuWM+y6LGIE3aTLSQH8VQ==" as=style crossorigin=anonymous><link rel=preload href=https://ahamoment.cn/js/bundle.min.d14fbcd65c3ba32e60cab81f8bbe7aa9b7f8b95ff8290e437fb26ff9ab7f7ea0c928db2dca60aac91f192db906f2d90678f83907e4e3994f6ff9fdb5bdea3369.js as=script integrity="sha512-0U+81lw7oy5gyrgfi756qbf4uV/4KQ5Df7Jv+at/fqDJKNstymCqyR8ZLbkG8tkGePg5B+TjmU9v+f21veozaQ==" crossorigin=anonymous><link rel=stylesheet type=text/css href=https://ahamoment.cn/css/styles.44fa81034ff7ea86cc966ac19f3832410f69e9e3d934b6314f12db45aa441d85959a242feb02ce9c112be4b1d4df423eaccb9633ecba2c6204dda4cb4901fc55.css integrity="sha512-RPqBA0/36obMlmrBnzgyQQ9p6ePZNLYxTxLbRapEHYWVmiQv6wLOnBEr5LHU30I+rMuWM+y6LGIE3aTLSQH8VQ==" crossorigin=anonymous></head><body data-code=7 data-lines=false id=documentTop><header class=nav_header><nav class=nav><a href=https://ahamoment.cn/ class="nav_brand nav_item" title=Ahamoment><img src=https://ahamoment.cn/logos/logo.png class=logo alt=Ahamoment><div class=nav_close><div><svg class="icon"><use xlink:href="#open-menu"/></svg><svg class="icon"><use xlink:href="#closeme"/></svg></div></div></a><div class="nav_body nav_body_left"><div class=nav_parent><a href=https://ahamoment.cn/ class=nav_item title=主页>主页</a></div><div class=nav_parent><a href=https://ahamoment.cn/post/ class=nav_item title=技术文章>技术文章</a></div><div class=nav_parent><a href=https://ahamoment.cn/talks/ class=nav_item title=碎碎念>碎碎念</a></div><div class=nav_parent><a href=https://ahamoment.cn/ class=nav_item title=笔记>笔记 <img src=https://ahamoment.cn/icons/caret-icon.svg alt=icon class=nav_icon></a><div class=nav_sub><span class=nav_child></span><a href=https://ahamoment.cn/k8s-notes/ class="nav_child nav_item" title=Kuberntes笔记>Kuberntes笔记</a></div></div><div class=nav_parent><a href=https://ahamoment.cn/about/ class=nav_item title=关于>关于</a></div><div class=nav_parent><a href=# class=nav_item></a><div class=nav_sub><span class=nav_child></span><a href=https://ahamoment.cn/en/ class="nav_child nav_item">English</a>
+<!doctype html><html lang=zh data-figures>
+<head>
+<title>markdown | Ahamoment</title>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<script async src="https://www.googletagmanager.com/gtag/js?id=XXXXXXXXXX"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','XXXXXXXXXX')</script>
+<meta property="og:locale" content="zh">
+<meta property="og:locale:alternate" content="pt">
+<meta property="og:type" content="article">
+<meta name=description content>
+<meta name=twitter:card content="summary">
+<meta name=twitter:creator content="@xueqiang_chen">
+<meta name=twitter:title content="markdown">
+<meta property="og:url" content="https://ahamoment.cn/tags/markdown/">
+<meta property="og:title" content="markdown">
+<meta property="og:description" content>
+<meta property="og:image" content="https://ahamoment.cn/images/thumbnail.png">
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/icons/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/icons/favicon-32x32.png>
+<link rel=manifest href=https://ahamoment.cn/icons/site.webmanifest>
+<link rel=canonical href=https://ahamoment.cn/tags/markdown/>
+<link rel=alternate type=application/rss+xml href=https://ahamoment.cn/tags/markdown/index.xml title=Ahamoment>
+<link rel=preload href=https://ahamoment.cn/css/styles.44fa81034ff7ea86cc966ac19f3832410f69e9e3d934b6314f12db45aa441d85959a242feb02ce9c112be4b1d4df423eaccb9633ecba2c6204dda4cb4901fc55.css integrity="sha512-RPqBA0/36obMlmrBnzgyQQ9p6ePZNLYxTxLbRapEHYWVmiQv6wLOnBEr5LHU30I+rMuWM+y6LGIE3aTLSQH8VQ==" as=style crossorigin=anonymous>
+<link rel=preload href=https://ahamoment.cn/js/bundle.min.d14fbcd65c3ba32e60cab81f8bbe7aa9b7f8b95ff8290e437fb26ff9ab7f7ea0c928db2dca60aac91f192db906f2d90678f83907e4e3994f6ff9fdb5bdea3369.js as=script integrity="sha512-0U+81lw7oy5gyrgfi756qbf4uV/4KQ5Df7Jv+at/fqDJKNstymCqyR8ZLbkG8tkGePg5B+TjmU9v+f21veozaQ==" crossorigin=anonymous>
+<link rel=stylesheet type=text/css href=https://ahamoment.cn/css/styles.44fa81034ff7ea86cc966ac19f3832410f69e9e3d934b6314f12db45aa441d85959a242feb02ce9c112be4b1d4df423eaccb9633ecba2c6204dda4cb4901fc55.css integrity="sha512-RPqBA0/36obMlmrBnzgyQQ9p6ePZNLYxTxLbRapEHYWVmiQv6wLOnBEr5LHU30I+rMuWM+y6LGIE3aTLSQH8VQ==" crossorigin=anonymous>
+</head>
+<body data-code=10 data-lines=false id=documentTop>
+<header class=nav_header>
+<nav class=nav><a href=https://ahamoment.cn/ class="nav_brand nav_item" title=Ahamoment>
+<img src=https://ahamoment.cn/logos/logo.png class=logo alt=Ahamoment>
+<div class=nav_close>
+<div><svg class="icon"><use xlink:href="#open-menu"/></svg><svg class="icon"><use xlink:href="#closeme"/></svg></div>
+</div>
+</a>
+<div class="nav_body nav_body_left">
+<div class=nav_parent>
+<a href=https://ahamoment.cn/ class=nav_item title=主页>主页 </a>
+</div>
+<div class=nav_parent>
+<a href=https://ahamoment.cn/post/ class=nav_item title=技术文章>技术文章 </a>
+</div>
+<div class=nav_parent>
+<a href=https://ahamoment.cn/talks/ class=nav_item title=碎碎念>碎碎念 </a>
+</div>
+<div class=nav_parent>
+<a href=https://ahamoment.cn/ class=nav_item title=笔记>笔记 <img src=https://ahamoment.cn/icons/caret-icon.svg alt=icon class=nav_icon></a>
+<div class=nav_sub>
+<span class=nav_child></span>
+<a href=https://ahamoment.cn/k8s-notes/ class="nav_child nav_item" title=Kuberntes笔记>Kuberntes笔记</a>
+</div>
+</div>
+<div class=nav_parent>
+<a href=https://ahamoment.cn/about/ class=nav_item title=关于>关于 </a>
+</div>
+<div class=nav_parent>
+<a href=# class=nav_item></a>
+<div class=nav_sub>
+<span class=nav_child></span>
+<a href=https://ahamoment.cn/en/ class="nav_child nav_item">English</a>
 <a href=https://ahamoment.cn/ class="nav_child nav_item">简体中文</a>
-<a href=https://ahamoment.cn/pt/ class="nav_child nav_item"></a></div></div><div class=follow><a href=https://github.com/XueqiangChen><svg class="icon"><use xlink:href="#github"/></svg></a><a href=https://twitter.com/xueqiang_chen><svg class="icon"><use xlink:href="#twitter"/></svg></a><a href=https://www.linkedin.com/in/#><svg class="icon"><use xlink:href="#linkedin"/></svg></a><a href=https://ahamoment.cn/index.xml><svg class="icon"><use xlink:href="#rss"/></svg></a><div class=color_mode><input type=checkbox class=color_choice id=mode></div></div></div></nav></header><main><div class="grid-inverse wrap content"><ul class=posts id=posts><li class=post_item><div class=excerpt><div class=excerpt_header><h3 class=post_link><a href=https://ahamoment.cn/post/markdown-syntax/ title="Markdown Syntax Guide">Markdown Syntax Guide</a></h3><div class=post_meta><span><svg class="icon"><use xlink:href="#calendar"/></svg></span><span class=post_date>Mar 11, 2019</span>
-<span class=post_time>· 3 min read</span><span>&nbsp;· <a href=https://ahamoment.cn/tags/markdown title=markdown class="post_tag button button_translucent">markdown
+<a href=https://ahamoment.cn/pt/ class="nav_child nav_item"></a>
+</div>
+</div>
+<div class=follow>
+<a href=https://github.com/XueqiangChen><svg class="icon"><use xlink:href="#github"/></svg>
+</a>
+<a href=https://twitter.com/xueqiang_chen><svg class="icon"><use xlink:href="#twitter"/></svg>
+</a>
+<a href=https://www.linkedin.com/in/#><svg class="icon"><use xlink:href="#linkedin"/></svg>
+</a>
+<a href=https://ahamoment.cn/index.xml><svg class="icon"><use xlink:href="#rss"/></svg>
+</a>
+<div class=color_mode>
+<input type=checkbox class=color_choice id=mode>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<main>
+<div class="grid-inverse wrap content">
+<ul class=posts id=posts>
+<li class=post_item>
+<div class=excerpt>
+<div class=excerpt_header>
+<h3 class=post_link>
+<a href=https://ahamoment.cn/post/markdown-syntax/ title="Markdown Syntax Guide">Markdown Syntax Guide</a>
+</h3>
+<div class=post_meta>
+<span><svg class="icon"><use xlink:href="#calendar"/></svg></span>
+<span class=post_date>
+Mar 11, 2019</span>
+<span class=post_time> · 3 min read</span><span>&nbsp;· <a href=https://ahamoment.cn/tags/markdown title=markdown class="post_tag button button_translucent">markdown
 </a><a href=https://ahamoment.cn/tags/css title=css class="post_tag button button_translucent">css
 </a><a href=https://ahamoment.cn/tags/html title=html class="post_tag button button_translucent">html
 </a><a href=https://ahamoment.cn/tags/themes title=themes class="post_tag button button_translucent">themes
-</a><a href=https://ahamoment.cn/tags/featured title=featured class="post_tag button button_translucent">featured</a></span>
-<span class=page_only>&nbsp;·<div class=post_share>分享到:
-<a href="https://twitter.com/intent/tweet?text=Markdown%20Syntax%20Guide&url=https%3a%2f%2fahamoment.cn%2fpost%2fmarkdown-syntax%2f&tw_p=tweetbutton" class=twitter title="分享到 Twitter" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#twitter"/></svg></a><a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fahamoment.cn%2fpost%2fmarkdown-syntax%2f&t=Markdown%20Syntax%20Guide" class=facebook title="分享到 Facebook" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#facebook"/></svg></a><a href=#linkedinshare id=linkedinshare class=linkedin title="分享到 LinkedIn" rel=nofollow><svg class="icon"><use xlink:href="#linkedin"/></svg></a><a href=https://ahamoment.cn/post/markdown-syntax/ title="Copy Link" class="link link_yank"><svg class="icon"><use xlink:href="#copy"/></svg></a></div></span></div></div><div class="excerpt_footer partition"><div class=excerpt_thumbnail><img src=https://ahamoment.cn/images/building.png alt="Markdown Syntax Guide"></div><div><p class=pale><p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.</p></p><a href=https://ahamoment.cn/post/markdown-syntax/ title=阅读更多 class="excerpt_more button">阅读更多</a></div></div></div></li><li class=post_item><div class=excerpt><div class=excerpt_header><h3 class=post_link><a href=https://ahamoment.cn/post/placeholder-text/ title="Placeholder Text">Placeholder Text</a></h3><div class=post_meta><span><svg class="icon"><use xlink:href="#calendar"/></svg></span><span class=post_date>Mar 9, 2019</span>
-<span class=post_time>· 2 min read</span><span>&nbsp;· <a href=https://ahamoment.cn/tags/markdown title=markdown class="post_tag button button_translucent">markdown
-</a><a href=https://ahamoment.cn/tags/text title=text class="post_tag button button_translucent">text</a></span>
-<span class=page_only>&nbsp;·<div class=post_share>分享到:
-<a href="https://twitter.com/intent/tweet?text=Placeholder%20Text&url=https%3a%2f%2fahamoment.cn%2fpost%2fplaceholder-text%2f&tw_p=tweetbutton" class=twitter title="分享到 Twitter" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#twitter"/></svg></a><a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fahamoment.cn%2fpost%2fplaceholder-text%2f&t=Placeholder%20Text" class=facebook title="分享到 Facebook" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#facebook"/></svg></a><a href=#linkedinshare id=linkedinshare class=linkedin title="分享到 LinkedIn" rel=nofollow><svg class="icon"><use xlink:href="#linkedin"/></svg></a><a href=https://ahamoment.cn/post/placeholder-text/ title="Copy Link" class="link link_yank"><svg class="icon"><use xlink:href="#copy"/></svg></a></div></span></div></div><div class=excerpt_footer><div><p class=pale><p>Lorem est tota propiore conpellat pectoribus de pectora summo.</p></p><a href=https://ahamoment.cn/post/placeholder-text/ title=阅读更多 class="excerpt_more button">阅读更多</a></div></div></div></li><li></li></ul><aside class=sidebar><section class=sidebar_inner><h2>Chen Xueqiang</h2><div class=author_bio>Technologist, perpetual student, teacher, continual incremental improvement.</div><a href=https://ahamoment.cn/about/ class="button mt-1" role=button title=阅读更多>阅读更多</a><h2 class=mt-4>精选文章</h2><ul><li><a href=https://ahamoment.cn/post/markdown-syntax/ class=nav-link title="Markdown Syntax Guide">Markdown Syntax Guide</a></li></ul><h2 class=mt-4>最新文章</h2><ul class=flex-column><li><a href=https://ahamoment.cn/post/tool-github-action/ class=nav-link title="使用 Github action 自动构建 github pages 和 gitbook">使用 Github action 自动构建 github pages 和 gitbook</a></li><li><a href=https://ahamoment.cn/post/algorithm-tree-inorder/ class=nav-link title=二叉树的中序遍历>二叉树的中序遍历</a></li><li><a href=https://ahamoment.cn/post/go-new-vs-make/ class=nav-link title="Go 语言中的 new 关键字和 make 关键字的区别">Go 语言中的 new 关键字和 make 关键字的区别</a></li><li><a href=https://ahamoment.cn/post/tool-mac-os-commands/ class=nav-link title="Mac 命令汇总">Mac 命令汇总</a></li><li><a href=https://ahamoment.cn/post/ml-tensorflow2.0-install/ class=nav-link title="安装 Tensorflow2">安装 Tensorflow2</a></li><li><a href=https://ahamoment.cn/post/tool-vim/ class=nav-link title="Vim 折腾记">Vim 折腾记</a></li><li><a href=https://ahamoment.cn/post/go-project-catalogs/ class=nav-link title="Go 语言工作目录">Go 语言工作目录</a></li><li><a href=https://ahamoment.cn/post/tool-bazel/ class=nav-link title="bazel 外部存储库缓存">bazel 外部存储库缓存</a></li></ul><div><h2 class="mt-4 taxonomy" id=categories-section>分类</h2><nav class=tags_nav><a href=https://ahamoment.cn/categories/java/ class="post_tag button button_translucent" title=java>JAVA
-<span class=button_tally>10</span></a>
-<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class="post_tag button button_translucent" title=数据结构与算法>数据结构与算法
-<span class=button_tally>8</span></a>
-<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class="post_tag button button_translucent" title=面试题>面试题
-<span class=button_tally>7</span></a>
-<a href=https://ahamoment.cn/categories/linux/ class="post_tag button button_translucent" title=linux>LINUX
-<span class=button_tally>6</span></a>
-<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class="post_tag button button_translucent" title=工具>工具
-<span class=button_tally>6</span></a>
-<a href=https://ahamoment.cn/categories/go/ class="post_tag button button_translucent" title=go>GO
-<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/categories/springboot/ class="post_tag button button_translucent" title=springboot>SPRINGBOOT
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/syntax/ class="post_tag button button_translucent" title=syntax>SYNTAX
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/themes/ class="post_tag button button_translucent" title=themes>THEMES
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/ class="post_tag button button_translucent" title=云计算>云计算
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/%E5%B7%A5%E7%A8%8B/ class="post_tag button button_translucent" title=工程>工程
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/ class="post_tag button button_translucent" title=机器学习>机器学习
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/categories/%E6%A1%86%E6%9E%B6/ class="post_tag button button_translucent" title=框架>框架
-<span class=button_tally>1</span></a></nav></div><div><h2 class="mt-4 taxonomy" id=series-section>专栏</h2><nav class=tags_nav><a href=https://ahamoment.cn/series/themes-guide/ class="post_tag button button_translucent" title=themes-guide>THEMES-GUIDE
-<span class=button_tally>1</span></a></nav></div><div><h2 class="mt-4 taxonomy" id=tags-section>标签</h2><nav class=tags_nav><a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="post_tag button button_translucent" title=多线程>多线程
-<span class=button_tally>7</span></a>
-<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="post_tag button button_translucent" title=树>树
-<span class=button_tally>6</span></a>
-<a href=https://ahamoment.cn/tags/linux/ class="post_tag button button_translucent" title=linux>LINUX
-<span class=button_tally>3</span></a>
-<a href=https://ahamoment.cn/tags/git/ class="post_tag button button_translucent" title=git>GIT
-<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/java/ class="post_tag button button_translucent" title=java>JAVA
-<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/markdown/ class="post_tag button button_translucent" title=markdown>MARKDOWN
-<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/shell/ class="post_tag button button_translucent" title=shell>SHELL
-<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/bazel/ class="post_tag button button_translucent" title=bazel>BAZEL
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/css/ class="post_tag button button_translucent" title=css>CSS
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/docker/ class="post_tag button button_translucent" title=docker>DOCKER
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/emoji/ class="post_tag button button_translucent" title=emoji>EMOJI
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/featured/ class="post_tag button button_translucent" title=featured>FEATURED
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/gitbook/ class="post_tag button button_translucent" title=gitbook>GITBOOK
-<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/github-action/ class="post_tag button button_translucent" title=github-action>GITHUB-ACTION
-<span class=button_tally>1</span></a><br><div class="post_tags_toggle button">所有标签</div><div class=post_tags><div class=tags_list><a href=https://ahamoment.cn/tags/bazel/ class="post_tag button button_translucent" data-position=1 title=bazel>BAZEL<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/css/ class="post_tag button button_translucent" data-position=1 title=css>CSS<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/docker/ class="post_tag button button_translucent" data-position=1 title=docker>DOCKER<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/emoji/ class="post_tag button button_translucent" data-position=1 title=emoji>EMOJI<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/featured/ class="post_tag button button_translucent" data-position=1 title=featured>FEATURED<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/git/ class="post_tag button button_translucent" data-position=2 title=git>GIT<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/gitbook/ class="post_tag button button_translucent" data-position=1 title=gitbook>GITBOOK<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/github-action/ class="post_tag button button_translucent" data-position=1 title=github-action>GITHUB-ACTION<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/github-pages/ class="post_tag button button_translucent" data-position=1 title=github-pages>GITHUB-PAGES<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/go/ class="post_tag button button_translucent" data-position=1 title=go>GO<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/gopath/ class="post_tag button button_translucent" data-position=1 title=gopath>GOPATH<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/html/ class="post_tag button button_translucent" data-position=1 title=html>HTML<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/hugo/ class="post_tag button button_translucent" data-position=1 title=hugo>HUGO<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/idea/ class="post_tag button button_translucent" data-position=1 title=idea>IDEA<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/index/ class="post_tag button button_translucent" data-position=1 title=index>INDEX<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/java/ class="post_tag button button_translucent" data-position=2 title=java>JAVA<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/jvm/ class="post_tag button button_translucent" data-position=1 title=jvm>JVM<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/kubernetes/ class="post_tag button button_translucent" data-position=1 title=kubernetes>KUBERNETES<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/linux/ class="post_tag button button_translucent" data-position=3 title=linux>LINUX<span class=button_tally>3</span></a>
-<a href=https://ahamoment.cn/tags/macbook/ class="post_tag button button_translucent" data-position=1 title=macbook>MACBOOK<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/markdown/ class="post_tag button button_translucent" data-position=2 title=markdown>MARKDOWN<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/mybatis/ class="post_tag button button_translucent" data-position=1 title=mybatis>MYBATIS<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/mysql/ class="post_tag button button_translucent" data-position=1 title=mysql>MYSQL<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/nscd/ class="post_tag button button_translucent" data-position=1 title=nscd>NSCD<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/privacy/ class="post_tag button button_translucent" data-position=1 title=privacy>PRIVACY<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/rpm/ class="post_tag button button_translucent" data-position=1 title=rpm>RPM<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/shell/ class="post_tag button button_translucent" data-position=2 title=shell>SHELL<span class=button_tally>2</span></a>
-<a href=https://ahamoment.cn/tags/shortcodes/ class="post_tag button button_translucent" data-position=1 title=shortcodes>SHORTCODES<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/spring/ class="post_tag button button_translucent" data-position=1 title=spring>SPRING<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/spring-boot/ class="post_tag button button_translucent" data-position=1 title=spring-boot>SPRING-BOOT<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/tensorflow2/ class="post_tag button button_translucent" data-position=1 title=tensorflow2>TENSORFLOW2<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/text/ class="post_tag button button_translucent" data-position=1 title=text>TEXT<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/themes/ class="post_tag button button_translucent" data-position=1 title=themes>THEMES<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/vim/ class="post_tag button button_translucent" data-position=1 title=vim>VIM<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/ class="post_tag button button_translucent" data-position=1 title=中序遍历>中序遍历<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/ class="post_tag button button_translucent" data-position=1 title=分布式>分布式<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E5%91%BD%E4%BB%A4/ class="post_tag button button_translucent" data-position=1 title=命令>命令<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E5%A0%86/ class="post_tag button button_translucent" data-position=1 title=堆>堆<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="post_tag button button_translucent" data-position=7 title=多线程>多线程<span class=button_tally>7</span></a>
-<a href=https://ahamoment.cn/tags/%E5%AE%B9%E5%99%A8/ class="post_tag button button_translucent" data-position=1 title=容器>容器<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/ class="post_tag button button_translucent" data-position=1 title=散列表>散列表<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="post_tag button button_translucent" data-position=6 title=树>树<span class=button_tally>6</span></a>
-<a href=https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/ class="post_tag button button_translucent" data-position=1 title=源代码>源代码<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/ class="post_tag button button_translucent" data-position=1 title=线程池>线程池<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ class="post_tag button button_translucent" data-position=1 title=计算机网络>计算机网络<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/ class="post_tag button button_translucent" data-position=1 title=调试>调试<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/ class="post_tag button button_translucent" data-position=1 title=队列>队列<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95/ class="post_tag button button_translucent" data-position=1 title=面试>面试<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/ class="post_tag button button_translucent" data-position=1 title=面试题>面试题<span class=button_tally>1</span></a>
-<a href=https://ahamoment.cn/tags/%E9%A1%B9%E7%9B%AE/ class="post_tag button button_translucent" data-position=1 title=项目>项目<span class=button_tally>1</span></a><div class=tags_sort><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span></div><span class=tags_hide><svg class="icon"><use xlink:href="#closeme"/></svg></span></div></div></nav></div></section></aside></div></main><svg width="0" height="0" class="hidden"><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook"><path d="M437 0H75C33.648.0.0 33.648.0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352.0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter"><path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68.0 01-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043.0-1.924.366-2.643 1.078A3.56 3.56.0 008.766 5.383c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846.0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47.0.929.273 1.705.82 2.388a3.623 3.623.0 002.115 1.291c-.312.08-.641.118-.979.118-.312.0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652.0 002.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422.0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139.0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77.0 001.172-4.892v-.468a7.788 7.788.0 001.84-1.921 8.142 8.142.0 01-2.11.593z"/></symbol><symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V4e2c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5.0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar"><path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916.0 1e2v352c0 33.084 26.916 60 60 60h392c33.084.0 60-26.916 60-60V1e2c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028.0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028.0 20 8.972 20 20v48z"/><path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github"><path d="M255.968 5.329C114.624 5.329.0 120.401.0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384.0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008.0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992.0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584.0 34.368-.32 62.08-.32 70.496.0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" id="gitlab"><path d="M12.3 74.7h54L43.3 3c-1-3.6-6.4-3.6-7.6.0L12.3 74.8z"/><path d="M12.3 74.7.5 111c-1 3.2.0 6.8 3 8.8l101.6 74-92.5-119z"/><path d="M105 193.7l-38.6-119h-54l92.7 119z"/><path d="M105 193.7l38.7-119H66.4l38.7 119z"/><path d="M105 193.7l38.7-119H198l-93 119z"/><path d="M198 74.7l11.6 36.2c1 3 0 6.6-3 8.6l-101.5 74 93-119z"/><path d="M198 74.7h-54.3L167 3c1.2-3.6 6.4-3.6 7.6.0L198 74.8z"/></symbol><symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss"><circle cx="3.429" cy="20.571" r="3.429"/><path d="M11.429 24h4.57C15.999 15.179 8.821 8.001.0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"/><path d="M24 24C24 10.766 13.234.0.0.0v4.571c10.714.0 19.43 8.714 19.43 19.429z"/></symbol><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin"><path d="M437 0H75C33.648.0.0 33.648.0 75v362c0 41.352 33.648 75 75 75h362c41.352.0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="arrow"><path d="M604.501 440.509 325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298.0 36.323s26.223 10.024 36.222.0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221.0 9.999-10.023 9.999-26.298.0-36.323z"/></symbol><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly"><path d="M504.971 239.029 448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255.0-24 10.745-24 24s10.745 24 24 24h44c19.851.0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002.0 004e2 320v108c0 19.851-16.149 36-36 36h-44c-13.255.0-24 10.745-24 24s10.745 24 24 24h44c46.318.0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568.0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255.0 24-10.745 24-24S205.255.0 192 0h-44c-46.318.0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568.0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255.0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851.0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002.0 00112 192z"/></symbol><symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="copy"><path d="M23 2.75A2.75 2.75.0 0020.25.0H8.75A2.75 2.75.0 006 2.75v13.5A2.75 2.75.0 008.75 19h11.5A2.75 2.75.0 0023 16.25zM18.25 14.5h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5zm0-3h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5zm0-3h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5z"/><path d="M8.75 20.5A4.255 4.255.0 014.5 16.25V2.75c0-.086.02-.166.025-.25H3.75A2.752 2.752.0 001 5.25v16A2.752 2.752.0 003.75 24h12a2.752 2.752.0 002.75-2.75v-.75z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme"><path d="M284.286 256.002 506.143 34.144c7.811-7.811 7.811-20.475.0-28.285-7.811-7.81-20.475-7.811-28.285.0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285.0-7.81 7.811-7.811 20.475.0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475.0 28.285a19.938 19.938.0 0014.143 5.857 19.94 19.94.0 0014.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475.0-28.285L284.286 256.002z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu"><path d="M492 236H20c-11.046.0-20 8.954-20 20s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954.0 96s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046.0-20 8.954-20 20s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="instagram"><path d="M12 2.163c3.204.0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849.0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204.0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849.0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741.0 8.333.014 7.053.072c-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403.0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209.0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796.0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795.0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="youtube"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23.0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23.0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="stackoverflow"><path d="M21 27v-8h3v11H0V19h3v8h18z"/><path d="M17.1.2 15 1.8l7.9 10.6 2.1-1.6L17.1.2zm3.7 14.7L10.6 6.4l1.7-2 10.2 8.5-1.7 2zM7.2 12.3l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm-1.8 6.8 13.56 1.96.17-2.38-13.26-2.55-.47 2.97zM19 25H5v-3h14v3z"/></symbol></svg><footer class=footer><div class="footer_inner wrap pale"><img src=https://ahamoment.cn/icons/apple-touch-icon.png class="icon icon_2 transparent" alt=Ahamoment><p>Copyright&nbsp;<span class=year></span>&nbsp;AHAMOMENT. All Rights Reserved</p><a class=to_top href=#documentTop><svg class="icon"><use xlink:href="#arrow"/></svg></a></div></footer><script type=text/javascript src=https://ahamoment.cn/js/bundle.min.d14fbcd65c3ba32e60cab81f8bbe7aa9b7f8b95ff8290e437fb26ff9ab7f7ea0c928db2dca60aac91f192db906f2d90678f83907e4e3994f6ff9fdb5bdea3369.js integrity="sha512-0U+81lw7oy5gyrgfi756qbf4uV/4KQ5Df7Jv+at/fqDJKNstymCqyR8ZLbkG8tkGePg5B+TjmU9v+f21veozaQ==" crossorigin=anonymous></script></body></html>
+</a><a href=https://ahamoment.cn/tags/featured title=featured class="post_tag button button_translucent">featured
+</a>
+</span>
+<span class=page_only>&nbsp;·
+<div class=post_share>
+分享到:
+<a href="https://twitter.com/intent/tweet?text=Markdown%20Syntax%20Guide&url=https%3a%2f%2fahamoment.cn%2fpost%2fmarkdown-syntax%2f&tw_p=tweetbutton" class=twitter title="分享到 Twitter" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#twitter"/></svg>
+</a>
+<a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fahamoment.cn%2fpost%2fmarkdown-syntax%2f&t=Markdown%20Syntax%20Guide" class=facebook title="分享到 Facebook" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#facebook"/></svg>
+</a>
+<a href=#linkedinshare id=linkedinshare class=linkedin title="分享到 LinkedIn" rel=nofollow><svg class="icon"><use xlink:href="#linkedin"/></svg>
+</a>
+<a href=https://ahamoment.cn/post/markdown-syntax/ title="Copy Link" class="link link_yank"><svg class="icon"><use xlink:href="#copy"/></svg>
+</a>
+</div>
+</span>
+</div>
+</div>
+<div class="excerpt_footer partition">
+<div class=excerpt_thumbnail>
+<img src=https://ahamoment.cn/images/building.png alt="Markdown Syntax Guide">
+</div>
+<div>
+<p class=pale>
+<p>This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.</p>
+</p>
+<a href=https://ahamoment.cn/post/markdown-syntax/ title=阅读更多 class="excerpt_more button">阅读更多</a>
+</div>
+</div>
+</div>
+</li>
+<li class=post_item>
+<div class=excerpt>
+<div class=excerpt_header>
+<h3 class=post_link>
+<a href=https://ahamoment.cn/post/placeholder-text/ title="Placeholder Text">Placeholder Text</a>
+</h3>
+<div class=post_meta>
+<span><svg class="icon"><use xlink:href="#calendar"/></svg></span>
+<span class=post_date>
+Mar 9, 2019</span>
+<span class=post_time> · 2 min read</span><span>&nbsp;· <a href=https://ahamoment.cn/tags/markdown title=markdown class="post_tag button button_translucent">markdown
+</a><a href=https://ahamoment.cn/tags/text title=text class="post_tag button button_translucent">text
+</a>
+</span>
+<span class=page_only>&nbsp;·
+<div class=post_share>
+分享到:
+<a href="https://twitter.com/intent/tweet?text=Placeholder%20Text&url=https%3a%2f%2fahamoment.cn%2fpost%2fplaceholder-text%2f&tw_p=tweetbutton" class=twitter title="分享到 Twitter" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#twitter"/></svg>
+</a>
+<a href="https://www.facebook.com/sharer.php?u=https%3a%2f%2fahamoment.cn%2fpost%2fplaceholder-text%2f&t=Placeholder%20Text" class=facebook title="分享到 Facebook" target=_blank rel=nofollow><svg class="icon"><use xlink:href="#facebook"/></svg>
+</a>
+<a href=#linkedinshare id=linkedinshare class=linkedin title="分享到 LinkedIn" rel=nofollow><svg class="icon"><use xlink:href="#linkedin"/></svg>
+</a>
+<a href=https://ahamoment.cn/post/placeholder-text/ title="Copy Link" class="link link_yank"><svg class="icon"><use xlink:href="#copy"/></svg>
+</a>
+</div>
+</span>
+</div>
+</div>
+<div class=excerpt_footer>
+<div>
+<p class=pale>
+<p>Lorem est tota propiore conpellat pectoribus de pectora summo.</p>
+</p>
+<a href=https://ahamoment.cn/post/placeholder-text/ title=阅读更多 class="excerpt_more button">阅读更多</a>
+</div>
+</div>
+</div>
+</li>
+<li>
+</li>
+</ul>
+<aside class=sidebar>
+<section class=sidebar_inner>
+<h2>Chen Xueqiang</h2>
+<div class=author_bio>
+Technologist, perpetual student, teacher, continual incremental improvement.
+</div>
+<a href=https://ahamoment.cn/about/ class="button mt-1" role=button title=阅读更多>阅读更多</a>
+<h2 class=mt-4>精选文章</h2>
+<ul>
+<li>
+<a href=https://ahamoment.cn/post/markdown-syntax/ class=nav-link title="Markdown Syntax Guide">Markdown Syntax Guide</a>
+</li>
+</ul>
+<h2 class=mt-4>最新文章</h2>
+<ul class=flex-column>
+<li>
+<a href=https://ahamoment.cn/post/tool-hugo-blog/ class=nav-link title="Hugo 博客搭建">Hugo 博客搭建</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/algorithm-tree-inorder/ class=nav-link title=二叉树的中序遍历>二叉树的中序遍历</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/go-new-vs-make/ class=nav-link title="Go 语言中的 new 关键字和 make 关键字的区别">Go 语言中的 new 关键字和 make 关键字的区别</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/tool-mac-os-commands/ class=nav-link title="Mac 命令汇总">Mac 命令汇总</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/ml-tensorflow2.0-install/ class=nav-link title="安装 Tensorflow2">安装 Tensorflow2</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/tool-vim/ class=nav-link title="Vim 折腾记">Vim 折腾记</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/go-project-catalogs/ class=nav-link title="Go 语言工作目录">Go 语言工作目录</a>
+</li>
+<li>
+<a href=https://ahamoment.cn/post/tool-bazel/ class=nav-link title="bazel 外部存储库缓存">bazel 外部存储库缓存</a>
+</li>
+</ul>
+<div>
+<h2 class="mt-4 taxonomy" id=categories-section>分类</h2>
+<nav class=tags_nav>
+<a href=https://ahamoment.cn/categories/java/ class="post_tag button button_translucent" title=java>
+JAVA
+<span class=button_tally>10</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class="post_tag button button_translucent" title=数据结构与算法>
+数据结构与算法
+<span class=button_tally>8</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class="post_tag button button_translucent" title=面试题>
+面试题
+<span class=button_tally>7</span>
+</a>
+<a href=https://ahamoment.cn/categories/linux/ class="post_tag button button_translucent" title=linux>
+LINUX
+<span class=button_tally>6</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class="post_tag button button_translucent" title=工具>
+工具
+<span class=button_tally>6</span>
+</a>
+<br>
+<div class="post_tags_toggle button">所有分类</div>
+<div class=post_tags>
+<div class=tags_list>
+<a href=https://ahamoment.cn/categories/go/ class="post_tag button button_translucent" data-position=2 title=go>GO<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/categories/java/ class="post_tag button button_translucent" data-position=10 title=java>JAVA<span class=button_tally>10</span>
+</a>
+<a href=https://ahamoment.cn/categories/linux/ class="post_tag button button_translucent" data-position=6 title=linux>LINUX<span class=button_tally>6</span>
+</a>
+<a href=https://ahamoment.cn/categories/springboot/ class="post_tag button button_translucent" data-position=1 title=springboot>SPRINGBOOT<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/syntax/ class="post_tag button button_translucent" data-position=1 title=syntax>SYNTAX<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/themes/ class="post_tag button button_translucent" data-position=1 title=themes>THEMES<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/ class="post_tag button button_translucent" data-position=1 title=云计算>云计算<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class="post_tag button button_translucent" data-position=6 title=工具>工具<span class=button_tally>6</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E5%B7%A5%E7%A8%8B/ class="post_tag button button_translucent" data-position=1 title=工程>工程<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class="post_tag button button_translucent" data-position=8 title=数据结构与算法>数据结构与算法<span class=button_tally>8</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/ class="post_tag button button_translucent" data-position=1 title=机器学习>机器学习<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E6%A1%86%E6%9E%B6/ class="post_tag button button_translucent" data-position=1 title=框架>框架<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class="post_tag button button_translucent" data-position=7 title=面试题>面试题<span class=button_tally>7</span>
+</a>
+<div class=tags_sort><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+</div>
+<span class=tags_hide><svg class="icon"><use xlink:href="#closeme"/></svg></span>
+</div>
+</div>
+</nav>
+</div>
+<div>
+<h2 class="mt-4 taxonomy" id=series-section>专栏</h2>
+<nav class=tags_nav>
+<a href=https://ahamoment.cn/series/themes-guide/ class="post_tag button button_translucent" title=themes-guide>
+THEMES-GUIDE
+<span class=button_tally>1</span>
+</a>
+</nav>
+</div>
+<div>
+<h2 class="mt-4 taxonomy" id=tags-section>标签</h2>
+<nav class=tags_nav>
+<a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="post_tag button button_translucent" title=多线程>
+多线程
+<span class=button_tally>7</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="post_tag button button_translucent" title=树>
+树
+<span class=button_tally>6</span>
+</a>
+<a href=https://ahamoment.cn/tags/linux/ class="post_tag button button_translucent" title=linux>
+LINUX
+<span class=button_tally>3</span>
+</a>
+<a href=https://ahamoment.cn/tags/git/ class="post_tag button button_translucent" title=git>
+GIT
+<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/tags/java/ class="post_tag button button_translucent" title=java>
+JAVA
+<span class=button_tally>2</span>
+</a>
+<br>
+<div class="post_tags_toggle button">所有标签</div>
+<div class=post_tags>
+<div class=tags_list>
+<a href=https://ahamoment.cn/tags/bazel/ class="post_tag button button_translucent" data-position=1 title=bazel>BAZEL<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/css/ class="post_tag button button_translucent" data-position=1 title=css>CSS<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/docker/ class="post_tag button button_translucent" data-position=1 title=docker>DOCKER<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/emoji/ class="post_tag button button_translucent" data-position=1 title=emoji>EMOJI<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/featured/ class="post_tag button button_translucent" data-position=1 title=featured>FEATURED<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/git/ class="post_tag button button_translucent" data-position=2 title=git>GIT<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/tags/gitbook/ class="post_tag button button_translucent" data-position=1 title=gitbook>GITBOOK<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/github-action/ class="post_tag button button_translucent" data-position=1 title=github-action>GITHUB-ACTION<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/github-pages/ class="post_tag button button_translucent" data-position=1 title=github-pages>GITHUB-PAGES<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/go/ class="post_tag button button_translucent" data-position=1 title=go>GO<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/gopath/ class="post_tag button button_translucent" data-position=1 title=gopath>GOPATH<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/html/ class="post_tag button button_translucent" data-position=1 title=html>HTML<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/hugo/ class="post_tag button button_translucent" data-position=1 title=hugo>HUGO<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/idea/ class="post_tag button button_translucent" data-position=1 title=idea>IDEA<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/index/ class="post_tag button button_translucent" data-position=1 title=index>INDEX<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/java/ class="post_tag button button_translucent" data-position=2 title=java>JAVA<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/tags/jvm/ class="post_tag button button_translucent" data-position=1 title=jvm>JVM<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/kubernetes/ class="post_tag button button_translucent" data-position=1 title=kubernetes>KUBERNETES<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/linux/ class="post_tag button button_translucent" data-position=3 title=linux>LINUX<span class=button_tally>3</span>
+</a>
+<a href=https://ahamoment.cn/tags/macbook/ class="post_tag button button_translucent" data-position=1 title=macbook>MACBOOK<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/markdown/ class="post_tag button button_translucent" data-position=2 title=markdown>MARKDOWN<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/tags/mybatis/ class="post_tag button button_translucent" data-position=1 title=mybatis>MYBATIS<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/mysql/ class="post_tag button button_translucent" data-position=1 title=mysql>MYSQL<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/nscd/ class="post_tag button button_translucent" data-position=1 title=nscd>NSCD<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/privacy/ class="post_tag button button_translucent" data-position=1 title=privacy>PRIVACY<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/rpm/ class="post_tag button button_translucent" data-position=1 title=rpm>RPM<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/shell/ class="post_tag button button_translucent" data-position=2 title=shell>SHELL<span class=button_tally>2</span>
+</a>
+<a href=https://ahamoment.cn/tags/shortcodes/ class="post_tag button button_translucent" data-position=1 title=shortcodes>SHORTCODES<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/spring/ class="post_tag button button_translucent" data-position=1 title=spring>SPRING<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/spring-boot/ class="post_tag button button_translucent" data-position=1 title=spring-boot>SPRING-BOOT<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/tensorflow2/ class="post_tag button button_translucent" data-position=1 title=tensorflow2>TENSORFLOW2<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/text/ class="post_tag button button_translucent" data-position=1 title=text>TEXT<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/themes/ class="post_tag button button_translucent" data-position=1 title=themes>THEMES<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/vim/ class="post_tag button button_translucent" data-position=1 title=vim>VIM<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/ class="post_tag button button_translucent" data-position=1 title=中序遍历>中序遍历<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E5%88%86%E5%B8%83%E5%BC%8F/ class="post_tag button button_translucent" data-position=1 title=分布式>分布式<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E5%91%BD%E4%BB%A4/ class="post_tag button button_translucent" data-position=1 title=命令>命令<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E5%A0%86/ class="post_tag button button_translucent" data-position=1 title=堆>堆<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="post_tag button button_translucent" data-position=7 title=多线程>多线程<span class=button_tally>7</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E5%AE%B9%E5%99%A8/ class="post_tag button button_translucent" data-position=1 title=容器>容器<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/ class="post_tag button button_translucent" data-position=1 title=散列表>散列表<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="post_tag button button_translucent" data-position=6 title=树>树<span class=button_tally>6</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/ class="post_tag button button_translucent" data-position=1 title=源代码>源代码<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/ class="post_tag button button_translucent" data-position=1 title=线程池>线程池<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/ class="post_tag button button_translucent" data-position=1 title=计算机网络>计算机网络<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/ class="post_tag button button_translucent" data-position=1 title=调试>调试<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/ class="post_tag button button_translucent" data-position=1 title=队列>队列<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95/ class="post_tag button button_translucent" data-position=1 title=面试>面试<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E9%9D%A2%E8%AF%95%E9%A2%98/ class="post_tag button button_translucent" data-position=1 title=面试题>面试题<span class=button_tally>1</span>
+</a>
+<a href=https://ahamoment.cn/tags/%E9%A1%B9%E7%9B%AE/ class="post_tag button button_translucent" data-position=1 title=项目>项目<span class=button_tally>1</span>
+</a>
+<div class=tags_sort><span title="sort alphabetically">[A~Z]</span><span title="sort by count">[0~9]</span>
+</div>
+<span class=tags_hide><svg class="icon"><use xlink:href="#closeme"/></svg></span>
+</div>
+</div>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+</main><svg width="0" height="0" class="hidden"><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="facebook"><path d="M437 0H75C33.648.0.0 33.648.0 75v362c0 41.352 33.648 75 75 75h151V331h-60v-90h60v-61c0-49.629 40.371-90 90-90h91v90h-91v61h91l-15 90h-76v181h121c41.352.0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zm0 0"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18.001 18.001" id="twitter"><path d="M15.891 4.013c.808-.496 1.343-1.173 1.605-2.034a8.68 8.68.0 01-2.351.861c-.703-.756-1.593-1.14-2.66-1.14-1.043.0-1.924.366-2.643 1.078A3.56 3.56.0 008.766 5.383c0 .309.039.585.117.819-3.076-.105-5.622-1.381-7.628-3.837-.34.601-.51 1.213-.51 1.846.0 1.301.549 2.332 1.645 3.089-.625-.053-1.176-.211-1.645-.47.0.929.273 1.705.82 2.388a3.623 3.623.0 002.115 1.291c-.312.08-.641.118-.979.118-.312.0-.533-.026-.664-.083.23.757.664 1.371 1.291 1.841a3.652 3.652.0 002.152.743C4.148 14.173 2.625 14.69.902 14.69c-.422.0-.721-.006-.902-.038 1.697 1.102 3.586 1.649 5.676 1.649 2.139.0 4.029-.542 5.674-1.626 1.645-1.078 2.859-2.408 3.639-3.974a10.77 10.77.0 001.172-4.892v-.468a7.788 7.788.0 001.84-1.921 8.142 8.142.0 01-2.11.593z"/></symbol><symbol aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="mail"><path d="M502.3 190.8c3.9-3.1 9.7-.2 9.7 4.7V4e2c0 26.5-21.5 48-48 48H48c-26.5.0-48-21.5-48-48V195.6c0-5 5.7-7.8 9.7-4.7 22.4 17.4 52.1 39.5 154.1 113.6 21.1 15.4 56.7 47.8 92.2 47.6 35.7.3 72-32.8 92.3-47.6 102-74.1 131.6-96.3 154-113.7zM256 320c23.2.4 56.6-29.2 73.4-41.4 132.7-96.3 142.8-104.7 173.4-128.7 5.8-4.5 9.2-11.5 9.2-18.9v-19c0-26.5-21.5-48-48-48H48C21.5 64 0 85.5.0 112v19c0 7.4 3.4 14.3 9.2 18.9 30.6 23.9 40.7 32.4 173.4 128.7 16.8 12.2 50.2 41.8 73.4 41.4z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="calendar"><path d="M452 40h-24V0h-40v40H124V0H84v40H60C26.916 40 0 66.916.0 1e2v352c0 33.084 26.916 60 60 60h392c33.084.0 60-26.916 60-60V1e2c0-33.084-26.916-60-60-60zm20 412c0 11.028-8.972 20-20 20H60c-11.028.0-20-8.972-20-20V188h432v264zm0-304H40v-48c0-11.028 8.972-20 20-20h24v40h40V80h264v40h40V80h24c11.028.0 20 8.972 20 20v48z"/><path d="M76 230h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 310h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zM76 390h40v40H76zm80 0h40v40h-40zm80 0h40v40h-40zm80 0h40v40h-40zm80-80h40v40h-40z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="github"><path d="M255.968 5.329C114.624 5.329.0 120.401.0 262.353c0 113.536 73.344 209.856 175.104 243.872 12.8 2.368 17.472-5.568 17.472-12.384.0-6.112-.224-22.272-.352-43.712-71.2 15.52-86.24-34.464-86.24-34.464-11.616-29.696-28.416-37.6-28.416-37.6-23.264-15.936 1.728-15.616 1.728-15.616 25.696 1.824 39.2 26.496 39.2 26.496 22.848 39.264 59.936 27.936 74.528 21.344 2.304-16.608 8.928-27.936 16.256-34.368-56.832-6.496-116.608-28.544-116.608-127.008.0-28.064 9.984-51.008 26.368-68.992-2.656-6.496-11.424-32.64 2.496-68 0 0 21.504-6.912 70.4 26.336 20.416-5.696 42.304-8.544 64.096-8.64 21.728.128 43.648 2.944 64.096 8.672 48.864-33.248 70.336-26.336 70.336-26.336 13.952 35.392 5.184 61.504 2.56 68 16.416 17.984 26.304 40.928 26.304 68.992.0 98.72-59.84 120.448-116.864 126.816 9.184 7.936 17.376 23.616 17.376 47.584.0 34.368-.32 62.08-.32 70.496.0 6.88 4.608 14.88 17.6 12.352C438.72 472.145 512 375.857 512 262.353 512 120.401 397.376 5.329 255.968 5.329z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 212" id="gitlab"><path d="M12.3 74.7h54L43.3 3c-1-3.6-6.4-3.6-7.6.0L12.3 74.8z"/><path d="M12.3 74.7.5 111c-1 3.2.0 6.8 3 8.8l101.6 74-92.5-119z"/><path d="M105 193.7l-38.6-119h-54l92.7 119z"/><path d="M105 193.7l38.7-119H66.4l38.7 119z"/><path d="M105 193.7l38.7-119H198l-93 119z"/><path d="M198 74.7l11.6 36.2c1 3 0 6.6-3 8.6l-101.5 74 93-119z"/><path d="M198 74.7h-54.3L167 3c1.2-3.6 6.4-3.6 7.6.0L198 74.8z"/></symbol><symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="rss"><circle cx="3.429" cy="20.571" r="3.429"/><path d="M11.429 24h4.57C15.999 15.179 8.821 8.001.0 8v4.572c6.302.001 11.429 5.126 11.429 11.428z"/><path d="M24 24C24 10.766 13.234.0.0.0v4.571c10.714.0 19.43 8.714 19.43 19.429z"/></symbol><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="linkedin"><path d="M437 0H75C33.648.0.0 33.648.0 75v362c0 41.352 33.648 75 75 75h362c41.352.0 75-33.648 75-75V75c0-41.352-33.648-75-75-75zM181 406h-60V196h60zm0-240h-60v-60h60zm210 240h-60V286c0-16.54-13.46-30-30-30s-30 13.46-30 30v120h-60V196h60v11.309C286.719 202.422 296.93 196 316 196c40.691.043 75 36.547 75 79.688zm0 0"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 612 612" id="arrow"><path d="M604.501 440.509 325.398 134.956c-5.331-5.357-12.423-7.627-19.386-7.27-6.989-.357-14.056 1.913-19.387 7.27L7.499 440.509c-9.999 10.024-9.999 26.298.0 36.323s26.223 10.024 36.222.0l262.293-287.164L568.28 476.832c9.999 10.024 26.222 10.024 36.221.0 9.999-10.023 9.999-26.298.0-36.323z"/></symbol><symbol viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" id="carly"><path d="M504.971 239.029 448 182.059V84c0-46.317-37.682-84-84-84h-44c-13.255.0-24 10.745-24 24s10.745 24 24 24h44c19.851.0 36 16.149 36 36v108c0 6.365 2.529 12.47 7.029 16.971L454.059 256l-47.029 47.029A24.002 24.002.0 004e2 320v108c0 19.851-16.149 36-36 36h-44c-13.255.0-24 10.745-24 24s10.745 24 24 24h44c46.318.0 84-37.683 84-84v-98.059l56.971-56.971c9.372-9.372 9.372-24.568.0-33.941zM112 192V84c0-19.851 16.149-36 36-36h44c13.255.0 24-10.745 24-24S205.255.0 192 0h-44c-46.318.0-84 37.683-84 84v98.059l-56.971 56.97c-9.373 9.373-9.373 24.568.0 33.941L64 329.941V428c0 46.317 37.682 84 84 84h44c13.255.0 24-10.745 24-24s-10.745-24-24-24h-44c-19.851.0-36-16.149-36-36V320c0-6.365-2.529-12.47-7.029-16.971L57.941 256l47.029-47.029A24.002 24.002.0 00112 192z"/></symbol><symbol viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="copy"><path d="M23 2.75A2.75 2.75.0 0020.25.0H8.75A2.75 2.75.0 006 2.75v13.5A2.75 2.75.0 008.75 19h11.5A2.75 2.75.0 0023 16.25zM18.25 14.5h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5zm0-3h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5zm0-3h-7.5a.75.75.0 010-1.5h7.5a.75.75.0 010 1.5z"/><path d="M8.75 20.5A4.255 4.255.0 014.5 16.25V2.75c0-.086.02-.166.025-.25H3.75A2.752 2.752.0 001 5.25v16A2.752 2.752.0 003.75 24h12a2.752 2.752.0 002.75-2.75v-.75z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512.001 512.001" id="closeme"><path d="M284.286 256.002 506.143 34.144c7.811-7.811 7.811-20.475.0-28.285-7.811-7.81-20.475-7.811-28.285.0L256 227.717 34.143 5.859c-7.811-7.811-20.475-7.811-28.285.0-7.81 7.811-7.811 20.475.0 28.285l221.857 221.857L5.858 477.859c-7.811 7.811-7.811 20.475.0 28.285a19.938 19.938.0 0014.143 5.857 19.94 19.94.0 0014.143-5.857L256 284.287l221.857 221.857c3.905 3.905 9.024 5.857 14.143 5.857s10.237-1.952 14.143-5.857c7.811-7.811 7.811-20.475.0-28.285L284.286 256.002z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" id="open-menu"><path d="M492 236H20c-11.046.0-20 8.954-20 20s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20zm0-160H20C8.954 76 0 84.954.0 96s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20zm0 320H20c-11.046.0-20 8.954-20 20s8.954 20 20 20h472c11.046.0 20-8.954 20-20s-8.954-20-20-20z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="instagram"><path d="M12 2.163c3.204.0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849.0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204.0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849.0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741.0 8.333.014 7.053.072c-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403.0-6.162 2.759-6.162 6.162S8.597 18.163 12 18.163s6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209.0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796.0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795.0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="youtube"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23.0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23.0C23.512 20.55 23.971 18.196 24 12c-.029-6.185-.484-8.549-4.385-8.816zM9 16V8l8 3.993L9 16z"/></symbol><symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="stackoverflow"><path d="M21 27v-8h3v11H0V19h3v8h18z"/><path d="M17.1.2 15 1.8l7.9 10.6 2.1-1.6L17.1.2zm3.7 14.7L10.6 6.4l1.7-2 10.2 8.5-1.7 2zM7.2 12.3l12 5.6 1.1-2.4-12-5.6-1.1 2.4zm-1.8 6.8 13.56 1.96.17-2.38-13.26-2.55-.47 2.97zM19 25H5v-3h14v3z"/></symbol></svg>
+<footer class=footer>
+<div class="footer_inner wrap pale">
+<img src=https://ahamoment.cn/icons/apple-touch-icon.png class="icon icon_2 transparent" alt=Ahamoment>
+<p>Copyright&nbsp;<span class=year></span>&nbsp;AHAMOMENT. All Rights Reserved</p><a class=to_top href=#documentTop><svg class="icon"><use xlink:href="#arrow"/></svg>
+</a>
+</div>
+</footer>
+<script type=text/javascript src=https://ahamoment.cn/js/bundle.min.d14fbcd65c3ba32e60cab81f8bbe7aa9b7f8b95ff8290e437fb26ff9ab7f7ea0c928db2dca60aac91f192db906f2d90678f83907e4e3994f6ff9fdb5bdea3369.js integrity="sha512-0U+81lw7oy5gyrgfi756qbf4uV/4KQ5Df7Jv+at/fqDJKNstymCqyR8ZLbkG8tkGePg5B+TjmU9v+f21veozaQ==" crossorigin=anonymous></script>
+</body>
+</html>

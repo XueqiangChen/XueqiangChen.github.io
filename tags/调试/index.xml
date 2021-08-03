@@ -48,7 +48,7 @@ The JDWP socket connector has been changed to bind to localhost only if no ip ad
 &lt;/li>
 &lt;/ul>
 &lt;p>服务端使用jdwp的调试参数成功启动后，我们可以看到java进程如下所示：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@test&lt;span class="o">]&lt;/span>$ ps -ef &lt;span class="p">|&lt;/span> grep java
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@test&lt;span class="o">]&lt;/span>$ ps -ef &lt;span class="p">|&lt;/span> grep java
 &lt;span class="ln">2&lt;/span>root &lt;span class="m">1323&lt;/span> &lt;span class="m">0&lt;/span> &lt;span class="m">99&lt;/span> 11:36 ? 00:00:30 java -Dspring.profiles.active&lt;span class="o">=&lt;/span>default -agentlib:jdwp&lt;span class="o">=&lt;/span>&lt;span class="nv">transport&lt;/span>&lt;span class="o">=&lt;/span>dt_socket,server&lt;span class="o">=&lt;/span>y,suspend&lt;span class="o">=&lt;/span>n,address&lt;span class="o">=&lt;/span>&lt;span class="m">2222&lt;/span> -jar ./test.jar
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="22-intellij-idea-配置">2.2 IntelliJ idea 配置&lt;/h3>
 &lt;p>首先保证 IDEA 里面已经打开了需要远程调试的代码，注意代码要与线上的代码一致，这里也可以用war/jar包来调。

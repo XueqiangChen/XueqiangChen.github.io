@@ -11,13 +11,13 @@
 &lt;h3 id="常用命令">常用命令&lt;/h3>
 &lt;p>命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options&lt;/p>
 &lt;p>查询依赖关系：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel query --notool_deps --noimplicit_deps &lt;span class="s2">&amp;#34;deps(//:ProjectRunner)&amp;#34;&lt;/span> --output graph
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel query --notool_deps --noimplicit_deps &lt;span class="s2">&amp;#34;deps(//:ProjectRunner)&amp;#34;&lt;/span> --output graph
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>可视化网站：&lt;/p>
 &lt;p>&lt;a href="http://www.webgraphviz.com/">http://www.webgraphviz.com/&lt;/a>&lt;/p>
 &lt;p>编译命令：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel build //:ProjectRunner
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel build //:ProjectRunner
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>清除命令：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel clean
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>bazel clean
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>bazel clean&lt;/code>在 &lt;code>outputPath&lt;/code>和&lt;code>action_cache&lt;/code>目录上执行&lt;code>rm -rf&lt;/code>。它还会删除工作空间符号链接。 &lt;code>--expunge&lt;/code>选项将清除整个&lt;code>outputBase&lt;/code>。&lt;/p>
 &lt;h2 id="输出目录">输出目录&lt;/h2>
 &lt;p>&lt;a href="https://docs.bazel.build/versions/master/output_directories.html">https://docs.bazel.build/versions/master/output_directories.html&lt;/a>&lt;/p>
@@ -31,7 +31,7 @@
 &lt;li>用户还可以使用Bazel的&lt;code>--output_user_root&lt;/code>启动选项来覆盖默认的安装基础目录和输出基础目录。例如：&lt;code>bazel --output_user_root=/tmp/bazel build x/y:z&lt;/code>。&lt;/li>
 &lt;/ul>
 &lt;p>我们在工作区目录中放置了符号链接“bazel-&lt;workspace-name>”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">#机器上所有Bazel输出的根目录：outputRoot&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">#机器上所有Bazel输出的根目录：outputRoot&lt;/span>
 &lt;span class="ln"> 2&lt;/span>/home/user/.cache/bazel/
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">#给定用户的顶级目录取决于用户名：outputUserRoot&lt;/span>
 &lt;span class="ln"> 4&lt;/span> _bazel_&lt;span class="nv">$USER&lt;/span>/

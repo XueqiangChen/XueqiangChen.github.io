@@ -67,7 +67,7 @@
 &lt;blockquote>
 &lt;p>试想一种情况，用户准备使用SQL查询用户名，而用户名字段正好建立了索引。&lt;/p>
 &lt;/blockquote>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span> SELECT name FROM table WHERE username=&amp;#39;guang19&amp;#39;;
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span> SELECT name FROM table WHERE username=&amp;#39;guang19&amp;#39;;
 &lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
 &lt;p>那么这个索引的key本身就是name，查到对应的name直接返回就行了，无需回表查询。&lt;/p>
 &lt;/blockquote>
@@ -79,7 +79,7 @@
 &lt;p>联合索引既由多列属性组成索引。&lt;/p>
 &lt;p>&lt;strong>（3）最左前缀原则&lt;/strong>&lt;/p>
 &lt;p>假设创建的联合索引由三个字段组成:&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>ALTER TABLE table ADD INDEX index_name (num,name,age)
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="ln">1&lt;/span>ALTER TABLE table ADD INDEX index_name (num,name,age)
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>那么当查询的条件有为:num / (num AND name) / (num AND name AND age)时，索引才生效。所以在创建联合索引时，尽量把查询最频繁的那个字段作为最左(第一个)字段。查询的时候也尽量以这个字段为第一条件。&lt;/p>
 &lt;h2 id="4-事务">4. 事务&lt;/h2>
 &lt;p>&lt;strong>事务是逻辑上的一组操作，要么都执行，要么都不执行。&lt;/strong>&lt;/p>
@@ -145,7 +145,7 @@
 &lt;/tbody>
 &lt;/table>
 &lt;p>MySQL InnoDB 存储引擎的默认支持的隔离级别是 &lt;strong>REPEATABLE-READ（可重读）&lt;/strong>。我们可以通过&lt;code>SELECT @@tx_isolation;&lt;/code>命令来查看，MySQL 8.0 该命令改为&lt;code>SELECT @@transaction_isolation;&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="ln">1&lt;/span>&lt;span class="n">mysql&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">tx_isolation&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-sql" data-lang="sql">&lt;span class="ln">1&lt;/span>&lt;span class="n">mysql&lt;/span>&lt;span class="o">&amp;gt;&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="k">SELECT&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">tx_isolation&lt;/span>&lt;span class="p">;&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="c1">-----------------+
 &lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">@@&lt;/span>&lt;span class="n">tx_isolation&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">|&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="o">+&lt;/span>&lt;span class="c1">-----------------+

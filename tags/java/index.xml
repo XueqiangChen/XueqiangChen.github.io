@@ -7,7 +7,7 @@
 &lt;h4 id="111-java-泛型了解么什么是类型擦除介绍一下常用的通配符">1.1.1 Java 泛型了解么？什么是类型擦除？介绍一下常用的通配符？&lt;/h4>
 &lt;p>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许开发者在编译时检测到非法的类型。泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。&lt;/p>
 &lt;p>&lt;strong>Java 的泛型是伪泛型，这是因为 Java 在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说类型擦除 。&lt;/strong> 更多关于类型擦除的问题，可以查看这篇文章：&lt;a href="https://www.cnblogs.com/wuqinglong/p/9456193.html">《Java 泛型类型擦除以及类型擦除带来的问题》&lt;/a> 。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;();&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="n">List&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">list&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">ArrayList&lt;/span>&lt;span class="o">&amp;lt;&amp;gt;();&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">add&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">12&lt;/span>&lt;span class="o">);&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="c1">//这里直接添加会报错
@@ -20,7 +20,7 @@
 &lt;span class="ln">11&lt;/span>&lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">list&lt;/span>&lt;span class="o">)&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>泛型一般有三种使用方式:泛型类、泛型接口、泛型方法。&lt;/p>
 &lt;p>&lt;strong>1.泛型类&lt;/strong>：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
 &lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="c1">//在实例化泛型类时，必须指定T的具体类型
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
 &lt;span class="ln"> 4&lt;/span>
@@ -35,27 +35,27 @@
 &lt;span class="ln">13&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">14&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>如何实例化泛型类：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">genericInteger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;(&lt;/span>&lt;span class="n">123456&lt;/span>&lt;span class="o">);&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">genericInteger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">Generic&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">&amp;gt;(&lt;/span>&lt;span class="n">123456&lt;/span>&lt;span class="o">);&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>2.泛型接口&lt;/strong> ：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">();&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>实现泛型接口，不指定类型：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="nd">@Override&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">T&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">null&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln">5&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>实现泛型接口，指定类型：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">class&lt;/span> &lt;span class="nc">GeneratorImpl&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">T&lt;/span>&lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Generator&lt;/span>&lt;span class="o">&amp;lt;&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">&amp;gt;{&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="nd">@Override&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="nf">method&lt;/span>&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="s">&amp;#34;hello&amp;#34;&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln">5&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>3.泛型方法&lt;/strong> ：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">E&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">E&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">inputArray&lt;/span> &lt;span class="o">)&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="o">&amp;lt;&lt;/span> &lt;span class="n">E&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">E&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">inputArray&lt;/span> &lt;span class="o">)&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="k">for&lt;/span> &lt;span class="o">(&lt;/span> &lt;span class="n">E&lt;/span> &lt;span class="n">element&lt;/span> &lt;span class="o">:&lt;/span> &lt;span class="n">inputArray&lt;/span> &lt;span class="o">){&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">printf&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="s">&amp;#34;%s &amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">element&lt;/span> &lt;span class="o">);&lt;/span>
@@ -63,7 +63,7 @@
 &lt;span class="ln">6&lt;/span> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">println&lt;/span>&lt;span class="o">();&lt;/span>
 &lt;span class="ln">7&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>使用：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// 创建不同类型数组： Integer, Double 和 Character
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// 创建不同类型数组： Integer, Double 和 Character
 &lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">Integer&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">intArray&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="n">1&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">2&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">3&lt;/span> &lt;span class="o">};&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">stringArray&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="o">{&lt;/span> &lt;span class="s">&amp;#34;Hello&amp;#34;&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="s">&amp;#34;World&amp;#34;&lt;/span> &lt;span class="o">};&lt;/span>
 &lt;span class="ln">4&lt;/span>&lt;span class="n">printArray&lt;/span>&lt;span class="o">(&lt;/span> &lt;span class="n">intArray&lt;/span> &lt;span class="o">);&lt;/span>
@@ -83,7 +83,7 @@
 &lt;/blockquote>
 &lt;p>&lt;strong>&lt;code>equals()&lt;/code>&lt;/strong> : 它的作用也是判断两个对象是否相等，它不能用于比较基本数据类型的变量。&lt;code>equals()&lt;/code>方法存在于&lt;code>Object&lt;/code>类中，而&lt;code>Object&lt;/code>类是所有类的直接或间接父类。&lt;/p>
 &lt;p>&lt;code>Object&lt;/code>类&lt;code>equals()&lt;/code>方法：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">obj&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">obj&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">obj&lt;/span>&lt;span class="o">);&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>equals()&lt;/code> 方法存在两种使用情况：&lt;/p>
@@ -92,7 +92,7 @@
 &lt;li>情况 2：类覆盖了 &lt;code>equals()&lt;/code>方法，是对对象内容的比较。一般，我们都覆盖 &lt;code>equals()&lt;/code>方法来两个对象的内容相等；若它们的内容相等，则返回 true(即，认为这两个对象相等)。&lt;/li>
 &lt;/ul>
 &lt;p>&lt;strong>举个例子：&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">test1&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">test1&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span> &lt;span class="c1">// a 为一个引用
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">b&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="n">String&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;ab&amp;#34;&lt;/span>&lt;span class="o">);&lt;/span> &lt;span class="c1">// b为另一个引用,对象的内容一样
@@ -115,7 +115,7 @@
 &lt;li>当创建 &lt;code>String&lt;/code> 类型的对象时，虚拟机会在常量池中查找有没有已经存在的值和要创建的值相同的对象，如果有就把它赋给当前引用。如果没有就在常量池中重新创建一个 &lt;code>String&lt;/code> 对象。&lt;/li>
 &lt;/ul>
 &lt;p>&lt;code>String&lt;/code>类&lt;code>equals()&lt;/code>方法：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">anObject&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kt">boolean&lt;/span> &lt;span class="nf">equals&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Object&lt;/span> &lt;span class="n">anObject&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="o">(&lt;/span>&lt;span class="k">this&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="n">anObject&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="k">return&lt;/span> &lt;span class="kc">true&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="o">}&lt;/span>
@@ -140,7 +140,7 @@
 &lt;p>面试官可能会问你：“你重写过 &lt;code>hashcode&lt;/code> 和 &lt;code>equals&lt;/code>么，为什么重写 &lt;code>equals&lt;/code> 时必须重写 &lt;code>hashCode&lt;/code> 方法？”&lt;/p>
 &lt;p>&lt;strong>1)hashCode()介绍:&lt;/strong>&lt;/p>
 &lt;p>&lt;code>hashCode()&lt;/code> 的作用是获取哈希码，也称为散列码；它实际上是返回一个 int 整数。这个哈希码的作用是确定该对象在哈希表中的索引位置。&lt;code>hashCode()&lt;/code>定义在 JDK 的 &lt;code>Object&lt;/code> 类中，这就意味着 Java 中的任何类都包含有 &lt;code>hashCode()&lt;/code> 函数。另外需要注意的是： &lt;code>Object&lt;/code> 的 hashcode 方法是本地方法，也就是用 c 语言或 c++ 实现的，该方法通常用来将对象的 内存地址 转换为整数之后返回。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">native&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">hashCode&lt;/span>&lt;span class="o">();&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">native&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="nf">hashCode&lt;/span>&lt;span class="o">();&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>散列表存储的是键值对(key-value)，它的特点是：能根据“键”快速的检索出对应的“值”。这其中就利用到了散列码！（可以快速找到所需要的对象）&lt;/p>
 &lt;p>&lt;strong>2)为什么要有 hashCode？&lt;/strong>&lt;/p>
 &lt;p>我们以&lt;code>HashSet&lt;/code> 如何检查重复”为例子来说明为什么要有 hashCode？&lt;/p>
@@ -255,9 +255,9 @@
 &lt;p>[1] &lt;a href="https://github.com/Snailclimb/JavaGuide">JavaGuide&lt;/a>&lt;/p></description></item><item><title>解决setcap导致Java加载libjli.so 失败问题</title><link>https://ahamoment.cn/post/linux-cap/</link><pubDate>Fri, 11 Sep 2020 11:12:43 +0800</pubDate><guid>https://ahamoment.cn/post/linux-cap/</guid><description>
 &lt;h2 id="背景">背景&lt;/h2>
 &lt;p>最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>java: error &lt;span class="k">while&lt;/span> loading shared libraries: libjli.so: cannot open shared object file: No such file or directory
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>java: error &lt;span class="k">while&lt;/span> loading shared libraries: libjli.so: cannot open shared object file: No such file or directory
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>错误信息是说 java 应用加载不到 libjli.so 文件，我们使用 &lt;code>java -version&lt;/code> 命令，同样的错误又出现了。使用 ldd 命令查看一下 java 应用是否加载了这个 so 文件，发现 java 应用加载的 so 文件中存在 libjli.so。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ ldd java
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ ldd java
 &lt;span class="ln">2&lt;/span> linux-vdso.so.1 &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="o">(&lt;/span>0x00007ffe2a9c7000&lt;span class="o">)&lt;/span>
 &lt;span class="ln">3&lt;/span> /usr/local/lib/libsysconfcpus.so &lt;span class="o">(&lt;/span>0x00002ac503ca8000&lt;span class="o">)&lt;/span>
 &lt;span class="ln">4&lt;/span> libz.so.1 &lt;span class="o">=&lt;/span>&amp;gt; /lib64/libz.so.1 &lt;span class="o">(&lt;/span>0x00002ac503eaa000&lt;span class="o">)&lt;/span>
@@ -283,7 +283,7 @@
 &lt;p>理解了动态库的概念之后，当碰到某个程序报错缺少某个库文件时，我们应该怎么查看该程序当前加载了哪些库文件呢？可以用 &lt;code>ldd&lt;/code> 命令。&lt;/p>
 &lt;p>ldd 命令的作用是用来查看程式运行所需的共享库,常用来解决程式因缺少某个库文件而不能运行的一些问题。&lt;/p>
 &lt;p>例如：查看test程序运行所依赖的库:&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@localhost testso&lt;span class="o">]&lt;/span>&lt;span class="c1"># ldd /etc/alternatives/java&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@localhost testso&lt;span class="o">]&lt;/span>&lt;span class="c1"># ldd /etc/alternatives/java&lt;/span>
 &lt;span class="ln">2&lt;/span> linux-vdso.so.1 &lt;span class="o">=&lt;/span>&amp;gt; &lt;span class="o">(&lt;/span>0x00007ffde15f8000&lt;span class="o">)&lt;/span>
 &lt;span class="ln">3&lt;/span> libpthread.so.0 &lt;span class="o">=&lt;/span>&amp;gt; /lib64/libpthread.so.0 &lt;span class="o">(&lt;/span>0x00007f03f2f8d000&lt;span class="o">)&lt;/span>
 &lt;span class="ln">4&lt;/span> libdl.so.2 &lt;span class="o">=&lt;/span>&amp;gt; /lib64/libdl.so.2 &lt;span class="o">(&lt;/span>0x00007f03f2d89000&lt;span class="o">)&lt;/span>
@@ -468,22 +468,22 @@
 &lt;p>&lt;strong>getcap&lt;/strong> 命令和 &lt;strong>setcap&lt;/strong> 命令分别用来查看和设置程序文件的 capabilities 属性。&lt;/p>
 &lt;p>例如&lt;strong>为 ping 命令文件添加 capabilities&lt;/strong>&lt;/p>
 &lt;p>执行 ping 命令所需的 capabilities 为 cap_net_admin 和 cap_net_raw，通过 setcap 命令可以添加它们：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ sudo setcap cap_net_admin,cap_net_raw+ep /bin/ping
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ sudo setcap cap_net_admin,cap_net_raw+ep /bin/ping
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>移除添加的 capabilities ，执行下面的命令：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ sudo setcap cap_net_admin,cap_net_raw-ep /bin/ping
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>$ sudo setcap cap_net_admin,cap_net_raw-ep /bin/ping
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>命令中的 ep 分别表示 Effective 和 Permitted 集合(接下来会介绍)，+ 号表示把指定的 capabilities 添加到这些集合中，- 号表示从集合中移除(对于 Effective 来说是设置或者清除位)。&lt;/p>
 &lt;h2 id="解决问题">解决问题&lt;/h2>
 &lt;p>回到我们开始的问题，由于我们为非 root 用户赋予了使用 80 端口的权限，调用了如下命令：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>setcap &lt;span class="nv">cap_net_bind_service&lt;/span>&lt;span class="o">=&lt;/span>+ep /usr/bin/java
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>setcap &lt;span class="nv">cap_net_bind_service&lt;/span>&lt;span class="o">=&lt;/span>+ep /usr/bin/java
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>当一个可执行文件提升了权限后，运行时加载程序（rtld）— ld.so，它不会与不受信任路径中的库链接。Linux 会为使用了 &lt;code>setcap&lt;/code> 或 &lt;code>suid&lt;/code> 的程序禁用掉 &lt;code>LD_LIBRARY_PATH&lt;/code>。所以就出现了 java 程序加载不到 libjli.so 的情况了，这是 JDK 的一个 bug。&lt;/p>
 &lt;blockquote>
 &lt;p>&lt;a href="http://bugs.sun.com/view_bug.do?bug_id=7157699">JDK-7157699 : can not run java after granting posix capabilities&lt;/a>&lt;/p>
 &lt;/blockquote>
 &lt;p>那么既然使用 setcap 后不会加载链接库，我们就可以将 libjli.so 所在的路径添加到 &lt;code>/etc/ld.so.conf/xxx.conf&lt;/code>中，例如：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>% cat /etc/ld.so.conf.d/java.conf
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>% cat /etc/ld.so.conf.d/java.conf
 &lt;span class="ln">2&lt;/span>/usr/java/jdk1.8.0_261-amd64/lib/amd64/jli
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>使用 &lt;code>ldconfig&lt;/code> 重载 so 文件。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@localhost jli&lt;span class="o">]&lt;/span>&lt;span class="c1"># ldconfig -p | grep libjli&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="o">[&lt;/span>root@localhost jli&lt;span class="o">]&lt;/span>&lt;span class="c1"># ldconfig -p | grep libjli&lt;/span>
 &lt;span class="ln">2&lt;/span> libjli.so &lt;span class="o">(&lt;/span>libc6,x86-64&lt;span class="o">)&lt;/span> &lt;span class="o">=&lt;/span>&amp;gt; /usr/java/jdk1.8.0_261-amd64/lib/amd64/jli/libjli.so% ldconfig &lt;span class="p">|&lt;/span> grep libjli
 &lt;span class="ln">3&lt;/span>libjli.so -&amp;gt; libjli.so
 &lt;span class="ln">4&lt;/span>.......

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on Ahamoment</title><link>https://ahamoment.cn/categories/go/</link><description>Recent content in Go on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Thu, 01 Apr 2021 16:23:40 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go 语言中的 new 关键字和 make 关键字的区别</title><link>https://ahamoment.cn/post/go-new-vs-make/</link><pubDate>Thu, 01 Apr 2021 16:23:40 +0800</pubDate><guid>https://ahamoment.cn/post/go-new-vs-make/</guid><description>
 &lt;p>Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。&lt;/p>
 &lt;p>对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
 &lt;span class="ln">2&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
 &lt;span class="ln">4&lt;/span>
@@ -10,28 +10,28 @@
 &lt;span class="ln">7&lt;/span> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">i&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">8&lt;/span>&lt;span class="p">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">10&lt;/span> &lt;span class="c1">//panic: runtime error: invalid memory address or nil pointer dereference
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">j&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="kt">int&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">new&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">4&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">5&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="mi">10&lt;/span>
 &lt;span class="ln">6&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="o">*&lt;/span>&lt;span class="nx">j&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>0xc00000a0e0
+&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>0xc00000a0e0
 &lt;span class="ln">2&lt;/span>&lt;span class="m">0&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="m">10&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。&lt;/p>
 &lt;p>我们来看一下new函数&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// The new built-in function allocates memory. The first argument is a type,
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="c1">// The new built-in function allocates memory. The first argument is a type,
 &lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="c1">// not a value, and the value returned is a pointer to a newly
 &lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">// allocated zero value of that type.
 &lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">func&lt;/span> &lt;span class="nb">new&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">Type&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="nx">Type&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>它只接受一个参数，这个参数是一个类型，分配好内存后，返回一个指向该类型内存地址的指针。同时把分配的内存置为零，也就是类型的零值。&lt;/p>
 &lt;p>接着，我们来看一下make函数。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">// The make built-in function allocates and initializes an object of type
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1">// The make built-in function allocates and initializes an object of type
 &lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="c1">// slice, map, or chan (only). Like new, the first argument is a type, not a
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="c1">// value. Unlike new, make&amp;#39;s return type is the same as the type of its
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">// argument, not a pointer to it. The specification of the result depends on
@@ -53,7 +53,7 @@
 &lt;li>make 是分配内存并初始化，初始化并不是置为零值。&lt;/li>
 &lt;li>与new一样，它的第一个参数也是一个类型，但是不一样的是，make返回的是传入的类型，而不是指针！&lt;/li>
 &lt;/ul>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">c&lt;/span> &lt;span class="kd">chan&lt;/span> &lt;span class="kt">int&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kd">var&lt;/span> &lt;span class="nx">c&lt;/span> &lt;span class="kd">chan&lt;/span> &lt;span class="kt">int&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%#v \n&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nx">c&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">//(chan int)(nil)
 &lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="nx">c&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="nb">make&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kd">chan&lt;/span> &lt;span class="kt">int&lt;/span>&lt;span class="p">)&lt;/span>
 &lt;span class="ln">4&lt;/span>&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;%#v&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">c&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1">//(chan int)(0xc000062060)
@@ -62,7 +62,7 @@
 &lt;p>工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。&lt;/p>
 &lt;p>GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。&lt;/p>
 &lt;p>在命令行中运行 &lt;code>go env&lt;/code> 来查看当前 GOPATH 路径设置情况：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1"># go env&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln"> 1&lt;/span>&lt;span class="c1"># go env&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="nv">GO111MODULE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
 &lt;span class="ln"> 3&lt;/span>&lt;span class="nv">GOARCH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;amd64&amp;#34;&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="nv">GOBIN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
@@ -114,16 +114,16 @@
 &lt;p>本节以 Linux 为演示平台，为大家演示使用 GOPATH 的方法。&lt;/p>
 &lt;h3 id="1-设置当前目录为gopath">1. 设置当前目录为GOPATH&lt;/h3>
 &lt;p>选择一个目录，在目录中的命令行中执行下面的指令：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nb">export&lt;/span> &lt;span class="nv">GOPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="nb">pwd&lt;/span>&lt;span class="sb">`&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>&lt;span class="nb">export&lt;/span> &lt;span class="nv">GOPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="nb">pwd&lt;/span>&lt;span class="sb">`&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>该指令中的 pwd 将输出当前的目录，使用反引号将 pwd 指令括起来表示命令行替换，也就是说，使用&lt;code>pwd&lt;/code>将获得 pwd 返回的当前目录的值。例如，假设你的当前目录&lt;code>是“/home/davy/go”，那么使用&lt;/code>pwd将获得返回值“/home/davy/go”。&lt;/p>
 &lt;p>使用 export 指令可以将当前目录的值设置到环境变量 GOPATH中。&lt;/p>
 &lt;h3 id="2-建立gopath中的源码目录">2. 建立GOPATH中的源码目录&lt;/h3>
 &lt;p>使用下面的指令创建 GOPATH 中的src目录，在 src 目录下还有一个 hello 目录，该目录用于保存源代码。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>mkdir -p src/hello
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>mkdir -p src/hello
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>mkdir 指令的 -p 可以连续创建一个路径。&lt;/p>
 &lt;h3 id="3-添加-maingo-源码文件">3. 添加 main.go 源码文件&lt;/h3>
 &lt;p>使用 Linux 编辑器将下面的源码保存为 main.go 并保存到 &lt;code>$GOPATH/src/hello&lt;/code> 目录下。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="ln">1&lt;/span>&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
 &lt;span class="ln">2&lt;/span>
 &lt;span class="ln">3&lt;/span>&lt;span class="kn">import&lt;/span> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
 &lt;span class="ln">4&lt;/span>
@@ -133,7 +133,7 @@
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="4-编译源码运行">4. 编译源码运行&lt;/h3>
 &lt;p>此时我们已经设置了 GOPATH， 因此在 GO 语言中可以通过 GOPATH 找到工程的位置。&lt;/p>
 &lt;p>在命令行中执行如下指令编译源码：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>go install hell
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="ln">1&lt;/span>go install hell
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>编译完成的可执行文件会保存在&lt;code>$GOPATH/bin&lt;/code> 目录下。&lt;/p>
 &lt;p>在 bin 目录中执行 ./hello，命令行输出如下：&lt;/p>
 &lt;p>hello world&lt;/p>

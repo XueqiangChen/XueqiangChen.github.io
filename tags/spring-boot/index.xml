@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>spring boot on Ahamoment</title><link>https://ahamoment.cn/tags/spring-boot/</link><description>Recent content in spring boot on Ahamoment</description><generator>Hugo -- gohugo.io</generator><copyright>Copyright © 2008–2018, Steve Francia and the Hugo Authors; all rights reserved.</copyright><lastBuildDate>Fri, 27 Mar 2020 18:59:19 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/spring-boot/index.xml" rel="self" type="application/rss+xml"/><item><title>Spring Boot 发送邮件</title><link>https://ahamoment.cn/post/framewordk-springboot-send-email/</link><pubDate>Fri, 27 Mar 2020 18:59:19 +0800</pubDate><guid>https://ahamoment.cn/post/framewordk-springboot-send-email/</guid><description>
 &lt;p>这篇文章主要介绍使用&lt;code>spring boot&lt;/code> 发送邮件。&lt;/p>
 &lt;h2 id="1-maven-依赖">1. Maven 依赖&lt;/h2>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="c">&amp;lt;!--mail--&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="c">&amp;lt;!--mail--&amp;gt;&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>org.springframework.boot&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>spring-boot-starter-mail&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
@@ -22,7 +22,7 @@
 &lt;/ul>
 &lt;h2 id="3-邮件服务配置">3. 邮件服务配置&lt;/h2>
 &lt;p>引入maven依赖之后，下一步就是使用&lt;code>spring.mail.*&lt;/code>namespace 在 &lt;code>application.properties&lt;/code> 文件中配置邮件服务。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln"> 1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln"> 1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">mail&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">default-encoding&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">UTF-8&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c">#邮件服务器的地址：例如smtp.qq.com,smtp.gmail.com&lt;/span>&lt;span class="w">
@@ -43,7 +43,7 @@
 &lt;/span>&lt;span class="ln">19&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">test-connection&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">false&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="4-发送邮件">4. 发送邮件&lt;/h2>
 &lt;h3 id="41-发送简单邮件">4.1 发送简单邮件&lt;/h3>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Service&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Service&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MailServiceImpl&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">MailService&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="nd">@Autowired&lt;/span>
@@ -61,7 +61,7 @@
 &lt;span class="ln">16&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">17&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="42-发送附件邮件">4.2 发送附件邮件&lt;/h3>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="ln"> 1&lt;/span> &lt;span class="err">@Override&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="ln"> 1&lt;/span> &lt;span class="err">@Override&lt;/span>
 &lt;span class="ln"> 2&lt;/span> &lt;span class="err">public&lt;/span> &lt;span class="err">void&lt;/span> &lt;span class="err">sendMessageWithAttachment()&lt;/span> &lt;span class="p">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="err">MimeMessage&lt;/span> &lt;span class="err">message&lt;/span> &lt;span class="err">=&lt;/span> &lt;span class="err">javaMailSender.createMimeMessage();&lt;/span>
 &lt;span class="ln"> 4&lt;/span>
@@ -88,12 +88,12 @@
 中文手册：https://sourceforge.net/projects/freemarker/files/chinese-manual/&lt;/p>
 &lt;/blockquote>
 &lt;p>同样，我们先引入 Freemarker 的 Maven 依赖。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>org.springframework.boot&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>spring-boot-starter-freemarker&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
 &lt;span class="ln">4&lt;/span>&lt;span class="nt">&amp;lt;/dependency&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>然后在项目的 &lt;code>/resoource/templates&lt;/code> 目录下添加一个 Freemarker 模板文件 &lt;code>notification.flt&lt;/code>。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="ln">1&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="ln">1&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Hello world!&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">title&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="ln">4&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
@@ -103,7 +103,7 @@
 &lt;span class="ln">8&lt;/span> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;span class="ln">9&lt;/span>&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>在 SpringBoot 的配置文件中加上 Freemarker 的相关配置：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">2&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">freemarker&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">template-loader-path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">classpath:/templates/&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">enabled&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
@@ -112,7 +112,7 @@
 &lt;/span>&lt;span class="ln">7&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">content-type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">text/html&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">8&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">check-template-location&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在 &lt;code>EmailServiceImpl&lt;/code> 中使用 Freemarker 模板发送邮件：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Service&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@Service&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MailServiceImpl&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">MailService&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 3&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="n">Logger&lt;/span> &lt;span class="n">logger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">LoggerFactory&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">getLogger&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">MailServiceImpl&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">class&lt;/span>&lt;span class="o">);&lt;/span>
@@ -152,14 +152,14 @@
 &lt;p>我们为了测试邮件服务的发送功能，暂时可以先不用使用真正的邮件服务器，而是换成&lt;a href="http://www.icegreen.com/greenmail/">GreenMail&lt;/a>。
 GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集成测试或用于开发的轻量级沙盒邮件服务器。具体的使用方法可以参考官网上的&lt;a href="https://github.com/greenmail-mail-test/greenmail/tree/master/greenmail-core/src/test/java/com/icegreen/greenmail/examples">用例&lt;/a>。&lt;/p>
 &lt;p>这里先引入GreenMail 的Maven依赖：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-xml" data-lang="xml">&lt;span class="ln">1&lt;/span>&lt;span class="nt">&amp;lt;dependency&amp;gt;&lt;/span>
 &lt;span class="ln">2&lt;/span> &lt;span class="nt">&amp;lt;groupId&amp;gt;&lt;/span>com.icegreen&lt;span class="nt">&amp;lt;/groupId&amp;gt;&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="nt">&amp;lt;artifactId&amp;gt;&lt;/span>greenmail&lt;span class="nt">&amp;lt;/artifactId&amp;gt;&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="nt">&amp;lt;version&amp;gt;&lt;/span>1.5.11&lt;span class="nt">&amp;lt;/version&amp;gt;&lt;/span>
 &lt;span class="ln">5&lt;/span> &lt;span class="nt">&amp;lt;scope&amp;gt;&lt;/span>test&lt;span class="nt">&amp;lt;/scope&amp;gt;&lt;/span>
 &lt;span class="ln">6&lt;/span>&lt;span class="nt">&amp;lt;/dependency&amp;gt;&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>在Spring boot 的测试文件(application-test.yaml)中配置用于邮件服务的相关属性。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln"> 1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="ln"> 1&lt;/span>&lt;span class="nt">spring&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 2&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">mail&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 3&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">default-encoding&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">UTF-8&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">host&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">localhost&lt;/span>&lt;span class="w">
@@ -176,7 +176,7 @@ GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集�
 &lt;/span>&lt;span class="ln">15&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">protocol&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">smtp&lt;/span>&lt;span class="w">
 &lt;/span>&lt;span class="ln">16&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">test-connection&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">false&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>我们创建一个自定义的 JUnit Rule 来初始化和停止GreenMail邮件服务器。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">SmtpServerRule&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">ExternalResource&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">SmtpServerRule&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">ExternalResource&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="err">#&lt;/span> &lt;span class="n">设置发送邮件服务的用户的用户名&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="n">String&lt;/span> &lt;span class="n">USER_PASSWORD&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s">&amp;#34;password&amp;#34;&lt;/span>&lt;span class="o">;&lt;/span>
@@ -206,7 +206,7 @@ GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集�
 &lt;span class="ln">28&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>然后就可以开始写我们的测试用例了。
 我们使用JUnit @Rule注解配置SmtpServerRule。这标记了在每个集成测试之前和之后要调用的自定义规则。并允许我们拦截传入的电子邮件。最后，我们做出一些断言并验证发送的电子邮件是否等于接收的电子邮件。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@ActiveProfiles&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;test&amp;#34;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nd">@ActiveProfiles&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s">&amp;#34;test&amp;#34;&lt;/span>&lt;span class="o">)&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="nd">@SpringBootTest&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">webEnvironment&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">SpringBootTest&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">WebEnvironment&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">RANDOM_PORT&lt;/span>&lt;span class="o">)&lt;/span>
 &lt;span class="ln"> 3&lt;/span>&lt;span class="nd">@RunWith&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">SpringRunner&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="na">class&lt;/span>&lt;span class="o">)&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">MailServiceImplTest&lt;/span> &lt;span class="o">{&lt;/span>

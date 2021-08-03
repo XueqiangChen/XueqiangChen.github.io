@@ -25,7 +25,7 @@
 &lt;p>上图为线程池实现类图，下面看具体的代码。&lt;/p>
 &lt;h3 id="22-threadpool">2.2 ThreadPool&lt;/h3>
 &lt;p>先定义一个线程池接口，定义常用的方法。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">ThreadPool&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">ThreadPool&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">//提交任务到线程池
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">execute&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Runnable&lt;/span> &lt;span class="n">runnable&lt;/span>&lt;span class="o">);&lt;/span>
@@ -53,7 +53,7 @@
 &lt;span class="ln">26&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="23-runnablequeue">2.3 RunnableQueue&lt;/h3>
 &lt;p>我们需要一个任务队列，用来存放提交的任务，该队列是一个BlockedQueue，并且有limit的限制。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">RunnableQueue&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">RunnableQueue&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">// 当有新任务进来时首先会offer到队列中
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">offer&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Runnable&lt;/span> &lt;span class="n">runnable&lt;/span>&lt;span class="o">);&lt;/span>
@@ -66,7 +66,7 @@
 &lt;span class="ln">11&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="24-threadfactory">2.4 ThreadFactory&lt;/h3>
 &lt;p>ThreadFactory提供了创建线程的接口，以便于个性化地定制Thread，比如Thread应该被加到哪个Group中，优先级、线程名字以及是否为守护线程等。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="nd">@FunctionalInterface&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="nd">@FunctionalInterface&lt;/span>
 &lt;span class="ln">2&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">ThreadFactory&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">3&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="n">Thread&lt;/span> &lt;span class="nf">createThread&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Runnable&lt;/span> &lt;span class="n">runnable&lt;/span>&lt;span class="o">);&lt;/span>
@@ -78,7 +78,7 @@
 &lt;li>AbortDenyPolicy：向任务提交者抛出异常。&lt;/li>
 &lt;li>RunnerDenyPolicy：使用提交者所在的线程执行任务。&lt;/li>
 &lt;/ol>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">DenyPolicy&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">interface&lt;/span> &lt;span class="nc">DenyPolicy&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">reject&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">Runnable&lt;/span> &lt;span class="n">runnable&lt;/span>&lt;span class="o">,&lt;/span> &lt;span class="n">ThreadPool&lt;/span> &lt;span class="n">threadPool&lt;/span>&lt;span class="o">);&lt;/span>
 &lt;span class="ln"> 4&lt;/span>
@@ -119,7 +119,7 @@
 &lt;span class="ln">39&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">40&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>这里还定义了一个 RunnableDenyException ，主要用于通知任务提交者，任务队列已经无法再接收新的任务。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">RunnableDenyException&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">RuntimeException&lt;/span>&lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln">1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">RunnableDenyException&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">RuntimeException&lt;/span>&lt;span class="o">{&lt;/span>
 &lt;span class="ln">2&lt;/span>
 &lt;span class="ln">3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="nf">RunnableDenyException&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span> &lt;span class="n">message&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln">4&lt;/span> &lt;span class="kd">super&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">message&lt;/span>&lt;span class="o">);&lt;/span>
@@ -127,7 +127,7 @@
 &lt;span class="ln">6&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="26-internaltask">2.6 InternalTask&lt;/h3>
 &lt;p>InternalTask是Runnable的一个实现，是实际任务存储的数据结构。主要用于线程池内部，该类会使用到RunnableQueue，然后不断地从queue中取出某个runnable，并运行runnable的run方法。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">InternalTask&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Runnable&lt;/span>&lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">InternalTask&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">Runnable&lt;/span>&lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="n">RunnableQueue&lt;/span> &lt;span class="n">runnableQueue&lt;/span>&lt;span class="o">;&lt;/span>
 &lt;span class="ln"> 4&lt;/span>
@@ -161,7 +161,7 @@
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>代码还对该类增加了一个开关方法stop，主要用于停止当前线程，一般在线程池销毁和线程数量维护的时候会使用到。&lt;/p>
 &lt;h3 id="27-线程池详细实现">2.7 线程池详细实现&lt;/h3>
 &lt;p>在LinkedRunnableQueue中有几个重要的属性，第一个是limit，也就是Runnable队列的上限；当提交的Runnable数量达到limit上限时，则会调用DenyPolicy的reject方法；runnableList是一个双向循环列表，用于存放Runnable任务&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">LinkedRunnableQueue&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">RunnableQueue&lt;/span>&lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">LinkedRunnableQueue&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">RunnableQueue&lt;/span>&lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">// 任务队列的最大容量，在构造时传入
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">limit&lt;/span>&lt;span class="o">;&lt;/span>
@@ -224,7 +224,7 @@
 &lt;span class="ln">61&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;span class="ln">62&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>根据前面的讲解，线程池需要有数量控制属性、创建线程工厂、任务队列策略等功能，线程池初始化代码如下：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">BasicThreadPool&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">Thread&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">ThreadPool&lt;/span>&lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">BasicThreadPool&lt;/span> &lt;span class="kd">extends&lt;/span> &lt;span class="n">Thread&lt;/span> &lt;span class="kd">implements&lt;/span> &lt;span class="n">ThreadPool&lt;/span>&lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="c1">// 初始化线程数量
 &lt;/span>&lt;span class="ln"> 4&lt;/span>&lt;span class="c1">&lt;/span> &lt;span class="kd">private&lt;/span> &lt;span class="kd">final&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">initSize&lt;/span>&lt;span class="o">;&lt;/span>
@@ -445,7 +445,7 @@
 &lt;p>当前线程池不够繁忙时，则需要回收部分线程，回收到&lt;code>coreSize&lt;/code>数量即可，回收时调用&lt;code>removeThread()&lt;/code>方法，在该方法中需要考虑的一点是，如果被回收的线程恰巧从&lt;code>Runnable&lt;/code>任务取出了某个任务，则会继续保持该线程的运行，直到完成了任务的运行为止，详见&lt;code>InternalTask&lt;/code>的run方法。&lt;/p>
 &lt;h2 id="3-线程池的应用">3. 线程池的应用&lt;/h2>
 &lt;p>写一个简单的程序分别测试线程池的任务提交、线程池线程数量的动态扩展，以及线程池的销毁功能。&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">ThreadPoolTest&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="kd">public&lt;/span> &lt;span class="kd">class&lt;/span> &lt;span class="nc">ThreadPoolTest&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 2&lt;/span>
 &lt;span class="ln"> 3&lt;/span> &lt;span class="kd">public&lt;/span> &lt;span class="kd">static&lt;/span> &lt;span class="kt">void&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="n">String&lt;/span>&lt;span class="o">[]&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="kd">throws&lt;/span> &lt;span class="n">InterruptedException&lt;/span> &lt;span class="o">{&lt;/span>
 &lt;span class="ln"> 4&lt;/span> &lt;span class="c1">//定义线程池，初始化线程数为2，核心线程数为4，最大线程数位6，任务队列最多允许1000个任务
@@ -474,7 +474,7 @@
 &lt;span class="ln">27&lt;/span> &lt;span class="o">}&lt;/span>
 &lt;span class="ln">28&lt;/span>&lt;span class="o">}&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>上述测试代码中，定义了一个Basic线程池，其中初始化线程数量为2，核心线程数量为4，最大线程数量为6，最大任务队列数量为1000，同时提交了20个任务到线程池中，然后在main线程中不断地输出线程池中的线程数量信息监控变化，运行上述代码，截取的部分输出信息如下：&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nl">getActiveCount:&lt;/span> &lt;span class="n">2&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="nl">getActiveCount:&lt;/span> &lt;span class="n">2&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="nl">getQueueSize:&lt;/span> &lt;span class="n">18&lt;/span>
 &lt;span class="ln"> 3&lt;/span>&lt;span class="nl">getCoreSize:&lt;/span> &lt;span class="n">4&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="nl">getMaxSize:&lt;/span> &lt;span class="n">6&lt;/span>
@@ -560,7 +560,7 @@
 &lt;span class="ln">84&lt;/span>&lt;span class="nl">getMaxSize:&lt;/span> &lt;span class="n">6&lt;/span>
 &lt;span class="ln">85&lt;/span>&lt;span class="o">================================================&lt;/span>
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>通过上述输出信息可以看出，线程池中线程的动态扩展状况以及任务执行情况，在输出的最后会发现active count停留在了core size的位置，这也符合我们的设计，最后为了确定线程池中的活跃线程数量&lt;/p>
-&lt;div class="highlight">&lt;pre class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="o">================================================&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-java" data-lang="java">&lt;span class="ln"> 1&lt;/span>&lt;span class="o">================================================&lt;/span>
 &lt;span class="ln"> 2&lt;/span>&lt;span class="nl">getActiveCount:&lt;/span> &lt;span class="n">4&lt;/span>
 &lt;span class="ln"> 3&lt;/span>&lt;span class="nl">getQueueSize:&lt;/span> &lt;span class="n">0&lt;/span>
 &lt;span class="ln"> 4&lt;/span>&lt;span class="nl">getCoreSize:&lt;/span> &lt;span class="n">4&lt;/span>
