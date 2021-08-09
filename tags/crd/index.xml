@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CRD on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/crd/</link>
+    <description>Recent content in CRD on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Fri, 12 Mar 2021 10:18:35 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/crd/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入解析声明式API（一）：API对象的奥秘</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</link>
+      <pubDate>Fri, 12 Mar 2021 10:18:35 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节主要是关于自定义API资源(CRD)。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

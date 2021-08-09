@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"文档",
+      "item":"https://ahamoment.cn/docs/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"K8s 学习笔记",
+      "item":"https://ahamoment.cn/docs/k8s-doc/"},{
+      "@type": "ListItem",
+      "position": 3 ,
+      "name":"6. kubernetes 作业调度与资源管理",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter6/"},{
+      "@type": "ListItem",
+      "position": 4 ,
+      "name":"K8s Go 客户端浅析",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/"
+    },
+    "headline": "K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment","datePublished": "2021-04-06T19:58:51+08:00",
+    "dateModified": "2021-04-06T19:58:51+08:00",
+    "wordCount":  663 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求\/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。\n客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。"
+}
+</script><meta property="og:title" content="K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/" />
+
+
+
+
+<meta property="og:description" content="在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-04-06T19:58:51&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2021-04-06T19:58:51&#43;08:00" />
+
+
+
+<meta property="article:section" content="docs" />
+
+
+<meta property="article:tag" content="kubernetes" />
+
+<meta property="article:tag" content="client-go" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/job/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="lg:pt-12">
+    <div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+        <div class="md:w-1/4 lg:w-1/5 border-r">
+            <div class="sticky top-16 pt-6">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="sidebar-title" class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+    <span class="font-semibold">Table of Contents</span>
+    <i class="fas fa-caret-right ml-1"></i>
+</div>
+
+<div id="sidebar-toc"
+    class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+    <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+        <a class=" hover:text-eureka"
+            href="https://ahamoment.cn/docs/k8s-doc/">K8s 学习笔记</a>
+        
+        
+        
+
+
+    </div>
+    
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/">2. Kubernetes 集群搭建与实践</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/">使用kubeadm 安装k8s集群</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/">3. 容器编排与 kubernetes 作业管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">深入解析声明式API（一）：API对象的奥秘</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">声明式API与Kubernetes编程范式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">撬动离线业务：Job与CronJob</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">深入理解StatefulSet（二）：存储状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">容器化守护进程的意义：DaemonSet</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/">深入理解StatefulSet（一）：拓扑状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/">Deployment：作业副本与水平扩容</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">谈谈“控制器”模式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/">深入解析Pod对象(二): 使用进阶</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/">深入解析Pod对象(一)：基本概念</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/">为什么我们需要Pod</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/">6. kubernetes 作业调度与资源管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/">十字路口上的Kubernetes默认调度器</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/">QoS 源代码分析</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/">Kubernetes的资源模型和资源管理</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" text-eureka  hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">K8s Go 客户端浅析</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/">9. kubernetes 生态周边</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/">容器健康检查</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">常用的k8s命令</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+</ul>
+
+</div>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+            <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
+                <h1 class="font-bold text-3xl text-primary-text">K8s Go 客户端浅析</h1>
+                <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-04-06</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>4 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="hover:text-eureka">云计算</a>
+        
+    </div>
+    
+
+    
+</div>
+            </div>
+            <div class="flex">
+                <div class="w-full lg:w-3/4 px-6">
+                    
+                    
+                    <div class="content">
+                        <p>在使用 <a href="https://kubernetes.io/zh/docs/reference/using-api/">Kubernetes REST API</a> 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。</p>
+<p>客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 <a href="https://kubernetes.io/zh/docs/tasks/access-application-cluster/configure-access-multiple-clusters/">kubeconfig 文件</a> 格式来读取凭据和 API 服务器地址。</p>
+<p>kubernetes 官方支持的客户端有 go/python/java/dotnet/js 等，今天我们要讨论的是其中的 <a href="https://github.com/kubernetes/client-go/">go 客户端</a>。</p>
+<p>首先下载源代码，进入到<code>examples</code>目录：</p>
+<pre><code class="language-bash">➜ git clone git@github.com:kubernetes/client-go.git
+➜  ~ cd client-go/examples
+➜  examples git:(master) ✗ ll
+total 32K
+-rwxr-xr-x 1 root root 2.0K Apr  6 17:33 README.md
+drwxr-xr-x 2 root root 4.0K Apr  6 17:46 create-update-delete-deployment
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 dynamic-create-update-delete-deployment
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 fake-client
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 in-cluster-client-configuration
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 leader-election
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 out-of-cluster-client-configuration
+drwxr-xr-x 2 root root 4.0K Apr  6 17:33 workqueue
+</code></pre>
+<p>go 客户端提供了很多的使用样例，我们重点来看一下<a href="https://github.com/kubernetes/client-go/tree/master/examples/create-update-delete-deployment">create-update-delete-deployment</a> 这个目录，这个目录中是关于操作deployment资源对象的样例，包括创建，查询，更新，删除。</p>
+<blockquote>
+<p>This example program demonstrates the fundamental operations for managing on <a href="https://kubernetes.io/docs/user-guide/deployments/">Deployment</a> resources, such as <code>Create</code>, <code>List</code>, <code>Update</code> and <code>Delete</code>.</p>
+<p>You can adopt the source code from this example to write programs that manage other types of resources through the Kubernetes API.</p>
+</blockquote>
+<p>我们从 <code>main</code> 函数开始看起，这里尝试使用 <code>go-callvis</code> 将整个调用关系可视化出来：</p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/frame_generic_dark.png" alt=""></p>
+<p>总的来看，<code>main</code> 使用 <code>kubeconfig</code> 的配置来生成 rest client，通过 rest client 调用 k8s api 进行资源的操作。</p>
+<p>接下来，具体来看一下读取 <code>kubeconfig</code> 配置的代码：</p>
+<pre><code class="language-go">var kubeconfig *string
+if home := homedir.HomeDir(); home != &quot;&quot; {
+    kubeconfig = flag.String(&quot;kubeconfig&quot;, filepath.Join(home, &quot;.kube&quot;, &quot;config&quot;), &quot;(optional) absolute path to the kubeconfig file&quot;)
+} else {
+    kubeconfig = flag.String(&quot;kubeconfig&quot;, &quot;&quot;, &quot;absolute path to the kubeconfig file&quot;)
+}
+flag.Parse()
+
+config, err := clientcmd.BuildConfigFromFlags(&quot;&quot;, *kubeconfig)
+</code></pre>
+<p>命令行参数指定<code>kubeconfig</code>的绝对路径，调用<code>clientcmd.BuildConfigFromFlags(&quot;&quot;, *kubeconfig)</code>来解析 config 的配置信息。 <code>BuildConfigFromFlags</code> 函数是用来从master地址或者kubeconfig文件地址来构建config配置，这个函数做了两件事情：</p>
+<ol>
+<li>调用<code>func NewNonInteractiveDeferredLoadingClientConfig(loader ClientConfigLoader, overrides *ConfigOverrides) ClientConfig</code></li>
+<li>调用 <code>func (config *DeferredLoadingClientConfig) ClientConfig() (*restclient.Config, error)</code> 函数</li>
+</ol>
+<pre><code class="language-go">func BuildConfigFromFlags(masterUrl, kubeconfigPath string) (*restclient.Config, error) {
+    ......
+    return NewNonInteractiveDeferredLoadingClientConfig(
+        &amp;ClientConfigLoadingRules{ExplicitPath: kubeconfigPath},
+        &amp;ConfigOverrides{ClusterInfo: clientcmdapi.Cluster{Server: masterUrl}}).ClientConfig()
+}
+</code></pre>
+<p>我们来看看这两个链式函数做了什么事情：</p>
+<pre><code class="language-go">func NewNonInteractiveDeferredLoadingClientConfig(loader ClientConfigLoader, overrides *ConfigOverrides) ClientConfig {
+	return &amp;DeferredLoadingClientConfig{loader: loader, overrides: overrides, icc: &amp;inClusterClientConfig{overrides: overrides}}
+}
+</code></pre>
+<p><code>NewNonInteractiveDeferredLoadingClientConfig</code> 函数返回一个 <code>ClientConfig</code> 接口的实现: <code>DeferredLoadingClientConfig</code>。<code>DeferredLoadingClientConfig</code> 主要工作是确保装载的 <code>Config</code> 实例使用的是最新 <code>kubeconfig</code> 数据（对于配置了多个集群的，<code>export KUBECONFIG=cluster1-config:cluster2-config</code>，需要执行 merge）。在这个结构体的注释中写道：</p>
+<pre><code>It is used in cases where the loading rules may change after you've instantiated them and you want to be sure that the most recent rules are used.  This is useful in cases where you bind flags to loading rule parameters before the parse happens and you want your calling code to be ignorant of how the values are being mutated to avoid passing extraneous information down a call stack
+
+实例化加载规则后，如果要更改加载规则，并且要确保使用最新的规则，则可以使用它。这在以下情况下很有用：
+在解析发生之前将标志绑定到加载规则参数，并且您希望您的调用代码不知道值的变化方式，以避免在调用堆栈中传递无关的信息
+</code></pre>
+<p>上一个函数返回了 ClientConfig 接口实例。然后调用 ClientConfig 接口定义的 ClientConfig() 方法。ClientConfig() 工作是解析、处理 kubeconfig 文件里的认证信息，并返回一个完整的 rest#Config 实例。</p>
+<pre><code class="language-go">// ClientConfig implements ClientConfig
+func (config *DeferredLoadingClientConfig) ClientConfig() (*restclient.Config, error) {
+	mergedClientConfig, err := config.createClientConfig()
+	......
+    
+	// load the configuration and return on non-empty errors and if the
+	// content differs from the default config
+	mergedConfig, err := mergedClientConfig.ClientConfig()
+	......
+
+	// check for in-cluster configuration and use it
+	if config.icc.Possible() {
+		klog.V(4).Infof(&quot;Using in-cluster configuration&quot;)
+		return config.icc.ClientConfig()
+	}
+
+	// return the result of the merged client config
+	return mergedConfig, err
+}
+</code></pre>
+<p>这个函数主要有两个重要部分：</p>
+<p>1.<code>mergedClientConfig, err := config.createClientConfig()</code></p>
+<p>内部执行遍历 kubeconfig files （如果有多个）， 对每个 kubeconfig 执行 LoadFromFile 返回 tools/clientcmd/api#Config 实例。api#Config 顾名思义 api 包下的 Config，是把 kubeconfig （eg. $HOME/.kube/config） 序列化为一个 API 资源对象。</p>
+<p>现在,我们看到了几种结构体或接口命名相似，不要混淆了：</p>
+<ul>
+<li>api#Config：序列化 kubeconfig 文件后生成的对象</li>
+<li>tools/clientcmd#ClientConfig：负责用 api#Config 真正创建 rest#Config。处理、解析 kubeconfig 中的认证信息，有了它才能创建 rest#Config，所以命名叫 <strong>Client</strong>Config</li>
+<li>rest#Config：用于创建 http 客户端</li>
+</ul>
+<p>对于 merge 后的 api#Config，调用 NewNonInteractiveClientConfig 创建一个 ClientConfig 接口的实现。</p>
+<p>2.<code>mergedConfig, err := mergedClientConfig.ClientConfig()</code></p>
+<p>真正创建 rest#Config 的地方。在这里解析、处理 kubeconfig 中的认证信息。</p>
+<p>完成 rest client 创建之后，就需要创建 <code>clientset</code> :</p>
+<pre><code class="language-go">clientset, err := kubernetes.NewForConfig(config)
+</code></pre>
+<p>这里的 <code>func NewForConfig(c *rest.Config) (*Clientset, error)</code> 函数会根据 api group 为不同的资源生成客户端。例如这里用到的 deployment 的客户端，定义了deployment的namespace：</p>
+<pre><code class="language-go">deploymentsClient := clientset.AppsV1().Deployments(apiv1.NamespaceDefault)
+</code></pre>
+<p>接下来创建 deployment 的描述信息：</p>
+<pre><code class="language-go">deployment := &amp;appsv1.Deployment{
+    ObjectMeta: metav1.ObjectMeta{
+        Name: &quot;demo-deployment&quot;,
+    },
+    Spec: appsv1.DeploymentSpec{
+        Replicas: int32Ptr(2),
+        Selector: &amp;metav1.LabelSelector{
+            MatchLabels: map[string]string{
+                &quot;app&quot;: &quot;demo&quot;,
+            },
+        },
+        Template: apiv1.PodTemplateSpec{
+            ObjectMeta: metav1.ObjectMeta{
+                Labels: map[string]string{
+                    &quot;app&quot;: &quot;demo&quot;,
+                },
+            },
+            Spec: apiv1.PodSpec{
+                Containers: []apiv1.Container{
+                    {
+                        Name:  &quot;web&quot;,
+                        Image: &quot;nginx:1.12&quot;,
+                        Ports: []apiv1.ContainerPort{
+                            {
+                                Name:          &quot;http&quot;,
+                                Protocol:      apiv1.ProtocolTCP,
+                                ContainerPort: 80,
+                            },
+                        },
+                    },
+                },
+            },
+        },
+    },
+}
+</code></pre>
+<p>创建deployment：</p>
+<pre><code class="language-go">// Create Deployment
+fmt.Println(&quot;Creating deployment...&quot;)
+result, err := deploymentsClient.Create(context.TODO(), deployment, metav1.CreateOptions{})
+if err != nil {
+   panic(err)
+}
+fmt.Printf(&quot;Created deployment %q.\n&quot;, result.GetObjectMeta().GetName())
+</code></pre>
+<p>这个创建的函数实际上就是调用 HTTP 的 POST 请求来跟K8s集群进行通信的。</p>
+<pre><code class="language-go">func (c *deployments) Create(ctx context.Context, deployment *v1.Deployment, opts metav1.CreateOptions) (result *v1.Deployment, err error) {
+	result = &amp;v1.Deployment{}
+	err = c.client.Post().
+		Namespace(c.ns).
+		Resource(&quot;deployments&quot;).
+		VersionedParams(&amp;opts, scheme.ParameterCodec).
+		Body(deployment).
+		Do(ctx).
+		Into(result)
+	return
+}
+</code></pre>
+<p>至于post的请求细节，这里不做详细的阐述。</p>
+<p><strong>参考：</strong></p>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzkzMzE2ODg1MQ==&amp;mid=2247489358&amp;idx=1&amp;sn=7045014044efa1767d6c88340c2d398f&amp;source=41#wechat_redirect">k8s informer</a></p>
+<p><a href="http://borismattijssen.github.io/articles/kubernetes-informers-controllers-reflectors-stores">Kubernetes: Controllers, Informers, Reflectors and Stores</a></p>
+<p><a href="https://segmentfault.com/a/1190000018953168">解读 kubernetes client-go 官方 examples</a>](<a href="https://segmentfault.com/a/1190000018953168">https://segmentfault.com/a/1190000018953168</a>)</p>
+<p><a href="https://qiankunli.github.io/2020/07/20/client_go.html#%E7%AE%80%E4%BB%8B">client-go学习</a></p>
+<p><a href="https://github.com/ofabry/go-callvis">go-callvis</a>：callvis 查看代码调用关系工具，一个不错的调用链可视化工具，可以方便我们分析代码</p>
+
+                    </div>
+                    
+                    <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+    
+    <a href="https://ahamoment.cn/tags/client-go/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#client-go</a>
+    
+</div>
+                    
+                    
+
+                    
+
+
+
+                    
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/" class="block">Kubernetes的资源模型和资源管理</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+    </div>
+</div>
+
+                    
+
+
+
+                </div>
+                
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        hljs.initHighlightingOnLoad();
+        changeSidebarHeight();
+        switchDocToc();
+    })
+</script>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>MyBatis Generator 使用与原理(上) | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Eureka is a elegant and powerful theme for Hugo.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"MyBatis Generator 使用与原理(上)",
+      "item":"https://ahamoment.cn/posts/java/framework-mybatis-generator/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/java/framework-mybatis-generator/"
+    },
+    "headline": "MyBatis Generator 使用与原理(上) | AhaMoment","datePublished": "2021-01-26T20:06:07+08:00",
+    "dateModified": "2021-01-26T20:06:07+08:00",
+    "wordCount":  291 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "Eureka is a elegant and powerful theme for Hugo."
+}
+</script><meta property="og:title" content="MyBatis Generator 使用与原理(上) | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/java/framework-mybatis-generator/" />
+
+
+
+
+<meta property="og:description" content="" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-01-26T20:06:07&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2021-01-26T20:06:07&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="mybatis" />
+
+
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">MyBatis Generator 使用与原理(上)</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-01-26</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E6%A1%86%E6%9E%B6/" class="hover:text-eureka">框架</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <p>这两天在看一个开源的小说管理平台的代码，发现它的项目使用了MyBatis Generator来生成代码操作数据库，花了两个早上的时间研究了一下，确实是很不错的工具，能在我们的开发过程中省掉不少的工作。</p>
+<p>mybatis generator 的使用大致分成几步：</p>
+<ol>
+<li>创建配置文件</li>
+<li>保存配置文件到本地</li>
+<li>执行 MyBatis Generator</li>
+</ol>
+<p>我们以一个例子来说明如何使用 MyBaits Generator，项目的结构如下所示：</p>
+<pre><code class="language-bash">├── pom.xml
+├── README.md
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   └── com
+│   │   │       └── xueqiang
+│   │   │           └── footmark
+│   │   │               ├── controller
+│   │   │               ├── FootmarkApplication.java
+│   │   │               ├── model
+│   │   │               ├── service
+│   │   │               └── utils
+│   │   └── resources
+│   │       ├── application.properties
+│   │       ├── log4j.properties
+│   │       ├── mybatis
+│   │       │   └── generator-configuration.xml
+│   └── test
+
+</code></pre>
+<h2 id="1-配置文件">1. 配置文件</h2>
+<p>在 <code>resources/mybatis/</code> 目录下创建配置文件 <code>generator-configuration.xml</code>，该文件的具体内容如下所示：</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE generatorConfiguration
+        PUBLIC &quot;-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd&quot;&gt;
+
+&lt;generatorConfiguration&gt;
+    &lt;!-- 全局配置文件，下面可以通过占位符的形式读取文件中的值 --&gt;
+&lt;!--    &lt;properties resource=&quot;db.properties&quot;/&gt;--&gt;
+    &lt;!-- 用来指定数据源驱动包（jar/zip）的绝对路径 --&gt;
+    &lt;classPathEntry location=&quot;D:\Users\xueqiang.chen\.m2\repository\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar&quot;/&gt;
+    &lt;!-- 用于运行时的解析模式和具体的代码生成行为，对应org.mybatis.generator.config.Context类 --&gt;
+    &lt;!--
+    id:Context示例的唯一ID，用于输出错误信息时候作为唯一标记
+    targetRuntime:用于执行代码生成模式。可选值：
+        MyBatis3DynamicSql：动态SQL
+        MyBatis3Kotlin：基于Kotlin生成
+        MyBatis3：提供基本的基于动态SQL的CRUD方法和XXXByExample方法，会生成XML映射文件
+        MyBatis3Simple：提供基本的基于动态SQL的CRUD方法，会生成XML映射文件
+        MyBatis3DynamicSqlV1：已经过时，不推荐使用
+    defaultModeType:控制Domain类的生成行为。执行引擎为MyBatis3DynamicSql或者MyBatis3Kotlin时忽略此配置，可选值：
+        conditional：默认值，类似hierarchical，但是只有一个主键的时候会合并所有属性生成在同一个类。
+        flat：所有内容全部生成在一个对象中。
+        hierarchical：键生成一个XXKey对象，Blob等单独生成一个对象，其他简单属性在一个对象中
+    --&gt;
+    &lt;!--
+    context的内容需要按照顺序排列,否则会报错：
+    property-&gt;plugin-&gt;commentGenerator-&gt;connectionFactory|jdbcConnection-&gt;javaTypeResolver-&gt;javaModelGenerator-&gt;sqlMapGenerator-&gt;javaClientGenerator-&gt;table
+    --&gt;
+    &lt;context id=&quot;default&quot; targetRuntime=&quot;MyBatis3DynamicSql&quot;&gt;
+        &lt;property name=&quot;javaFileEncoding&quot; value=&quot;UTF-8&quot;/&gt;
+
+&lt;!--        &lt;plugin type=&quot;org.mybatis.generator.plugins.SerializablePlugin&quot;/&gt;--&gt;
+
+        &lt;!--用于控制生成的实体的注释内容
+        suppressAllComments:是否生成注释
+        suppressDate:是否在注释中添加生成的时间戳
+        dateFormat:配合suppressDate使用，指定输出时间戳的格式
+        addRemarkComments:是否输出表和列的Comment信息--&gt;
+        &lt;commentGenerator&gt;
+            &lt;property name=&quot;suppressDate&quot; value=&quot;true&quot;/&gt;
+            &lt;property name=&quot;suppressAllComments&quot; value=&quot;true&quot;/&gt;
+        &lt;/commentGenerator&gt;
+
+        &lt;!--用于指定数据源的连接信息，对应的类为org.mybatis.generator.config.JDBCConnectionConfiguration
+        driverClass:数据源驱动的全类名
+        connectionURL:JDBC的连接URL
+        userId:用户名
+        password:密码--&gt;
+        &lt;jdbcConnection driverClass=&quot;com.mysql.jdbc.Driver&quot;
+                        connectionURL=&quot;jdbc:mysql://127.0.0.1:3306/footmark&quot;
+                        userId=&quot;root&quot;
+                        password=&quot;mysql&quot;&gt;
+        &lt;/jdbcConnection&gt;
+
+        &lt;!--用于解析和计算数据库列类型和Java类型的映射关系，该标签只包含一个type属性，用于指定org.mybatis.generator.api.JavaTypeResolver接口的实现类
+        forceBigDecimals:是否强制把所有的数字类型强制使用java.math.BigDecimal类型表示
+        useJSR310Types:是否支持JSR310，主要是JSR310的新日期类型
+            数据库JDBC类型           Java类型
+            DATE	                java.time.LocalDate
+            TIME	                java.time.LocalTime
+            TIMESTAMP	            java.time.LocalDateTime
+            TIME_WITH_TIMEZONE	    java.time.OffsetTime
+            TIMESTAMP_WITH_TIMEZONE	java.time.OffsetDateTime--&gt;
+        &lt;javaTypeResolver&gt;
+            &lt;!-- 不强制把所有的数字类型转化为BigDecimal --&gt;
+            &lt;property name=&quot;forceBigDecimals&quot; value=&quot;false&quot; /&gt;
+        &lt;/javaTypeResolver&gt;
+
+        &lt;!--主要用于控制实体（Model）类的代码生成行为
+        targetPackage:生成的实体类的包名
+        targetProject:生成的实体类文件相对于项目（根目录）的位置
+
+        property:
+        constructorBased:是否生成一个带有所有字段属性的构造函数
+        enableSubPackages:是否允许通过Schema生成子包
+        exampleTargetPackage:生成的伴随实体类的Example类的包名
+        exampleTargetProject:生成的伴随实体类的Example类文件相对于项目（根目录）的位置
+        immutable:是否不可变
+        rootClass:为生成的实体类添加父类
+        trimStrings:Setter方法是否对字符串类型进行一次trim操作--&gt;
+        &lt;javaModelGenerator targetPackage=&quot;com.xueqiang.footmark.model.entity&quot; targetProject=&quot;src/main/java&quot;&gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot; /&gt;
+            &lt;property name=&quot;trimStrings&quot; value=&quot;true&quot; /&gt;
+        &lt;/javaModelGenerator&gt;
+
+        &lt;!--主要用于控制XML映射文件的代码生成行为
+        targetPackage:生成的XML映射文件的包名
+        targetProject:生成的XML映射文件相对于项目（根目录）的位置,例如:src/main/resources
+
+        property:
+        enableSubPackages:是否允许通过Schema生成子包--&gt;
+        &lt;sqlMapGenerator targetPackage=&quot;mapper&quot;  targetProject=&quot;src/main/resources&quot;&gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot; /&gt;
+        &lt;/sqlMapGenerator&gt;
+
+        &lt;!--主要用于控制Mapper接口的代码生成行为
+        type:Mapper接口生成策略.(&lt;context&gt;标签的targetRuntime属性为MyBatis3DynamicSql或者MyBatis3Kotlin时此属性配置忽略)
+            ANNOTATEDMAPPER:Mapper接口生成的时候依赖于注解和SqlProviders（也就是纯注解实现），不会生成XML映射文件。
+            XMLMAPPER:Mapper接口生成接口方法，对应的实现代码生成在XML映射文件中（也就是纯映射文件实现）
+            MIXEDMAPPER:Mapper接口生成的时候复杂的方法实现生成在XML映射文件中，而简单的实现通过注解和SqlProviders实现（也就是注解和映射文件混合实现）。
+        targetPackage:生成的Mapper接口的包名
+        targetProject:生成的Mapper接口文件相对于项目（根目录）的位置--&gt;
+        &lt;!--property属性：
+        enableSubPackages:是否允许通过Schema生成子包
+        useLegacyBuilder:是否通过SQL Builder生成动态SQL
+        rootInterface:为生成的Mapper接口添加父接口--&gt;
+        &lt;javaClientGenerator type=&quot;ANNOTATEDMAPPER&quot; targetPackage=&quot;com.xueqiang.footmark.model.mapper&quot;  targetProject=&quot;src/main/java&quot;&gt;
+            &lt;property name=&quot;enableSubPackages&quot; value=&quot;true&quot; /&gt;
+        &lt;/javaClientGenerator&gt;
+
+        &lt;!--enableInsert                动态SQL提供类SqlProvider的类名称
+        enableSelectByPrimaryKey        是否允许生成selectByPrimaryKey方法
+        enableSelectByExample           是否允许生成selectByExample方法
+        enableUpdateByPrimaryKey        是否允许生成updateByPrimaryKey方法
+        enableDeleteByPrimaryKey        是否允许生成deleteByPrimaryKey方法
+        enableDeleteByExample           是否允许生成deleteByExample方法
+        enableCountByExample            是否允许生成countByExample方法
+        enableUpdateByExample           是否允许生成updateByExample方法
+        selectByPrimaryKeyQueryId       value指定对应的主键列提供列表查询功能
+        selectByExampleQueryId          value指定对应的查询ID提供列表查询功能--&gt;
+        &lt;table tableName=&quot;t_order&quot;
+               enableCountByExample=&quot;false&quot;
+               enableDeleteByExample=&quot;false&quot;
+               enableSelectByExample=&quot;true&quot;
+               enableUpdateByExample=&quot;false&quot;
+               domainObjectName=&quot;Order&quot;
+               mapperName=&quot;OrderMapper&quot;&gt;
+            &lt;generatedKey column=&quot;id&quot; sqlStatement=&quot;MySql&quot;/&gt;
+        &lt;/table&gt;
+
+    &lt;/context&gt;
+&lt;/generatorConfiguration&gt;
+</code></pre>
+<p>上面的这个配置文件主要是按<code>t_order</code>这个数据库表的属性生成整个 xml 配置文件的元素意义我们可以参考<a href="http://mybatis.org/generator/configreference/xmlconfig.html">官方文档</a>的介绍。</p>
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/mybatis/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#mybatis</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/linux/linux-commands/" class="block">Linux 常用命令</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/interview/interview-docker-k8s/" class="block">Docker 和 Kubernetes 面试题</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+
+    
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

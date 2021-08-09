@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>gitbook on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/gitbook/</link>
+    <description>Recent content in gitbook on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Thu, 17 Jun 2021 20:28:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/gitbook/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo 博客搭建</title>
+      <link>https://ahamoment.cn/posts/tool/tool-hugo-blog/</link>
+      <pubDate>Thu, 17 Jun 2021 20:28:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-hugo-blog/</guid>
+      <description>前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
+1. 博客主体 博客主体是由
+https://github.com/peaceiris/actions-gh-pages
+https://github.com/GitbookIO/gitbook-cli
+https://github.com/marketplace/actions/publish-gitbook
+https://github.com/marketplace?type=actions</description>
+    </item>
+    
+  </channel>
+</rss>

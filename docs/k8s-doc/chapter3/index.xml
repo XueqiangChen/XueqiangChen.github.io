@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>3. 容器编排与 kubernetes 作业管理 on AhaMoment</title>
+    <link>https://ahamoment.cn/docs/k8s-doc/chapter3/</link>
+    <description>Recent content in 3. 容器编排与 kubernetes 作业管理 on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/chapter3/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[译]Kubernetes深入研究：CustomResources的代码生成</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/</link>
+      <pubDate>Fri, 12 Mar 2021 10:57:25 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources&#34;&gt;Kubernetes Deep Dive: Code Generation for CustomResources&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析声明式API（一）：API对象的奥秘</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</link>
+      <pubDate>Fri, 12 Mar 2021 10:18:35 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节主要是关于自定义API资源(CRD)。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>声明式API与Kubernetes编程范式</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/</link>
+      <pubDate>Fri, 12 Mar 2021 07:19:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节主要是关于声明式 API 与 Kubernetes 编程范式。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>撬动离线业务：Job与CronJob</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</link>
+      <pubDate>Tue, 09 Mar 2021 14:45:46 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入理解StatefulSet（二）：存储状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</link>
+      <pubDate>Tue, 09 Mar 2021 11:20:45 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的存储状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>容器化守护进程的意义：DaemonSet</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/</link>
+      <pubDate>Tue, 09 Mar 2021 10:42:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 Daemonset&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入理解StatefulSet（一）：拓扑状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</link>
+      <pubDate>Wed, 03 Mar 2021 07:45:28 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的拓扑状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Deployment：作业副本与水平扩容</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</link>
+      <pubDate>Mon, 01 Mar 2021 07:37:59 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;作业副本&lt;/li&gt;
+&lt;li&gt;水平扩容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>谈谈“控制器”模式</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/</link>
+      <pubDate>Sun, 28 Feb 2021 15:15:52 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析Pod对象(二): 使用进阶</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</link>
+      <pubDate>Sat, 27 Feb 2021 15:55:20 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ProjectedVolume: Secret, ConfigMap, DownwadAPI&lt;/li&gt;
+&lt;li&gt;ServiceAccount&lt;/li&gt;
+&lt;li&gt;容器健康检查和恢复机制&lt;/li&gt;
+&lt;li&gt;Pod 预设置：PodPreset&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析Pod对象(一)：基本概念</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</link>
+      <pubDate>Fri, 26 Feb 2021 15:14:52 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第14课时：深入解析Pod对象(一)：基本概念&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>为什么我们需要Pod</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</link>
+      <pubDate>Fri, 26 Feb 2021 09:33:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第13课时：为什么我们需要 Pod?&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

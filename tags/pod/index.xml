@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pod on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/pod/</link>
+    <description>Recent content in pod on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Sat, 27 Feb 2021 15:55:20 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/pod/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入解析Pod对象(二): 使用进阶</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</link>
+      <pubDate>Sat, 27 Feb 2021 15:55:20 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ProjectedVolume: Secret, ConfigMap, DownwadAPI&lt;/li&gt;
+&lt;li&gt;ServiceAccount&lt;/li&gt;
+&lt;li&gt;容器健康检查和恢复机制&lt;/li&gt;
+&lt;li&gt;Pod 预设置：PodPreset&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析Pod对象(一)：基本概念</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</link>
+      <pubDate>Fri, 26 Feb 2021 15:14:52 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第14课时：深入解析Pod对象(一)：基本概念&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>为什么我们需要Pod</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</link>
+      <pubDate>Fri, 26 Feb 2021 09:33:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第13课时：为什么我们需要 Pod?&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

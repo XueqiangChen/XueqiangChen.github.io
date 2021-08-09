@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Java 基础面试题 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="
+本文收集Java基础知识点相关的面试题目
+">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java 基础面试题",
+      "item":"https://ahamoment.cn/posts/interview/interview-java/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/interview/interview-java/"
+    },
+    "headline": "Java 基础面试题 | AhaMoment","datePublished": "2020-12-16T09:44:34+08:00",
+    "dateModified": "2020-12-16T09:44:34+08:00",
+    "wordCount":  757 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "\u003cblockquote\u003e\n\u003cp\u003e本文收集Java基础知识点相关的面试题目\u003c\/p\u003e\n\u003c\/blockquote\u003e"
+}
+</script><meta property="og:title" content="Java 基础面试题 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/interview/interview-java/" />
+
+
+
+
+<meta property="og:description" content="
+本文收集Java基础知识点相关的面试题目
+" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-12-16T09:44:34&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-12-16T09:44:34&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="java" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/linux/linux-cap/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Java 基础面试题</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-12-16</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>4 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="hover:text-eureka">面试题</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <blockquote>
+<p>本文收集Java基础知识点相关的面试题目</p>
+</blockquote>
+<h2 id="1-java-基础">1. Java 基础</h2>
+<h3 id="11-语法">1.1. 语法</h3>
+<h4 id="111-java-泛型了解么什么是类型擦除介绍一下常用的通配符">1.1.1 Java 泛型了解么？什么是类型擦除？介绍一下常用的通配符？</h4>
+<p>Java 泛型（generics）是 JDK 5 中引入的一个新特性, 泛型提供了编译时类型安全检测机制，该机制允许开发者在编译时检测到非法的类型。泛型的本质是参数化类型，也就是说所操作的数据类型被指定为一个参数。</p>
+<p><strong>Java 的泛型是伪泛型，这是因为 Java 在编译期间，所有的泛型信息都会被擦掉，这也就是通常所说类型擦除 。</strong> 更多关于类型擦除的问题，可以查看这篇文章：<a href="https://www.cnblogs.com/wuqinglong/p/9456193.html">《Java 泛型类型擦除以及类型擦除带来的问题》</a> 。</p>
+<pre><code class="language-java">List&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+
+list.add(12);
+//这里直接添加会报错
+list.add(&quot;a&quot;);
+Class&lt;? extends List&gt; clazz = list.getClass();
+Method add = clazz.getDeclaredMethod(&quot;add&quot;, Object.class);
+//但是通过反射添加，是可以的
+add.invoke(list, &quot;kl&quot;);
+
+System.out.println(list)
+</code></pre>
+<p>泛型一般有三种使用方式:泛型类、泛型接口、泛型方法。</p>
+<p><strong>1.泛型类</strong>：</p>
+<pre><code class="language-java">//此处T可以随便写为任意标识，常见的如T、E、K、V等形式的参数常用于表示泛型
+//在实例化泛型类时，必须指定T的具体类型
+public class Generic&lt;T&gt;{
+
+    private T key;
+
+    public Generic(T key) {
+        this.key = key;
+    }
+
+    public T getKey(){
+        return key;
+    }
+}
+</code></pre>
+<p>如何实例化泛型类：</p>
+<pre><code class="language-java">Generic&lt;Integer&gt; genericInteger = new Generic&lt;Integer&gt;(123456);
+</code></pre>
+<p><strong>2.泛型接口</strong> ：</p>
+<pre><code class="language-java">public interface Generator&lt;T&gt; {
+    public T method();
+}
+</code></pre>
+<p>实现泛型接口，不指定类型：</p>
+<pre><code class="language-java">class GeneratorImpl&lt;T&gt; implements Generator&lt;T&gt;{
+    @Override
+    public T method() {
+        return null;
+    }
+}
+</code></pre>
+<p>实现泛型接口，指定类型：</p>
+<pre><code class="language-java">class GeneratorImpl&lt;T&gt; implements Generator&lt;String&gt;{
+    @Override
+    public String method() {
+        return &quot;hello&quot;;
+    }
+}
+</code></pre>
+<p><strong>3.泛型方法</strong> ：</p>
+<pre><code class="language-java">   public static &lt; E &gt; void printArray( E[] inputArray )
+   {
+         for ( E element : inputArray ){
+            System.out.printf( &quot;%s &quot;, element );
+         }
+         System.out.println();
+    }
+</code></pre>
+<p>使用：</p>
+<pre><code class="language-java">// 创建不同类型数组： Integer, Double 和 Character
+Integer[] intArray = { 1, 2, 3 };
+String[] stringArray = { &quot;Hello&quot;, &quot;World&quot; };
+printArray( intArray  );
+printArray( stringArray  );
+</code></pre>
+<p><strong>常用的通配符为： T，E，K，V，？</strong></p>
+<ul>
+<li>？ 表示不确定的 java 类型</li>
+<li>T (type) 表示具体的一个 java 类型</li>
+<li>K V (key value) 分别代表 java 键值中的 Key Value</li>
+<li>E (element) 代表 Element</li>
+</ul>
+<p>更多关于 Java 泛型中的通配符可以查看这篇文章：<a href="https://juejin.im/post/5d5789d26fb9a06ad0056bd9">《聊一聊-JAVA 泛型中的通配符 T，E，K，V，？》</a></p>
+<h4 id="112--和-equals-的区别">1.1.2. == 和 equals 的区别</h4>
+<p><strong><code>==</code></strong> : 它的作用是判断两个对象的地址是不是相等。即判断两个对象是不是同一个对象。(<strong>基本数据类型<code>==</code>比较的是值，引用数据类型<code>==</code>比较的是内存地址</strong>)</p>
+<blockquote>
+<p>因为 Java 只有值传递，所以，对于 == 来说，不管是比较基本数据类型，还是引用数据类型的变量，其本质比较的都是值，只是引用类型变量存的值是对象的地址。</p>
+</blockquote>
+<p><strong><code>equals()</code></strong> : 它的作用也是判断两个对象是否相等，它不能用于比较基本数据类型的变量。<code>equals()</code>方法存在于<code>Object</code>类中，而<code>Object</code>类是所有类的直接或间接父类。</p>
+<p><code>Object</code>类<code>equals()</code>方法：</p>
+<pre><code class="language-java">public boolean equals(Object obj) {
+     return (this == obj);
+}
+</code></pre>
+<p><code>equals()</code> 方法存在两种使用情况：</p>
+<ul>
+<li>情况 1：类没有覆盖 <code>equals()</code>方法。则通过<code>equals()</code>比较该类的两个对象时，等价于通过“==”比较这两个对象。使用的默认是 <code>Object</code>类<code>equals()</code>方法。</li>
+<li>情况 2：类覆盖了 <code>equals()</code>方法，是对对象内容的比较。一般，我们都覆盖 <code>equals()</code>方法来两个对象的内容相等；若它们的内容相等，则返回 true(即，认为这两个对象相等)。</li>
+</ul>
+<p><strong>举个例子：</strong></p>
+<pre><code class="language-java">public class test1 {
+    public static void main(String[] args) {
+        String a = new String(&quot;ab&quot;); // a 为一个引用
+        String b = new String(&quot;ab&quot;); // b为另一个引用,对象的内容一样
+        String aa = &quot;ab&quot;; // 放在常量池中
+        String bb = &quot;ab&quot;; // 从常量池中查找
+        if (aa == bb) // true
+            System.out.println(&quot;aa==bb&quot;);
+        if (a == b) // false，非同一对象
+            System.out.println(&quot;a==b&quot;);
+        if (a.equals(b)) // true
+            System.out.println(&quot;aEQb&quot;);
+        if (42 == 42.0) { // true
+            System.out.println(&quot;true&quot;);
+        }
+    }
+}
+</code></pre>
+<p><strong>说明：</strong></p>
+<ul>
+<li><code>String</code> 中的 <code>equals</code> 方法是被重写过的，因为 <code>Object</code> 的 <code>equals</code> 方法是比较的对象的内存地址，而 <code>String</code> 的 <code>equals</code> 方法比较的是对象的值。</li>
+<li>当创建 <code>String</code> 类型的对象时，虚拟机会在常量池中查找有没有已经存在的值和要创建的值相同的对象，如果有就把它赋给当前引用。如果没有就在常量池中重新创建一个 <code>String</code> 对象。</li>
+</ul>
+<p><code>String</code>类<code>equals()</code>方法：</p>
+<pre><code class="language-java">public boolean equals(Object anObject) {
+    if (this == anObject) {
+        return true;
+    }
+    if (anObject instanceof String) {
+        String anotherString = (String)anObject;
+        int n = value.length;
+        if (n == anotherString.value.length) {
+            char v1[] = value;
+            char v2[] = anotherString.value;
+            int i = 0;
+            while (n-- != 0) {
+                if (v1[i] != v2[i])
+                    return false;
+                i++;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+</code></pre>
+<h4 id="113-hashcode-与-equals">1.1.3. hashCode() 与 equals()</h4>
+<p>面试官可能会问你：“你重写过 <code>hashcode</code> 和 <code>equals</code>么，为什么重写 <code>equals</code> 时必须重写 <code>hashCode</code> 方法？”</p>
+<p><strong>1)hashCode()介绍:</strong></p>
+<p><code>hashCode()</code> 的作用是获取哈希码，也称为散列码；它实际上是返回一个 int 整数。这个哈希码的作用是确定该对象在哈希表中的索引位置。<code>hashCode()</code>定义在 JDK 的 <code>Object</code> 类中，这就意味着 Java 中的任何类都包含有 <code>hashCode()</code> 函数。另外需要注意的是： <code>Object</code> 的 hashcode 方法是本地方法，也就是用 c 语言或 c++ 实现的，该方法通常用来将对象的 内存地址 转换为整数之后返回。</p>
+<pre><code class="language-java">public native int hashCode();
+</code></pre>
+<p>散列表存储的是键值对(key-value)，它的特点是：能根据“键”快速的检索出对应的“值”。这其中就利用到了散列码！（可以快速找到所需要的对象）</p>
+<p><strong>2)为什么要有 hashCode？</strong></p>
+<p>我们以<code>HashSet</code> 如何检查重复”为例子来说明为什么要有 hashCode？</p>
+<p>当你把对象加入 <code>HashSet</code> 时，<code>HashSet</code> 会先计算对象的 hashcode 值来判断对象加入的位置，同时也会与其他已经加入的对象的 hashcode 值作比较，如果没有相符的 hashcode，<code>HashSet</code> 会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调用 <code>equals()</code> 方法来检查 hashcode 相等的对象是否真的相同。如果两者相同，<code>HashSet</code> 就不会让其加入操作成功。如果不同的话，就会重新散列到其他位置。这样我们就大大减少了 equals 的次数，相应就大大提高了执行速度。</p>
+<p><strong>3) 为什么重写 <code>equals</code> 时必须重写 <code>hashCode</code> 方法？</strong></p>
+<p>如果两个对象相等，则 hashcode 一定也是相同的。两个对象相等，对两个对象分别调用 equals 方法都返回 true。但是，两个对象有相同的 hashcode 值，它们也不一定是相等的 。<strong>因此，equals 方法被覆盖过，则 <code>hashCode</code> 方法也必须被覆盖。</strong></p>
+<blockquote>
+<p><code>hashCode()</code>的默认行为是对堆上的对象产生独特值。如果没有重写 <code>hashCode()</code>，则该 class 的两个对象无论如何都不会相等（即使这两个对象指向相同的数据）</p>
+</blockquote>
+<p><strong>4)为什么两个对象有相同的 hashcode 值，它们也不一定是相等的？</strong></p>
+<p>在这里解释一位小伙伴的问题。以下内容摘自《Head Fisrt Java》。</p>
+<p>因为 <code>hashCode()</code> 所使用的杂凑算法也许刚好会让多个对象传回相同的杂凑值。越糟糕的杂凑算法越容易碰撞，但这也与数据值域分布的特性有关（所谓碰撞也就是指的是不同的对象得到相同的 <code>hashCode</code>。</p>
+<p>我们刚刚也提到了 <code>HashSet</code>,如果 <code>HashSet</code> 在对比的时候，同样的 hashcode 有多个对象，它会使用 <code>equals()</code> 来判断是否真的相同。也就是说 <code>hashcode</code> 只是用来缩小查找成本。</p>
+<p>更多关于 <code>hashcode()</code> 和 <code>equals()</code> 的内容可以查看：<a href="https://www.cnblogs.com/skywang12345/p/3324958.html">Java hashCode() 和 equals()的若干问题解答</a></p>
+<h3 id="12-数据类型">1.2. 数据类型</h3>
+<h4 id="121-string-stringbuffer-和-stringbuilder-的区别是什么-string-为什么是不可变的">1.2.1 String StringBuffer 和 StringBuilder 的区别是什么? String 为什么是不可变的?</h4>
+<p>简单的来说：<code>String</code> 类中使用 final 关键字修饰字符数组来保存字符串，<code>private final char value[]</code>，所以<code>String</code> 对象是不可变的。</p>
+<blockquote>
+<p>在 Java 9 之后，String 类的实现改用 byte 数组存储字符串 <code>private final byte[] value</code>;</p>
+</blockquote>
+<p>而 <code>StringBuilder</code> 与 <code>StringBuffer</code> 都继承自 <code>AbstractStringBuilder</code> 类，在 <code>AbstractStringBuilder</code> 中也是使用字符数组保存字符串<code>char[] value</code> 但是没有用 <code>final</code> 关键字修饰，所以这两种对象都是可变的。</p>
+<p><strong>线程安全性</strong></p>
+<p><code>String</code> 中的对象是不可变的，也就可以理解为常量，线程安全。</p>
+<p><code>StringBuffer</code> 对方法加了同步锁或者对调用的方法加了同步锁，所以是线程安全的。</p>
+<p><code>StringBuilder</code> 并没有对方法进行加同步锁，所以是非线程安全的。</p>
+<p><strong>性能</strong></p>
+<p>每次对 <code>String</code> 类型进行改变的时候，都会生成一个新的 <code>String</code> 对象，然后将指针指向新的 <code>String</code> 对象。<code>StringBuffer</code> 每次都会对 <code>StringBuffer</code> 对象本身进行操作，而不是生成新的对象并改变对象引用。相同情况下使用 <code>StringBuilder</code> 相比使用 <code>StringBuffer</code> 仅能获得 10%~15% 左右的性能提升，但却要冒多线程不安全的风险。</p>
+<p><strong>对于三者使用的总结：</strong></p>
+<ol>
+<li>操作少量的数据: 适用 <code>String</code></li>
+<li>单线程操作字符串缓冲区下操作大量数据: 适用 <code>StringBuilder</code></li>
+<li>多线程操作字符串缓冲区下操作大量数据: 适用 <code>StringBuffer</code></li>
+</ol>
+<h3 id="13-方法">1.3. 方法</h3>
+<h4 id="131-重载和重写的区别">1.3.1 重载和重写的区别</h4>
+<p>重载就是同样的一个方法能够根据输入数据的不同，做出不同的处理。</p>
+<p>重写就是当子类继承自父类的相同方法，输入数据一样，但要做出有别于父类的响应时，你就要覆盖父类方法。</p>
+<table>
+<thead>
+<tr>
+<th>区别点</th>
+<th>重载方法</th>
+<th>重写方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>发生范围</td>
+<td>同一个类</td>
+<td>子类</td>
+</tr>
+<tr>
+<td>参数列表</td>
+<td>必须修改</td>
+<td>一定不能修改</td>
+</tr>
+<tr>
+<td>返回类型</td>
+<td>可修改</td>
+<td>子类方法返回值类型应比父类方法返回值类型更小或相等</td>
+</tr>
+<tr>
+<td>异常</td>
+<td>可修改</td>
+<td>子类方法声明抛出的异常类应比父类方法声明抛出的异常类更小或相等；</td>
+</tr>
+<tr>
+<td>访问修饰符</td>
+<td>可修改</td>
+<td>一定不能做更严格的限制（可以降低限制）</td>
+</tr>
+<tr>
+<td>发生阶段</td>
+<td>编译期</td>
+<td>运行期</td>
+</tr>
+</tbody>
+</table>
+<h3 id="14-面向对象">1.4 面向对象</h3>
+<h4 id="141-在-java-中定义一个不做事且没有参数的构造方法的作用">1.4.1. 在 Java 中定义一个不做事且没有参数的构造方法的作用</h4>
+<p>Java 程序在执行子类的构造方法之前，如果没有用 <code>super()</code>来调用父类特定的构造方法，则会调用父类中“没有参数的构造方法”。因此，如果父类中只定义了有参数的构造方法，而在子类的构造方法中又没有用 <code>super()</code>来调用父类中特定的构造方法，则编译时将发生错误，因为 Java 程序在父类中找不到没有参数的构造方法可供执行。解决办法是在父类里加上一个不做事且没有参数的构造方法。</p>
+<h4 id="142-面对对象的三大特性">1.4.2. 面对对象的三大特性</h4>
+<p>封装、继承和多态。</p>
+<p>封装是指把一个对象的状态信息（也就是属性）隐藏在对象内部，不允许外部对象直接访问对象的内部信息。</p>
+<p>继承：不同类型的对象，相互之间经常有一定数量的共同点。</p>
+<p>多态，顾名思义，表示一个对象具有多种的状态。具体表现为父类的引用指向子类的实例。</p>
+<h3 id="14-反射机制">1.4. 反射机制</h3>
+<p>JAVA 反射机制是在运行状态中，对于任意一个类，都能够知道这个类的所有属性和方法；对于任意一个对象，都能够调用它的任意一个方法和属性；这种动态获取的信息以及动态调用对象的方法的功能称为 java 语言的反射机制。</p>
+<p><strong>反射机制优缺点</strong></p>
+<ul>
+<li><strong>优点：</strong> 运行期类型的判断，动态加载类，提高代码灵活度。</li>
+<li><strong>缺点：</strong> 1,性能瓶颈：反射相当于一系列解释操作，通知 JVM 要做的事情，性能比直接的 java 代码要慢很多。2,安全问题，让我们可以动态操作改变类的属性同时也增加了类的安全隐患。</li>
+</ul>
+<p><strong>反射的应用场景</strong></p>
+<p><strong>反射是框架设计的灵魂。</strong></p>
+<p>在我们平时的项目开发过程中，基本上很少会直接使用到反射机制，但这不能说明反射机制没有用，实际上有很多设计、开发都与反射机制有关，例如模块化的开发，通过反射去调用对应的字节码；动态代理设计模式也采用了反射机制，还有我们日常使用的 Spring／Hibernate 等框架也大量使用到了反射机制。</p>
+<p>举例：</p>
+<ol>
+<li>我们在使用 JDBC 连接数据库时使用 <code>Class.forName()</code>通过反射加载数据库的驱动程序；</li>
+<li>Spring 框架的 IOC（动态加载管理 Bean）创建对象以及 AOP（动态代理）功能都和反射有联系；</li>
+<li>动态配置实例的属性；</li>
+</ol>
+<h3 id="15-文件与io流">1.5. 文件与IO流</h3>
+<h4 id="151-bionioaio-有什么区别">1.5.1. BIO,NIO,AIO 有什么区别?</h4>
+<ul>
+<li><strong>BIO (Blocking I/O):</strong> 同步阻塞 I/O 模式，数据的读取写入必须阻塞在一个线程内等待其完成。在活动连接数不是特别高（小于单机 1000）的情况下，这种模型是比较不错的，可以让每一个连接专注于自己的 I/O 并且编程模型简单，也不用过多考虑系统的过载、限流等问题。线程池本身就是一个天然的漏斗，可以缓冲一些系统处理不了的连接或请求。但是，当面对十万甚至百万级连接的时候，传统的 BIO 模型是无能为力的。因此，我们需要一种更高效的 I/O 处理模型来应对更高的并发量。</li>
+<li><strong>NIO (Non-blocking/New I/O):</strong> NIO 是一种同步非阻塞的 I/O 模型，在 Java 1.4 中引入了 NIO 框架，对应 java.nio 包，提供了 Channel , Selector，Buffer 等抽象。NIO 中的 N 可以理解为 Non-blocking，不单纯是 New。它支持面向缓冲的，基于通道的 I/O 操作方法。 NIO 提供了与传统 BIO 模型中的 <code>Socket</code> 和 <code>ServerSocket</code> 相对应的 <code>SocketChannel</code> 和 <code>ServerSocketChannel</code> 两种不同的套接字通道实现,两种通道都支持阻塞和非阻塞两种模式。阻塞模式使用就像传统中的支持一样，比较简单，但是性能和可靠性都不好；非阻塞模式正好与之相反。对于低负载、低并发的应用程序，可以使用同步阻塞 I/O 来提升开发速率和更好的维护性；对于高负载、高并发的（网络）应用，应使用 NIO 的非阻塞模式来开发</li>
+<li><strong>AIO (Asynchronous I/O):</strong> AIO 也就是 NIO 2。在 Java 7 中引入了 NIO 的改进版 NIO 2,它是异步非阻塞的 IO 模型。异步 IO 是基于事件和回调机制实现的，也就是应用操作之后会直接返回，不会堵塞在那里，当后台处理完成，操作系统会通知相应的线程进行后续的操作。AIO 是异步 IO 的缩写，虽然 NIO 在网络操作中，提供了非阻塞的方法，但是 NIO 的 IO 行为还是同步的。对于 NIO 来说，我们的业务线程是在 IO 操作准备好时，得到通知，接着就由这个线程自行进行 IO 操作，IO 操作本身是同步的。查阅网上相关资料，我发现就目前来说 AIO 的应用还不是很广泛，Netty 之前也尝试使用过 AIO，不过又放弃了。</li>
+</ul>
+<h2 id="2-容器">2. 容器</h2>
+<h2 id="3-参考">3. 参考</h2>
+<p>[1] <a href="https://github.com/Snailclimb/JavaGuide">JavaGuide</a></p>
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/java/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#java</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/interview/interview-spring/" class="block">Spring系列面试题</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/interview/interview-network/" class="block">计算机网络面试题</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="https://ahamoment.cn/posts/linux/linux-cap/">解决setcap导致Java加载libjli.so 失败问题</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

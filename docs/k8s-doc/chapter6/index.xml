@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>6. kubernetes 作业调度与资源管理 on AhaMoment</title>
+    <link>https://ahamoment.cn/docs/k8s-doc/chapter6/</link>
+    <description>Recent content in 6. kubernetes 作业调度与资源管理 on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/chapter6/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>十字路口上的Kubernetes默认调度器</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/</link>
+      <pubDate>Wed, 21 Apr 2021 19:33:49 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文来自张磊老师的&lt;a href=&#34;https://time.geekbang.org/column/article/69678&#34;&gt;《深入剖析Kuberntes》&lt;/a&gt;课程笔记，请勿转载。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>QoS 源代码分析</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/</link>
+      <pubDate>Tue, 20 Apr 2021 20:02:37 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/</guid>
+      <description>&lt;p&gt;QOS 的作用请参考上面的几篇文章&lt;a href=&#34;https://chenxq.xyz/post/cloud-k8s-resource-model-and-resource-manager/&#34;&gt;Kubernetes的资源模型和资源管理&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes的资源模型和资源管理</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/</link>
+      <pubDate>Wed, 14 Apr 2021 20:13:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文来自张磊老师的&lt;a href=&#34;https://time.geekbang.org/column/article/69678&#34;&gt;《深入剖析Kuberntes》&lt;/a&gt;课程笔记，请勿转载。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>K8s Go 客户端浅析</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/</link>
+      <pubDate>Tue, 06 Apr 2021 19:58:51 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/</guid>
+      <description>在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。</description>
+    </item>
+    
+  </channel>
+</rss>

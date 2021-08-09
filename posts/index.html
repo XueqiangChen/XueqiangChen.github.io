@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Posts | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="Eureka is a elegant and powerful theme for Hugo.">
+
+
+
+
+<script type="application/ld+json">
+{
+    "@context":"https://schema.org",
+    "@type":"ItemList",
+    "itemListElement":[{
+            "@type":"ListItem",
+            "position":  1 ,
+            "name": "Hugo 博客搭建",
+            "description": "前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。\n1. 博客主体 博客主体是由\nhttps://github.com/peaceiris/actions-gh-pages\nhttps://github.com/GitbookIO/gitbook-cli\nhttps://github.com/marketplace/actions/publish-gitbook\nhttps://github.com/marketplace?type=actions",
+            "url": "https://ahamoment.cn/posts/tool/tool-hugo-blog/"
+        },{
+            "@type":"ListItem",
+            "position":  2 ,
+            "name": "二叉树的中序遍历",
+            "description": "二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章\u0026mdash;\u0026gt;传送门\n这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：\nleetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \\ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2]  1.",
+            "url": "https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/"
+        },{
+            "@type":"ListItem",
+            "position":  3 ,
+            "name": "Go 语言中的 new 关键字和 make 关键字的区别",
+            "description": "Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。\n对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。\npackage main import \u0026quot;fmt\u0026quot; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。",
+            "url": "https://ahamoment.cn/posts/go/go-new-vs-make/"
+        },{
+            "@type":"ListItem",
+            "position":  4 ,
+            "name": "Mac 命令汇总",
+            "description": "常用快捷键 Overall Mac 键盘快捷键\n修饰键  Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn  在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。",
+            "url": "https://ahamoment.cn/posts/tool/tool-mac-os-commands/"
+        },{
+            "@type":"ListItem",
+            "position":  5 ,
+            "name": "安装 Tensorflow2",
+            "description": "安装 Anaconda https://www.anaconda.com/products/individual\n根据系统选择下载不同的 anaconda 安装：\n这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功：\n$ conda --version conda 4.9.2  更换 conda 镜像源 查看用户目录下的 .",
+            "url": "https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/"
+        },{
+            "@type":"ListItem",
+            "position":  6 ,
+            "name": "Vim 折腾记",
+            "description": "\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c/p\u003e",
+            "url": "https://ahamoment.cn/posts/tool/tool-vim/"
+        },{
+            "@type":"ListItem",
+            "position":  7 ,
+            "name": "Go 语言工作目录",
+            "description": "GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。\n工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。\nGOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。\n在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：\n# go env GO111MODULE=\u0026quot;\u0026quot; GOARCH=\u0026quot;amd64\u0026quot; GOBIN=\u0026quot;\u0026quot; GOCACHE=\u0026quot;/root/.cache/go-build\u0026quot; GOENV=\u0026quot;/root/.",
+            "url": "https://ahamoment.cn/posts/go/go-project-catalogs/"
+        },{
+            "@type":"ListItem",
+            "position":  8 ,
+            "name": "bazel 外部存储库缓存",
+            "description": "bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html\nStep1：\n从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。\nStep2:\n运行 yum install bazel3 命令安装。\n教程 java / c++",
+            "url": "https://ahamoment.cn/posts/tool/tool-bazel/"
+        },{
+            "@type":"ListItem",
+            "position":  9 ,
+            "name": "Linux 常用命令",
+            "description": "设置 JAVA_HOME\nexport JAVA_HOME=\u0026quot;$(dirname $(dirname $(realpath $(which javac))))\u0026quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。\n语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例",
+            "url": "https://ahamoment.cn/posts/linux/linux-commands/"
+        },{
+            "@type":"ListItem",
+            "position":  10 ,
+            "name": "MyBatis Generator 使用与原理(上)",
+            "description": "Eureka is a elegant and powerful theme for Hugo.",
+            "url": "https://ahamoment.cn/posts/java/framework-mybatis-generator/"
+        }
+    ]
+}
+</script><meta property="og:title" content="Posts | AhaMoment" />
+<meta property="og:type" content="website" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/" />
+
+
+
+
+
+<meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo." />
+
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="og:updated_time" content="2021-06-17T20:28:05&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="index" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="https://ahamoment.cn/posts/index.xml" title="AhaMoment" />
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<article class="mx-6 my-8">
+    <h1 class="font-bold text-3xl text-primary-text">Posts</h1>
+    
+</article>
+<div class="bg-secondary-bg rounded px-6">
+    <div class="overflow-hidden divide-y">
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/tool/tool-hugo-blog/" class="font-bold text-xl hover:text-eureka">Hugo 博客搭建</a>
+</div>
+<div class="content">
+  前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
+1. 博客主体 博客主体是由
+https://github.com/peaceiris/actions-gh-pages
+https://github.com/GitbookIO/gitbook-cli
+https://github.com/marketplace/actions/publish-gitbook
+https://github.com/marketplace?type=actions
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-06-17</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>1 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/" class="font-bold text-xl hover:text-eureka">二叉树的中序遍历</a>
+</div>
+<div class="content">
+  二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章—&gt;传送门
+这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：
+leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2]  1.
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-04-15</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="hover:text-eureka">数据结构与算法</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/go/go-new-vs-make/" class="font-bold text-xl hover:text-eureka">Go 语言中的 new 关键字和 make 关键字的区别</a>
+</div>
+<div class="content">
+  Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
+对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
+package main import &#34;fmt&#34; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-04-01</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/go/" class="hover:text-eureka">Go</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/tool/tool-mac-os-commands/" class="font-bold text-xl hover:text-eureka">Mac 命令汇总</a>
+</div>
+<div class="content">
+  常用快捷键 Overall Mac 键盘快捷键
+修饰键  Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn  在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-03-25</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>1 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/" class="font-bold text-xl hover:text-eureka">安装 Tensorflow2</a>
+</div>
+<div class="content">
+  安装 Anaconda https://www.anaconda.com/products/individual
+根据系统选择下载不同的 anaconda 安装：
+这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功：
+$ conda --version conda 4.9.2  更换 conda 镜像源 查看用户目录下的 .
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-03-25</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>1 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" class="hover:text-eureka">机器学习</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/tool/tool-vim/" class="font-bold text-xl hover:text-eureka">Vim 折腾记</a>
+</div>
+<div class="content">
+  折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上
+
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-03-16</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>5 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/go/go-project-catalogs/" class="font-bold text-xl hover:text-eureka">Go 语言工作目录</a>
+</div>
+<div class="content">
+  GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
+工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
+GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
+在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
+# go env GO111MODULE=&#34;&#34; GOARCH=&#34;amd64&#34; GOBIN=&#34;&#34; GOCACHE=&#34;/root/.cache/go-build&#34; GOENV=&#34;/root/.
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-03-15</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/go/" class="hover:text-eureka">Go</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/tool/tool-bazel/" class="font-bold text-xl hover:text-eureka">bazel 外部存储库缓存</a>
+</div>
+<div class="content">
+  bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
+Step1：
+从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
+Step2:
+运行 yum install bazel3 命令安装。
+教程 java / c&#43;&#43;
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-02-10</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>1 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/linux/linux-commands/" class="font-bold text-xl hover:text-eureka">Linux 常用命令</a>
+</div>
+<div class="content">
+  设置 JAVA_HOME
+export JAVA_HOME=&#34;$(dirname $(dirname $(realpath $(which javac))))&#34;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
+语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-02-10</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>1 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/linux/" class="hover:text-eureka">Linux</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+  <div class="py-6">
+    <div class="flex flex-col-reverse lg:flex-row justify-between">
+  
+  <div class="w-full ">
+    <div class="mb-4">
+  <a href="https://ahamoment.cn/posts/java/framework-mybatis-generator/" class="font-bold text-xl hover:text-eureka">MyBatis Generator 使用与原理(上)</a>
+</div>
+<div class="content">
+  
+</div>
+
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-01-26</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E6%A1%86%E6%9E%B6/" class="hover:text-eureka">框架</a>
+        
+    </div>
+    
+
+    
+</div>
+
+  </div>
+
+  
+</div>
+  </div>
+  
+</div>
+
+
+</div>
+
+    <ul class="pagination pagination-default">
+      <li class="page-item disabled">
+        <a href="#" aria-disabled="true" aria-label="First" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;&laquo;</span></a>
+      </li>
+      <li class="page-item disabled">
+        <a href="#" aria-disabled="true" aria-label="Previous" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&laquo;</span></a>
+      </li>
+      <li class="page-item active">
+        <a href="#" aria-current="page" aria-label="Page 1" class="page-link" role="button">1</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Page 2" class="page-link" role="button">2</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/2/" aria-label="Next" class="page-link" role="button"><span aria-hidden="true">&raquo;</span></a>
+      </li>
+      <li class="page-item">
+        <a href="/posts/page/5/" aria-label="Last" class="page-link" role="button"><span aria-hidden="true">&raquo;&raquo;</span></a>
+      </li>
+    </ul>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

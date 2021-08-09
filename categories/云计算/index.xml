@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>云计算 on AhaMoment</title>
+    <link>https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/</link>
+    <description>Recent content in 云计算 on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Wed, 21 Apr 2021 19:33:49 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>十字路口上的Kubernetes默认调度器</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/</link>
+      <pubDate>Wed, 21 Apr 2021 19:33:49 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文来自张磊老师的&lt;a href=&#34;https://time.geekbang.org/column/article/69678&#34;&gt;《深入剖析Kuberntes》&lt;/a&gt;课程笔记，请勿转载。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>QoS 源代码分析</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/</link>
+      <pubDate>Tue, 20 Apr 2021 20:02:37 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/</guid>
+      <description>&lt;p&gt;QOS 的作用请参考上面的几篇文章&lt;a href=&#34;https://chenxq.xyz/post/cloud-k8s-resource-model-and-resource-manager/&#34;&gt;Kubernetes的资源模型和资源管理&lt;/a&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Kubernetes的资源模型和资源管理</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/</link>
+      <pubDate>Wed, 14 Apr 2021 20:13:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文来自张磊老师的&lt;a href=&#34;https://time.geekbang.org/column/article/69678&#34;&gt;《深入剖析Kuberntes》&lt;/a&gt;课程笔记，请勿转载。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>K8s Go 客户端浅析</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/</link>
+      <pubDate>Tue, 06 Apr 2021 19:58:51 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/</guid>
+      <description>在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。</description>
+    </item>
+    
+    <item>
+      <title>[译]Kubernetes深入研究：CustomResources的代码生成</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/</link>
+      <pubDate>Fri, 12 Mar 2021 10:57:25 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources&#34;&gt;Kubernetes Deep Dive: Code Generation for CustomResources&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>[译]Kubernetes深入研究：CustomResources的代码生成</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</link>
+      <pubDate>Fri, 12 Mar 2021 10:57:25 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;原文链接：&lt;a href=&#34;https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources&#34;&gt;Kubernetes Deep Dive: Code Generation for CustomResources&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析声明式API（一）：API对象的奥秘</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</link>
+      <pubDate>Fri, 12 Mar 2021 10:18:35 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节主要是关于自定义API资源(CRD)。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>声明式API与Kubernetes编程范式</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/</link>
+      <pubDate>Fri, 12 Mar 2021 07:19:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节主要是关于声明式 API 与 Kubernetes 编程范式。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>撬动离线业务：Job与CronJob</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</link>
+      <pubDate>Tue, 09 Mar 2021 14:45:46 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程.&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入理解StatefulSet（二）：存储状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</link>
+      <pubDate>Tue, 09 Mar 2021 11:20:45 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的存储状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>容器化守护进程的意义：DaemonSet</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/</link>
+      <pubDate>Tue, 09 Mar 2021 10:42:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 Daemonset&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入理解StatefulSet（一）：拓扑状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</link>
+      <pubDate>Wed, 03 Mar 2021 07:45:28 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的拓扑状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Deployment：作业副本与水平扩容</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</link>
+      <pubDate>Mon, 01 Mar 2021 07:37:59 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;作业副本&lt;/li&gt;
+&lt;li&gt;水平扩容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>谈谈“控制器”模式</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/</link>
+      <pubDate>Sun, 28 Feb 2021 15:15:52 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>容器健康检查</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</link>
+      <pubDate>Sat, 27 Feb 2021 17:40:49 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>深入解析Pod对象(二): 使用进阶</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</link>
+      <pubDate>Sat, 27 Feb 2021 15:55:20 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;ProjectedVolume: Secret, ConfigMap, DownwadAPI&lt;/li&gt;
+&lt;li&gt;ServiceAccount&lt;/li&gt;
+&lt;li&gt;容器健康检查和恢复机制&lt;/li&gt;
+&lt;li&gt;Pod 预设置：PodPreset&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入解析Pod对象(一)：基本概念</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</link>
+      <pubDate>Fri, 26 Feb 2021 15:14:52 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第14课时：深入解析Pod对象(一)：基本概念&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>为什么我们需要Pod</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</link>
+      <pubDate>Fri, 26 Feb 2021 09:33:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程，第13课时：为什么我们需要 Pod?&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>常用的k8s命令</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</link>
+      <pubDate>Thu, 25 Feb 2021 07:37:43 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</guid>
+      <description>1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
+$ kubectl replace -f nginx-deployment.</description>
+    </item>
+    
+    <item>
+      <title>使用kubeadm 安装k8s集群</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/</link>
+      <pubDate>Sat, 20 Feb 2021 09:12:03 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/</guid>
+      <description>1. 准备工作 机器配置  8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制  组件信息    组件 版本     系统 Centos 7.</description>
+    </item>
+    
+    <item>
+      <title>容器内获取 CPU 核数问题</title>
+      <link>https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/</link>
+      <pubDate>Fri, 11 Sep 2020 18:14:58 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/</guid>
+      <description>现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
+但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
+int cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
+   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码</description>
+    </item>
+    
+  </channel>
+</rss>

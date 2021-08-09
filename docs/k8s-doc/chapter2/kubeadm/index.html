@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>使用kubeadm 安装k8s集群 | K8s 学习笔记 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="1. 准备工作 机器配置  8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制  组件信息    组件 版本     系统 Centos 7.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"文档",
+      "item":"https://ahamoment.cn/docs/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"K8s 学习笔记",
+      "item":"https://ahamoment.cn/docs/k8s-doc/"},{
+      "@type": "ListItem",
+      "position": 3 ,
+      "name":"2. Kubernetes 集群搭建与实践",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter2/"},{
+      "@type": "ListItem",
+      "position": 4 ,
+      "name":"使用kubeadm 安装k8s集群",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/"
+    },
+    "headline": "使用kubeadm 安装k8s集群 | K8s 学习笔记 | AhaMoment","datePublished": "2021-02-20T09:12:03+08:00",
+    "dateModified": "2021-02-20T09:12:03+08:00",
+    "wordCount":  2144 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "1. 准备工作 机器配置  8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制  组件信息    组件 版本     系统 Centos 7."
+}
+</script><meta property="og:title" content="使用kubeadm 安装k8s集群 | K8s 学习笔记 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/" />
+
+
+
+
+<meta property="og:description" content="1. 准备工作 机器配置  8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制  组件信息    组件 版本     系统 Centos 7." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-02-20T09:12:03&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2021-02-20T09:12:03&#43;08:00" />
+
+
+
+<meta property="article:section" content="docs" />
+
+
+<meta property="article:tag" content="kubernetes" />
+
+<meta property="article:tag" content="kubeadm" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/interview/interview-docker-k8s/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="lg:pt-12">
+    <div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+        <div class="md:w-1/4 lg:w-1/5 border-r">
+            <div class="sticky top-16 pt-6">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="sidebar-title" class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+    <span class="font-semibold">Table of Contents</span>
+    <i class="fas fa-caret-right ml-1"></i>
+</div>
+
+<div id="sidebar-toc"
+    class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+    <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+        <a class=" hover:text-eureka"
+            href="https://ahamoment.cn/docs/k8s-doc/">K8s 学习笔记</a>
+        
+        
+        
+
+
+    </div>
+    
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/">2. Kubernetes 集群搭建与实践</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" text-eureka  hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/">使用kubeadm 安装k8s集群</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/">3. 容器编排与 kubernetes 作业管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">深入解析声明式API（一）：API对象的奥秘</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">声明式API与Kubernetes编程范式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">撬动离线业务：Job与CronJob</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">深入理解StatefulSet（二）：存储状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">容器化守护进程的意义：DaemonSet</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/">深入理解StatefulSet（一）：拓扑状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/">Deployment：作业副本与水平扩容</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">谈谈“控制器”模式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/">深入解析Pod对象(二): 使用进阶</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/">深入解析Pod对象(一)：基本概念</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/">为什么我们需要Pod</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/">6. kubernetes 作业调度与资源管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/">十字路口上的Kubernetes默认调度器</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/">QoS 源代码分析</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/">Kubernetes的资源模型和资源管理</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">K8s Go 客户端浅析</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/">9. kubernetes 生态周边</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/">容器健康检查</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">常用的k8s命令</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+</ul>
+
+</div>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+            <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
+                <h1 class="font-bold text-3xl text-primary-text">使用kubeadm 安装k8s集群</h1>
+                <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-02-20</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>11 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="hover:text-eureka">云计算</a>
+        
+    </div>
+    
+
+    
+</div>
+            </div>
+            <div class="flex">
+                <div class="w-full lg:w-3/4 px-6">
+                    
+                    
+                    <div class="content">
+                        <h2 id="1-准备工作">1. 准备工作</h2>
+<h3 id="机器配置">机器配置</h3>
+<ol>
+<li>8核CPU、8GB内存；</li>
+<li>40GB磁盘</li>
+<li>centos 7.9</li>
+<li>内网互同</li>
+<li>外网访问不受限制</li>
+</ol>
+<h3 id="组件信息">组件信息</h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th style="text-align:left">版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>系统</td>
+<td style="text-align:left">Centos 7.9</td>
+</tr>
+<tr>
+<td>Docker版本</td>
+<td style="text-align:left">18.09.9</td>
+</tr>
+<tr>
+<td>k8s 版本</td>
+<td style="text-align:left">1.20.0</td>
+</tr>
+<tr>
+<td>Pod 网段</td>
+<td style="text-align:left">10.32.0.0/</td>
+</tr>
+</tbody>
+</table>
+<h3 id="实践目标">实践目标</h3>
+<ol>
+<li>在所有节点上安装 Docker 和 kubeadm；</li>
+<li>部署 Kubernetes Master；</li>
+<li>部署容器网络插件；</li>
+<li>部署 Kubernetes Worker；</li>
+<li>部署 Dashboard 可视化插件；</li>
+<li>部署容器存储插件</li>
+</ol>
+<h3 id="基本配置">基本配置</h3>
+<p>开始安装之前，我们还需要对系统做一些基本的配置。</p>
+<p><strong>所有节点配置 hosts</strong></p>
+<pre><code class="language-bash"># cat /etc/hosts
+
+10.186.4.100 master
+10.186.4.167 node1
+10.186.4.168 node2
+10.186.4.169 node3
+</code></pre>
+<p><strong>所有节点关闭防火墙、selinux、dnsmasq</strong></p>
+<pre><code class="language-bash">systemctl disable --now firewalld
+#关闭dnsmasq(否则可能导致docker容器无法解析域名)
+systemctl disable --now dnsmasq
+systemctl disable --now NetworkManager
+
+# Set SELinux in permissive mode (effectively disabling it)
+sudo setenforce 0
+sudo sed -i 's/^SELINUX=enforcing$/SELINUX=permissive/' /etc/selinux/config
+</code></pre>
+<p><strong>关闭swap</strong></p>
+<pre><code class="language-bash">swapoff -a &amp;&amp; sysctl -w vm.swappiness=0
+sed -ri '/^[^#]*swap/s@^@#@' /etc/fstab
+</code></pre>
+<p><strong>允许iptales查看网桥流量</strong></p>
+<pre><code class="language-bash">cat &lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+
+cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+
+sudo sysctl --system
+</code></pre>
+<p><strong>安装ntpdate</strong></p>
+<pre><code class="language-bash">rpm -ivh http://mirrors.wlnmp.com/centos/wlnmp-release-centos.noarch.rpm
+yum install ntpdate -y
+</code></pre>
+<p>同步时间</p>
+<pre><code class="language-bash">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+echo 'Asia/Shanghai' &gt;/etc/timezone
+ntpdate time2.aliyun.com
+</code></pre>
+<p>加入到 crontab</p>
+<pre><code class="language-bash">*/5 * * * * ntpdate time2.aliyun.com
+</code></pre>
+<p><strong>节点之间免密登录</strong></p>
+<pre><code class="language-bash">ssh-keygen -t rsa
+for i in master node1 node2 node3;do ssh-copy-id -i .ssh/id_rsa.pub $i;done
+</code></pre>
+<p><strong>开放端口</strong></p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/k8s-port.png" alt=""></p>
+<p>网络插件weave的端口是6783。</p>
+<h2 id="2-安装-kubeadm-和-docker">2. 安装 kubeadm 和 docker</h2>
+<h3 id="docker-安装">docker 安装</h3>
+<blockquote>
+<p>安装过程参考<a href="https://docs.docker.com/engine/install/centos/">docker install</a></p>
+</blockquote>
+<p><strong>yum源配置</strong></p>
+<pre><code class="language-bash">yum install -y yum-utils
+
+# 官方源
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+# 阿里云源
+yum-config-manager \
+	--add-repo \
+	https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+</code></pre>
+<p>如果是安装最新版本的 docker，可以直接安装:</p>
+<pre><code class="language-bash">$ sudo yum install docker-ce docker-ce-cli containerd.io
+</code></pre>
+<p>指定版本安装的话，先查看源中可用的docker版本：</p>
+<pre><code class="language-bash">$ yum list docker-ce --showduplicates | sort -r
+
+docker-ce.x86_64  3:18.09.1-3.el7                     docker-ce-stable
+docker-ce.x86_64  3:18.09.0-3.el7                     docker-ce-stable
+docker-ce.x86_64  18.06.1.ce-3.el7                    docker-ce-stable
+docker-ce.x86_64  18.06.0.ce-3.el7                    docker-ce-stable
+</code></pre>
+<p>通过软件包名称安装特定版本，软件包名称是软件包名称（docker-ce）加上版本字符串（第二列），从第一个冒号（:)开始，直至第一个连字符，并用连字符（-）连接。例如docker-ce-18.09.9。</p>
+<pre><code class="language-bash">$ sudo yum install -y docker-ce-&lt;VERSION_STRING&gt; docker-ce-cli-&lt;VERSION_STRING&gt; containerd.io
+</code></pre>
+<p>设置开机启动</p>
+<pre><code class="language-bash">$ sudo systemctl start docker 
+$ systemctl daemon-reload &amp;&amp; systemctl enable --now docker
+</code></pre>
+<h3 id="kubeadm">kubeadm</h3>
+<blockquote>
+<p>安装过程参考 <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/install-kubeadm/">Installing kubeadm</a></p>
+</blockquote>
+<p>添加 yum 源，执行安装命令。</p>
+<pre><code class="language-bash">cat &lt;&lt;EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+exclude=kubelet kubeadm kubectl
+EOF
+
+# 阿里云源
+cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+
+sed -i -e '/mirrors.cloud.aliyuncs.com/d' -e '/mirrors.aliyuncs.com/d' /etc/yum.repos.d/CentOS-Base.repo
+
+sudo yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
+
+sudo systemctl enable --now kubelet
+</code></pre>
+<p>在上述安装 kubeadm 的过程中，kubeadm 和 kubelet、kubectl、kubernetes-cni 这几个二进制文件都会被自动安装好。</p>
+<p>安装的时候指定版本：</p>
+<pre><code class="language-bash">sudo yum install -y kubelet-1.20.0-0 kubeadm-1.20.0-0 kubectl-1.20.0-0 --disableexcludes=kubernetes
+</code></pre>
+<p><strong><code>kubectl</code> 命令启用 <code>shell</code> 自动补齐功能</strong></p>
+<pre><code class="language-bash"># 1.安装bash-completion
+yum install bash-completion
+# 重新加载你的 Shell 并运行 type _init_completion
+type _init_completion
+
+# 2.启动 kubectl 自动补齐
+echo 'source &lt;(kubectl completion bash)' &gt;&gt;~/.bashrc
+source ~/.bashrc
+</code></pre>
+<p><strong>开机自启动</strong></p>
+<pre><code class="language-bash">systemctl daemon-reload &amp;&amp; systemctl enable --now kubelet
+</code></pre>
+<h2 id="3-部署kubernetes-的master节点">3. 部署kubernetes 的master节点</h2>
+<p><a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-init/">kubeadm 初始化</a>的时候可以通过命令行参数或者配置文件的方式进行。我们可以通过 <a href="https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-config"><code>kubeadm config</code></a> 命令来查看 <code>kubeadm</code> 的配置。</p>
+<p>初始化需要的镜像可以通过<code>kubeadm config images list</code> 来查看：</p>
+<pre><code class="language-bash"># kubeadm config images list
+
+k8s.gcr.io/kube-apiserver:v1.20.4
+k8s.gcr.io/kube-controller-manager:v1.20.4
+k8s.gcr.io/kube-scheduler:v1.20.4
+k8s.gcr.io/kube-proxy:v1.20.4
+k8s.gcr.io/pause:3.2
+k8s.gcr.io/etcd:3.4.13-0
+k8s.gcr.io/coredns:1.7.0
+</code></pre>
+<p>为了减少初始化的时间，可以用 <code>kubeadm config images pull</code> 命令提前拉取镜像，获取镜像的时候，默认使用的 <code>k8s.gcr.io</code> 这个镜像源，国内是下载不了的。有两个解决办法：</p>
+<ol>
+<li>
+<p>使用国内的阿里云镜像源：</p>
+<pre><code class="language-bash">cat &gt;/etc/sysconfig/kubelet&lt;&lt;EOF
+KUBELET_EXTRA_ARGS=&quot;--pod-infra-container-image=registry.cn-hangzhou.aliyuncs.com/google_containers/pause-amd64:3.2&quot;
+EOF
+
+# 或者通过命令行指定 image repo
+kubeadm config images pull --image-repository registry.aliyuncs.com/google_containers
+</code></pre>
+</li>
+<li>
+<p>设置代理，<code>docker pull</code> 的代理配置参考<a href="https://note.qidong.name/2020/05/docker-proxy/">Docker的三种网络代理配置</a></p>
+</li>
+</ol>
+<p><code>kubeadm</code> 的初始化这里采用了配置文件的方式，<code>kubeadm</code> 对于低版本的配置文件是不兼容的，我们通过 <code>kubeadm config migrate --new-config ${new-file} --old config ${old-file}</code> 命令来转换。</p>
+<pre><code class="language-yaml"># kubeadm.yml
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: bw4tlw.owb266appoos6afw
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 10.186.4.100
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: yxj-test
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  extraArgs:
+    runtime-config: api/all=true
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controllerManager:
+  extraArgs:
+    horizontal-pod-autoscaler-sync-period: 10s
+    horizontal-pod-autoscaler-use-rest-clients: &quot;true&quot;
+    node-monitor-grace-period: 10s
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: k8s.gcr.io
+kind: ClusterConfiguration
+kubernetesVersion: v1.20.3
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers
+networking:
+  dnsDomain: cluster.local
+  podSubnet: 10.32.0.0/12
+  serviceSubnet: 10.96.0.0/12
+scheduler: {}
+</code></pre>
+<p>这个配置中，给kube-controller-manager 设置了</p>
+<pre><code class="language-bash">horizontal-pod-autoscaler-use-rest-clients: &quot;true&quot;
+</code></pre>
+<p>这意味着，将来部署的 kube-controller-manager 能够使用自定义资源（Custom Metrics）进行自动水平扩展。</p>
+<p>由于我们这里使用的网络插件是wave，自定义Pod 的 cidr 网络为：</p>
+<pre><code class="language-bash">podSubnet: 10.32.0.0/12
+</code></pre>
+<p>然后，执行一句指令：</p>
+<pre><code class="language-bash">$ kubeadm init --config kubeadm.yaml
+[init] Using Kubernetes version: v1.20.0
+[preflight] Running pre-flight checks
+        [WARNING IsDockerSystemdCheck]: detected &quot;cgroupfs&quot; as the Docker cgroup driver. The recommended driver is &quot;systemd&quot;. Please follow the guide at https://kubernetes.io/docs/setup/cri/
+[preflight] Pulling images required for setting up a Kubernetes cluster
+[preflight] This might take a minute or two, depending on the speed of your internet connection
+[preflight] You can also perform this action in beforehand using 'kubeadm config images pull'
+[certs] Using certificateDir folder &quot;/etc/kubernetes/pki&quot;
+[certs] Generating &quot;ca&quot; certificate and key
+[certs] Generating &quot;apiserver&quot; certificate and key
+[certs] apiserver serving cert is signed for DNS names [kubernetes kubernetes.default kubernetes.default.svc kubernetes.default.svc.cluster.local yxj-test] and IPs [10.96.0.1 10.186.4.100]
+[certs] Generating &quot;apiserver-kubelet-client&quot; certificate and key
+[certs] Generating &quot;front-proxy-ca&quot; certificate and key
+[certs] Generating &quot;front-proxy-client&quot; certificate and key
+[certs] Generating &quot;etcd/ca&quot; certificate and key
+[certs] Generating &quot;etcd/server&quot; certificate and key
+[certs] etcd/server serving cert is signed for DNS names [localhost yxj-test] and IPs [10.186.4.100 127.0.0.1 ::1]
+[certs] Generating &quot;etcd/peer&quot; certificate and key
+[certs] etcd/peer serving cert is signed for DNS names [localhost yxj-test] and IPs [10.186.4.100 127.0.0.1 ::1]
+[certs] Generating &quot;etcd/healthcheck-client&quot; certificate and key
+[certs] Generating &quot;apiserver-etcd-client&quot; certificate and key
+[certs] Generating &quot;sa&quot; key and public key
+[kubeconfig] Using kubeconfig folder &quot;/etc/kubernetes&quot;
+[kubeconfig] Writing &quot;admin.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;kubelet.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;controller-manager.conf&quot; kubeconfig file
+[kubeconfig] Writing &quot;scheduler.conf&quot; kubeconfig file
+[kubelet-start] Writing kubelet environment file with flags to file &quot;/var/lib/kubelet/kubeadm-flags.env&quot;
+[kubelet-start] Writing kubelet configuration to file &quot;/var/lib/kubelet/config.yaml&quot;
+[kubelet-start] Starting the kubelet
+[control-plane] Using manifest folder &quot;/etc/kubernetes/manifests&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-apiserver&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-controller-manager&quot;
+[control-plane] Creating static Pod manifest for &quot;kube-scheduler&quot;
+[etcd] Creating static Pod manifest for local etcd in &quot;/etc/kubernetes/manifests&quot;
+[wait-control-plane] Waiting for the kubelet to boot up the control plane as static Pods from directory &quot;/etc/kubernetes/manifests&quot;. This can take up to 4m0s
+[apiclient] All control plane components are healthy after 15.004566 seconds
+[upload-config] Storing the configuration used in ConfigMap &quot;kubeadm-config&quot; in the &quot;kube-system&quot; Namespace
+[kubelet] Creating a ConfigMap &quot;kubelet-config-1.20&quot; in namespace kube-system with the configuration for the kubelets in the cluster
+[upload-certs] Skipping phase. Please see --upload-certs
+[mark-control-plane] Marking the node yxj-test as control-plane by adding the labels &quot;node-role.kubernetes.io/master=''&quot; and &quot;node-role.kubernetes.io/control-plane='' (deprecated)&quot;
+[mark-control-plane] Marking the node yxj-test as control-plane by adding the taints [node-role.kubernetes.io/master:NoSchedule]
+[bootstrap-token] Using token: bw4tlw.owb266appoos6afw
+[bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to get nodes
+[bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+[bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+[bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+[bootstrap-token] Creating the &quot;cluster-info&quot; ConfigMap in the &quot;kube-public&quot; namespace
+[kubelet-finalize] Updating &quot;/etc/kubernetes/kubelet.conf&quot; to point to a rotatable kubelet client certificate and key
+[addons] Applied essential addon: CoreDNS
+[addons] Applied essential addon: kube-proxy
+
+Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run &quot;kubectl apply -f [podnetwork].yaml&quot; with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 10.186.4.100:6443 --token bw4tlw.owb266appoos6afw \
+    --discovery-token-ca-cert-hash sha256:67c5b1f31669be60c07280f52b9aab867af54d2d4bb679490216028f858c7fb6
+</code></pre>
+<p>就可以完成 Kubernetes Master 的部署了，这个过程只需要几分钟。部署完成后，kubeadm 会生成一行指令</p>
+<pre><code class="language-bash">kubeadm join 10.186.4.100:6443 --token bw4tlw.owb266appoos6afw \
+    --discovery-token-ca-cert-hash sha256:67c5b1f31669be60c07280f52b9aab867af54d2d4bb679490216028f858c7fb6
+</code></pre>
+<p>这个 kubeadm join 命令，就是用来给这个 Master 节点添加更多工作节点（Worker）的命令。我们在后面部署 Worker 节点的时候马上会用到它，所以找一个地方把这条命令记录下来。</p>
+<p>此外，kubeadm 还会提示我们第一次使用 Kubernetes 集群所需要的配置命令：</p>
+<pre><code class="language-bash">mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre>
+<p>而需要这些配置命令的原因是：Kubernetes 集群默认需要加密方式访问。所以，这几条命令，就是将刚刚部署生成的 Kubernetes 集群的安全配置文件，保存到当前用户的.kube 目录下，kubectl 默认会使用这个目录下的授权信息访问 Kubernetes 集群。如果不这么做的话，我们每次都需要通过 export KUBECONFIG 环境变量告诉 kubectl 这个安全配置文件的位置。现在，我们就可以使用 kubectl get 命令来查看当前唯一一个节点的状态了：</p>
+<pre><code class="language-bash"># kubectl get nodes
+
+NAME       STATUS   ROLES                  AGE     VERSION
+yxj-test   Ready    control-plane,master   3h14m   v1.20.0
+</code></pre>
+<p>默认情况下，出于安全原因，不会在master节点上调度Pod。如果希望能够在master节点上调度Pod，就可以运行如下的命令：</p>
+<pre><code class="language-bash"># kubectl taint nodes --all node-role.kubernetes.io/master-
+node/yxj-test untainted
+taint &quot;node-role.kubernetes.io/master&quot; not found
+taint &quot;node-role.kubernetes.io/master&quot; not found
+taint &quot;node-role.kubernetes.io/master&quot; not found
+</code></pre>
+<p>这样就删除主节点上的 <code>node-role.kubernetes.io/master </code> 污点，调度器就能将Pod调度到 master 节点上。</p>
+<p><strong>修改组件参数</strong></p>
+<p>如果我们需要修改 k8s 组件的参数，那么可以在 <code>/etc/kubernetes/manifests/</code> 这个目录下编辑组件的yaml文件，保存后会重启对应的组件。</p>
+<h2 id="4-部署网络插件">4. 部署网络插件</h2>
+<p>以weave为例子：</p>
+<pre><code class="language-bash">kubectl apply -f &quot;https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')&quot;
+</code></pre>
+<p>部署完成后，我们可以通过 kubectl get 重新检查 Pod 的状态：</p>
+<pre><code class="language-bash"># kubectl get pods -n kube-system
+NAME                               READY   STATUS    RESTARTS   AGE
+coredns-74ff55c5b-f95sj            1/1     Running   0          131m
+coredns-74ff55c5b-zvjdz            1/1     Running   0          131m
+etcd-yxj-test                      1/1     Running   0          131m
+kube-apiserver-yxj-test            1/1     Running   0          131m
+kube-controller-manager-yxj-test   1/1     Running   0          131m
+kube-proxy-nm4tt                   1/1     Running   0          131m
+kube-scheduler-yxj-test            1/1     Running   0          131m
+weave-net-pl4qp                    2/2     Running   1          126m
+</code></pre>
+<p>可以看到，所有的系统 Pod 都成功启动了，而刚刚部署的 Weave 网络插件则在 kube-system 下面新建了一个名叫 weave-net-pl4qp 的 Pod，一般来说，这些 Pod 就是容器网络插件在每个节点上的控制组件。</p>
+<p>Kubernetes 支持容器网络插件，使用的是一个名叫 CNI 的通用接口，它也是当前容器网络的事实标准，市面上的所有容器网络开源项目都可以通过 CNI 接入 Kubernetes，比如 Flannel、Calico、Canal、Romana 等等，它们的部署方式也都是类似的“一键部署”。</p>
+<blockquote>
+<p>weave 插件部署报错：weave Inconsistent bridge state detected. Please do &lsquo;weave reset&rsquo; and try again</p>
+<p>解决：安装<a href="https://www.weave.works/docs/net/latest/install/installing-weave/">weave</a></p>
+<pre><code class="language-bash">sudo curl -L git.io/weave -o /usr/local/bin/weave
+sudo chmod a+x /usr/local/bin/weave
+</code></pre>
+</blockquote>
+<h2 id="5-部署-k8s-的-worker-节点">5. 部署 k8s 的 worker 节点</h2>
+<p>Kubernetes 的 Worker 节点跟 Master 节点几乎是相同的，它们运行着的都是一个 kubelet 组件。唯一的区别在于，在 kubeadm init 的过程中，kubelet 启动后，Master 节点上还会自动运行 kube-apiserver、kube-scheduler、kube-controller-manger 这三个系统 Pod。</p>
+<p>所以，相比之下，部署 Worker 节点反而是最简单的，只需要两步即可完成。</p>
+<ul>
+<li>
+<p>第一步，在所有 Worker 节点上执行“安装 kubeadm 和 Docker”一节的所有步骤。</p>
+</li>
+<li>
+<p>第二步，执行部署 Master 节点时生成的 kubeadm join 指令：</p>
+<pre><code class="language-bash">kubeadm join 10.186.4.100:6443 --token bw4tlw.owb266appoos6afw \
+    --discovery-token-ca-cert-hash sha256:36f6f60943015fadcc0fc9824611af4d594b7c4b43ab264c2113342fbd1e3994
+</code></pre>
+</li>
+</ul>
+<p><strong>通过 Taint/Toleration 调整 Master 执行 Pod 的策略</strong></p>
+<p>我在前面提到过，默认情况下 Master 节点是不允许运行用户 Pod 的。而 Kubernetes 做到这一点，依靠的是 Kubernetes 的 Taint/Toleration 机制。</p>
+<p>它的原理非常简单：一旦某个节点被加上了一个 Taint，即被“打上了污点”，那么所有 Pod 就都不能在这个节点上运行，因为 Kubernetes 的 Pod 都有“洁癖”。除非，有个别的 Pod 声明自己能“容忍”这个“污点”，即声明了 Toleration，它才可以在这个节点上运行。</p>
+<p>其中，为节点打上“污点”（Taint）的命令是：</p>
+<pre><code class="language-bash">$ kubectl taint nodes node1 foo=bar:NoSchedule
+</code></pre>
+<p>这时，该 node1 节点上就会增加一个键值对格式的 Taint，即：foo=bar:NoSchedule。其中值里面的 NoSchedule，意味着这个 Taint 只会在调度新 Pod 时产生作用，而不会影响已经在 node1 上运行的 Pod，哪怕它们没有 Toleration。</p>
+<p>那么 Pod 又如何声明 Toleration 呢？</p>
+<p>我们只要在 Pod 的.yaml 文件中的 spec 部分，加入 tolerations 字段即可：</p>
+<pre><code class="language-bash">
+apiVersion: v1
+kind: Pod
+...
+spec:
+  tolerations:
+  - key: &quot;foo&quot;
+    operator: &quot;Equal&quot;
+    value: &quot;bar&quot;
+    effect: &quot;NoSchedule&quot;
+</code></pre>
+<p>这个 Toleration 的含义是，这个 Pod 能“容忍”所有键值对为 foo=bar 的 Taint（ operator: “Equal”，“等于”操作）。</p>
+<p>现在回到我们已经搭建的集群上来。这时，如果你通过 kubectl describe 检查一下 Master 节点的 Taint 字段，就会有所发现了：</p>
+<pre><code class="language-bash">
+$ kubectl describe node master
+
+Name:               master
+Roles:              master
+Taints:             node-role.kubernetes.io/master:NoSchedule
+</code></pre>
+<p>可以看到，Master 节点默认被加上了node-role.kubernetes.io/master:NoSchedule这样一个“污点”，其中“键”是node-role.kubernetes.io/master，而没有提供“值”。</p>
+<p>此时，你就需要像下面这样用“Exists”操作符（operator: “Exists”，“存在”即可）来说明，该 Pod 能够容忍所有以 foo 为键的 Taint，才能让这个 Pod 运行在该 Master 节点上：</p>
+<pre><code class="language-bash">apiVersion: v1
+kind: Pod
+...
+spec:
+  tolerations:
+  - key: &quot;foo&quot;
+    operator: &quot;Exists&quot;
+    effect: &quot;NoSchedule&quot;
+</code></pre>
+<p>当然，如果你就是想要一个单节点的 Kubernetes，删除这个 Taint 才是正确的选择：</p>
+<pre><code class="language-bash">$ kubectl taint nodes --all node-role.kubernetes.io/master-
+</code></pre>
+<p>如上所示，我们在“node-role.kubernetes.io/master”这个键后面加上了一个短横线“-”，这个格式就意味着移除所有以“node-role.kubernetes.io/master”为键的 Taint。到了这一步，一个基本完整的 Kubernetes 集群就部署完毕了。是不是很简单呢？有了 kubeadm 这样的原生管理工具，Kubernetes 的部署已经被大大简化。更重要的是，像证书、授权、各个组件的配置等部署中最麻烦的操作，kubeadm 都已经帮你完成了。接下来，我们再在这个 Kubernetes 集群上安装一些其他的辅助插件，比如 Dashboard 和存储插件。</p>
+<h2 id="6-部署-dashboard-可视化插件">6. 部署 Dashboard 可视化插件</h2>
+<p>在 Kubernetes 社区中，有一个很受欢迎的 Dashboard 项目，它可以给用户提供一个可视化的 Web 界面来查看当前集群的各种信息。毫不意外，它的部署也相当简单：</p>
+<pre><code class="language-bash">kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+</code></pre>
+<p>这里通过暴露NodePort的方式来提供服务，需要修改默认的yaml文件：</p>
+<pre><code class="language-yaml">...
+kind: Service
+ apiVersion: v1
+ metadata:
+   labels:
+     k8s-app: kubernetes-dashboard
+   name: kubernetes-dashboard
+   namespace: kubernetes-dashboard
+ spec:
+   type: NodePort
+   ports:
+     - port: 443
+       targetPort: 8443
+       nodePort: 30000
+   selector:
+     k8s-app: kubernetes-dashboard
+ ...
+</code></pre>
+<p>部署完成之后，我们就可以查看 Dashboard 对应的 Pod 的状态了：</p>
+<pre><code class="language-bash"># kubectl get pods -n kubernetes-dashboard
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-79c5968bdc-wwhns   1/1     Running   0          12m
+kubernetes-dashboard-9f9799597-pkc76         1/1     Running   0          12m
+</code></pre>
+<p>需要注意的是，由于 Dashboard 是一个 Web Server，很多人经常会在自己的公有云上无意地暴露 Dashboard 的端口，从而造成安全隐患。所以，1.7 版本之后的 Dashboard 项目部署完成后，默认只能通过 Proxy 的方式在本地访问。具体的操作，你可以查看 Dashboard 项目的<a href="https://github.com/kubernetes/dashboard">官方文档</a>。</p>
+<h3 id="创建dashboard管理员">创建dashboard管理员</h3>
+<pre><code class="language-bash">[root@fztelecom3-34 dashboard]# vim dashboard-admin.yaml
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: dashboard-admin
+  namespace: kubernetes-dashboard
+
+
+[root@fztelecom3-34 dashboard]# kubectl create -f ./dashboard-admin.yaml
+</code></pre>
+<h3 id="62-为用户分配权限">6.2. 为用户分配权限</h3>
+<pre><code class="language-bash">[root@fztelecom3-34 dashboard]# vim dashboard-admin-bind-cluster-role.yaml
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: dashboard-admin-bind-cluster-role
+  labels:
+    k8s-app: kubernetes-dashboard
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+- kind: ServiceAccount
+  name: dashboard-admin
+  namespace: kubernetes-dashboard
+
+[root@fztelecom3-34 dashboard]# kubectl create -f ./dashboard-admin-bind-cluster-role.yaml
+</code></pre>
+<h3 id="63-查看登录的token">6.3. 查看登录的token</h3>
+<pre><code class="language-ba">[root@fztelecom3-34 dashboard]# kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep dashboard-admin | awk '{print $1}')
+</code></pre>
+<p>打开nodeip:port访问</p>
+<h2 id="7-部署容器存储插件">7. 部署容器存储插件</h2>
+<p>很多时候我们需要用数据卷（Volume）把外面宿主机上的目录或者文件挂载进容器的 Mount Namespace 中，从而达到容器和宿主机共享这些目录或者文件的目的。容器里的应用，也就可以在这些数据卷中新建和写入文件。</p>
+<p>可是，如果你在某一台机器上启动的一个容器，显然无法看到其他机器上的容器在它们的数据卷里写入的文件。这是容器最典型的特征之一：无状态。</p>
+<p>而容器的持久化存储，就是用来保存容器存储状态的重要手段：存储插件会在容器里挂载一个基于网络或者其他机制的远程数据卷，使得在容器里创建的文件，实际上是保存在远程存储服务器上，或者以分布式的方式保存在多个节点上，而与当前宿主机没有任何绑定关系。这样，无论你在其他哪个宿主机上启动新的容器，都可以请求挂载指定的持久化存储卷，从而访问到数据卷里保存的内容。这就是“持久化”的含义。</p>
+<p>由于 Kubernetes 本身的松耦合设计，绝大多数存储项目，比如 Ceph、GlusterFS、NFS 等，都可以为 Kubernetes 提供持久化存储能力。在这次的部署实战中，我会选择部署一个很重要的 Kubernetes 存储插件项目：Rook。</p>
+<p>Rook 项目是一个基于 Ceph 的 Kubernetes 存储插件（它后期也在加入对更多存储实现的支持）。不过，不同于对 Ceph 的简单封装，Rook 在自己的实现中加入了水平扩展、迁移、灾难备份、监控等大量的企业级功能，使得这个项目变成了一个完整的、生产级别可用的容器存储插件。</p>
+<p>得益于容器化技术，用几条指令，Rook 就可以把复杂的 Ceph 存储后端部署起来：</p>
+<p><a href="https://rook.io/docs/rook/v1.5/ceph-quickstart.html#ceph-storage-quickstart">https://rook.io/docs/rook/v1.5/ceph-quickstart.html#ceph-storage-quickstart</a></p>
+<pre><code class="language-bash">git clone --single-branch --branch v1.5.8 https://github.com/rook/rook.git
+cd rook/cluster/examples/kubernetes/ceph
+kubectl create -f crds.yaml -f common.yaml -f operator.yaml
+kubectl create -f cluster.yaml
+
+# 所有的镜像，需要通过外网来拉取
+ceph/ceph:v15.2.9
+k8s.gcr.io/sig-storage/csi-node-driver-registrar:v2.0.1
+k8s.gcr.io/sig-storage/csi-attacher:v3.0.0
+k8s.gcr.io/sig-storage/csi-snapshotter:v3.0.0
+k8s.gcr.io/sig-storage/csi-resizer:v1.0.0
+k8s.gcr.io/sig-storage/csi-provisioner:v2.0.0
+quay.io/cephcsi/cephcsi:v3.2.0
+ceph/ceph:v15.2.9
+</code></pre>
+<p>在部署完成后，你就可以看到 Rook 项目会将自己的 Pod 放置在由它自己管理的两个 Namespace 当中：</p>
+<pre><code class="language-bash">
+$ kubectl get pods -n rook-ceph-system
+NAME                                  READY     STATUS    RESTARTS   AGE
+rook-ceph-agent-7cv62                 1/1       Running   0          15s
+rook-ceph-operator-78d498c68c-7fj72   1/1       Running   0          44s
+rook-discover-2ctcv                   1/1       Running   0          15s
+
+$ kubectl get pods -n rook-ceph
+NAME                   READY     STATUS    RESTARTS   AGE
+rook-ceph-mon0-kxnzh   1/1       Running   0          13s
+rook-ceph-mon1-7dn2t   1/1       Running   0          2s
+</code></pre>
+<p>这样，一个基于 Rook 持久化存储集群就以容器的方式运行起来了，而接下来在 Kubernetes 项目上创建的所有 Pod 就能够通过 Persistent Volume（PV）和 Persistent Volume Claim（PVC）的方式，在容器里挂载由 Ceph 提供的数据卷了。</p>
+<p>这时候，你可能会有个疑问：为什么我要选择 Rook 项目呢？其实，是因为这个项目很有前途</p>
+<p>如果你去研究一下 Rook 项目的实现，就会发现它巧妙地依赖了 Kubernetes 提供的编排能力，合理的使用了很多诸如 Operator、CRD 等重要的扩展特性（这些特性我都会在后面的文章中逐一讲解到）。这使得 Rook 项目，成为了目前社区中基于 Kubernetes API 构建的最完善也最成熟的容器存储插件。我相信，这样的发展路线，很快就会得到整个社区的推崇。</p>
+<blockquote>
+<p>备注：其实，在很多时候，大家说的所谓“云原生”，就是“Kubernetes 原生”的意思。而像 Rook、Istio 这样的项目，正是贯彻这个思路的典范。在我们后面讲解了声明式 API 之后，相信你对这些项目的设计思想会有更深刻的体会。</p>
+</blockquote>
+<h2 id="8-卸载集群">8. 卸载集群</h2>
+<h3 id="81-master">8.1 Master</h3>
+<p>kubeadm reset</p>
+<p>停止docker</p>
+<pre><code class="language-bash">sudo systemctl stop docker kubelet
+</code></pre>
+<p>删除相关配置文件：</p>
+<pre><code class="language-bash">rm -rf ~/.kube/
+</code></pre>
+<p>Node</p>
+<pre><code class="language-bash">[root@test-2 ~]# kubeadm reset
+[reset] WARNING: Changes made to this host by 'kubeadm init' or 'kubeadm join' will be reverted.
+[reset] Are you sure you want to proceed? [y/N]: y
+[preflight] Running pre-flight checks
+W0305 11:09:18.394192   10467 removeetcdmember.go:79] [reset] No kubeadm config, using etcd pod spec to get data directory
+[reset] No etcd config found. Assuming external etcd
+[reset] Please, manually reset etcd to prevent further issues
+[reset] Stopping the kubelet service
+[reset] Unmounting mounted directories in &quot;/var/lib/kubelet&quot;
+[reset] Deleting contents of config directories: [/etc/kubernetes/manifests /etc/kubernetes/pki]
+[reset] Deleting files: [/etc/kubernetes/admin.conf /etc/kubernetes/kubelet.conf /etc/kubernetes/bootstrap-kubelet.conf /etc/kubernetes/controller-manager.conf /etc/kubernetes/scheduler.conf]
+[reset] Deleting contents of stateful directories: [/var/lib/kubelet /var/lib/dockershim /var/run/kubernetes /var/lib/cni]
+
+The reset process does not clean CNI configuration. To do so, you must remove /etc/cni/net.d
+
+The reset process does not reset or clean up iptables rules or IPVS tables.
+If you wish to reset iptables, you must do so manually by using the &quot;iptables&quot; command.
+
+If your cluster was setup to utilize IPVS, run ipvsadm --clear (or similar)
+to reset your system's IPVS tables.
+
+The reset process does not clean your kubeconfig files and you must remove them manually.
+Please, check the contents of the $HOME/.kube/config file.
+</code></pre>
+<p>停止相关的服务</p>
+<pre><code class="language-bash">sudo systemctl stop docker &amp;&amp; yum remove docker-ce docker-ce-cli containerd.io -y
+</code></pre>
+<p>删除相关配置文件：</p>
+<pre><code class="language-bash"># 清除网络插件的配置
+rm -rf /etc/cni/net.d/
+
+# 清除iptables规则或者 IPVS 表
+# 查看规则以number的方式，一条一条的出来，然后我们根据号码来删除哪一条规则
+iptables -L INPUT --line-numbers
+# 删除第七条规则
+iptables -D INPUT 7
+# 删除所有规则
+sudo iptables -F &amp;&amp; sudo iptables -X &amp;&amp; sudo iptables -F -t nat &amp;&amp; sudo iptables -X -t nat
+# 如果开启了ipvs，通过下面的命令清除
+ipvsadm --clear
+
+# 清除网桥
+ip link del weave
+ip link del docker0
+ip link del vethwe-bridge
+ip link del vxlan-6784
+
+# 删除kubeconfig文件
+rm -rf ~/.kube/
+</code></pre>
+<h2 id="参考文档">参考文档：</h2>
+<p>[1] <a href="https://feisky.gitbooks.io/kubernetes/content/deploy/kubeadm.html">kubeadm</a></p>
+<p>[2] <a href="https://www.cnblogs.com/dukuan/p/14124600.html">Kubernetes实战指南（三十四）： 高可用安装K8s集群1.20.x</a></p>
+<p>[3] <a href="https://zhuanlan.zhihu.com/p/349342658">kubeadm安装最新高可用K8S集群v1.20.2</a></p>
+<p>[4] <a href="https://blog.csdn.net/weixin_40814867/article/details/111031110">k8s 1.20.0 在centos7 使用 kubeadm 安装</a></p>
+<p>[5] <a href="https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/create-cluster-kubeadm/">Creating a cluster with kubeadm</a></p>
+
+                    </div>
+                    
+                    <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+    
+    <a href="https://ahamoment.cn/tags/kubeadm/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubeadm</a>
+    
+</div>
+                    
+                    
+
+                    
+
+
+
+                    
+                    
+
+
+
+                </div>
+                
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        hljs.initHighlightingOnLoad();
+        changeSidebarHeight();
+        switchDocToc();
+    })
+</script>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

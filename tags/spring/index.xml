@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spring on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/spring/</link>
+    <description>Recent content in spring on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Thu, 17 Dec 2020 14:21:46 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/spring/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Spring系列面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-spring/</link>
+      <pubDate>Thu, 17 Dec 2020 14:21:46 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-spring/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文包含spring, spring boot, spring mvc 以及 mybatis的面试题&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

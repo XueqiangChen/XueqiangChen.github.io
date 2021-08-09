@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chenxq on AhaMoment</title>
+    <link>https://ahamoment.cn/authors/chenxq/</link>
+    <description>Recent content in Chenxq on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/authors/chenxq/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>2. Kubernetes 集群搭建与实践</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter2/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter2/</guid>
+      <description>&lt;p&gt;本章主要是使用kubeadm搭建k8s集群&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>3. 容器编排与 kubernetes 作业管理</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/</guid>
+      <description>&lt;p&gt;讲解k8s中的相关对象&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>6. kubernetes 作业调度与资源管理</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter6/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter6/</guid>
+      <description>&lt;p&gt;作业调度和资源管理相关内容&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>9. kubernetes 生态周边</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/</guid>
+      <description>&lt;p&gt;kubernetes 生态周边&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>K8s 学习笔记</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/</link>
+      <pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/</guid>
+      <description>K8s docs</description>
+    </item>
+    
+  </channel>
+</rss>

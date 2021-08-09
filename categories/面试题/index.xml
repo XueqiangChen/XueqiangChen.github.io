@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>面试题 on AhaMoment</title>
+    <link>https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/</link>
+    <description>Recent content in 面试题 on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Mon, 28 Dec 2020 11:16:35 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Docker 和 Kubernetes 面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-docker-k8s/</link>
+      <pubDate>Mon, 28 Dec 2020 11:16:35 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-docker-k8s/</guid>
+      <description>1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
+AUFS
+AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：</description>
+    </item>
+    
+    <item>
+      <title>面试题目录</title>
+      <link>https://ahamoment.cn/posts/interview/interview-questions/</link>
+      <pubDate>Tue, 22 Dec 2020 14:00:47 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-questions/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;面试题目录&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>分布式面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-distributed-system/</link>
+      <pubDate>Fri, 18 Dec 2020 09:12:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-distributed-system/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文收集有关分布式面试题的内容&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring系列面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-spring/</link>
+      <pubDate>Thu, 17 Dec 2020 14:21:46 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-spring/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文包含spring, spring boot, spring mvc 以及 mybatis的面试题&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 基础面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-java/</link>
+      <pubDate>Wed, 16 Dec 2020 09:44:34 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-java/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文收集Java基础知识点相关的面试题目&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>计算机网络面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-network/</link>
+      <pubDate>Thu, 10 Dec 2020 09:43:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-network/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文主要收集面试过程中遇到的计算机网络的面试题。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL 面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-mysql/</link>
+      <pubDate>Wed, 09 Dec 2020 11:48:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-mysql/</guid>
+      <description>1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。
+2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。</description>
+    </item>
+    
+  </channel>
+</rss>

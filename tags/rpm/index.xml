@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>RPM on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/rpm/</link>
+    <description>Recent content in RPM on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Tue, 02 Jun 2020 18:51:23 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/rpm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>20 常用的 RPM 命令</title>
+      <link>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</link>
+      <pubDate>Tue, 02 Jun 2020 18:51:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</guid>
+      <description>本文翻译自20 Practical Examples of RPM Commands in Linux
+ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。</description>
+    </item>
+    
+  </channel>
+</rss>

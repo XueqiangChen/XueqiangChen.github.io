@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Docker 和 Kubernetes 面试题 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
+AUFS
+AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Docker 和 Kubernetes 面试题",
+      "item":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/interview/interview-docker-k8s/"
+    },
+    "headline": "Docker 和 Kubernetes 面试题 | AhaMoment","datePublished": "2020-12-28T11:16:35+08:00",
+    "dateModified": "2020-12-28T11:16:35+08:00",
+    "wordCount":  638 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。\nAUFS\nAUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示："
+}
+</script><meta property="og:title" content="Docker 和 Kubernetes 面试题 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/interview/interview-docker-k8s/" />
+
+
+
+
+<meta property="og:description" content="1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
+AUFS
+AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-12-28T11:16:35&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-12-28T11:16:35&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="docker" />
+
+<meta property="article:tag" content="kubernetes" />
+
+
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Docker 和 Kubernetes 面试题</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-12-28</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/" class="hover:text-eureka">面试题</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h2 id="1-docker-问题">1. Docker 问题</h2>
+<h3 id="11-docker-后端存储驱动-devicemapperoverlay-几种的区别">1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？</h3>
+<p>刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。</p>
+<p><strong>AUFS</strong></p>
+<p>AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：</p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/aufs.webp" alt=""></p>
+<p><strong>Overlay</strong></p>
+<p>Overlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：</p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/overlay.webp" alt=""></p>
+<p><strong>Devicemapper</strong></p>
+<p>Device mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：</p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/devicemapper.webp" alt=""></p>
+<p>详细内容请参考：</p>
+<ul>
+<li>
+<p><a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1513">Docker 五种存储驱动</a></p>
+</li>
+<li>
+<p><a href="https://links.jianshu.com/go?to=http%3A%2F%2Fdockone.io%2Farticle%2F1765">深入了解 Docker 存储驱动</a></p>
+</li>
+</ul>
+<h3 id="12-容器隔离不彻底memory-和-cpu-隔离不彻底怎么处理解决这个问题">1.2. 容器隔离不彻底，Memory 和 CPU 隔离不彻底，怎么处理解决这个问题？</h3>
+<p>由于 /proc 文件系统是以只读的方式挂载到容器内部，所以在容器内看到的都是宿主机的信息，包括 CPU 和 Memory，docker 是以 cgroups 来进行资源限制的，而 jdk1.9 以下版本目前无法自动识别容器的资源配额，1.9以上版本会自动识别和正常读取 cgroups 中为容器限制的资源大小。</p>
+<p><em><strong>Memory 隔离不彻底</strong></em></p>
+<hr>
+<p>Docker 通过 cgroups 完成对内存的限制，而 /proc 文件目录是以只读的形式挂载到容器中，由于默认情况下，Java 压根就看不到 cgroups 限制的内容的大小，而默认使用 /proc/meminfo 中的信息作为内存信息进行启动，默认情况下，JVM 初始堆大小为内存总量的 1/4，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。</p>
+<p>那么目前有几种解决方式：</p>
+<p>（1）升级 JDK 版本到1.9以上，让 JVM 能自动识别 cgroups 对容器的资源限制，从而自动调整 JVM 的参数并启动 JVM 进程。</p>
+<p>（2）对于较低版本的JDK，一定要设置 JVM 初始堆大小，并且JVM 的最大堆内存不能超过容器的最大内存值，正常理论值应该是：容器 limit-memory = JVM 最大堆内存 + 750MB。</p>
+<p>（3）使用 lxcfs ，这是一种用户态文件系统，用来支持LXC 容器，lxcfs 通过用户态文件系统，在容器中提供下列 procfs 的文件，启动时，把宿主机对应的目录 /var/lib/lxcfu/proc/meminfo 文件挂载到 Docker 容器的 /proc/meminfo 位置后，容器中进程（JVM）读取相应文件内容时，lxcfs 的 fuse 将会从容器对应的 cgroups 中读取正确的内存限制，从而获得正确的资源约束设定。</p>
+<p><em><strong>CPU 隔离不彻底</strong></em></p>
+<hr>
+<p>JVM GC （垃圾回收）对于 java 程序执行性能有一定的影响，默认的 JVM 使用如下公式： ParallelGCThreads = ( ncpu &lt;= 8 ) ? ncpu：3 + （ncpu * 5）/ 8 来计算并行 GC 的线程数，但是在容器里面，ncpu 获取的就是所在宿主机的 cpu 个数，这会导致 JVM 启动过多的 GC 线程，直接的结果就是 GC 的性能下降，java 服务的感受就是：延时增加， TPS 吞度量下降，针对这种问题，也有以下几种解决方案：</p>
+<p>（1）显示传递 JVM 启动参数：“-XX: ParallelGCThreads&quot; 告诉 JVM 应该启动多少个并行 GC 线程，缺点是需要业务感知，而且需要为不同配置的容器传递不同的 JVM 参数。</p>
+<p>（2）在容器内使用 Hack 过的 glibc ，使 JVM 通过 sysconf 系统调用能正确获取容器内 CPU 资源核数，优点是业务无感知，并且能自动适配不同配置的容器，缺点是有一定的维护成本。具体参考：<a href="https://chenxq.xyz/post/cloud-container-get-cpu/">容器内获取 CPU 核数问题</a></p>
+<h3 id="13-介绍一下容器实现的基础-namespace-and-cgroups">1.3. 介绍一下容器实现的基础: Namespace and Cgroups</h3>
+<p>主要用到了Linux的两种技术：Namespace 和 CGroup。Namespace 做隔离，Cgroups 做限制。</p>
+<p>Namespace 技术实际上修改了应用进程看待整个计算机“视图”，即它的“视线”被操作系统做了限制，只能“看到”某些指定的内容。在创建进程的时候，Linux 系统提供了Mount、UTS、IPC、Network和User这些Namespace，用来对各种不同的进程上下文进行隔离操作。所以，Docker 容器实际上是在创建容器进程时，指定了这个进程所需要启用的一组 Namespace 参数。这样，容器就只能“看”到当前 Namespace 所限定的资源、文件、设备、状态，或者配置。而对于宿主机以及其他不相关的程序，它就完全看不到了。所以说，容器，其实是一种特殊的进程而已。</p>
+<p>Linux Cgroups 就是 Linux 内核中用来为进程设置资源限制的一个重要功能。它最主要的作用，就是限制一个进程组能够使用的资源上限，包括 CPU、内存、磁盘、网络带宽等等。</p>
+<p>一个正在运行的 Docker 容器，其实就是一个启用了多个 Linux Namespace 的应用进程，而这个进程能够使用的资源量，则受 Cgroups 配置的限制。</p>
+<p>详情请参考：https://coolshell.cn/articles/17049.html</p>
+<h3 id="14-docker-load-加载一个镜像-docker-images-查看不到是哪些原因">1.4. docker load 加载一个镜像， docker images 查看不到，是哪些原因？</h3>
+<h3 id="14-有没有遇到容器-oom-的问题怎么处理的">1.4 有没有遇到容器 OOM 的问题？怎么处理的？</h3>
+<p>OOM 可能的原因：</p>
+<ol>
+<li>
+<p>容器隔离不彻底。默认情况下，JVM 初始堆大小为内存总量的 1/4，例如这台宿主机的内存为32G，那么初始堆的大小为8G，这种情况会导致，如果容器分配的内存小于 JVM 的内存， JVM 进程会被 linux killer 杀死。</p>
+</li>
+<li></li>
+</ol>
+<p>处理方法：</p>
+<ol>
+<li>升级jdk版本或者设置初始堆大小和堆内存最大值，即-Xms 和 -Xmx。</li>
+</ol>
+<h2 id="2-kubernetes-问题">2. Kubernetes 问题</h2>
+<h3 id="21-k8s-的架构体系了解吗简单描述一下">2.1. k8s 的架构体系了解吗？简单描述一下</h3>
+<p>这道题主要考察 k8s 体系，涉及的范围其实太广泛，可以从本身 k8s 组件、存储、网络、监控等方面阐述，当时我主要将 k8s 的每个组件功能都大概说了一下。</p>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/k8s-infra.png" alt=""></p>
+<p><strong>Master节点</strong></p>
+<p>Master节点主要有四个组件，分别是：api-server、controller-manager、kube-scheduler 和 etcd。</p>
+<hr>
+<p><em><strong>api-server</strong></em></p>
+<p>负责API服务。kube-apiserver 作为 k8s 集群的核心，负责整个集群功能模块的交互和通信，集群内的各个功能模块如 kubelet、controller、scheduler 等都通过 api-server 提供的接口将信息存入到 etcd 中，当需要这些信息时，又通过 api-server 提供的 restful 接口，如get、watch 接口来获取，从而实现整个 k8s 集群功能模块的数据交互。</p>
+<p><em><strong>controller-manager</strong></em></p>
+<p>负责容器编排。controller-manager 作为 k8s 集群的管理控制中心，负责集群内 Node、Namespace、Service、Token、Replication 等资源对象的管理，使集群内的资源对象维持在预期的工作状态。</p>
+<p>每一个 controller 通过 api-server 提供的 restful 接口实时监控集群内每个资源对象的状态，当发生故障，导致资源对象的工作状态发生变化，就进行干预，尝试将资源对象从当前状态恢复为预期的工作状态，常见的 controller 有 Namespace Controller、Node Controller、Service Controller、ServiceAccount Controller、Token Controller、ResourceQuote Controller、Replication Controller等。</p>
+<p><em><strong>kube-scheduler</strong></em></p>
+<p>kube-scheduler 简单理解为通过特定的调度算法和策略为待调度的 Pod 列表中的每个 Pod 选择一个最合适的节点进行调度，调度主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略和限制筛选出候选节点，优选阶段是在第一步的基础上，通过相应的策略为每一个候选节点进行打分，分数最高者胜出，随后目标节点的 kubelet 进程通过 api-server 提供的接口监控到 kube-scheduler 产生的 pod 绑定事件，从 etcd 中获取 Pod 的清单，然后下载镜像，启动容器。</p>
+<p><strong>预选阶段的策略有：</strong></p>
+<p>(1) MatchNodeSelector：判断节点的 label 是否满足 Pod 的 nodeSelector 属性值。</p>
+<p>(2) PodFitResource：判断节点的资源是否满足 Pod 的需求，批判的标准是：当前节点已运行的所有 Pod 的 request值 + 待调度的 Pod 的 request 值是否超过节点的资源容量。</p>
+<p>(3) PodFitHostName：判断节点的主机名称是否满足 Pod 的 nodeName 属性值。</p>
+<p>(4) PodFitHostPort：判断 Pod 的端口所映射的节点端口是否被节点其他 Pod 所占用。</p>
+<p>(5) CheckNodeMemoryPressure：判断 Pod 是否可以调度到内存有压力的节点，这取决于 Pod 的 Qos 配置，如果是 BestEffort（尽量满足，优先级最低），则不允许调度。</p>
+<p>(6) CheckNodeDiskPressure：如果当前节点磁盘有压力，则不允许调度。</p>
+<p><strong>优选阶段的策略有：</strong></p>
+<p>(1) SelectorSpreadPriority：尽量减少节点上同属一个 SVC/RC/RS 的 Pod 副本数，为了更好的实现容灾，对于同属一个 SVC/RC/RS 的 Pod 实例，应尽量调度到不同的 node 节点。</p>
+<p>(2) LeastRequestPriority：优先调度到请求资源较少的节点，节点的优先级由节点的空闲资源与节点总容量的比值决定的，即（节点总容量 - 已经运行的 Pod 所需资源）/ 节点总容量，CPU 和 Memory 具有相同的权重，最终的值由这两部分组成。</p>
+<p>(3) BalancedResourceAllocation：该策略不能单独使用，必须和 LeaseRequestPriority 策略一起结合使用，尽量调度到 CPU 和 Memory 使用均衡的节点上。</p>
+<p><em><strong>ETCD</strong></em></p>
+<p>强一致性的键值对存储，k8s 集群中的所有资源对象都存储在 etcd 中。</p>
+<p><strong>Node节点</strong></p>
+<hr>
+<p>在 Kubernetes 项目中，kubelet 主要负责同容器运行时（比如 Docker 项目）打交道。而这个交互所依赖的，是一个称作 CRI（Container Runtime Interface）的远程调用接口，这个接口定义了容器运行时的各项核心操作。而具体的容器运行时，比如 Docker 项目，则一般通过 OCI 这个容器运行时规范同底层的 Linux 操作系统进行交互。此外，kubelet 还通过 gRPC 协议同一个叫作 Device Plugin 的插件进行交互。这个插件，是 Kubernetes 项目用来管理 GPU 等宿主机物理设备的主要组件，也是基于 Kubernetes 项目进行机器学习训练、高性能作业支持等工作必须关注的功能。而 kubelet 的另一个重要功能，则是调用网络插件和存储插件为容器配置网络和持久化存储。这两个插件与 kubelet 进行交互的接口，分别是 CNI（Container Networking Interface）和 CSI（Container Storage Interface）。</p>
+<p>Node节点主要有三个组件：分别是 kubelet、kube-proxy 和 容器运行时 docker 或者 rkt。</p>
+<p><em><strong>kubelet</strong></em></p>
+<p>在 k8s 集群中，每个 node 节点都会运行一个 kubelet 进程，该进程用来处理 Master 节点下达到该节点的任务，同时，通过 api-server 提供的接口定期向 Master 节点报告自身的资源使用情况，并通过 cadvisor 组件监控节点和容器的使用情况。</p>
+<p><em><strong>kube-proxy</strong></em></p>
+<p>kube-proxy 就是一个智能的软件负载均衡器，将 service 的请求转发到后端具体的 Pod 实例上，并提供负载均衡和会话保持机制，目前有三种工作模式，分别是：用户模式（userspace）、iptables 模式和 IPVS 模式。</p>
+<p><em><strong>容器运行时——docker</strong></em></p>
+<p>负责管理 node 节点上的所有容器和容器 IP 的分配。</p>
+<h3 id="22-k8s-创建一个pod的详细流程涉及的组件怎么通信的">2.2. k8s 创建一个pod的详细流程，涉及的组件怎么通信的？</h3>
+<p>k8s 创建一个 Pod 的详细流程如下：</p>
+<p>(1) 客户端提交创建请求，可以通过 api-server 提供的 restful 接口，或者是通过 kubectl 命令行工具，支持的数据类型包括 JSON 和 YAML。</p>
+<p>(2) api-server 处理用户请求，将 pod 信息存储至 etcd 中。</p>
+<p>(3) kube-scheduler 通过 api-server 提供的接口监控到未绑定的 pod，尝试为 pod 分配 node 节点，主要分为两个阶段，预选阶段和优选阶段，其中预选阶段是遍历所有的 node 节点，根据策略筛选出候选节点，而优选阶段是在第一步的基础上，为每一个候选节点进行打分，分数最高者胜出。</p>
+<p>(4) 选择分数最高的节点，进行 pod binding 操作，并将结果存储至 etcd 中。</p>
+<p>(5) 随后目标节点的 kubelet 进程通过 api-server 提供的接口监测到 kube-scheduler 产生的 pod 绑定事件，然后从 etcd 获取 pod 清单，下载镜像并启动容器。</p>
+<hr>
+<p>整个事件流可以参考下图：</p>
+<p><img src="https:////upload-images.jianshu.io/upload_images/16605471-363ddd93976fbd60.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/759/format/webp" alt="img"></p>
+<p>参考文章：<a href="http://dockone.io/article/9134">kubectl 创建 Pod 背后到底发生了什么？</a></p>
+<h3 id="23-k8s-中服务级别怎样设置服务的级别才是最高的">2.3. k8s 中服务级别，怎样设置服务的级别才是最高的</h3>
+<p>这道题主要考察 k8s Qos 类别。在 k8s 中，Qos 主要有三种类别，分别是 BestEffort、Burstable 和 Guaranteed，三种类别区别如下：</p>
+<p><em><strong>BestEffort</strong></em></p>
+<p>什么都不设置（CPU or Memory），佛系申请资源。</p>
+<p><em><strong>Burstable</strong></em></p>
+<p>Pod 中的容器至少一个设置了CPU 或者 Memory 的请求</p>
+<p><em><strong>Guaranteed</strong></em></p>
+<p>Pod 中的所有容器必须设置 CPU 和 Memory，并且 request 和 limit 值相等。</p>
+<p>详情可以参考这篇博客：<a href="https://www.jianshu.com/p/b02e6bb20f03">K8s Qos</a></p>
+<h3 id="24-有状态的容器如何上云">2.4. 有状态的容器如何上云？</h3>
+<h3 id="25-解释一下crd和operator有没有自己开发过crd或者operator">2.5. 解释一下CRD和Operator？有没有自己开发过CRD或者Operator？</h3>
+<h3 id="26-什么是-cni-平时-k8s-集群用的是哪个网络插件">2.6. 什么是 CNI? 平时 K8S 集群用的是哪个网络插件？</h3>
+<h3 id="27-为什么-pod-中关于资源有-request-和-limit-两个字段有想过这么设计的原因吗">2.7. 为什么 Pod 中关于资源有 request 和 limit 两个字段？有想过这么设计的原因吗？</h3>
+<h3 id="28-pod被调度到一个节点上的具体过程">2.8. Pod被调度到一个节点上的具体过程？</h3>
+<h3 id="29-一个请求到-pod-接收响应中间经历了哪些过程">2.9. 一个请求到 Pod 接收响应，中间经历了哪些过程？</h3>
+<h2 id="3-参考资料">3. 参考资料</h2>
+<p>[1] <a href="https://www.jianshu.com/p/2de643caefc1">docker &amp; kubernetes 面试</a></p>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/docker/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#docker</a>
+    
+    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/java/framework-mybatis-generator/" class="block">MyBatis Generator 使用与原理(上)</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/interview/interview-questions/" class="block">面试题目录</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+
+    
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

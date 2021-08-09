@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>statefulset on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/statefulset/</link>
+    <description>Recent content in statefulset on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Tue, 09 Mar 2021 11:20:45 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/statefulset/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>深入理解StatefulSet（二）：存储状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</link>
+      <pubDate>Tue, 09 Mar 2021 11:20:45 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的存储状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>深入理解StatefulSet（一）：拓扑状态</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</link>
+      <pubDate>Wed, 03 Mar 2021 07:45:28 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程，本节内容主要介绍 StatefulSet 的拓扑状态&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

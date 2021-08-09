@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>git on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/git/</link>
+    <description>Recent content in git on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Tue, 24 Nov 2020 14:31:32 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/git/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Git 常用命令汇总</title>
+      <link>https://ahamoment.cn/posts/tool/tool-git-common-operations/</link>
+      <pubDate>Tue, 24 Nov 2020 14:31:32 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-git-common-operations/</guid>
+      <description>1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
+ commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。</description>
+    </item>
+    
+    <item>
+      <title>自动配置Git仓库提交作者</title>
+      <link>https://ahamoment.cn/posts/tool/tool-git-set-config/</link>
+      <pubDate>Sat, 16 Nov 2019 19:12:17 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-git-set-config/</guid>
+      <description>1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
+2. 方法 2.1 安装Git  Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址  2.</description>
+    </item>
+    
+  </channel>
+</rss>

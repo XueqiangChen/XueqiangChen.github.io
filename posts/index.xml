@@ -1,0 +1,500 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on AhaMoment</title>
+    <link>https://ahamoment.cn/posts/</link>
+    <description>Recent content in Posts on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Thu, 17 Jun 2021 20:28:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Hugo 博客搭建</title>
+      <link>https://ahamoment.cn/posts/tool/tool-hugo-blog/</link>
+      <pubDate>Thu, 17 Jun 2021 20:28:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-hugo-blog/</guid>
+      <description>前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
+1. 博客主体 博客主体是由
+https://github.com/peaceiris/actions-gh-pages
+https://github.com/GitbookIO/gitbook-cli
+https://github.com/marketplace/actions/publish-gitbook
+https://github.com/marketplace?type=actions</description>
+    </item>
+    
+    <item>
+      <title>二叉树的中序遍历</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/</link>
+      <pubDate>Thu, 15 Apr 2021 10:03:48 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/</guid>
+      <description>二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章&amp;mdash;&amp;gt;传送门
+这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：
+leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2]  1.</description>
+    </item>
+    
+    <item>
+      <title>Go 语言中的 new 关键字和 make 关键字的区别</title>
+      <link>https://ahamoment.cn/posts/go/go-new-vs-make/</link>
+      <pubDate>Thu, 01 Apr 2021 16:23:40 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/go/go-new-vs-make/</guid>
+      <description>Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
+对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
+package main import &amp;quot;fmt&amp;quot; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。</description>
+    </item>
+    
+    <item>
+      <title>Mac 命令汇总</title>
+      <link>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</link>
+      <pubDate>Thu, 25 Mar 2021 16:03:00 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</guid>
+      <description>常用快捷键 Overall Mac 键盘快捷键
+修饰键  Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn  在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。</description>
+    </item>
+    
+    <item>
+      <title>安装 Tensorflow2</title>
+      <link>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</link>
+      <pubDate>Thu, 25 Mar 2021 15:48:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</guid>
+      <description>安装 Anaconda https://www.anaconda.com/products/individual
+根据系统选择下载不同的 anaconda 安装：
+这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功：
+$ conda --version conda 4.9.2  更换 conda 镜像源 查看用户目录下的 .</description>
+    </item>
+    
+    <item>
+      <title>Vim 折腾记</title>
+      <link>https://ahamoment.cn/posts/tool/tool-vim/</link>
+      <pubDate>Tue, 16 Mar 2021 16:12:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-vim/</guid>
+      <description>&lt;p&gt;折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Go 语言工作目录</title>
+      <link>https://ahamoment.cn/posts/go/go-project-catalogs/</link>
+      <pubDate>Mon, 15 Mar 2021 10:16:45 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/go/go-project-catalogs/</guid>
+      <description>GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
+工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
+GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
+在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
+# go env GO111MODULE=&amp;quot;&amp;quot; GOARCH=&amp;quot;amd64&amp;quot; GOBIN=&amp;quot;&amp;quot; GOCACHE=&amp;quot;/root/.cache/go-build&amp;quot; GOENV=&amp;quot;/root/.</description>
+    </item>
+    
+    <item>
+      <title>bazel 外部存储库缓存</title>
+      <link>https://ahamoment.cn/posts/tool/tool-bazel/</link>
+      <pubDate>Wed, 10 Feb 2021 14:05:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-bazel/</guid>
+      <description>bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
+Step1：
+从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
+Step2:
+运行 yum install bazel3 命令安装。
+教程 java / c++</description>
+    </item>
+    
+    <item>
+      <title>Linux 常用命令</title>
+      <link>https://ahamoment.cn/posts/linux/linux-commands/</link>
+      <pubDate>Wed, 10 Feb 2021 11:54:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-commands/</guid>
+      <description>设置 JAVA_HOME
+export JAVA_HOME=&amp;quot;$(dirname $(dirname $(realpath $(which javac))))&amp;quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
+语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例</description>
+    </item>
+    
+    <item>
+      <title>MyBatis Generator 使用与原理(上)</title>
+      <link>https://ahamoment.cn/posts/java/framework-mybatis-generator/</link>
+      <pubDate>Tue, 26 Jan 2021 20:06:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/framework-mybatis-generator/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Docker 和 Kubernetes 面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-docker-k8s/</link>
+      <pubDate>Mon, 28 Dec 2020 11:16:35 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-docker-k8s/</guid>
+      <description>1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
+AUFS
+AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：</description>
+    </item>
+    
+    <item>
+      <title>面试题目录</title>
+      <link>https://ahamoment.cn/posts/interview/interview-questions/</link>
+      <pubDate>Tue, 22 Dec 2020 14:00:47 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-questions/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;面试题目录&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>分布式面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-distributed-system/</link>
+      <pubDate>Fri, 18 Dec 2020 09:12:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-distributed-system/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文收集有关分布式面试题的内容&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Spring系列面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-spring/</link>
+      <pubDate>Thu, 17 Dec 2020 14:21:46 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-spring/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文包含spring, spring boot, spring mvc 以及 mybatis的面试题&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>Java 基础面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-java/</link>
+      <pubDate>Wed, 16 Dec 2020 09:44:34 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-java/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文收集Java基础知识点相关的面试题目&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>计算机网络面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-network/</link>
+      <pubDate>Thu, 10 Dec 2020 09:43:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-network/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文主要收集面试过程中遇到的计算机网络的面试题。&lt;/p&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+    <item>
+      <title>MySQL 面试题</title>
+      <link>https://ahamoment.cn/posts/interview/interview-mysql/</link>
+      <pubDate>Wed, 09 Dec 2020 11:48:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/interview/interview-mysql/</guid>
+      <description>1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。
+2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。</description>
+    </item>
+    
+    <item>
+      <title>Git 常用命令汇总</title>
+      <link>https://ahamoment.cn/posts/tool/tool-git-common-operations/</link>
+      <pubDate>Tue, 24 Nov 2020 14:31:32 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-git-common-operations/</guid>
+      <description>1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
+ commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 自定义线程池</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-thread-pool/</link>
+      <pubDate>Thu, 12 Nov 2020 10:22:13 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-thread-pool/</guid>
+      <description>1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。
+ 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：
+ 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：
+ 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 线程生命周期</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/</link>
+      <pubDate>Wed, 11 Nov 2020 18:23:31 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/</guid>
+      <description>线程的生命周期大体可以分为如下6个主要的阶段：
+ NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：
+// Thread.State public enum State { /** * Thread state for a thread which has not yet started.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程面试题总结</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-interview-questions/</link>
+      <pubDate>Wed, 11 Nov 2020 10:41:32 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-interview-questions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 深入理解synchronized关键字</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-synchronized2/</link>
+      <pubDate>Sun, 25 Oct 2020 07:20:03 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-synchronized2/</guid>
+      <description>synchronized关键字提供了一种互斥机制，也就是说在同一时刻，只能有一个线程访问同步资源，很多资料、书籍将synchronized（mutex）称为锁，其实这种说法是不严谨的，准确地讲应该是某线程获取了与mutex关联的monitor锁（当然写程序的时候知道它想要表达的语义即可）。
+使用JDK命令javap对Mutex class进行反汇编，输出了大量的JVM指令，在这些指令中，你将发现monitor enter和monitor exit是成对出现的（有些时候会出现一个monitor enter多个monitor exit，但是每一个monitor exit之前必有对应的monitor enter，这是肯定的）.
+ Monitorenter 每个对象都与一个monitor相关联，一个monitor的lock的锁只能被一个线程在同一时间获得，在一个线程尝试获得与对象关联monitor的所有权时会发生如下的几件事情。  如果monitor的计数器为0，则意味着该monitor的lock还没有被获得，某个线程获得之后将立即对该计数器加一，从此该线程就是这个monitor的所有者了。 如果一个已经拥有该monitor所有权的线程重入，则会导致monitor计数器再次累加。 如果monitor已经被其他线程所拥有，则其他线程尝试获取该monitor的所有权时，会被陷入阻塞状态直到monitor计数器变为0，才能再次尝试获取对monitor的所有权。   Monitorexit 释放对monitor的所有权，想要释放对某个对象关联的monitor的所有权的前提是，你曾经获得了所有权。释放monitor所有权的过程比较简单，就是将monitor的计数器减一，如果计数器的结果为0，那就意味着该线程不再拥有对该monitor的所有权，通俗地讲就是解锁。与此同时被该monitor block的线程将再次尝试获得对该monitor的所有权。  使用synchronized方法需要注意几个问题：</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 线程中断 Interrupt</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-interrupt/</link>
+      <pubDate>Sat, 24 Oct 2020 07:17:54 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-interrupt/</guid>
+      <description>&lt;p&gt;线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM 内存结构</title>
+      <link>https://ahamoment.cn/posts/java/java-jvm-jmm/</link>
+      <pubDate>Thu, 15 Oct 2020 19:55:31 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-jvm-jmm/</guid>
+      <description>http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf
+ JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。
+程序计数器 无论任何语言，其实最终都是需要由操作系统通过控制总线向CPU发送机器指令，Java也不例外，程序计数器在JVM中所起的作用就是用于存放当前线程接下来将要执行的字节码指令、分支、循环、跳转、异常处理等信息。在任何时候，一个处理器只执行其中一个线程中的指令，为了能够在CPU时间片轮转切换上下文之后顺利回到正确的执行位置，每条线程都需要具有一个独立的程序计数器，各个线程之间互相不影响，因此JVM将此块内存区域设计成了线程私有的。
+Java 虚拟机栈 与程序计数器内存相类似，Java虚拟机栈也是线程私有的，它的生命周期与线程相同，是在JVM运行时所创建的，在线程中，方法在执行的时候都会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息，如图所示，方法的调用对应着栈帧在虚拟机栈中的压栈和弹栈过程。
+每一个线程在创建的时候，JVM都会为其创建对应的虚拟机栈，虚拟机栈的大小可以通过-xss来配置，方法的调用是栈帧被压入和弹出的过程，通过上图可以看出，同等的虚拟机栈如果局部变量表等占用内存越小则可被压入的栈帧就会越多，反之则可被压入的栈帧就会越少，一般将栈帧内存的大小称为宽度，而栈帧的数量则称为虚拟机栈的深度。
+本地方法栈 Java中提供了调用本地方法的接口（Java Native Interface），也就是C/C++程序，在线程的执行过程中，经常会碰到调用JNI方法的情况，比如网络通信、文件操作的底层，甚至是String的intern等都是JNI方法，JVM为本地方法所划分的内存区域便是本地方法栈，这块内存区域其自由度非常高，完全靠不同的JVM厂商来实现，Java虚拟机规范并未给出强制的规定，同样它也是线程私有的内存区域。
+堆内存 堆内存是JVM中最大的一块内存区域，被所有的线程所共享，Java在运行期间创建的所有对象几乎都存放在该内存区域，该内存区域也是垃圾回收器重点照顾的区域，因此有些时候堆内存被称为“GC堆”。
+堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。</description>
+    </item>
+    
+    <item>
+      <title>散列表那些事</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</link>
+      <pubDate>Thu, 15 Oct 2020 10:04:54 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</guid>
+      <description>基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？
+我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。
+这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：
+ 以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。  散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。
+一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。
+散列映射法的关键问题有两个：
+ 如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。  散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：</description>
+    </item>
+    
+    <item>
+      <title>认识 Linux NSCD 服务缓存</title>
+      <link>https://ahamoment.cn/posts/linux/linux-nscd/</link>
+      <pubDate>Sun, 27 Sep 2020 13:23:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-nscd/</guid>
+      <description>NSCD(Name Service Cache Daemon)是服务缓存守护进程。
+NSCD 安装   RHEL/CentOS
+yum -y install nscd    Debian/Ubuntu
+apt-get install nscd    RPM</description>
+    </item>
+    
+    <item>
+      <title>堆</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-heap/</link>
+      <pubDate>Tue, 15 Sep 2020 11:44:06 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-heap/</guid>
+      <description>什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
+若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
+若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
+如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
+优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
+ 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &amp;ldquo;最大堆&amp;rdquo;，也称 &amp;ldquo;大顶堆&amp;rdquo;：堆顶元素是整个树的最大值 &amp;ldquo;最小堆&amp;rdquo;，也称&amp;quot;小顶堆&amp;quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。</description>
+    </item>
+    
+    <item>
+      <title>容器内获取 CPU 核数问题</title>
+      <link>https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/</link>
+      <pubDate>Fri, 11 Sep 2020 18:14:58 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/</guid>
+      <description>现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
+但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
+int cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
+   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码</description>
+    </item>
+    
+    <item>
+      <title>解决setcap导致Java加载libjli.so 失败问题</title>
+      <link>https://ahamoment.cn/posts/linux/linux-cap/</link>
+      <pubDate>Fri, 11 Sep 2020 11:12:43 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-cap/</guid>
+      <description>背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
+java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.</description>
+    </item>
+    
+    <item>
+      <title>平衡二叉树</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/</link>
+      <pubDate>Mon, 31 Aug 2020 18:11:54 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/</guid>
+      <description>平衡二叉树 平衡二叉树也是一种搜索树。
+搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。
+平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|&amp;lt;=1。
+平衡二叉树的高度能够达到 $log_2n$
+平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。
+右单旋 按照字母大小插入三个结点，Mar, May, Nov：
+如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。</description>
+    </item>
+    
+    <item>
+      <title>Linux Shell Script 基础教程</title>
+      <link>https://ahamoment.cn/posts/linux/linux-bash-tutorials/</link>
+      <pubDate>Thu, 27 Aug 2020 16:03:59 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-bash-tutorials/</guid>
+      <description>本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
+ 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
+1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：</description>
+    </item>
+    
+    <item>
+      <title>二叉搜索树</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/</link>
+      <pubDate>Wed, 19 Aug 2020 17:05:29 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/</guid>
+      <description>1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：
+ 非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。  2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：
+ 查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。  x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。    我们用递归来实现查找过程，</description>
+    </item>
+    
+    <item>
+      <title>二叉树及存储结构</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/</link>
+      <pubDate>Tue, 11 Aug 2020 10:40:08 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/</guid>
+      <description>&lt;p&gt;摘要：二叉树的定义，遍历二叉树&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>树的定义及表示</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-tree/</link>
+      <pubDate>Tue, 11 Aug 2020 10:31:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-tree/</guid>
+      <description>这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。
+1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。
+1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。
+如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。
+public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.</description>
+    </item>
+    
+    <item>
+      <title>队列及其实现</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-queue/</link>
+      <pubDate>Thu, 06 Aug 2020 20:04:38 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-queue/</guid>
+      <description>1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
+ 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。
+2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：
+ 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 死锁问题</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-dead-lock/</link>
+      <pubDate>Wed, 10 Jun 2020 19:21:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-dead-lock/</guid>
+      <description>锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。
+1. 什么是死锁  百度百科中对于死锁的定义：死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。
+ 简而言之，当线程1持有资源A，线程2持有资源B。此时线程1想要获取资源B，线程2想要获取资源A。两个线程都想要获取对方手中的资源，自己又不肯让出已有资源，一直僵持不下就形成了死锁。
+2. 死锁产生的四个条件  互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。 请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。 不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。 环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个 P1 占用的资源；P1 正在等待 P2 占用的资源，……，Pn 正在等待已被 P0 占用的资源。  3.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 初识 Synchronized</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-synchronized/</link>
+      <pubDate>Wed, 10 Jun 2020 19:16:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-synchronized/</guid>
+      <description>Synchronized 简介  本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！
+ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。
+public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, &amp;quot;一号窗口&amp;quot;); Thread windowThread2 = new Thread(ticketWindow, &amp;quot;二号窗口&amp;quot;); Thread windowThread3 = new Thread(ticketWindow, &amp;quot;三号窗口&amp;quot;); windowThread1.</description>
+    </item>
+    
+    <item>
+      <title>20 常用的 RPM 命令</title>
+      <link>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</link>
+      <pubDate>Tue, 02 Jun 2020 18:51:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</guid>
+      <description>本文翻译自20 Practical Examples of RPM Commands in Linux
+ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。</description>
+    </item>
+    
+    <item>
+      <title>JDK1.8 源代码阅读环境搭建</title>
+      <link>https://ahamoment.cn/posts/java/java-source-code-learn/</link>
+      <pubDate>Mon, 11 May 2020 18:57:51 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-source-code-learn/</guid>
+      <description>一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
+二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。</description>
+    </item>
+    
+    <item>
+      <title>Spring Boot 发送邮件</title>
+      <link>https://ahamoment.cn/posts/java/framewordk-springboot-send-email/</link>
+      <pubDate>Fri, 27 Mar 2020 18:59:19 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/framewordk-springboot-send-email/</guid>
+      <description>&lt;p&gt;这篇文章主要介绍使用&lt;code&gt;spring boot&lt;/code&gt; 发送邮件。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Linux Shell 输入/输出重定向</title>
+      <link>https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/</link>
+      <pubDate>Tue, 26 Nov 2019 19:54:15 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/</guid>
+      <description>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
+重定向命令列表如下：
+   命令 说明     command &amp;gt; file 将输出重定向到 file。   command &amp;lt; file 将输入重定向到 file。   command &amp;raquo; file 将输出以追加的方式重定向到 file。   n &amp;gt; file 将文件描述符为 n 的文件重定向到 file。   n &amp;raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n &amp;gt;&amp;amp; m 将输出文件 m 和 n 合并。   n &amp;lt;&amp;amp; m 将输入文件 m 和 n 合并。   &amp;laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</description>
+    </item>
+    
+    <item>
+      <title>IntellJ IDEA 远程调试 Java 程序</title>
+      <link>https://ahamoment.cn/posts/java/java-remote-debug/</link>
+      <pubDate>Thu, 21 Nov 2019 20:04:16 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-remote-debug/</guid>
+      <description>1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
+2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
+ 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea  2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</description>
+    </item>
+    
+    <item>
+      <title>自动配置Git仓库提交作者</title>
+      <link>https://ahamoment.cn/posts/tool/tool-git-set-config/</link>
+      <pubDate>Sat, 16 Nov 2019 19:12:17 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/tool/tool-git-set-config/</guid>
+      <description>1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
+2. 方法 2.1 安装Git  Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址  2.</description>
+    </item>
+    
+  </channel>
+</rss>

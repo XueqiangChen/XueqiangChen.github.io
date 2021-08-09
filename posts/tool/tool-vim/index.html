@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Vim 折腾记 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Vim 折腾记",
+      "item":"https://ahamoment.cn/posts/tool/tool-vim/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/tool/tool-vim/"
+    },
+    "headline": "Vim 折腾记 | AhaMoment","datePublished": "2021-03-16T16:12:24+08:00",
+    "dateModified": "2021-03-16T16:12:24+08:00",
+    "wordCount":  859 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c\/p\u003e"
+}
+</script><meta property="og:title" content="Vim 折腾记 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-vim/" />
+
+
+
+
+<meta property="og:description" content="折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-03-16T16:12:24&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2021-03-16T16:12:24&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="vim" />
+
+
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Vim 折腾记</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-03-16</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>5 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <p>折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上</p>
+<h2 id="环境">环境</h2>
+<pre><code class="language-bash"># cat /etc/*release
+CentOS Linux release 7.9.2009 (Core)
+</code></pre>
+<p>系统自带的vim是<code>7.x</code>，对于很多的插件来说(例如 ycm)都已经不兼容了，所以第一步就是要将 vim 的版本更新到 8.0 以上</p>
+<h2 id="安装软件">安装软件</h2>
+<p>编译vim之前先卸载掉旧版本的vim</p>
+<pre><code class="language-bash">yum remove vim-enhanced vim-common vim-filesystem vim-minimal
+</code></pre>
+<p>为了编译能够正常，需要安装上一些依赖和常用的工具包：</p>
+<pre><code class="language-bash"># install devtoolset-8
+yum install centos-release-scl
+yum-config-manager --enable rhel-server-rhscl-7-rpms
+yum install devtoolset-8
+scl enable devtoolset-8 bash
+
+# install cmake, python3-devel, etc.
+yum -y install git ncurses-devel ruby ruby-devel lua lua-devel perl perl-devel python3 python3-devel python2-devel perl-ExtUtils-Embed lrzsz cmake wget gcc gcc-c++ unzi
+</code></pre>
+<p>其中有部分工具是给后面安装插件使用的。</p>
+<p>下载vim的源代码：</p>
+<pre><code class="language-bash">git clone https://github.com/vim/vim.git
+cd vim
+# if you build vim before
+make distclean
+# config
+# --enable-fail-if-missing 表示问题会提示报错，并停止
+# --enable-***interp=yes 表示加入***支持
+# --with-***-config-dir=*** 表示指定配置文件路径
+./configure --with-features=huge \
+            --enable-rubyinterp=yes \
+            --enable-luainterp=yes \
+            --enable-perlinterp=yes \
+            --enable-python3interp=yes \
+            --enable-pythoninterp=yes \
+            --with-python-config-dir=/usr/lib64/python2.7/config \
+            --with-python3-config-dir=/usr/lib64/python3.6/config-3.6m-x86_64-linux-gnu \
+            --enable-fontset=yes \
+            --enable-cscope=yes \
+            --enable-multibyte \
+            --disable-gui \
+            --enable-fail-if-missing \
+            --prefix=/usr/local \
+            --with-compiledby='Professional operations'
+# 编译
+# make VIMRUNTIMEDIR=*** 表示指定VIM可执行文件的位置
+make VIMRUNTIMEDIR=/usr/local/share/vim/vim82 &amp;&amp; make install
+</code></pre>
+<p>编译完成之后，查看一下vim的版本：</p>
+<pre><code class="language-bash">$ vim --version
+VIM - Vi IMproved 8.2 (2019 Dec 12, compiled Mar 16 2021 16:12:42)
+</code></pre>
+<h2 id="配置与插件">配置与插件</h2>
+<p>为了支持go代码的开发，这里先以go的IDE环境为示例，</p>
+<p>首先，插件的管理工具，这里选择 vim-plug。在Linux环境下直接用curl下载即可：</p>
+<pre><code class="language-bash">curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+</code></pre>
+<p>插件的配置也非常简单，只要将所有的插件配置在 <code>call plug#begin('~/.vim/plugged')</code> 和 <code>call plug#end()</code> 之间即可，常见的插件基本上都可以从 github 中找到，如果 github 找不到的话基本上 vim.org 的脚本都可以在 <a href="https://github.com/vim-scripts">vim-script</a> 中找到备份</p>
+<p>来看一下 <code>~/.vimrc</code> 的最终配置：</p>
+<pre><code class="language-bash">&quot; 显示行数
+set number
+
+&quot; 显示光标所在的当前行的行号，其他行都为相对于该行的相对行号。
+&quot; set relativenumber
+
+&quot; 光标所在当前行高亮
+&quot; set cursorline
+
+&quot; 自动折行，即太长的行分成几行显示。
+&quot; 关闭自动折行
+&quot; set nowrap
+set wrap
+
+&quot; 只有遇到指定的符号（比如空格、连词号和其他标点符号），才发生折行。也就是说，不会在单词内部折行。
+set linebreak
+
+&quot; 指定折行处与编辑窗口的右边缘之间空出的字符数。
+set wrapmargin=2
+
+&quot; 避免 backspace 不能使用
+&quot; 0  same as “:set backspace=” (Vi compatible)
+&quot; 1 same as “:set backspace=indent,eol”
+&quot; 2 same as “:set backspace=indent,eol,start”
+set backspace=2
+
+&quot; 自动将tab键转为空格
+set expandtab
+
+&quot; tab 转为多少个空格
+set softtabstop=4
+
+&quot; 设置语法高亮
+syntax enable
+syntax on
+
+&quot; 按下回车键后，下一行的缩进会自动跟上一行的缩进保持一致。
+set autoindent
+
+&quot; 光标遇到圆括号、方括号、大括号时，自动高亮对应的另一个圆括号、方括号和大括号
+set showmatch
+
+&quot; 按下tab键时，vim显示的空格数
+set tabstop=4
+
+&quot; 统一缩进为4
+set shiftwidth=4
+
+&quot; 在底部显示，当前处于命令模式还是插入模式
+set showmode
+
+&quot; 支持使用鼠标
+set mouse-=a
+
+&quot; 使用 utf-8 编码
+set encoding=utf-8
+
+&quot; 开启文件类型检查，并且载入与该类型对应的缩进规则。比如，如果编辑的是.py文件，Vim 就是会找 Python 的缩进规则~/.vim/indent/python.vim。
+filetype indent on
+
+&quot;--------------------------------------
+&quot;  搜索
+&quot;--------------------------------------
+&quot; 搜索时，高亮显示匹配结果
+set hlsearch
+
+&quot; 搜索时忽略大小写
+set ignorecase
+&quot;--------------------------------------
+&quot;  搜索(END)
+&quot;--------------------------------------
+
+&quot;--------------------------------------
+&quot;  编辑
+&quot;--------------------------------------
+&quot; 打开英语单词的拼写检查
+&quot; set spell spelllang=en_us
+
+&quot; 不创建交换文件。交换文件主要用于系统崩溃时恢复文件，文件名的开头是.、结尾是.swp。
+set noswapfile
+
+&quot; 启用自动补全
+filetype plugin indent on
+
+&quot; 退出插入模式指定类型的文件自动保存
+au InsertLeave *.go,*.sh,*.php write
+&quot;--------------------------------------
+&quot; 编辑(结束)
+&quot;-------------------------------------
+set nocompatible              &quot; 去除VI一致性,必须
+filetype off                  &quot; 必须
+
+
+&quot;--------------------------------------
+&quot; vim-plug
+&quot;--------------------------------------
+&quot;&quot; 插件开始的位置
+call plug#begin('~/.vim/plugged')
+
+&quot; Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+&quot; 可以快速对齐的插件
+Plug 'junegunn/vim-easy-align'
+
+&quot; 用来提供一个导航目录的侧边栏
+Plug 'scrooloose/nerdtree'
+
+&quot; 可以使 nerdtree 的 tab 更加友好些
+Plug 'jistr/vim-nerdtree-tabs'
+
+&quot; 可以在导航目录中看到 git 版本信息
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+&quot; 查看当前代码文件中的变量和函数列表的插件，
+&quot; 可以切换和跳转到代码中对应的变量和函数的位置
+&quot; 大纲式导航, Go 需要 https://github.com/jstemmer/gotags 支持
+Plug 'majutsushi/tagbar'
+
+&quot; 自动补全括号的插件，包括小括号，中括号，以及花括号
+Plug 'jiangmiao/auto-pairs'
+
+&quot; Vim状态栏插件，包括显示行号，列号，文件类型，文件名，以及Git状态
+Plug 'vim-airline/vim-airline'
+
+&quot; 有道词典在线翻译
+&quot; Plug 'ianva/vim-youdao-translater'
+
+&quot; 代码自动完成，安装完插件还需要额外配置才可以使用
+Plug 'Valloric/YouCompleteMe'
+
+&quot; 可以在文档中显示 git 信息
+Plug 'airblade/vim-gitgutter'
+
+
+&quot; 下面两个插件要配合使用，可以自动生成代码块
+&quot;Plug 'SirVer/ultisnips'
+&quot;Plug 'honza/vim-snippets'
+
+&quot; 可以在 vim 中使用 tab 补全
+Plug 'vim-scripts/SuperTab'
+
+&quot; 可以在 vim 中自动完成
+&quot;Plug 'Shougo/neocomplete.vim'
+
+
+&quot; 配色方案
+&quot; colorscheme neodark
+Plug 'KeitaNakamura/neodark.vim'
+&quot; colorscheme monokai
+Plug 'crusoexia/vim-monokai'
+&quot; colorscheme github
+Plug 'acarapetis/vim-colors-github'
+&quot; colorscheme one
+Plug 'rakr/vim-one'
+
+&quot; go 主要插件
+Plug 'fatih/vim-go', { 'tag': '*' }
+&quot; go 中的代码追踪，输入 gd 就可以自动跳转
+&quot; Plug 'dgryski/vim-godef'
+
+&quot; markdown 插件
+Plug 'iamcco/mathjax-support-for-mkdp'
+Plug 'iamcco/markdown-preview.vim'
+
+&quot; 插件结束的位置，插件全部放在此行上面
+call plug#end()
+&quot;-------------------------------------
+&quot; VIM-PLUG(end)
+&quot;-------------------------------------
+
+&quot;==============================================================================
+&quot; 主题配色
+&quot;==============================================================================
+&quot; 使用256色
+&quot; set t_Co=256
+
+&quot; 开启24bit的颜色，开启这个颜色会更漂亮一些
+set termguicolors
+&quot; 配色方案, 可以从上面插件安装中的选择一个使用
+colorscheme one &quot; 主题
+set background=dark &quot; 主题背景 dark-深色; light-浅色
+
+
+&quot;==============================================================================
+&quot; vim-go 插件
+&quot;==============================================================================
+let g:go_fmt_command = &quot;goimports&quot; &quot; 格式化将默认的 gofmt 替换
+let g:go_autodetect_gopath = 1
+let g:go_list_type = &quot;quickfix&quot;
+
+let g:go_version_warning = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_generate_tags = 1
+
+let g:godef_split=2
+
+
+&quot;==============================================================================
+&quot; NERDTree 插件
+&quot;==============================================================================
+
+&quot; 打开和关闭NERDTree快捷键
+map &lt;F3&gt; :NERDTreeToggle&lt;CR&gt;
+&quot; 显示行号
+let NERDTreeShowLineNumbers=1
+&quot; 打开文件时是否显示目录
+let NERDTreeAutoCenter=1
+&quot; 是否显示隐藏文件
+let NERDTreeShowHidden=0
+&quot; 设置宽度
+&quot; let NERDTreeWinSize=31
+&quot; 忽略一下文件的显示
+let NERDTreeIgnore=['\.pyc','\~$','\.swp']
+&quot; 打开 vim 文件及显示书签列表
+let NERDTreeShowBookmarks=2
+
+&quot; 在终端启动vim时，共享NERDTree
+let g:nerdtree_tabs_open_on_console_startup=1
+
+
+&quot;==============================================================================
+&quot;  majutsushi/tagbar 插件
+&quot;==============================================================================
+
+&quot; majutsushi/tagbar 插件打开关闭快捷键
+nmap &lt;F9&gt; :TagbarToggle&lt;CR&gt;
+
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
+
+&quot;==============================================================================
+&quot;  nerdtree-git-plugin 插件
+&quot;==============================================================================
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ &quot;Modified&quot;  : &quot;✹&quot;,
+    \ &quot;Staged&quot;    : &quot;✚&quot;,
+    \ &quot;Untracked&quot; : &quot;✭&quot;,
+    \ &quot;Renamed&quot;   : &quot;➜&quot;,
+    \ &quot;Unmerged&quot;  : &quot;═&quot;,
+    \ &quot;Deleted&quot;   : &quot;✖&quot;,
+    \ &quot;Dirty&quot;     : &quot;✗&quot;,
+    \ &quot;Clean&quot;     : &quot;✔︎&quot;,
+    \ 'Ignored'   : '☒',
+    \ &quot;Unknown&quot;   : &quot;?&quot;
+    \ }
+
+let g:NERDTreeGitStatusShowIgnored = 1
+
+
+
+&quot;==============================================================================
+&quot;  Valloric/YouCompleteMe 插件
+&quot;==============================================================================
+
+&quot; make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['&lt;C-n&gt;', '&lt;space&gt;']
+let g:ycm_key_list_previous_completion = ['&lt;C-p&gt;', '&lt;Up&gt;']
+let g:SuperTabDefaultCompletionType = '&lt;C-n&gt;'
+
+&quot; better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = &quot;&lt;tab&gt;&quot;
+let g:UltiSnipsJumpForwardTrigger = &quot;&lt;tab&gt;&quot;
+let g:UltiSnipsJumpBackwardTrigger = &quot;&lt;s-tab&gt;&quot;
+
+
+&quot;==============================================================================
+&quot;  其他插件配置
+&quot;==============================================================================
+
+&quot; markdwon 的快捷键
+map &lt;silent&gt; &lt;F5&gt; &lt;Plug&gt;MarkdownPreview
+map &lt;silent&gt; &lt;F6&gt; &lt;Plug&gt;StopMarkdownPreview
+
+&quot; tab 标签页切换快捷键
+:nn &lt;Leader&gt;1 1gt
+:nn &lt;Leader&gt;2 2gt
+:nn &lt;Leader&gt;3 3gt
+:nn &lt;Leader&gt;4 4gt
+:nn &lt;Leader&gt;5 5gt
+:nn &lt;Leader&gt;6 6gt
+:nn &lt;Leader&gt;7 7gt
+:nn &lt;Leader&gt;8 8gt
+:nn &lt;Leader&gt;9 8gt
+:nn &lt;Leader&gt;0 :tablast&lt;CR&gt;
+</code></pre>
+<h2 id="参考">参考</h2>
+<p><a href="https://learnku.com/articles/24924">将 VIM 打造成 go 语言的 ide</a></p>
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/vim/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#vim</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/" class="block">安装 Tensorflow2</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/go/go-project-catalogs/" class="block">Go 语言工作目录</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+    <div class="col-span-2">
+        
+        
+        <div class="sticky top-16 z-10 hidden lg:block px-6 py-4  bg-primary-bg ">
+    <span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 ">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#环境">环境</a></li>
+    <li><a href="#安装软件">安装软件</a></li>
+    <li><a href="#配置与插件">配置与插件</a></li>
+    <li><a href="#参考">参考</a></li>
+  </ul>
+</nav>
+</div>
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        enableStickyToc();
+    });
+</script>
+        
+    </div>
+    
+
+    
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

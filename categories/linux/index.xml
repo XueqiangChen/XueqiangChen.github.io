@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Linux on AhaMoment</title>
+    <link>https://ahamoment.cn/categories/linux/</link>
+    <description>Recent content in Linux on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Wed, 10 Feb 2021 11:54:23 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux 常用命令</title>
+      <link>https://ahamoment.cn/posts/linux/linux-commands/</link>
+      <pubDate>Wed, 10 Feb 2021 11:54:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-commands/</guid>
+      <description>设置 JAVA_HOME
+export JAVA_HOME=&amp;quot;$(dirname $(dirname $(realpath $(which javac))))&amp;quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
+语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例</description>
+    </item>
+    
+    <item>
+      <title>认识 Linux NSCD 服务缓存</title>
+      <link>https://ahamoment.cn/posts/linux/linux-nscd/</link>
+      <pubDate>Sun, 27 Sep 2020 13:23:05 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-nscd/</guid>
+      <description>NSCD(Name Service Cache Daemon)是服务缓存守护进程。
+NSCD 安装   RHEL/CentOS
+yum -y install nscd    Debian/Ubuntu
+apt-get install nscd    RPM</description>
+    </item>
+    
+    <item>
+      <title>解决setcap导致Java加载libjli.so 失败问题</title>
+      <link>https://ahamoment.cn/posts/linux/linux-cap/</link>
+      <pubDate>Fri, 11 Sep 2020 11:12:43 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-cap/</guid>
+      <description>背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
+java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.</description>
+    </item>
+    
+    <item>
+      <title>Linux Shell Script 基础教程</title>
+      <link>https://ahamoment.cn/posts/linux/linux-bash-tutorials/</link>
+      <pubDate>Thu, 27 Aug 2020 16:03:59 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-bash-tutorials/</guid>
+      <description>本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
+ 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
+1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：</description>
+    </item>
+    
+    <item>
+      <title>20 常用的 RPM 命令</title>
+      <link>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</link>
+      <pubDate>Tue, 02 Jun 2020 18:51:23 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-20-rpm-command/</guid>
+      <description>本文翻译自20 Practical Examples of RPM Commands in Linux
+ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。</description>
+    </item>
+    
+    <item>
+      <title>Linux Shell 输入/输出重定向</title>
+      <link>https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/</link>
+      <pubDate>Tue, 26 Nov 2019 19:54:15 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/</guid>
+      <description>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
+重定向命令列表如下：
+   命令 说明     command &amp;gt; file 将输出重定向到 file。   command &amp;lt; file 将输入重定向到 file。   command &amp;raquo; file 将输出以追加的方式重定向到 file。   n &amp;gt; file 将文件描述符为 n 的文件重定向到 file。   n &amp;raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n &amp;gt;&amp;amp; m 将输出文件 m 和 n 合并。   n &amp;lt;&amp;amp; m 将输入文件 m 和 n 合并。   &amp;laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</description>
+    </item>
+    
+  </channel>
+</rss>

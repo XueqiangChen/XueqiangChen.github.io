@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>堆 on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/%E5%A0%86/</link>
+    <description>Recent content in 堆 on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Tue, 15 Sep 2020 11:44:06 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E5%A0%86/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>堆</title>
+      <link>https://ahamoment.cn/posts/algorithm/algorithm-heap/</link>
+      <pubDate>Tue, 15 Sep 2020 11:44:06 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/algorithm/algorithm-heap/</guid>
+      <description>什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
+若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
+若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
+如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
+优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
+ 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &amp;ldquo;最大堆&amp;rdquo;，也称 &amp;ldquo;大顶堆&amp;rdquo;：堆顶元素是整个树的最大值 &amp;ldquo;最小堆&amp;rdquo;，也称&amp;quot;小顶堆&amp;quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。</description>
+    </item>
+    
+  </channel>
+</rss>

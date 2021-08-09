@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Java 多线程 - 线程中断 Interrupt | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java 多线程 - 线程中断 Interrupt",
+      "item":"https://ahamoment.cn/posts/java/java-multithread-interrupt/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/java/java-multithread-interrupt/"
+    },
+    "headline": "Java 多线程 - 线程中断 Interrupt | AhaMoment","datePublished": "2020-10-24T07:17:54+08:00",
+    "dateModified": "2020-10-24T07:17:54+08:00",
+    "wordCount":  377 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "\u003cp\u003e线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。\u003c\/p\u003e"
+}
+</script><meta property="og:title" content="Java 多线程 - 线程中断 Interrupt | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-interrupt/" />
+
+
+
+
+<meta property="og:description" content="线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。" />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-10-24T07:17:54&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-10-24T07:17:54&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="多线程" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-dead-lock/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-synchronized/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Java 多线程 - 线程中断 Interrupt</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-10-24</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>2 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/java/" class="hover:text-eureka">java</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <p>线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。</p>
+<p>首先来看一下与线程中断相关的几个API：</p>
+<pre><code class="language-java">public void interrupt()
+public static boolean interrupted()
+public boolean isInterrupted()    
+</code></pre>
+<h2 id="interrupt">interrupt</h2>
+<p>如下方法的调用会使得当前线程进入阻塞状态，而调用当前线程的interrupt方法，就可以打断阻塞。</p>
+<ul>
+<li>Object的wait方法。</li>
+<li>Object的wait（long）方法。</li>
+<li>Object的wait（long，int）方法。</li>
+<li>Thread的sleep（long）方法。</li>
+<li>Thread的sleep（long，int）方法。</li>
+<li>Thread的join方法。</li>
+<li>Thread的join（long）方法。</li>
+<li>Thread的join（long，int）方法。</li>
+<li>InterruptibleChannel的io操作。</li>
+<li>Selector的wakeup方法。</li>
+</ul>
+<p>上述若干方法都会使得当前线程进入阻塞状态，若另外的一个线程调用被阻塞线程的interrupt方法，则会打断这种阻塞，因此这种方法有时会被称为可中断方法，记住，打断一个线程并不等于该线程的生命周期结束，仅仅是打断了当前线程的阻塞状态。</p>
+<p>一旦线程在阻塞的情况下被打断，都会抛出一个称为<code>InterruptedException</code>的异常，这个异常就像一个signal（信号）一样通知当前线程被打断了，下面我们来看一个例子：</p>
+<pre><code class="language-java">import java.util.concurrent.TimeUnit;
+public class ThreadInterrupt {
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread(() -&gt; {
+            try {
+                TimeUnit.MINUTES.sleep(1);
+            } catch(
+                InterruptedException e)
+
+            {
+                System.out.println(&quot;Oh, i am be interrupted.&quot;);
+            }
+        });
+        thread.start();
+        //short block and make sure thread is started.
+        TimeUnit.MILLISECONDS.sleep(2);
+        thread.interrupt();
+    }
+}
+</code></pre>
+<p>上面的代码创建了一个线程，并且企图休眠1分钟的时长，不过很可惜，大约在2毫秒之后就被主线程调用interrupt方法打断，程序的执行结果就是“Oh，i am be interrupted.”</p>
+<p>interrupt这个方法到底做了什么样的事情呢？在一个线程内部存在着名为<strong>interrupt flag</strong>的标识，<strong>如果一个线程被interrupt，那么它的flag将被设置，但是如果当前线程正在执行可中断方法被阻塞时，调用interrupt方法将其中断，反而会导致flag被清除</strong>，关于这点我们在后面还会做详细的介绍。另外有一点需要注意的是，如果一个线程已经是死亡状态，那么尝试对其的interrupt会直接被忽略。</p>
+<h2 id="isinterrupted">isInterrupted</h2>
+<p>isInterrupted是Thread的一个成员方法，它主要判断当前线程是否被中断，该方法仅仅是对interrupt标识的一个判断，并不会影响标识发生任何改变，这个与我们即将学习到的interrupted是存在差别的，下面我们看一个简单的程序：</p>
+<pre><code class="language-java">public class ThreadisInterrupted {
+	public static void main(String[] args) throws InterruptedException {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					//do nothing, just empty loop.
+				}
+			}
+		};
+		thread.start();
+		TimeUnit.MILLISECONDS.sleep(2);
+		System.out.printf(&quot;Thread is interrupted ? ％s\n&quot;, thread.isInterrupted());
+		thread.interrupt();
+		System.out.printf(&quot;Thread is interrupted ? ％s\n&quot;, thread.isInterrupted());
+	}
+}
+</code></pre>
+<p>上面的代码中定义了一个线程，并且在线程的执行单元中（run方法）写了一个空的死循环，为什么不写sleep呢？因为sleep是可中断方法，会捕获到中断信号，从而干扰我们程序的结果。下面是程序运行的结果，记得手动结束上面的程序运行，或者你也可以将上面定义的线程指定为守护线程，这样就会随着主线程的结束导致JVM中没有非守护线程而自动退出。</p>
+<pre><code class="language-java">Thread is interrupted ? false
+Thread is interrupted ? true
+</code></pre>
+<p><strong>可中断方法捕获到了中断信号（signal）之后，也就是捕获了InterruptedException异常之后会擦除掉interrupt的标识</strong>，对上面的程序稍作修改，你会发现程序的结果又会出现很大的不同，示例代码如下：</p>
+<pre><code class="language-java">public class ThreadisInterrupted {
+	public static void main(String[] args) throws InterruptedException {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					try {
+						TimeUnit.MINUTES.sleep(1);
+					} catch (InterruptedException e) {
+						//ignore the exception
+						//here the interrupt flag will be clear.
+						//由于可中断方法的异常被捕获后，会擦除掉interrup标记，所以调用
+						//isInterrupted返回false
+						System.out.printf(&quot;I am be interrupted ? ％s&quot;, isInterrupted());
+					}
+				}
+			}
+		};
+		thread.start();
+		TimeUnit.MILLISECONDS.sleep(2);
+		System.out.printf(&quot;Thread is interrupted ? ％s\n&quot;, thread.isInterrupted());
+		thread.interrupt();
+		System.out.printf(&quot;Thread is interrupted ? ％s\n&quot;, thread.isInterrupted());
+	}
+}
+</code></pre>
+<p>由于在run方法中使用了sleep这个可中断方法，它会捕获到中断信号，并且会擦除interrupt标识，因此程序的执行结果都会是false，程序输出如下：</p>
+<pre><code>Thread is interrupted ? false
+I am be interrupted ? false
+Thread is interrupted ? false
+</code></pre>
+<p>其实这也不难理解，可中断方法捕获到了中断信号之后，为了不影响线程中其他方法的执行，将线程的interrupt标识复位是一种很合理的设计。</p>
+<h2 id="interrupted">interrupted</h2>
+<p>interrupted是一个静态方法，虽然其也用于判断当前线程是否被中断，但是它和成员方法isInterrupted还是有很大的区别的，<strong>调用该方法会直接擦除掉线程的interrupt标识</strong>，需要注意的是，<strong>如果当前线程被打断了，那么第一次调用interrupted方法会返回true，并且立即擦除了interrupt标识；第二次包括以后的调用永远都会返回false，除非在此期间线程又一次地被打断</strong>，下面设计了一个简单的例子，来验证我们的说法：</p>
+<pre><code class="language-java">public class ThreadisInterrupted {
+	public static void main(String[] args) throws InterruptedException {
+		Thread thread = new Thread() {
+			@Override
+			public void run() {
+				while (true) {
+					System.out.println(Thread.interrupted());
+				}
+			}
+		};
+		thread.setDaemon(true);
+		thread.start();
+		//shortly block make sure the thread is started.
+		TimeUnit.MILLISECONDS.sleep(2);
+		thread.interrupt();
+	}
+}
+</code></pre>
+<p>同样由于不想要受到可中断方法如sleep的影响，在Thread的run方法中没有进行任何短暂的休眠，所以运行上面的程序会出现非常多的输出，但是我们通过对输出的检查会发现如下所示的内容，其足以作为对该方法的解释。</p>
+<pre><code>……
+false
+false
+true
+false
+false
+……
+</code></pre>
+<p>在很多的false包围中发现了一个true，也就是interrupted方法判断到了其被中断，立即擦除了中断标识，并且只有这一次返回true，后面的都将会是false。</p>
+<h2 id="interrupt-注意事项">interrupt 注意事项</h2>
+<p>打开Thread的源码，不难发现，isInterrupted方法和interrupted方法都调用了同一个本地方法：</p>
+<pre><code class="language-java">private native boolean isInterrupted(boolean ClearInterrupted);
+</code></pre>
+<p>其中参数ClearInterrupted主要用来控制是否擦除线程interrupt的标识。<code>isInterrupted</code>方法的源码中该参数为false，表示不想擦除：</p>
+<pre><code class="language-java">public boolean isInterrupted() {
+    return isInterrupted(false);
+}
+</code></pre>
+<p>而interrupted静态方法中该参数则为true，表示想要擦除：</p>
+<pre><code class="language-java">public static boolean interrupted() {
+    return currentThread().isInterrupted(true);
+}
+</code></pre>
+<p>在比较详细地学习了interrupt方法之后，大家思考一个问题，如果一个线程在没有执行可中断方法之前就被打断，那么其接下来将执行可中断方法，比如sleep会发生什么样的情况呢？下面我们通过一个简单的实验来回答这个疑问：</p>
+<pre><code class="language-java">public class ThreadisInterrupted {
+	public static void main(String[] args) {
+		//① 判断当前线程是否被中断
+        // flag=false,清除线程中断标志
+		System.out.println(&quot;Main thread is interrupted? &quot; + Thread.interrupted());
+		//②中断当前线程
+        // flag=true
+		Thread.currentThread().interrupt();
+		//③判断当前线程是否已经被中断
+        // 这里不能再调用Thread.interrupted()，因为会将flag清除，达不到实验效果
+		System.out.println(&quot;Main thread is interrupted? &quot; + Thread.currentThread().isInterrupted());
+		try {
+			//④ 当前线程执行可中断方法
+			TimeUnit.MINUTES.sleep(1);
+		} catch (InterruptedException e) {
+			//⑤捕获中断信号
+			System.out.println(&quot;I will be interrupted still.&quot;);
+		}
+	}
+}
+</code></pre>
+<p>通过运行上面的程序，你会发现，如果一个线程设置了interrupt标识，那么接下来的可中断方法会立即中断，因此注释⑤的信号捕获部分代码会被执行.</p>
+<h2 id="参考">参考</h2>
+<p>【1】<a href="https://book.douban.com/subject/30255689/">《Java 高并发编程详解》-汪文君</a></p>
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#多线程</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/java/java-multithread-synchronized2/" class="block">Java 多线程 - 深入理解synchronized关键字</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/java/java-jvm-jmm/" class="block">JVM 内存结构</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-dead-lock/">Java 多线程 - 死锁问题</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-synchronized/">Java 多线程 - 初识 Synchronized</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

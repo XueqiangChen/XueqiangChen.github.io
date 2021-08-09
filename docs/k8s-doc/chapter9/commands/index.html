@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>常用的k8s命令 | K8s 学习笔记 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
+$ kubectl replace -f nginx-deployment.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"文档",
+      "item":"https://ahamoment.cn/docs/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"K8s 学习笔记",
+      "item":"https://ahamoment.cn/docs/k8s-doc/"},{
+      "@type": "ListItem",
+      "position": 3 ,
+      "name":"9. kubernetes 生态周边",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{
+      "@type": "ListItem",
+      "position": 4 ,
+      "name":"常用的k8s命令",
+      "item":"https://ahamoment.cn/docs/k8s-doc/chapter9/commands/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/docs/k8s-doc/chapter9/commands/"
+    },
+    "headline": "常用的k8s命令 | K8s 学习笔记 | AhaMoment","datePublished": "2021-02-25T07:37:43+08:00",
+    "dateModified": "2021-02-25T07:37:43+08:00",
+    "wordCount":  609 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：\n$ kubectl replace -f nginx-deployment."
+}
+</script><meta property="og:title" content="常用的k8s命令 | K8s 学习笔记 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/" />
+
+
+
+
+<meta property="og:description" content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
+$ kubectl replace -f nginx-deployment." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2021-02-25T07:37:43&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2021-02-25T07:37:43&#43;08:00" />
+
+
+
+<meta property="article:section" content="docs" />
+
+
+<meta property="article:tag" content="kubernetes" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/interview/interview-docker-k8s/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="lg:pt-12">
+    <div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+        <div class="md:w-1/4 lg:w-1/5 border-r">
+            <div class="sticky top-16 pt-6">
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="sidebar-title" class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+    <span class="font-semibold">Table of Contents</span>
+    <i class="fas fa-caret-right ml-1"></i>
+</div>
+
+<div id="sidebar-toc"
+    class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+    <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+        <a class=" hover:text-eureka"
+            href="https://ahamoment.cn/docs/k8s-doc/">K8s 学习笔记</a>
+        
+        
+        
+
+
+    </div>
+    
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/">2. Kubernetes 集群搭建与实践</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/">使用kubeadm 安装k8s集群</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/">3. 容器编排与 kubernetes 作业管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">深入解析声明式API（一）：API对象的奥秘</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">声明式API与Kubernetes编程范式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">撬动离线业务：Job与CronJob</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">深入理解StatefulSet（二）：存储状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">容器化守护进程的意义：DaemonSet</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/">深入理解StatefulSet（一）：拓扑状态</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/">Deployment：作业副本与水平扩容</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">谈谈“控制器”模式</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/">深入解析Pod对象(二): 使用进阶</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/">深入解析Pod对象(一)：基本概念</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/">为什么我们需要Pod</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/">6. kubernetes 作业调度与资源管理</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/">十字路口上的Kubernetes默认调度器</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/">QoS 源代码分析</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/">Kubernetes的资源模型和资源管理</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">K8s Go 客户端浅析</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class=" pb-2 ">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/">9. kubernetes 生态周边</a>
+        </div>
+        
+        
+<ul class="pl-6">
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/">容器健康检查</a>
+        </div>
+        
+    </li>
+    
+    
+    
+    
+    <li class="py-2">
+        <div class="">
+            <a class=" text-eureka  hover:text-eureka"
+                href="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">常用的k8s命令</a>
+        </div>
+        
+    </li>
+    
+    
+</ul>
+
+        
+    </li>
+    
+    
+</ul>
+
+</div>
+
+
+
+
+
+
+
+            </div>
+
+        </div>
+        <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+            <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
+                <h1 class="font-bold text-3xl text-primary-text">常用的k8s命令</h1>
+                <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2021-02-25</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>3 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="hover:text-eureka">云计算</a>
+        
+    </div>
+    
+
+    
+</div>
+            </div>
+            <div class="flex">
+                <div class="w-full lg:w-3/4 px-6">
+                    
+                    
+                    <div class="content">
+                        <h2 id="1-yaml-文件">1. yaml 文件</h2>
+<h3 id="11-创建">1.1 创建</h3>
+<pre><code class="language-bash">$ kubectl create -f 我的配置文件
+</code></pre>
+<h3 id="12-修改">1.2 修改</h3>
+<p>更新 yaml 文件：</p>
+<pre><code class="language-bash">$ kubectl replace -f nginx-deployment.yaml
+</code></pre>
+<p>声明式的表达方式，使用 apply 命令：</p>
+<pre><code class="language-bash">$ kubectl apply -f nginx-deployment.yaml
+</code></pre>
+<h2 id="2-pod">2. Pod</h2>
+<h3 id="21-查询">2.1 查询</h3>
+<p><strong>获取 pod 的信息</strong></p>
+<pre><code class="language-bash">kubectl get pods -n ${namespace}
+</code></pre>
+<p>**根据 pod 的标签过滤 **</p>
+<pre><code class="language-bash">kubectl get pods -l app=nginx
+</code></pre>
+<p>注意的是，在命令行中，所有 key-value 格式的参数，都使用“=”而非“:”表示。</p>
+<p><strong>获取 pod 的描述信息</strong></p>
+<pre><code class="language-bash">$ kubectl describe pod &lt;pod-name&gt;
+</code></pre>
+<h3 id="22-登录">2.2 登录</h3>
+<p>进入到 Pod 中：</p>
+<pre><code class="language-bash">$ kubectl exec -it nginx-deployment-5c678cfb6d-lg9lw -- /bin/bash
+</code></pre>
+<h3 id="23-删除">2.3 删除</h3>
+<p>删除 Pod：</p>
+<pre><code class="language-bash">$ kubectl delete -f nginx-deployment.yaml
+</code></pre>
+<h3 id="24-更新">2.4. 更新</h3>
+<p>通过修改yaml文件更新pod</p>
+<pre><code class="language-yaml">...    
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.8 #这里被从1.7.9修改为1.8
+        ports:
+      - containerPort: 80
+</code></pre>
+<p>执行 <code>kubectl replace</code> 命令</p>
+<pre><code class="language-bash">$ kubectl replace -f nginx-deployment.yaml
+</code></pre>
+<p>这里更推荐用 <code>kubectl apply</code> 命令，来统一进行 Kubernetes 对象的创建和更新操作</p>
+<pre><code class="language-bash">
+# 修改nginx-deployment.yaml的内容
+
+$ kubectl apply -f nginx-deployment.yaml
+</code></pre>
+<h3 id="25-创建一个临时的pod">2.5 创建一个临时的Pod</h3>
+<pre><code class="language-bash">$ kubectl run -i --tty --image busybox:1.28.4 dns-test --restart=Never --rm /bin/sh 
+</code></pre>
+<p>通过这条命令，我们启动了一个一次性的 Pod，因为–rm 意味着 Pod 退出后就会被删除掉。</p>
+<h2 id="3-日志">3. 日志</h2>
+<h3 id="31-kube-apiserver-日志">3.1. kube-apiserver 日志</h3>
+<pre><code class="language-bash">PODNAME=$(kubectl -n kube-system get pod -l component=kube-apiserver -o jsonpath='{.items[0].metadata.name}')
+kubectl -n kube-system logs $PODNAME --tail 100
+</code></pre>
+<p>以上命令操作假设控制平面以 Kubernetes 静态 Pod 的形式来运行。如果 kube-apiserver 是用 systemd 管理的，则需要登录到 master 节点上，然后使用 <code>journalctl -u kube-apiserver</code> 查看其日志。</p>
+<h3 id="32-kube-controller-manager-日志">3.2. kube-controller-manager 日志</h3>
+<pre><code class="language-bash">PODNAME=$(kubectl -n kube-system get pod -l component=kube-controller-manager -o jsonpath='{.items[0].metadata.name}')
+kubectl -n kube-system logs $PODNAME --tail 100
+</code></pre>
+<p>以上命令操作假设控制平面以 Kubernetes 静态 Pod 的形式来运行。如果 kube-controller-manager 是用 systemd 管理的，则需要登录到 master 节点上，然后使用 <code>journalctl -u kube-controller-manager</code> 查看其日志。</p>
+<h3 id="33-kube-scheduler-日志">3.3. kube-scheduler 日志</h3>
+<pre><code class="language-bash">PODNAME=$(kubectl -n kube-system get pod -l component=kube-scheduler -o jsonpath='{.items[0].metadata.name}')
+kubectl -n kube-system logs $PODNAME --tail 100
+</code></pre>
+<p>以上命令操作假设控制平面以 Kubernetes 静态 Pod 的形式来运行。如果 kube-scheduler 是用 systemd 管理的，则需要登录到 master 节点上，然后使用 <code>journalctl -u kube-scheduler</code> 查看其日志。</p>
+<h3 id="34-kubelet-日志">3.4. kubelet 日志</h3>
+<pre><code class="language-bash">journalctl -l -u kubelet
+</code></pre>
+<h3 id="35-pod-日志">3.5. Pod 日志</h3>
+<p>查看指定Pod的日志</p>
+<pre><code class="language-bash">kubectl logs &lt;pod-name&gt; -n &lt;namespace&gt;
+
+# 类似 tail -f 的日志
+kubectl logs -f &lt;pod-name&gt; -n &lt;namespace&gt;
+</code></pre>
+<p>例子：</p>
+<pre><code class="language-bash"># Return snapshot logs from pod nginx with only one container
+kubectl logs nginx
+
+# Return snapshot logs from pod nginx with multi containers
+kubectl logs nginx --all-containers=true
+
+# Return snapshot logs from all containers in pods defined by label app=nginx
+kubectl logs -lapp=nginx --all-containers=true
+
+# Return snapshot of previous terminated ruby container logs from pod web-1
+kubectl logs -p -c ruby web-1
+
+# Begin streaming the logs of the ruby container in pod web-1
+kubectl logs -f -c ruby web-1
+
+# Begin streaming the logs from all containers in pods defined by label app=nginx
+kubectl logs -f -lapp=nginx --all-containers=true
+
+# Display only the most recent 20 lines of output in pod nginx
+kubectl logs --tail=20 nginx
+
+# Show all logs from pod nginx written in the last hour
+kubectl logs --since=1h nginx
+
+# Show logs from a kubelet with an expired serving certificate
+kubectl logs --insecure-skip-tls-verify-backend nginx
+
+# Return snapshot logs from first container of a job named hello
+kubectl logs job/hello
+
+# Return snapshot logs from container nginx-1 of a deployment named nginx
+kubectl logs deployment/nginx -c nginx-1
+</code></pre>
+<h2 id="4-污点">4. 污点</h2>
+<p>一旦某个节点被加上了一个 Taint，即被“打上了污点”，那么所有 Pod 就都不能在这个节点上运行，因为 Kubernetes 的 Pod 都有“洁癖”。</p>
+<p>除非，有个别的 Pod 声明自己能“容忍”这个“污点”，即声明了 Toleration，它才可以在这个节点上运行。</p>
+<p>为节点打污点(Taint)的命令是：</p>
+<pre><code class="language-bash">$ kubectl taint nodes node1 foo=bar:NoSchedule
+</code></pre>
+<p>这时，该 node1 节点上就会增加一个键值对格式的 Taint，即：foo=bar:NoSchedule。其中值里面的 NoSchedule，意味着这个 Taint 只会在调度新 Pod 时产生作用，而不会影响已经在 node1 上运行的 Pod，哪怕它们没有 Toleration。</p>
+<p>那么 Pod 又如何声明 Toleration 呢？</p>
+<p>我们只要在 Pod 的.yaml 文件中的 spec 部分，加入 tolerations 字段即可：</p>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Pod
+...
+spec:
+  tolerations:
+  - key: &quot;foo&quot;
+    operator: &quot;Equal&quot;
+    value: &quot;bar&quot;
+    effect: &quot;NoSchedule&quot;
+</code></pre>
+<p>这个 Toleration 的含义是，这个 Pod 能“容忍”所有键值对为 foo=bar 的 Taint（ operator: “Equal”，“等于”操作）。</p>
+<p>通常，master 节点上会自带一个污点：</p>
+<pre><code class="language-yaml">$ kubectl describe node master
+
+Name:               master
+Roles:              master
+Taints:             node-role.kubernetes.io/master:NoSchedule
+</code></pre>
+<p>可以看到，Master 节点默认被加上了node-role.kubernetes.io/master:NoSchedule这样一个“污点”，其中“键”是node-role.kubernetes.io/master，而没有提供“值”。</p>
+<p>此时，你就需要像下面这样用“Exists”操作符（operator: “Exists”，“存在”即可）来说明，该 Pod 能够容忍所有以 foo 为键的 Taint，才能让这个 Pod 运行在该 Master 节点上：</p>
+<pre><code class="language-bash">apiVersion: v1
+kind: Pod
+...
+spec:
+  tolerations:
+  - key: &quot;foo&quot;
+    operator: &quot;Exists&quot;
+    effect: &quot;NoSchedule&quot;
+</code></pre>
+<p>当然，如果你就是想要一个单节点的 Kubernetes，删除这个 Taint 才是正确的选择：</p>
+<pre><code class="language-bash">$ kubectl taint nodes --all node-role.kubernetes.io/master-
+</code></pre>
+<p>如上所示，我们在“node-role.kubernetes.io/master”这个键后面加上了一个短横线“-”，这个格式就意味着移除所有以“node-role.kubernetes.io/master”为键的 Taint。</p>
+<h2 id="5-projectedvolume">5. ProjectedVolume</h2>
+<h3 id="51-secret">5.1 Secret</h3>
+<h4 id="511-创建">5.1.1. 创建</h4>
+<pre><code class="language-bash">kubectl create secret generic user --from-file=./username.txt
+</code></pre>
+<h4 id="512-查询">5.1.2 查询</h4>
+<pre><code class="language-bash">kubectl get secrets
+</code></pre>
+<h3 id="52-configmap">5.2. ConfigMap</h3>
+<h4 id="521-创建">5.2.1. 创建</h4>
+<pre><code class="language-bash">$ kubectl create configmap &lt;configmap-na,e&gt; --from-file=&lt;file-name&gt;
+</code></pre>
+<h4 id="522-查询">5.22. 查询</h4>
+<pre><code class="language-bash">kubectl get configmaps &lt;configmap-name&gt; -o yaml
+</code></pre>
+
+                    </div>
+                    
+                    <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+    
+</div>
+                    
+                    
+
+                    
+
+
+
+                    
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/" class="block">容器健康检查</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+    </div>
+</div>
+
+                    
+
+
+
+                </div>
+                
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        hljs.initHighlightingOnLoad();
+        changeSidebarHeight();
+        switchDocToc();
+    })
+</script>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

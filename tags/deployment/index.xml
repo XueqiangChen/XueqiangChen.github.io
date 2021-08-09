@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>deployment on AhaMoment</title>
+    <link>https://ahamoment.cn/tags/deployment/</link>
+    <description>Recent content in deployment on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Mon, 01 Mar 2021 07:37:59 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/deployment/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Deployment：作业副本与水平扩容</title>
+      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</link>
+      <pubDate>Mon, 01 Mar 2021 07:37:59 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</guid>
+      <description>&lt;blockquote&gt;
+&lt;p&gt;本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;作业副本&lt;/li&gt;
+&lt;li&gt;水平扩容&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

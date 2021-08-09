@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang='en' ><meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+<title>Java 多线程 - 自定义线程池 | AhaMoment</title>
+
+<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
+<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
+<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload"
+  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
+  as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
+   media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
+   crossorigin></script>
+
+  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
+     crossorigin></script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
+   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
+   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
+  onload="this.media='all';this.onload=null" crossorigin>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
+  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
+   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+        { left: "\\(", right: "\\)", display: false },
+        { left: "\\[", right: "\\]", display: true }
+      ],
+    });
+  });
+</script>
+
+
+<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
+  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
+
+<style type="text/css">
+    .widget + .widget {
+        margin-top: 1rem;
+    }
+    .widget-title {
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+    .widget-list li {
+        font-size: 0.9rem;
+    }
+    .bg-cover img {
+        opacity: 1;
+        transition: all .5s ease-in-out;
+    }
+    .bg-cover img.dark {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.day {
+        opacity: 0;
+        height: 0;
+    }
+    .dark .bg-cover img.dark {
+        opacity: 1;
+        height: auto;
+    }
+    .search-container {
+        margin-top: -0.3rem;
+    }
+    .search-container .search {
+        border: 1px solid #e2e8f0;
+        border-radius: 4px;
+    }
+    .search-container input {
+        padding-left: 1rem;
+        line-height: 2rem;
+        outline: none;
+        background: transparent;
+    }
+    .search-container button {
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        color: #e2e8f0;
+    }
+</style>
+<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
+
+<meta name="description"
+  content="1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。
+ 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：
+ 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：
+ 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2.">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+      "@type": "ListItem",
+      "position": 1 ,
+      "name":"Posts",
+      "item":"https://ahamoment.cn/posts/"},{
+      "@type": "ListItem",
+      "position": 2 ,
+      "name":"Java 多线程 - 自定义线程池",
+      "item":"https://ahamoment.cn/posts/java/java-multithread-thread-pool/"}]
+}
+</script>
+
+
+
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://ahamoment.cn/posts/java/java-multithread-thread-pool/"
+    },
+    "headline": "Java 多线程 - 自定义线程池 | AhaMoment","datePublished": "2020-11-12T10:22:13+08:00",
+    "dateModified": "2020-11-12T10:22:13+08:00",
+    "wordCount":  1291 ,
+    "publisher": {
+        "@type": "Person",
+        "name": "Chenxueqiang",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://ahamoment.cn/images/icon.png"
+        }
+        },
+    "description": "1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。\n 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。\n这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：\n 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：\n 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2."
+}
+</script><meta property="og:title" content="Java 多线程 - 自定义线程池 | AhaMoment" />
+<meta property="og:type" content="article" />
+
+
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+
+
+<meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-thread-pool/" />
+
+
+
+
+<meta property="og:description" content="1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。
+ 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：
+ 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：
+ 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2." />
+
+
+
+
+<meta property="og:locale" content="en" />
+
+
+
+
+<meta property="og:site_name" content="AhaMoment" />
+
+
+
+
+
+
+<meta property="article:published_time" content="2020-11-12T10:22:13&#43;08:00" />
+
+
+<meta property="article:modified_time" content="2020-11-12T10:22:13&#43;08:00" />
+
+
+
+<meta property="article:section" content="posts" />
+
+
+<meta property="article:tag" content="多线程" />
+
+<meta property="article:tag" content="线程池" />
+
+
+
+
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-interview-questions/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-synchronized2/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-interrupt/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-dead-lock/" />
+
+<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-synchronized/" />
+
+
+
+<body class="flex flex-col min-h-screen">
+  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+    <div class="w-full max-w-screen-xl mx-auto"><script>
+    let storageColorScheme = localStorage.getItem("lightDarkMode")
+    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
+        document.getElementsByTagName('html')[0].classList.add('dark')
+    }
+</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div id="target"
+        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
+            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
+            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
+        </div>
+
+        <div class="flex">
+            <div class="search-container relative pt-4 md:pt-0">
+                <div class="search">
+                    <form role="search" class="search-form" action="/search.html" method="get">
+                        <label>
+                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
+                        </label>
+                        <button>
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="relative pt-4 md:pt-0">
+                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
+                    <i class="fas fa-adjust"></i>
+                </div>
+                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
+                </div>
+                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
+                    id='lightDarkOptions'>
+                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
+                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
+    </div>
+
+</nav>
+<script>
+    
+    let element = document.getElementById('lightDarkMode')
+    if (storageColorScheme == null || storageColorScheme == 'Auto') {
+        document.addEventListener('DOMContentLoaded', () => {
+            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
+        })
+    } else if (storageColorScheme == "Light") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'sun')
+        element.firstElementChild.classList.add('fa-sun')
+    } else if (storageColorScheme == "Dark") {
+        element.firstElementChild.classList.remove('fa-adjust')
+        element.firstElementChild.setAttribute("data-icon", 'moon')
+        element.firstElementChild.classList.add('fa-moon')
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        getcolorscheme();
+        switchBurger();
+    });
+</script>
+</div>
+  </header>
+  <main class="flex-grow pt-16">
+    <div class="pl-scrollbar">
+      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+
+
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+        <h1 class="font-bold text-3xl text-primary-text">Java 多线程 - 自定义线程池</h1>
+        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+    <div class="mr-6 my-2">
+        <i class="fas fa-calendar mr-1"></i>
+        <span>2020-11-12</span>
+    </div>
+    <div class="mr-6 my-2">
+        <i class="fas fa-clock mr-1"></i>
+        <span>7 min read</span>
+    </div>
+    
+    
+    <div class="mr-6 my-2">
+        <i class="fas fa-folder mr-1"></i>
+        
+        <a href="https://ahamoment.cn/categories/java/" class="hover:text-eureka">java</a>
+        
+    </div>
+    
+
+    
+</div>
+        
+        
+        
+
+        <div class="content">
+            <h2 id="1-为什么要用线程池">1. 为什么要用线程池？</h2>
+<blockquote>
+<p><strong>池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。</strong></p>
+</blockquote>
+<p><strong>线程池</strong>提供了一种限制和管理资源（包括执行一个任务）。 每个<strong>线程池</strong>还维护一些基本统计信息，例如已完成任务的数量。</p>
+<p>这里借用《Java 并发编程的艺术》提到的来说一下<strong>使用线程池的好处</strong>：</p>
+<ul>
+<li><strong>降低资源消耗</strong>。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。</li>
+<li><strong>提高响应速度</strong>。当任务到达时，任务可以不需要的等到线程创建就能立即执行。</li>
+<li><strong>提高线程的可管理性</strong>。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
+</ul>
+<h2 id="2-自定义一个简单的线程池">2. 自定义一个简单的线程池</h2>
+<p>一个线程池应该具备以下要素：</p>
+<ul>
+<li>任务队列：用于缓存提交的任务。</li>
+<li>任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。</li>
+<li>任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。</li>
+<li>线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。</li>
+<li>QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。</li>
+<li>Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。</li>
+</ul>
+<h3 id="21-线程池实现类图">2.1 线程池实现类图</h3>
+<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/threadpool.png" alt=""></p>
+<p>上图为线程池实现类图，下面看具体的代码。</p>
+<h3 id="22-threadpool">2.2 ThreadPool</h3>
+<p>先定义一个线程池接口，定义常用的方法。</p>
+<pre><code class="language-java">public interface ThreadPool {
+
+	//提交任务到线程池
+	void execute(Runnable runnable);
+
+	// 关闭线程池
+	void shutdown();
+
+	// 获取线程池的初始化大小
+	int getInitSize();
+
+	// 获取线程池的最大线程数
+	int getMaxSize();
+
+	// 获取线程池的核心线程数
+	int getCoreSize();
+
+	// 获取线程池中用于缓存任务队列的大小
+	int getQueueSize();
+
+	// 获取线程池中活跃线程的数量
+	int getActiveCount();
+
+	// 查看线程池是否已经被shutdown
+	boolean isShutdown();
+}
+</code></pre>
+<h3 id="23-runnablequeue">2.3 RunnableQueue</h3>
+<p>我们需要一个任务队列，用来存放提交的任务，该队列是一个BlockedQueue，并且有limit的限制。</p>
+<pre><code class="language-java">public interface RunnableQueue {
+
+   // 当有新任务进来时首先会offer到队列中
+   void offer(Runnable runnable);
+
+   // 工作线程通过take方法获取Runnable
+   Runnable take() throws InterruptedException;
+
+   // 获取任务队列中任务的数量
+   int size();
+}
+</code></pre>
+<h3 id="24-threadfactory">2.4 ThreadFactory</h3>
+<p>ThreadFactory提供了创建线程的接口，以便于个性化地定制Thread，比如Thread应该被加到哪个Group中，优先级、线程名字以及是否为守护线程等。</p>
+<pre><code class="language-java">@FunctionalInterface
+public interface ThreadFactory {
+
+	Thread createThread(Runnable runnable);
+}
+</code></pre>
+<h3 id="25-拒绝策略denypolicy">2.5 拒绝策略（DenyPolicy）</h3>
+<p>DenyPolicy主要用于当Queue中的runnable达到了limit上限时，决定采用何种策略通知提交者。该接口中定义了三种默认的实现。</p>
+<ol>
+<li>DiscardDenyPolicy：直接将任务丢弃。</li>
+<li>AbortDenyPolicy：向任务提交者抛出异常。</li>
+<li>RunnerDenyPolicy：使用提交者所在的线程执行任务。</li>
+</ol>
+<pre><code class="language-java">public interface DenyPolicy {
+
+	void reject(Runnable runnable, ThreadPool threadPool);
+
+	/**
+	 * 该拒绝策略会直接将任务丢弃
+	 */
+	class DiscardDenyPolicy implements DenyPolicy {
+
+		@Override
+		public void reject(Runnable runnable, ThreadPool threadPool) {
+			//do nothing
+			System.out.println(&quot;task will be discard&quot;);
+		}
+	}
+
+	/**
+	 * 该拒绝策略会向任务提交者抛出异常
+	 */
+	class AbortDenyPolicy implements DenyPolicy {
+
+		@Override
+		public void reject(Runnable runnable, ThreadPool threadPool) {
+			throw new RunnableDenyException(&quot;The Runnable &quot; + runnable + &quot; will be abort.&quot;);
+		}
+	}
+
+	/**
+	 * 该拒绝策略会使任务在提交者所在的线程中执行任务
+	 */
+	class RunnerDenyPolicy implements DenyPolicy {
+
+		@Override
+		public void reject(Runnable runnable, ThreadPool threadPool) {
+			if (!threadPool.isShutdown()) {
+				runnable.run();
+			}
+		}
+	}
+}
+</code></pre>
+<p>这里还定义了一个 RunnableDenyException ，主要用于通知任务提交者，任务队列已经无法再接收新的任务。</p>
+<pre><code class="language-java">public class RunnableDenyException extends RuntimeException{
+
+	public RunnableDenyException(String message) {
+		super(message);
+	}
+}
+</code></pre>
+<h3 id="26-internaltask">2.6 InternalTask</h3>
+<p>InternalTask是Runnable的一个实现，是实际任务存储的数据结构。主要用于线程池内部，该类会使用到RunnableQueue，然后不断地从queue中取出某个runnable，并运行runnable的run方法。</p>
+<pre><code class="language-java">public class InternalTask implements Runnable{
+
+	private final RunnableQueue runnableQueue;
+
+	private volatile boolean running = true;
+
+	public InternalTask(RunnableQueue runnableQueue) {
+		this.runnableQueue = runnableQueue;
+	}
+
+	@Override
+	public void run() {
+		// 如果当前任务为running并且没有被中断，则其将不断地从queue中获取runnable，然后执行run方法
+        // 这是提交到线程池的任务最终运行的地方
+		while (running &amp;&amp; !Thread.currentThread().isInterrupted()) {
+			try {
+				Runnable task = runnableQueue.take();
+				task.run();
+			} catch (InterruptedException e) {
+				running = false;
+				break;
+			}
+		}
+	}
+
+	// 停止当前任务，主要会在线程池的shutdown方法中使用
+	public void stop() {
+		this.running = false;
+	}
+
+}
+</code></pre>
+<p>代码还对该类增加了一个开关方法stop，主要用于停止当前线程，一般在线程池销毁和线程数量维护的时候会使用到。</p>
+<h3 id="27-线程池详细实现">2.7 线程池详细实现</h3>
+<p>在LinkedRunnableQueue中有几个重要的属性，第一个是limit，也就是Runnable队列的上限；当提交的Runnable数量达到limit上限时，则会调用DenyPolicy的reject方法；runnableList是一个双向循环列表，用于存放Runnable任务</p>
+<pre><code class="language-java">public class LinkedRunnableQueue implements RunnableQueue{
+
+	// 任务队列的最大容量，在构造时传入
+	private final int limit;
+
+	// 若任务队列已满，则执行拒绝策略
+	private final DenyPolicy denyPolicy;
+
+	// 存放任务的队列
+	private final LinkedList&lt;Runnable&gt; runnableList = new LinkedList&lt;&gt;();
+
+	private final ThreadPool threadPool;
+
+	public LinkedRunnableQueue(int limit, DenyPolicy denyPolicy, ThreadPool threadPool) {
+		this.limit = limit;
+		this.denyPolicy  = denyPolicy;
+		this.threadPool = threadPool;
+	}
+
+	@Override
+	public void offer(Runnable runnable) {
+		synchronized (runnableList) {
+			if (runnableList.size() &gt;= limit) {
+				// 无法容纳新的任务，执行拒绝策略
+				denyPolicy.reject(runnable, threadPool);
+			} else {
+				// 将任务加入队尾，并且唤醒阻塞中的线程
+				runnableList.addLast(runnable);
+				runnableList.notifyAll();
+			}
+		}
+	}
+
+	/**
+	 * take方法也是同步方法，线程不断从队列中获取Runnable任务，当队列为空的时候工作线程会陷入阻塞，
+	 * 有可能在阻塞的过程中被中断，为了传递中断信号需要在catch语句块中将异常抛出以通知上游（InternalTask）
+	 * @return 任务
+	 * @throws InterruptedException 中断异常，通知上游(InternalTask)
+	 */
+	@Override
+	public Runnable take() throws InterruptedException {
+		synchronized (runnableList) {
+			while (runnableList.isEmpty()) {
+				try {
+					// 如果任务队列中没有可执行任务，则当前线程挂起，进入runnableList关联的monitor waitset中等待唤醒
+					runnableList.wait();
+				} catch (InterruptedException e) {
+					// 被中断时需要将异常抛出
+					throw e;
+				}
+			}
+			// 从任务队列头排除一个任务
+			return runnableList.removeFirst();
+		}
+	}
+
+	@Override
+	public int size() {
+		return runnableList.size();
+	}
+}
+
+</code></pre>
+<p>根据前面的讲解，线程池需要有数量控制属性、创建线程工厂、任务队列策略等功能，线程池初始化代码如下：</p>
+<pre><code class="language-java">public class BasicThreadPool extends Thread implements ThreadPool{
+
+	// 初始化线程数量
+	private final int initSize;
+
+	// 线程池最大数量
+	private final int maxSize;
+
+	// 线程池核心线程数量
+	private final int coreSize;
+
+	// 当前活跃的线程数量
+	private int activeCount;
+
+	// 创建线程所需的工厂
+	private final ThreadFactory threadFactory;
+
+	// 任务队列
+	private final RunnableQueue runnableQueue;
+
+	// 线程池是否已经被shutdown
+	private volatile boolean isShutdown = false;
+
+	// 工作线程队列
+	private final Queue&lt;ThreadTask&gt; threadQueue = new ArrayDeque&lt;&gt;();
+
+	private final static DenyPolicy DEFAULT_DENY_POLICY = new DenyPolicy.DiscardDenyPolicy();
+
+	private final static ThreadFactory DEFAULT_THREAD_FACTORY = new DefaultThreadFactory();
+
+	private final long keepAliveTime;
+
+	private final TimeUnit timeUnit;
+
+	// 构造时需要传递的参数：初始的线程数量，最大的线程数量，核心线程数量，任务队列的最大数量
+	public BasicThreadPool(int initSize, int maxSize, int coreSize, int queueSize) {
+		this(initSize, maxSize, coreSize, DEFAULT_THREAD_FACTORY, queueSize, DEFAULT_DENY_POLICY, 10 ,TimeUnit.SECONDS);
+	}
+
+	// 构造线程池时需要传入的参数，该构造函数需要的参数比较多
+	public BasicThreadPool(int initSize, int maxSize, int coreSize, ThreadFactory threadFactory, int queueSize, DenyPolicy denyPolicy, long keepAliveTime, TimeUnit timeUnit) {
+		this.initSize = initSize;
+		this.maxSize = maxSize;
+		this.coreSize = coreSize;
+		this.threadFactory = threadFactory;
+		this.runnableQueue = new LinkedRunnableQueue(queueSize, denyPolicy, this);
+		this.keepAliveTime = keepAliveTime;
+		this.timeUnit = timeUnit;
+		this.init();
+	}
+
+	// 初始化时，先创建 initSize 个线程
+	private void init() {
+		start();
+		for (int i = 0; i &lt; initSize; i++) {
+			newThread();
+		}
+	}
+
+	private void newThread() {
+		//创建任务线程，并且启动
+		InternalTask internalTask = new InternalTask(runnableQueue);
+		Thread thread = this.threadFactory.createThread(internalTask);
+		ThreadTask threadTask = new ThreadTask(thread, internalTask);
+		threadQueue.offer(threadTask);
+		this.activeCount++;
+		thread.start();
+	}
+
+	private void removeThread() {
+		// 从线程池中移除某个线程
+		ThreadTask threadTask = threadQueue.remove();
+		threadTask.internalTask.stop();
+		this.activeCount--;
+	}
+
+	@Override
+	public void execute(Runnable runnable) {
+		if (this.isShutdown) {
+			throw new IllegalStateException(&quot;The thread pool is destroy&quot;);
+		}
+		// 提交任务只是简单地往任务队列中插入Runnable
+		this.runnableQueue.offer(runnable);
+	}
+
+	@Override
+	public void run() {
+		// run 方法继承自Thread，主要用于维护线程数量，比如扩容、回收工作
+		while (!isShutdown &amp;&amp; !isInterrupted()) {
+			try {
+				timeUnit.sleep(keepAliveTime);
+			} catch (InterruptedException e) {
+				isShutdown = true;
+				break;
+			}
+
+			synchronized (this) {
+				if (isShutdown) {
+					break;
+				}
+				//当前队列中有尚未处理，并且activeCount&lt;coreSize则继续扩容
+				if (runnableQueue.size() &gt; 0 &amp;&amp; activeCount &lt; coreSize) {
+					for (int i = initSize; i &lt; coreSize; i++) {
+						newThread();
+					}
+					// continue 的目的在于不想让线程的扩容直接达到maxsize
+					continue;
+				}
+				// 当前队列中有任务尚未处理，并且activeCount&lt;maxSize则继续扩容
+				if (runnableQueue.size() &gt; 0 &amp;&amp; activeCount &lt; maxSize) {
+					for (int i = coreSize; i &lt; maxSize; ++i) {
+						newThread();
+					}
+				}
+
+				// 如果任务队列中没有任务，则需要回收，回收至coreSize即可
+				if (runnableQueue.size() == 0 &amp;&amp; activeCount &gt; coreSize) {
+					for (int i = coreSize; i &lt; activeCount; i++) {
+						removeThread();
+					}
+				}
+			}
+		}
+	}
+
+	//ThreadTask 只是InternalTask和Thread的一个组合
+	private static class ThreadTask {
+		Thread thread;
+		InternalTask internalTask;
+
+		public ThreadTask(Thread thread, InternalTask internalTask) {
+			this.thread = thread;
+			this.internalTask = internalTask;
+		}
+	}
+
+	/**
+	 * 销毁线程池主要为了是停止BasicThreadPool线程，停止线程池中的活动线程并且将isShutdown开关变量更改为true。
+	 */
+	@Override
+	public void shutdown() {
+		synchronized (this) {
+			if (isShutdown) {
+				return;
+			}
+
+			isShutdown = true;
+			threadQueue.forEach(threadTask -&gt; {
+				threadTask.internalTask.stop();
+				threadTask.thread.interrupt();
+			});
+
+			this.interrupt();
+		}
+	}
+
+	@Override
+	public int getInitSize() {
+		if (isShutdown) {
+			throw new IllegalStateException(&quot;The thread pool is destroy&quot;);
+		}
+		return this.initSize;
+	}
+
+	@Override
+	public int getMaxSize() {
+		if (isShutdown) {
+			throw new IllegalStateException(&quot;The thread pool is destroy&quot;);
+		}
+		return this.maxSize;
+	}
+
+	@Override
+	public int getCoreSize() {
+		if (isShutdown) {
+			throw new IllegalStateException(&quot;The thread pool is destroy&quot;);
+		}
+		return this.coreSize;
+	}
+
+	@Override
+	public int getQueueSize() {
+		if (isShutdown) {
+			throw new IllegalStateException(&quot;The thread pool is destroy&quot;);
+		}
+		return runnableQueue.size();
+	}
+
+	@Override
+	public int getActiveCount() {
+		synchronized (this) {
+			return this.activeCount;
+		}
+	}
+
+	@Override
+	public boolean isShutdown() {
+		return this.isShutdown;
+	}
+
+	private static class DefaultThreadFactory implements ThreadFactory {
+
+		private static final AtomicInteger GROUP_COUNTER = new AtomicInteger(1);
+
+		private static final ThreadGroup group = new ThreadGroup(&quot;MyThreadPool-&quot; + GROUP_COUNTER.getAndIncrement());
+
+		private static final AtomicInteger COUNTER = new AtomicInteger(0);
+
+		@Override
+		public Thread createThread(Runnable runnable) {
+			return new Thread(group, runnable, &quot;thread-pool-&quot; + COUNTER.getAndIncrement());
+		}
+	}
+}
+
+</code></pre>
+<p>自动维护线程的代码块是同步代码块，主要是为了阻止在线程维护过程中线程池销毁引起的数据不一致问题。</p>
+<p>任务队列中若存在积压任务，并且当前活动线程少于核心线程数，则新建 <code>coreSize-initSize</code>数量的线程，并且将其加入到活动线程队列中，为了防止马上进行<code>maxSize-coreSize</code>数量的扩充，建议使用<code>continue</code>终止本次循环。</p>
+<p>任务队列中有积压任务，并且当前活动线程少于最大线程数，则新建<code>maxSize-coreSize</code>数量的线程，并且将其加入到活动队列中。</p>
+<p>当前线程池不够繁忙时，则需要回收部分线程，回收到<code>coreSize</code>数量即可，回收时调用<code>removeThread()</code>方法，在该方法中需要考虑的一点是，如果被回收的线程恰巧从<code>Runnable</code>任务取出了某个任务，则会继续保持该线程的运行，直到完成了任务的运行为止，详见<code>InternalTask</code>的run方法。</p>
+<h2 id="3-线程池的应用">3. 线程池的应用</h2>
+<p>写一个简单的程序分别测试线程池的任务提交、线程池线程数量的动态扩展，以及线程池的销毁功能。</p>
+<pre><code class="language-java">public class ThreadPoolTest {
+
+	public static void main(String[] args) throws InterruptedException {
+		//定义线程池，初始化线程数为2，核心线程数为4，最大线程数位6，任务队列最多允许1000个任务
+		final ThreadPool threadPool = new BasicThreadPool(2, 6, 4, 1000);
+		// 定义20个任务并且提交给线程池
+		for (int i = 0; i &lt; 20; i++) {
+			threadPool.execute(()-&gt; {
+				try {
+					TimeUnit.SECONDS.sleep(10);
+					System.out.println(Thread.currentThread().getName() + &quot; is running and done.&quot;);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			});
+		}
+
+		for (; ;) {
+			//不断输出线程池的信息
+			System.out.println(&quot;getActiveCount: &quot; + threadPool.getActiveCount());
+			System.out.println(&quot;getQueueSize: &quot; + threadPool.getQueueSize());
+			System.out.println(&quot;getCoreSize: &quot; + threadPool.getCoreSize());
+			System.out.println(&quot;getMaxSize: &quot; + threadPool.getMaxSize());
+			System.out.println(&quot;================================================&quot;);
+			TimeUnit.SECONDS.sleep(5);
+		}
+	}
+}
+</code></pre>
+<p>上述测试代码中，定义了一个Basic线程池，其中初始化线程数量为2，核心线程数量为4，最大线程数量为6，最大任务队列数量为1000，同时提交了20个任务到线程池中，然后在main线程中不断地输出线程池中的线程数量信息监控变化，运行上述代码，截取的部分输出信息如下：</p>
+<pre><code class="language-java">getActiveCount: 2
+getQueueSize: 18
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 2
+getQueueSize: 18
+getCoreSize: 4
+getMaxSize: 6
+================================================
+thread-pool-1 is running and done.
+thread-pool-0 is running and done.
+getActiveCount: 4
+getQueueSize: 14
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 4
+getQueueSize: 14
+getCoreSize: 4
+getMaxSize: 6
+================================================
+thread-pool-2 is running and done.
+thread-pool-3 is running and done.
+thread-pool-0 is running and done.
+thread-pool-1 is running and done.
+getActiveCount: 6
+getQueueSize: 8
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 6
+getQueueSize: 8
+getCoreSize: 4
+getMaxSize: 6
+================================================
+thread-pool-4 is running and done.
+thread-pool-5 is running and done.
+thread-pool-3 is running and done.
+thread-pool-2 is running and done.
+thread-pool-0 is running and done.
+thread-pool-1 is running and done.
+getActiveCount: 6
+getQueueSize: 2
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 6
+getQueueSize: 2
+getCoreSize: 4
+getMaxSize: 6
+================================================
+thread-pool-3 is running and done.
+thread-pool-2 is running and done.
+thread-pool-5 is running and done.
+thread-pool-4 is running and done.
+thread-pool-1 is running and done.
+thread-pool-0 is running and done.
+getActiveCount: 6
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 6
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+thread-pool-3 is running and done.
+thread-pool-2 is running and done.
+getActiveCount: 5
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 5
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 4
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+</code></pre>
+<p>通过上述输出信息可以看出，线程池中线程的动态扩展状况以及任务执行情况，在输出的最后会发现active count停留在了core size的位置，这也符合我们的设计，最后为了确定线程池中的活跃线程数量</p>
+<pre><code class="language-java">================================================
+getActiveCount: 4
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+================================================
+getActiveCount: 4
+getQueueSize: 0
+getCoreSize: 4
+getMaxSize: 6
+</code></pre>
+<h2 id="4-参考">4. 参考</h2>
+<blockquote>
+<p>【1】<a href="https://book.douban.com/subject/30255689/">《Java 高并发编程详解》-汪文君</a></p>
+</blockquote>
+
+        </div>
+        
+        <div class="my-4">
+    
+    <a href="https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#多线程</a>
+    
+    <a href="https://ahamoment.cn/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#线程池</a>
+    
+</div>
+        
+        
+        
+
+
+        
+        
+        
+        
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+    <div>
+        
+        <span class="block font-bold">Previous</span>
+        <a href="https://ahamoment.cn/posts/tool/tool-git-common-operations/" class="block">Git 常用命令汇总</a>
+        
+    </div>
+    <div class="md:text-right mt-4 md:mt-0">
+        
+        <span class="block font-bold">Next</span>
+        <a href="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/" class="block">Java 多线程 - 线程生命周期</a>
+        
+    </div>
+</div>
+
+        
+
+
+
+    </div>
+    
+
+    
+    
+    <div
+        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+        <h2 class="text-lg font-semibold mb-4">See Also</h2>
+        <div class="content">
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/">Java 多线程 - 线程生命周期</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-interview-questions/">Java 多线程面试题总结</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-synchronized2/">Java 多线程 - 深入理解synchronized关键字</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-interrupt/">Java 多线程 - 线程中断 Interrupt</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-dead-lock/">Java 多线程 - 死锁问题</a>
+            <br />
+            
+            <a href="https://ahamoment.cn/posts/java/java-multithread-synchronized/">Java 多线程 - 初识 Synchronized</a>
+            <br />
+            
+        </div>
+    </div>
+    
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        hljs.initHighlightingOnLoad();
+    })
+</script>
+
+      </div>
+    </div>
+    
+  </main>
+  <footer class="pl-scrollbar">
+    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+    <p class="text-sm text-tertiary-text">&copy; 2021
+ &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div></div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>java on AhaMoment</title>
+    <link>https://ahamoment.cn/categories/java/</link>
+    <description>Recent content in java on AhaMoment</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en</language>
+    <copyright>&amp;copy; 2021
+</copyright>
+    <lastBuildDate>Thu, 12 Nov 2020 10:22:13 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java 多线程 - 自定义线程池</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-thread-pool/</link>
+      <pubDate>Thu, 12 Nov 2020 10:22:13 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-thread-pool/</guid>
+      <description>1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。
+ 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。
+这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：
+ 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：
+ 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 线程生命周期</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/</link>
+      <pubDate>Wed, 11 Nov 2020 18:23:31 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/</guid>
+      <description>线程的生命周期大体可以分为如下6个主要的阶段：
+ NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：
+// Thread.State public enum State { /** * Thread state for a thread which has not yet started.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程面试题总结</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-interview-questions/</link>
+      <pubDate>Wed, 11 Nov 2020 10:41:32 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-interview-questions/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 深入理解synchronized关键字</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-synchronized2/</link>
+      <pubDate>Sun, 25 Oct 2020 07:20:03 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-synchronized2/</guid>
+      <description>synchronized关键字提供了一种互斥机制，也就是说在同一时刻，只能有一个线程访问同步资源，很多资料、书籍将synchronized（mutex）称为锁，其实这种说法是不严谨的，准确地讲应该是某线程获取了与mutex关联的monitor锁（当然写程序的时候知道它想要表达的语义即可）。
+使用JDK命令javap对Mutex class进行反汇编，输出了大量的JVM指令，在这些指令中，你将发现monitor enter和monitor exit是成对出现的（有些时候会出现一个monitor enter多个monitor exit，但是每一个monitor exit之前必有对应的monitor enter，这是肯定的）.
+ Monitorenter 每个对象都与一个monitor相关联，一个monitor的lock的锁只能被一个线程在同一时间获得，在一个线程尝试获得与对象关联monitor的所有权时会发生如下的几件事情。  如果monitor的计数器为0，则意味着该monitor的lock还没有被获得，某个线程获得之后将立即对该计数器加一，从此该线程就是这个monitor的所有者了。 如果一个已经拥有该monitor所有权的线程重入，则会导致monitor计数器再次累加。 如果monitor已经被其他线程所拥有，则其他线程尝试获取该monitor的所有权时，会被陷入阻塞状态直到monitor计数器变为0，才能再次尝试获取对monitor的所有权。   Monitorexit 释放对monitor的所有权，想要释放对某个对象关联的monitor的所有权的前提是，你曾经获得了所有权。释放monitor所有权的过程比较简单，就是将monitor的计数器减一，如果计数器的结果为0，那就意味着该线程不再拥有对该monitor的所有权，通俗地讲就是解锁。与此同时被该monitor block的线程将再次尝试获得对该monitor的所有权。  使用synchronized方法需要注意几个问题：</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 线程中断 Interrupt</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-interrupt/</link>
+      <pubDate>Sat, 24 Oct 2020 07:17:54 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-interrupt/</guid>
+      <description>&lt;p&gt;线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>JVM 内存结构</title>
+      <link>https://ahamoment.cn/posts/java/java-jvm-jmm/</link>
+      <pubDate>Thu, 15 Oct 2020 19:55:31 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-jvm-jmm/</guid>
+      <description>http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf
+ JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。
+程序计数器 无论任何语言，其实最终都是需要由操作系统通过控制总线向CPU发送机器指令，Java也不例外，程序计数器在JVM中所起的作用就是用于存放当前线程接下来将要执行的字节码指令、分支、循环、跳转、异常处理等信息。在任何时候，一个处理器只执行其中一个线程中的指令，为了能够在CPU时间片轮转切换上下文之后顺利回到正确的执行位置，每条线程都需要具有一个独立的程序计数器，各个线程之间互相不影响，因此JVM将此块内存区域设计成了线程私有的。
+Java 虚拟机栈 与程序计数器内存相类似，Java虚拟机栈也是线程私有的，它的生命周期与线程相同，是在JVM运行时所创建的，在线程中，方法在执行的时候都会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息，如图所示，方法的调用对应着栈帧在虚拟机栈中的压栈和弹栈过程。
+每一个线程在创建的时候，JVM都会为其创建对应的虚拟机栈，虚拟机栈的大小可以通过-xss来配置，方法的调用是栈帧被压入和弹出的过程，通过上图可以看出，同等的虚拟机栈如果局部变量表等占用内存越小则可被压入的栈帧就会越多，反之则可被压入的栈帧就会越少，一般将栈帧内存的大小称为宽度，而栈帧的数量则称为虚拟机栈的深度。
+本地方法栈 Java中提供了调用本地方法的接口（Java Native Interface），也就是C/C++程序，在线程的执行过程中，经常会碰到调用JNI方法的情况，比如网络通信、文件操作的底层，甚至是String的intern等都是JNI方法，JVM为本地方法所划分的内存区域便是本地方法栈，这块内存区域其自由度非常高，完全靠不同的JVM厂商来实现，Java虚拟机规范并未给出强制的规定，同样它也是线程私有的内存区域。
+堆内存 堆内存是JVM中最大的一块内存区域，被所有的线程所共享，Java在运行期间创建的所有对象几乎都存放在该内存区域，该内存区域也是垃圾回收器重点照顾的区域，因此有些时候堆内存被称为“GC堆”。
+堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 死锁问题</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-dead-lock/</link>
+      <pubDate>Wed, 10 Jun 2020 19:21:07 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-dead-lock/</guid>
+      <description>锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。
+1. 什么是死锁  百度百科中对于死锁的定义：死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。
+ 简而言之，当线程1持有资源A，线程2持有资源B。此时线程1想要获取资源B，线程2想要获取资源A。两个线程都想要获取对方手中的资源，自己又不肯让出已有资源，一直僵持不下就形成了死锁。
+2. 死锁产生的四个条件  互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。 请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。 不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。 环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个 P1 占用的资源；P1 正在等待 P2 占用的资源，……，Pn 正在等待已被 P0 占用的资源。  3.</description>
+    </item>
+    
+    <item>
+      <title>Java 多线程 - 初识 Synchronized</title>
+      <link>https://ahamoment.cn/posts/java/java-multithread-synchronized/</link>
+      <pubDate>Wed, 10 Jun 2020 19:16:24 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-multithread-synchronized/</guid>
+      <description>Synchronized 简介  本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！
+ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。
+public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, &amp;quot;一号窗口&amp;quot;); Thread windowThread2 = new Thread(ticketWindow, &amp;quot;二号窗口&amp;quot;); Thread windowThread3 = new Thread(ticketWindow, &amp;quot;三号窗口&amp;quot;); windowThread1.</description>
+    </item>
+    
+    <item>
+      <title>JDK1.8 源代码阅读环境搭建</title>
+      <link>https://ahamoment.cn/posts/java/java-source-code-learn/</link>
+      <pubDate>Mon, 11 May 2020 18:57:51 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-source-code-learn/</guid>
+      <description>一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
+二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。</description>
+    </item>
+    
+    <item>
+      <title>IntellJ IDEA 远程调试 Java 程序</title>
+      <link>https://ahamoment.cn/posts/java/java-remote-debug/</link>
+      <pubDate>Thu, 21 Nov 2019 20:04:16 +0800</pubDate>
+      
+      <guid>https://ahamoment.cn/posts/java/java-remote-debug/</guid>
+      <description>1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
+2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
+ 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea  2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</description>
+    </item>
+    
+  </channel>
+</rss>
