@@ -1,34 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>java on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/java/</link>
-    <description>Recent content in java on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Wed, 16 Dec 2020 09:44:34 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/java/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Java 基础面试题</title>
-      <link>https://ahamoment.cn/posts/interview/interview-java/</link>
-      <pubDate>Wed, 16 Dec 2020 09:44:34 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/interview/interview-java/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;本文收集Java基础知识点相关的面试题目&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>解决setcap导致Java加载libjli.so 失败问题</title>
-      <link>https://ahamoment.cn/posts/linux/linux-cap/</link>
-      <pubDate>Fri, 11 Sep 2020 11:12:43 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/linux/linux-cap/</guid>
-      <description>背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
-java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>java on AhaMoment</title><link>https://ahamoment.cn/tags/java/</link><description>Recent content in java on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Wed, 16 Dec 2020 09:44:34 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/java/index.xml" rel="self" type="application/rss+xml"/><item><title>Java 基础面试题</title><link>https://ahamoment.cn/posts/interview/interview-java/</link><pubDate>Wed, 16 Dec 2020 09:44:34 +0800</pubDate><guid>https://ahamoment.cn/posts/interview/interview-java/</guid><description>&lt;blockquote>
+&lt;p>本文收集Java基础知识点相关的面试题目&lt;/p>
+&lt;/blockquote></description></item><item><title>解决setcap导致Java加载libjli.so 失败问题</title><link>https://ahamoment.cn/posts/linux/linux-cap/</link><pubDate>Fri, 11 Sep 2020 11:12:43 +0800</pubDate><guid>https://ahamoment.cn/posts/linux/linux-cap/</guid><description>背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
+java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory 错误信息是说 java 应用加载不到 libjli.</description></item></channel></rss>

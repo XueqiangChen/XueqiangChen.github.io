@@ -1,27 +1,6 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>bazel on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/bazel/</link>
-    <description>Recent content in bazel on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Wed, 10 Feb 2021 14:05:07 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/bazel/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>bazel 外部存储库缓存</title>
-      <link>https://ahamoment.cn/posts/tool/tool-bazel/</link>
-      <pubDate>Wed, 10 Feb 2021 14:05:07 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-bazel/</guid>
-      <description>bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>bazel on AhaMoment</title><link>https://ahamoment.cn/tags/bazel/</link><description>Recent content in bazel on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Wed, 10 Feb 2021 14:05:07 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/bazel/index.xml" rel="self" type="application/rss+xml"/><item><title>bazel 外部存储库缓存</title><link>https://ahamoment.cn/posts/tool/tool-bazel/</link><pubDate>Wed, 10 Feb 2021 14:05:07 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-bazel/</guid><description>bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
 Step1：
 从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
 Step2:
 运行 yum install bazel3 命令安装。
-教程 java / c++</description>
-    </item>
-    
-  </channel>
-</rss>
+教程 java / c++</description></item></channel></rss>

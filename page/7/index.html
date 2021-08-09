@@ -1,457 +1,260 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="Eureka is a elegant and powerful theme for Hugo.">
-
-
-
-<meta property="og:title" content="AhaMoment" />
-<meta property="og:type" content="website" />
-
-
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
+<meta property="og:title" content="AhaMoment">
+<meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/" />
-
-
-
-
-
-<meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo." />
-
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="og:updated_time" content="2021-08-06T00:00:00&#43;00:00" />
-
-
-
-<meta property="article:section" content="" />
-
-
-<link rel="alternate" type="application/rss+xml" href="https://ahamoment.cn/index.xml" title="AhaMoment" /><link rel="alternate" type="application/json" href="https://ahamoment.cn/index.json" title="AhaMoment" />
-
+<meta property="og:url" content="https://ahamoment.cn/">
+<meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="og:updated_time" content="2021-08-06T00:00:00+00:00">
+<meta property="article:section" content>
+<link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-<div class="pl-scrollbar">
-  <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-    <div class="max-w-screen-xl mx-auto" style="padding-top: 3rem">
-      <div class="bg-local bg-cover">
-        <img class="day" src="images/banner-day.png" />
-        <img class="dark" src="images/banner.png" />
-      </div>
-    </div>
-    <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-      <div class="col-span-2 sidebar">
-        <div class="widget bg-secondary-bg rounded p-6">
-          <h2 class="widget-title">最新文章</h2>
-          <ul class="widget-list">
-            <li>
-              <a href="/posts/tool/tool-hugo-blog/" class="nav-link">Hugo 博客搭建</a>
-            </li>
-            <li>
-              <a href="/posts/algorithm/algorithm-tree-inorder/" class="nav-link">二叉树的中序遍历</a>
-            </li>
-            <li>
-              <a href="/posts/go/go-new-vs-make/" class="nav-link">Go 语言中的 new 关键字和 make 关键字的区别</a>
-            </li>
-            <li>
-              <a href="/posts/tool/tool-mac-os-commands/" class="nav-link">Mac 命令汇总</a>
-            </li>
-            <li>
-              <a href="/posts/machinelearning/ml-tensorflow2.0-install/" class="nav-link">安装 Tensorflow2</a>
-            </li>
-          </ul>
-        </div>
-        <div class="widget bg-secondary-bg rounded p-6">
-          <h2 class="widget-title">友情链接</h2>
-          <ul class="widget-list">
-            
-            <li>
-              <a href="https://imnerd.org/">怡红院落</a>
-            </li>
-            
-            <li>
-              <a href="https://draveness.me/">面向信仰编程</a>
-            </li>
-            
-          </ul>
-        </div>
-        <div class="widget bg-secondary-bg rounded p-6">
-          <h2 class="widget-title">管理</h2>
-          <ul class="widget-list">
-            <li>
-              <a href="/admin">🛠 后台管理</a>
-            </li>
-            <li>
-              <a href="/ui">💬 评论管理</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-span-2  lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
-          
-          <div class="px-2 py-6">
-            <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="mb-4">
-  <a href="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/" class="font-bold text-xl hover:text-eureka">Linux Shell 输入/输出重定向</a>
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class="max-w-screen-xl mx-auto" style=padding-top:3rem>
+<div class="bg-local bg-cover">
+<img class=day src=images/banner-day.png>
+<img class=dark src=images/banner.png>
 </div>
-<div class="content">
-  大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+<div class="col-span-2 sidebar">
+<div class="widget bg-secondary-bg rounded p-6">
+<h2 class=widget-title>最新文章</h2>
+<ul class=widget-list>
+<li>
+<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
+</li>
+<li>
+<a href=/posts/algorithm/algorithm-tree-inorder/ class=nav-link>二叉树的中序遍历</a>
+</li>
+<li>
+<a href=/posts/go/go-new-vs-make/ class=nav-link>Go 语言中的 new 关键字和 make 关键字的区别</a>
+</li>
+<li>
+<a href=/posts/tool/tool-mac-os-commands/ class=nav-link>Mac 命令汇总</a>
+</li>
+<li>
+<a href=/posts/machinelearning/ml-tensorflow2.0-install/ class=nav-link>安装 Tensorflow2</a>
+</li>
+</ul>
+</div>
+<div class="widget bg-secondary-bg rounded p-6">
+<h2 class=widget-title>友情链接</h2>
+<ul class=widget-list>
+<li>
+<a href=https://imnerd.org/>怡红院落</a>
+</li>
+<li>
+<a href=https://draveness.me/>面向信仰编程</a>
+</li>
+</ul>
+</div>
+<div class="widget bg-secondary-bg rounded p-6">
+<h2 class=widget-title>管理</h2>
+<ul class=widget-list>
+<li>
+<a href=/admin>🛠 后台管理</a>
+</li>
+<li>
+<a href=/ui>💬 评论管理</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class="font-bold text-xl hover:text-eureka">Linux Shell 输入/输出重定向</a>
+</div>
+<div class=content>
+大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
 重定向命令列表如下：
-   命令 说明     command &gt; file 将输出重定向到 file。   command &lt; file 将输入重定向到 file。   command » file 将输出以追加的方式重定向到 file。   n &gt; file 将文件描述符为 n 的文件重定向到 file。   n » file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n &gt;&amp; m 将输出文件 m 和 n 合并。   n &lt;&amp; m 将输入文件 m 和 n 合并。   « tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。
+命令 说明 command > file 将输出重定向到 file。 command &lt; file 将输入重定向到 file。 command » file 将输出以追加的方式重定向到 file。 n > file 将文件描述符为 n 的文件重定向到 file。 n » file 将文件描述符为 n 的文件以追加的方式重定向到 file。 n >& m 将输出文件 m 和 n 合并。 n &lt;& m 将输入文件 m 和 n 合并。 « tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。 需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。
 </div>
-
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2019-11-26</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/linux/" class="hover:text-eureka">Linux</a>
-        
-    </div>
-    
-
-    
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2019-11-26</span>
 </div>
-
-  </div>
-
-  
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
 </div>
-          </div>
-          
-          <div class="px-2 py-6">
-            <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="mb-4">
-  <a href="https://ahamoment.cn/posts/java/java-remote-debug/" class="font-bold text-xl hover:text-eureka">IntellJ IDEA 远程调试 Java 程序</a>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
 </div>
-<div class="content">
-  1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
+</div>
+</div>
+</div>
+</div>
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/java/java-remote-debug/ class="font-bold text-xl hover:text-eureka">IntellJ IDEA 远程调试 Java 程序</a>
+</div>
+<div class=content>
+1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
 2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
- 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea  2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。
+应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea 2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。
 </div>
-
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2019-11-21</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/java/" class="hover:text-eureka">java</a>
-        
-    </div>
-    
-
-    
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2019-11-21</span>
 </div>
-
-  </div>
-
-  
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
 </div>
-          </div>
-          
-          <div class="px-2 py-6">
-            <div class="flex flex-col-reverse lg:flex-row justify-between">
-  
-  <div class="w-full ">
-    <div class="mb-4">
-  <a href="https://ahamoment.cn/posts/tool/tool-git-set-config/" class="font-bold text-xl hover:text-eureka">自动配置Git仓库提交作者</a>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
 </div>
-<div class="content">
-  1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
-2. 方法 2.1 安装Git  Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址  2.
 </div>
-
+</div>
+</div>
+</div>
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/tool/tool-git-set-config/ class="font-bold text-xl hover:text-eureka">自动配置Git仓库提交作者</a>
+</div>
+<div class=content>
+1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
+2. 方法 2.1 安装Git Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址 2.
+</div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2019-11-16</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
-        
-    </div>
-    
-
-    
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2019-11-16</span>
 </div>
-
-  </div>
-
-  
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
 </div>
-          </div>
-          
-        </div>
-        
-    <ul class="pagination pagination-default">
-      <li class="page-item">
-        <a href="/" aria-label="First" class="page-link" role="button"><span aria-hidden="true">&laquo;&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/page/6/" aria-label="Previous" class="page-link" role="button"><span aria-hidden="true">&laquo;</span></a>
-      </li>
-      <li class="page-item">
-        <a href="/page/3/" aria-label="Page 3" class="page-link" role="button">3</a>
-      </li>
-      <li class="page-item">
-        <a href="/page/4/" aria-label="Page 4" class="page-link" role="button">4</a>
-      </li>
-      <li class="page-item">
-        <a href="/page/5/" aria-label="Page 5" class="page-link" role="button">5</a>
-      </li>
-      <li class="page-item">
-        <a href="/page/6/" aria-label="Page 6" class="page-link" role="button">6</a>
-      </li>
-      <li class="page-item active">
-        <a href="#" aria-current="page" aria-label="Page 7" class="page-link" role="button">7</a>
-      </li>
-      <li class="page-item disabled">
-        <a href="#" aria-disabled="true" aria-label="Next" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;</span></a>
-      </li>
-      <li class="page-item disabled">
-        <a href="#" aria-disabled="true" aria-label="Last" class="page-link" role="button" tabindex="-1"><span aria-hidden="true">&raquo;&raquo;</span></a>
-      </li>
-    </ul>
-      </div>
-    </div>
-  </div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class=hover:text-eureka>工具</a>
 </div>
-
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<ul class="pagination pagination-default">
+<li class=page-item>
+<a href=/ aria-label=First class=page-link role=button><span aria-hidden=true>&#171;&#171;</span></a>
+</li>
+<li class=page-item>
+<a href=/page/6/ aria-label=Previous class=page-link role=button><span aria-hidden=true>&#171;</span></a>
+</li>
+<li class=page-item>
+<a href=/page/3/ aria-label="Page 3" class=page-link role=button>3</a>
+</li>
+<li class=page-item>
+<a href=/page/4/ aria-label="Page 4" class=page-link role=button>4</a>
+</li>
+<li class=page-item>
+<a href=/page/5/ aria-label="Page 5" class=page-link role=button>5</a>
+</li>
+<li class=page-item>
+<a href=/page/6/ aria-label="Page 6" class=page-link role=button>6</a>
+</li>
+<li class="page-item active">
+<a href=# aria-current=page aria-label="Page 7" class=page-link role=button>7</a>
+</li>
+<li class="page-item disabled">
+<a href=# aria-disabled=true aria-label=Next class=page-link role=button tabindex=-1><span aria-hidden=true>&#187;</span></a>
+</li>
+<li class="page-item disabled">
+<a href=# aria-disabled=true aria-label=Last class=page-link role=button tabindex=-1><span aria-hidden=true>&#187;&#187;</span></a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

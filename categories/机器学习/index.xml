@@ -1,25 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>机器学习 on AhaMoment</title>
-    <link>https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
-    <description>Recent content in 机器学习 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 25 Mar 2021 15:48:23 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>安装 Tensorflow2</title>
-      <link>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</link>
-      <pubDate>Thu, 25 Mar 2021 15:48:23 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</guid>
-      <description>安装 Anaconda https://www.anaconda.com/products/individual
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>机器学习 on AhaMoment</title><link>https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link><description>Recent content in 机器学习 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 25 Mar 2021 15:48:23 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.xml" rel="self" type="application/rss+xml"/><item><title>安装 Tensorflow2</title><link>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</link><pubDate>Thu, 25 Mar 2021 15:48:23 +0800</pubDate><guid>https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/</guid><description>安装 Anaconda https://www.anaconda.com/products/individual
 根据系统选择下载不同的 anaconda 安装：
 这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功：
-$ conda --version conda 4.9.2  更换 conda 镜像源 查看用户目录下的 .</description>
-    </item>
-    
-  </channel>
-</rss>
+$ conda --version conda 4.9.2 更换 conda 镜像源 查看用户目录下的 .</description></item></channel></rss>

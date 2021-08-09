@@ -1,362 +1,155 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>Git 常用命令汇总 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
  commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"Git 常用命令汇总",
-      "item":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/tool/tool-git-common-operations/"
-    },
-    "headline": "Git 常用命令汇总 | AhaMoment","datePublished": "2020-11-24T14:31:32+08:00",
-    "dateModified": "2020-11-24T14:31:32+08:00",
-    "wordCount":  908 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：\n commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat\/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。"
-}
-</script><meta property="og:title" content="Git 常用命令汇总 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Git 常用命令汇总","item":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"},"headline":"Git 常用命令汇总 | AhaMoment","datePublished":"2020-11-24T14:31:32+08:00","dateModified":"2020-11-24T14:31:32+08:00","wordCount":908,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：\n commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat\/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。"}</script><meta property="og:title" content="Git 常用命令汇总 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-git-common-operations/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-git-common-operations/">
 <meta property="og:description" content="1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
- commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2020-11-24T14:31:32&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2020-11-24T14:31:32&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="git" />
-
-
-
-
-
-<meta property="og:see_also" content="https://ahamoment.cn/posts/tool/tool-git-set-config/" />
-
-
-
+ commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2020-11-24T14:31:32+08:00">
+<meta property="article:modified_time" content="2020-11-24T14:31:32+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="git">
+<meta property="og:see_also" content="https://ahamoment.cn/posts/tool/tool-git-set-config/">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">Git 常用命令汇总</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2020-11-24</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>5 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">Git 常用命令汇总</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-11-24</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <h2 id="1-撤销提交">1. 撤销提交</h2>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>5 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class=hover:text-eureka>工具</a>
+</div>
+</div>
+<div class=content>
+<h2 id=1-撤销提交>1. 撤销提交</h2>
 <p>撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：</p>
 <ul>
 <li>commit - 分支提交错误</li>
 <li>reset - 误删代码</li>
 </ul>
-<h3 id="11-分支提交错误">1.1 分支提交错误</h3>
+<h3 id=11-分支提交错误>1.1 分支提交错误</h3>
 <p>有时我们会遇到这种情况：我们从develop 分支新建一个名为<code>feat/home</code> 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。</p>
 <p>此时有两种情况:</p>
-<h4 id="场景一已经commit但是未push到远端">场景一：已经commit，但是未push到远端</h4>
+<h4 id=场景一已经commit但是未push到远端>场景一：已经commit，但是未push到远端</h4>
 <p>使用<code>git reset</code>命令，可以在提交层面在私有分支舍弃一些没有提交的修改：</p>
-<pre><code class="language-bash"># 回退到上一个版本
+<pre><code class=language-bash># 回退到上一个版本
 git reset --hard HEAD^
 </code></pre>
 <p>git reset 命令主要有三个选项： &ndash;soft、&ndash;mixed 、&ndash;hard，默认参数为 &ndash;mixed。</p>
 <p><strong>git reset &ndash;soft 提交</strong>：</p>
 <p><code>--soft</code> 这个版本的命令有“最小”影响，<em>只改变一个符号引用的状态使其指向一个新提交，不会改变其索引和工作目录</em>， 具体体现如下：</p>
-<pre><code class="language-bash"># 模拟一份提交历史
+<pre><code class=language-bash># 模拟一份提交历史
 git add 1.js &amp;&amp; git commit -m &quot;update part 1&quot;
 git add 2.js &amp;&amp; git commit -m &quot;update part 2&quot;
 git add 3.js &amp;&amp; git commit -m &quot;update part 3&quot;
 git add 4.js &amp;&amp; git commit -m &quot;update part 4&quot;
 git log --oneline --graph -4 --decorate
 </code></pre>
-<p><img src="https://pic4.zhimg.com/80/v2-b446150005c25f5d3dee7141360c1d5b_720w.jpg" alt="img"></p>
-<pre><code class="language-bash"># 用 --soft 参数尝试回退一个版本
+<p><img src=https://pic4.zhimg.com/80/v2-b446150005c25f5d3dee7141360c1d5b_720w.jpg alt=img></p>
+<pre><code class=language-bash># 用 --soft 参数尝试回退一个版本
 git reset --soft HEAD~1
 </code></pre>
 <p>当我们执行<code> --soft</code> 命令后，可以看到控制台无任何输出，此时再次查看当前提交历史：</p>
-<pre><code class="language-bash">git log --oneline --graph -4 --decorate
+<pre><code class=language-bash>git log --oneline --graph -4 --decorate
 </code></pre>
 <p>如下图，可以看到版本库已经回退了一个版本：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-63b5fd59bedb05cbc827f74df1419d0e_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-63b5fd59bedb05cbc827f74df1419d0e_720w.jpg alt=img></p>
 <p>执行 <code>git status</code>，可以看到SHA1为<code>54b1941</code> 的commit 上的更改回到了缓存区：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-8e9c7f5733491c923cb5b2bb377e3c88_720w.jpg" alt="img"></p>
+<p><img src=https://pic1.zhimg.com/80/v2-8e9c7f5733491c923cb5b2bb377e3c88_720w.jpg alt=img></p>
 <p>因此我们可以认为 &ndash;soft 操作是软重置，只撤销了<code>git commit</code>操作，保留了 <code>git add</code> 操作。</p>
 <p><strong>git reset &ndash;hard 提交:</strong></p>
 <p>此时接上面的流程，我们这次执行 <code>--hard</code> 操作，尝试回退两个版本：</p>
-<pre><code class="language-text">git reset --hard HEAD~2
+<pre><code class=language-text>git reset --hard HEAD~2
 </code></pre>
 <p>如下图，可以看到版本库回退了两个版本，并且将本地版本库的头指针全部重置到了指定版本，暂存区也会被重置，工作区的代码也回退到了这一版本：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-63940d55d02820080385baab58ff222e_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-63940d55d02820080385baab58ff222e_720w.jpg alt=img></p>
 <p>执行<code>git status</code> 可以看到 我们的 SHA1 为 <code>54b1941</code>的 commit 上做的修改都“丢失”了，新的文件也被删除了。</p>
-<p><img src="https://pic3.zhimg.com/80/v2-201eca04452cc16359c3b692e68b7476_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-201eca04452cc16359c3b692e68b7476_720w.jpg alt=img></p>
 <p>因此可以知道，<code>git commit --hard</code> 是具有破坏性，是很危险的操作，它很容易导致数据丢失，如果我们真的进行了该操作想要找回丢失的数据，那么此时可以使用<code>git reflog</code> 回到未来，找到丢失的commit。这个命令的具体使用会在文章后面介绍。</p>
 <p><strong>git reset &ndash;mixed 提交</strong>：</p>
 <p>我们重新造一系列 commit 历史：</p>
-<pre><code class="language-text">git add 1.js &amp;&amp; git commit -m &quot;update 1.js&quot;
+<pre><code class=language-text>git add 1.js &amp;&amp; git commit -m &quot;update 1.js&quot;
 git add 2.js &amp;&amp; git commit -m &quot;update 2.js&quot;
 git add 3.js &amp;&amp; git commit -m &quot;update 3.js&quot;
 git add 4.js &amp;&amp; git commit -m &quot;update 4.js&quot;
@@ -364,22 +157,22 @@ git add 5.js &amp;&amp; git commit -m &quot;update 5.js&quot;
 git log --oneline --graph -4 --decorate
 </code></pre>
 <p>可以看到当前的 commit 历史如下：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-16293fb7352ea2b7ccd8f7aef878cdfa_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-16293fb7352ea2b7ccd8f7aef878cdfa_720w.jpg alt=img></p>
 <p>此时执行&ndash;mixed 操作，尝试回退两个版本：</p>
-<pre><code class="language-text"># 等价于 git reset HEAD~2
+<pre><code class=language-text># 等价于 git reset HEAD~2
 git reset --mixed HEAD~2
 </code></pre>
 <p>提交历史此时改变为下图所示：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-e78d82234469aa8a1d1144f7413e5752_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-e78d82234469aa8a1d1144f7413e5752_720w.jpg alt=img></p>
 <p>此时执行 <code>git status</code> ，命令行输出如下：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-b8db70598e55f34a9d9eacc428b63a51_720w.jpg" alt="img">HEAD、索引被更改，工作目录未被更改</p>
+<p><img src=https://pic2.zhimg.com/80/v2-b8db70598e55f34a9d9eacc428b63a51_720w.jpg alt=img>HEAD、索引被更改，工作目录未被更改</p>
 <p>SourceTree 工具上的直观显示如下：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-d5b53a062a54a4e9599d6097c35c1c46_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-d5b53a062a54a4e9599d6097c35c1c46_720w.jpg alt=img></p>
 <p>可以看出，该命令加上 &ndash;mixed 参数会保留提交的源码改动，只是将索引信息回退到了某一个版本，如果还需要继续提交，再次执行 <code>git add</code> 和 <code>git commit</code></p>
 <p>介绍完<code>git reset</code>，那么我们来说一下如何用该命令解决提交分支错误的问题:</p>
 <p><strong>第一种方法</strong>：</p>
 <p>适用于多个分支一起开发的时候将A分支的改动错误的提交到B的场景：</p>
-<pre><code class="language-text"># 将该分支的本不应该提交的commit撤销
+<pre><code class=language-text># 将该分支的本不应该提交的commit撤销
 git reset HEAD^
 
 # 按需选择想要回到哪个版本
@@ -409,7 +202,7 @@ git add . &amp;&amp; git commit -m &quot;update xxxx&quot;
 </code></pre>
 <p><strong>第二种方法</strong>：</p>
 <p>适用于在不小心在 master 分支上提交了代码，而实际想要在 feature 分支上提交代码的场景：</p>
-<pre><code class="language-text"># 新检出一个新分支，但是仍在master 分支上，并不会切换到新分支
+<pre><code class=language-text># 新检出一个新分支，但是仍在master 分支上，并不会切换到新分支
 git branch feat/update
 
 # 恢复master本身提交的状态
@@ -423,7 +216,7 @@ git checkout feat/update
 <li>适用于想要对特定的某一个或几个commit 进行“嫁接”，使其复制一份到正确的 feature 分支的场景；</li>
 <li>在功能性迭代开发中发现一个bug，并提交了一个commit 进行修复，但是发现该bug也存在线上的发布版本上，必须要尽快对线上进行修复，此时可以使用<code>git cherry-pick</code> 将bug 修复的commit 嫁接到 fix 分支上进行代码修复，并及时发布，解决线上bug。</li>
 </ol>
-<pre><code class="language-text"># 先切换到正确的分支
+<pre><code class=language-text># 先切换到正确的分支
 git checkout feat/update
 
 # 取出提交错误的或bug fix的 commit 引入到feat/update 分支中
@@ -436,20 +229,20 @@ git checkout feat/feedback
 git reset --head a06ef2f
 </code></pre>
 <p>上面演示的是“嫁接” 一个commit，如果想要嫁接多个 commit 可以这样做：</p>
-<pre><code class="language-text"># 将三个commit 合并过来
+<pre><code class=language-text># 将三个commit 合并过来
 git cherry-pick b9dabf9 e2c739d dad9e51
 </code></pre>
 <p>如果想加个一个应用范围内的 commit，可以这样做：</p>
-<pre><code class="language-text">git cherry-pick 422db47..e2c739d
+<pre><code class=language-text>git cherry-pick 422db47..e2c739d
 </code></pre>
 <p>需要注意的是无论是对单个 commit 进行 <code>git cherry-pick</code> ，还是批量处理，注意一定要根据时间线，依照 commit 的先后顺序来处理。</p>
 <p>如果你只想把改动转移到目标分支，但是并不想提交，可以这样做：</p>
-<pre><code class="language-text"># --no-commit 参数会使嫁接过来的改动不会提交，只会放在暂存区
+<pre><code class=language-text># --no-commit 参数会使嫁接过来的改动不会提交，只会放在暂存区
 git cherry-pick b9dabf9 --no-commit
 </code></pre>
 <p><strong>第四种方法</strong>：</p>
 <p>适用于当多个文件被缓存时，发现其中一个文件是其他分支的功能性改动，想直接取消该文件的缓存：</p>
-<pre><code class="language-text"># 编辑了 1.js 2.js 3.js
+<pre><code class=language-text># 编辑了 1.js 2.js 3.js
 # 缓存所有改动的文件
 git add .
 
@@ -472,20 +265,20 @@ git stash pop
 # 继续提交
 git add &amp;&amp; git commit -m &quot;update 3.js&quot;
 </code></pre>
-<h4 id="场景2commit之后已经-push-到远端">场景2：Commit之后已经 push 到远端</h4>
+<h4 id=场景2commit之后已经-push-到远端>场景2：Commit之后已经 push 到远端</h4>
 <p>场景：假设我们在 feat/feedback 分支上发现最后一次 commit 的功能是feat/update 分支的改动，此时想要取消这次commit（update 2.js）</p>
 <p>下图是feat/feedback 的提交历史：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-cb8ada46e62932fd5f30c8305293711a_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-cb8ada46e62932fd5f30c8305293711a_720w.jpg alt=img></p>
 <p>此时我们需要借助 git revert 命令来撤销我们的操作。</p>
 <p>解决方式：</p>
-<pre><code class="language-text"># 撤销最近的一次提交
+<pre><code class=language-text># 撤销最近的一次提交
 git revert HEAD --no-edit
 </code></pre>
 <p>接着我们使用 sourceTree 查看撤销之后的提交历史：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-93b578021734cef32e25d16437966872_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-93b578021734cef32e25d16437966872_720w.jpg alt=img></p>
 <p>我们看到想要撤销的 SHA1 为<code> db6bb3</code> 的 commit（Update 2.js）记录还在，并且多了一个SHA1 为 <code>6e1d7ee</code> 新的 commit（Revert &ldquo;Update 2.js&rdquo;）。因此可以看出，<code>git revert</code> 是对给定的 commit 提交进行逆过程，该命令会引入一个新的提交来抵消给定提交的影响。 和 <code>git cherry-pick</code> 一样，revert命令不修改版本库的现存历史记录，相反它只会在记录添加新的提交。</p>
 <p>接下来我们已经解决了错误分支的提交，但是还要把这次提交放到正确的分支上，依然可以使用 <code>git cherry pick</code> 去操作：</p>
-<pre><code class="language-text"># 将revert commit push到远端
+<pre><code class=language-text># 将revert commit push到远端
 git push origin feat/feedback
 
 # 切换到正确的分支
@@ -496,23 +289,23 @@ git cherry pick db6bb3f
 </code></pre>
 <p><code>git revert</code> 后面可以加不同的参数达到不同的撤销效果，常用的如下：</p>
 <p><code>--edit</code> ：该参数为<code>git revert</code> 的默认参数，它会自动创建提交日志提醒，此时会弹出编辑器会话，可以在里面修改提交消息，然后再提交。</p>
-<pre><code class="language-text">git revert 6ac5152 --edit 
+<pre><code class=language-text>git revert 6ac5152 --edit 
 </code></pre>
-<p><img src="https://pic2.zhimg.com/80/v2-6111f7f582edd5cd26854f839e51fb45_720w.jpg" alt="img"></p>
+<p><img src=https://pic2.zhimg.com/80/v2-6111f7f582edd5cd26854f839e51fb45_720w.jpg alt=img></p>
 <p><code>--no-edit</code> ：表示不编辑 commit 信息，revert 的 commit 会直接自动变回 &lsquo;Revert + 想要撤销的commit 的message&rsquo; 的格式。上面例子中使用的就是这种方式。</p>
 <p><code>--no-commit</code>：该命令会使撤销的 commit 里面的改动放到暂存区，不进行提交，用户可以自行再次提交。这种参数并且适用于将多个 commit 结果还原到索引中，集体放置在缓冲区，进行用户自定义的操作。</p>
-<pre><code class="language-text">git revert 13b7faf --no-commit
+<pre><code class=language-text>git revert 13b7faf --no-commit
 </code></pre>
-<p><img src="https://pic3.zhimg.com/80/v2-24b1be37b46fc4aa9641019f59450d62_720w.jpg" alt="img"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-4b5de95cae663cb6468c80a285b5e28e_720w.jpg" alt="img"></p>
-<h4 id="场景3改动不仅已经-push-到远端并且已经合到主仓库">场景3：改动不仅已经 push 到远端，并且已经合到主仓库</h4>
+<p><img src=https://pic3.zhimg.com/80/v2-24b1be37b46fc4aa9641019f59450d62_720w.jpg alt=img></p>
+<p><img src=https://pic3.zhimg.com/80/v2-4b5de95cae663cb6468c80a285b5e28e_720w.jpg alt=img></p>
+<h4 id=场景3改动不仅已经-push-到远端并且已经合到主仓库>场景3：改动不仅已经 push 到远端，并且已经合到主仓库</h4>
 <p>当我们把本不属于该分支的代码或者不需要提交的改动提交到主仓库，并合并到了develop 仓库之后，这是想要撤销合到主仓库的改动，解决方式如下：</p>
 <p><strong>1. 当以pull request 的方式进行的合并</strong></p>
 <p>在团队的 github flow 流程中，若我们把问题分支的 pull request 请求通过并合并到develop 之后，我们可以看到在 open a pull request 页面有如下提示：</p>
-<p><img src="https://pic3.zhimg.com/80/v2-4b5de95cae663cb6468c80a285b5e28e_720w.jpg" alt="img"></p>
+<p><img src=https://pic3.zhimg.com/80/v2-4b5de95cae663cb6468c80a285b5e28e_720w.jpg alt=img></p>
 <p>这时我们可以直接点击 【Revert】按钮进行撤回。该撤回操作会提示你需要创建一个 revert pull request，格式默认为： revert-${问题pr号}-${问题分支}</p>
-<p><img src="https://pic1.zhimg.com/80/v2-0fc06f08ad499c2d4794c1bc461e6c10_720w.jpg" alt="img"></p>
-<p><img src="https://pic3.zhimg.com/80/v2-3801382ef21d74f80876899913643216_720w.jpg" alt="img"></p>
+<p><img src=https://pic1.zhimg.com/80/v2-0fc06f08ad499c2d4794c1bc461e6c10_720w.jpg alt=img></p>
+<p><img src=https://pic3.zhimg.com/80/v2-3801382ef21d74f80876899913643216_720w.jpg alt=img></p>
 <p>最后我们将revert 产生的 pull request 合并到 develop 分支。</p>
 <p>因此对于团队协作中，推荐的工作流程是如上图所示在一个新分支中恢复错误的提交。在这里有人会问，为什么不直接在 develop 分支进行 <code>git revert</code> 操作，岂不是更方便，何必麻麻烦烦的去多建一个分支出来？</p>
 <p>这么做的原因是：在拥有大量开发人员的团队中， develop、master 分支为保护分支，为了安全不允许或建议去直接修改。</p>
@@ -520,7 +313,7 @@ git cherry pick db6bb3f
 <p>在团队协作流程中，通常我们会使用 Github 的【Merge pull request】 绿色按钮进行合并pull request 的操作，因为这样会更简单直观，建议始终使用该绿色按钮进行操作。</p>
 <p><strong>2. 当用命令行执行合并时</strong></p>
 <p>上面展示了通过界面按钮去操作如何撤销已经合并develop 分支的改动，那么在个人项目中用命令行操作是怎么样的呢？</p>
-<pre><code class="language-text"># 添加三个文件
+<pre><code class=language-text># 添加三个文件
 echo 1 &gt; 1.html
 echo 2 &gt; 2.html
 echo 3 &gt; 3.html
@@ -558,141 +351,104 @@ git merge revert-feat/update --no-ff
 git push origin develop
 </code></pre>
 <p>图为新建revert 分支：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-8b931ed19dd13ee391cef0acb87d334f_720w.jpg" alt="img"></p>
+<p><img src=https://pic4.zhimg.com/80/v2-8b931ed19dd13ee391cef0acb87d334f_720w.jpg alt=img></p>
 <p>图为<code>git revert</code> 弹出编辑器编辑 revert commit message 过程：</p>
-<p><img src="https://pic1.zhimg.com/80/v2-edc56b72932a310d7249a6b29d7f5d08_720w.jpg" alt="img"></p>
+<p><img src=https://pic1.zhimg.com/80/v2-edc56b72932a310d7249a6b29d7f5d08_720w.jpg alt=img></p>
 <p>图为执行完<code>git revert</code> 之后的 commit 历史记录：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-9319c72557ba7c0889b6c7a599e0cfd9_720w.jpg" alt="img"></p>
+<p><img src=https://pic2.zhimg.com/80/v2-9319c72557ba7c0889b6c7a599e0cfd9_720w.jpg alt=img></p>
 <p>接下来我们想将 3.html 的改动撤销的操作就变成了上面场景 2 的操作流程了。</p>
-<h4 id="场景4revert-错误需要再次补救">场景4：revert 错误，需要再次补救</h4>
+<h4 id=场景4revert-错误需要再次补救>场景4：revert 错误，需要再次补救</h4>
 <p>当我们的代码合到主仓库，并且成功发布到生产环境，此时发现线上有集中报错，必须马上将线上代码回滚到最新版本。这是我们需要进行revert 操作。revert 的代码发布到生产之后，发现错误仍旧存在，最后排查到是某个外部服务依赖出现问题，本次revert 的改动无关，并且外部服务已经恢复。此时需要将 revert 的改动再次发布上生产环境。</p>
 <p>我们可以再用一次<code>git revert</code>，revert 掉我们之前的 revert commit：</p>
-<pre><code class="language-text">git revert HEAD --no-edit
+<pre><code class=language-text>git revert HEAD --no-edit
 </code></pre>
 <p>这样 revert 撤销的改动又回来了，此时会发现提交历史上又会出现一个新的revert commit。</p>
-<h3 id="12-误删代码">1.2. 误删代码</h3>
+<h3 id=12-误删代码>1.2. 误删代码</h3>
 <p>介绍上面提交错误 commit 的时候，我们提到了<code>git reset --hard</code>。 如果我们真的使用了<code>git reset --hard</code> 之后，发现某些修改还有必要的，这时候就需要借助时光机 <code>git reflog</code> “回来未来”了。</p>
 <p><code>git reflog</code> 是非常好用的“后悔药”，它几乎可以恢复我们 commit 过的改动，即使这条 commit 记录已经被我们 reset 掉了。</p>
 <p>具体演示如下：</p>
-<p><img src="https://pic4.zhimg.com/80/v2-c6e8559bf331a08fad732be99477e7c3_720w.jpg" alt="img"></p>
+<p><img src=https://pic4.zhimg.com/80/v2-c6e8559bf331a08fad732be99477e7c3_720w.jpg alt=img></p>
 <p>如上图，在当前提交历史中，我们认为最新的两个commit 已经没有用了，想直接reset 到 SHA1 为 <code>c48a245</code> 这个 commit：</p>
-<pre><code class="language-text"># 回到 c48a245 commit
+<pre><code class=language-text># 回到 c48a245 commit
 git reset --hard c48a245
 </code></pre>
 <p>此时提交历史变为现在这样：</p>
-<p><img src="https://pic2.zhimg.com/80/v2-92259374ff0071516766da5919472ef1_720w.jpg" alt="img"></p>
+<p><img src=https://pic2.zhimg.com/80/v2-92259374ff0071516766da5919472ef1_720w.jpg alt=img></p>
 <p>此时可以看到SHA1 为<code>c48a245</code> 的 commit 时间线之后的改动都已经被撤销了。 这时候我们突然想到：commit 信息为 “Add 1.html 2.html” 的提交里面的改动很重要，需要被找回，但是我们使用 <code>git log</code> 查看过去提交历史，已经找不到这条被我们 reset 掉的历史记录了。这时候进行如下操作：</p>
-<pre><code class="language-text">git reflog
+<pre><code class=language-text>git reflog
 </code></pre>
-<p><img src="https://pic4.zhimg.com/80/v2-d3a2ca9f0d5b4a1bc2f49212988160e3_720w.jpg" alt="img"></p>
+<p><img src=https://pic4.zhimg.com/80/v2-d3a2ca9f0d5b4a1bc2f49212988160e3_720w.jpg alt=img></p>
 <p>我们如愿以偿的看到了曾经提交过的这个想要找回的commit（commit: Add 1.html 2.html），它的 SHA1 为 <code>cf2e245</code>。</p>
 <p>接下来怎么做取决于你具体想要达到什么目的：</p>
 <ul>
 <li>想要回到<code>cf2e245</code> 这个特定的commit：</li>
 </ul>
-<pre><code class="language-text">git reset --hard cf2e245
+<pre><code class=language-text>git reset --hard cf2e245
 </code></pre>
 <ul>
 <li>想要暂存 <code>cf2e245</code> 中的改动，并且不想马上提交：</li>
 </ul>
-<pre><code class="language-text">git reset --soft cf2e245
+<pre><code class=language-text>git reset --soft cf2e245
 </code></pre>
 <ul>
 <li>想要把<code>cf2e245</code> 嫁接到某个分支目录下：</li>
 </ul>
-<pre><code class="language-text">git checkout feat/xxx
+<pre><code class=language-text>git checkout feat/xxx
 git cherry-pick cf2e245
 </code></pre>
 <ul>
 <li>想要找回 <code>cf2e245</code> 某个文件的改动，暂存起来：</li>
 </ul>
-<pre><code class="language-text">git checkout cf2e245 1.html
+<pre><code class=language-text>git checkout cf2e245 1.html
 </code></pre>
-<p><img src="https://pic1.zhimg.com/80/v2-df5d04e1c971f7bf76b6056a70b34028_720w.jpg" alt="img"></p>
+<p><img src=https://pic1.zhimg.com/80/v2-df5d04e1c971f7bf76b6056a70b34028_720w.jpg alt=img></p>
 <p>对于 <code>git reflog</code> 需要注意的是： 它不是万能的。Git 会定期清理那些你已经不再用到的“对象”，如果你想找到几个月以前的提交，可能会指望不上它。</p>
-<h2 id="2-filemode-的变化">2. filemode 的变化</h2>
+<h2 id=2-filemode-的变化>2. filemode 的变化</h2>
 <p>执行git diff filename ,出现 old mode 100644 new mode 100755 的提示，如下图：</p>
-<p><img src="https://img-blog.csdn.net/20180320172628960?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2FpMjAwMGFp/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20180320172628960?watermark/2/text/Ly9ibG9nLmNzZG4ubmV0L2FpMjAwMGFp/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt=img></p>
 <p>但是发现文件内容并没有发生改变</p>
 <p>产生这个问题的原因就是：filemode的变化，文件chmod后其文件某些位是改变了的，如果严格的比较原文件和chmod后的文件，两者是有区别的，但是源代码通常只关心文本内容，因此chmod产生的变化应该忽略，所以设置一下：</p>
 <p>切到源码的根目录下，</p>
-<pre><code class="language-bash">git config --add core.filemode false
+<pre><code class=language-bash>git config --add core.filemode false
 </code></pre>
 <p>这样你的所有的git库都会忽略filemode变更了。</p>
-<h2 id="参考">参考</h2>
+<h2 id=参考>参考</h2>
 <blockquote>
-<p><a href="https://zhuanlan.zhihu.com/p/42929114">Git 误操作救命篇一： 如何将改动撤销</a></p>
-<p><a href="https://blog.csdn.net/ai2000ai/article/details/79628896">git diff old mode 100644 new mode 100755</a></p>
+<p><a href=https://zhuanlan.zhihu.com/p/42929114>Git 误操作救命篇一： 如何将改动撤销</a></p>
+<p><a href=https://blog.csdn.net/ai2000ai/article/details/79628896>git diff old mode 100644 new mode 100755</a></p>
 </blockquote>
-
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/git/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#git</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/git/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#git</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/interview/interview-mysql/" class="block">MySQL 面试题</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/java/java-multithread-thread-pool/" class="block">Java 多线程 - 自定义线程池</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/interview/interview-mysql/ class=block>MySQL 面试题</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-        <h2 class="text-lg font-semibold mb-4">See Also</h2>
-        <div class="content">
-            
-            <a href="https://ahamoment.cn/posts/tool/tool-git-set-config/">自动配置Git仓库提交作者</a>
-            <br />
-            
-        </div>
-    </div>
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/java/java-multithread-thread-pool/ class=block>Java 多线程 - 自定义线程池</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+<h2 class="text-lg font-semibold mb-4">See Also</h2>
+<div class=content>
+<a href=https://ahamoment.cn/posts/tool/tool-git-set-config/>自动配置Git仓库提交作者</a>
+<br>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

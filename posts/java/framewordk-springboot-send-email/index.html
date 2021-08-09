@@ -1,322 +1,118 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>Spring Boot 发送邮件 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="这篇文章主要介绍使用spring boot 发送邮件。">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"Spring Boot 发送邮件",
-      "item":"https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"
-    },
-    "headline": "Spring Boot 发送邮件 | AhaMoment","datePublished": "2020-03-27T18:59:19+08:00",
-    "dateModified": "2020-03-27T18:59:19+08:00",
-    "wordCount":  488 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "\u003cp\u003e这篇文章主要介绍使用\u003ccode\u003espring boot\u003c\/code\u003e 发送邮件。\u003c\/p\u003e"
-}
-</script><meta property="og:title" content="Spring Boot 发送邮件 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="这篇文章主要介绍使用spring boot 发送邮件。">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Spring Boot 发送邮件","item":"https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"},"headline":"Spring Boot 发送邮件 | AhaMoment","datePublished":"2020-03-27T18:59:19+08:00","dateModified":"2020-03-27T18:59:19+08:00","wordCount":488,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"\u003cp\u003e这篇文章主要介绍使用\u003ccode\u003espring boot\u003c\/code\u003e 发送邮件。\u003c\/p\u003e"}</script><meta property="og:title" content="Spring Boot 发送邮件 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/java/framewordk-springboot-send-email/" />
-
-
-
-
-<meta property="og:description" content="这篇文章主要介绍使用spring boot 发送邮件。" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2020-03-27T18:59:19&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2020-03-27T18:59:19&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="spring boot" />
-
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/java/framewordk-springboot-send-email/">
+<meta property="og:description" content="这篇文章主要介绍使用spring boot 发送邮件。">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2020-03-27T18:59:19+08:00">
+<meta property="article:modified_time" content="2020-03-27T18:59:19+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="spring boot">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">Spring Boot 发送邮件</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2020-03-27</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>3 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/springboot/" class="hover:text-eureka">SpringBoot</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">Spring Boot 发送邮件</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-03-27</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <p>这篇文章主要介绍使用<code>spring boot</code> 发送邮件。</p>
-<h2 id="1-maven-依赖">1. Maven 依赖</h2>
-<pre><code class="language-xml">&lt;!--mail--&gt;
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>3 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/springboot/ class=hover:text-eureka>SpringBoot</a>
+</div>
+</div>
+<div class=content>
+<p>这篇文章主要介绍使用<code>spring boot</code> 发送邮件。</p>
+<h2 id=1-maven-依赖>1. Maven 依赖</h2>
+<pre><code class=language-xml>&lt;!--mail--&gt;
 &lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-mail&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <blockquote>
-<p>如果需要指定版本，也可以从<a href="https://mvnrepository.com/">mvn repo</a>中找到你需要的版本号。</p>
+<p>如果需要指定版本，也可以从<a href=https://mvnrepository.com/>mvn repo</a>中找到你需要的版本号。</p>
 </blockquote>
-<h2 id="2-spring-mail-服务简介">2. Spring Mail 服务简介</h2>
-<p><a href="https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/integration.html#mail">Spring mail</a> 是Spring 框架提供的一个程序库，用于发送电子邮件，使我们不受底层邮件系统的限制，只关注客户端进行资源处理。Spring mail 包的内容如下：</p>
-<p><img src="https://img-blog.csdnimg.cn/20200320200922102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<h2 id=2-spring-mail-服务简介>2. Spring Mail 服务简介</h2>
+<p><a href=https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/integration.html#mail>Spring mail</a> 是Spring 框架提供的一个程序库，用于发送电子邮件，使我们不受底层邮件系统的限制，只关注客户端进行资源处理。Spring mail 包的内容如下：</p>
+<p><img src="https://img-blog.csdnimg.cn/20200320200922102.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></p>
 <ul>
 <li><code>MailSender</code> 接口：核心接口，提供用于发送简单电子邮件的基本功能。</li>
 <li><code>JavaMailSender</code> 接口：上述MailSender的子接口。它支持MIME消息，并且通常与MimeMessageHelper类结合使用以创建MimeMessage。</li>
@@ -325,9 +121,9 @@
 <li><code>MimeMessagePreparator</code>接口：提供用于接收MIME消息的回调接口。</li>
 <li><code>MimeMessageHelper</code>类：用于创建MIME消息的帮助器类。它提供在HTML布局中对图像，典型邮件附件和文本内容的支持。</li>
 </ul>
-<h2 id="3-邮件服务配置">3. 邮件服务配置</h2>
+<h2 id=3-邮件服务配置>3. 邮件服务配置</h2>
 <p>引入maven依赖之后，下一步就是使用<code>spring.mail.*</code>namespace 在 <code>application.properties</code> 文件中配置邮件服务。</p>
-<pre><code class="language-yaml">spring:
+<pre><code class=language-yaml>spring:
   mail:
     default-encoding: UTF-8
     #邮件服务器的地址：例如smtp.qq.com,smtp.gmail.com
@@ -347,9 +143,9 @@
     protocol: smtp
     test-connection: false
 </code></pre>
-<h2 id="4-发送邮件">4. 发送邮件</h2>
-<h3 id="41-发送简单邮件">4.1 发送简单邮件</h3>
-<pre><code class="language-java">@Service
+<h2 id=4-发送邮件>4. 发送邮件</h2>
+<h3 id=41-发送简单邮件>4.1 发送简单邮件</h3>
+<pre><code class=language-java>@Service
 public class MailServiceImpl implements MailService {
 
     @Autowired
@@ -367,8 +163,8 @@ public class MailServiceImpl implements MailService {
     }
 }
 </code></pre>
-<h3 id="42-发送附件邮件">4.2 发送附件邮件</h3>
-<pre><code class="language-json"> @Override
+<h3 id=42-发送附件邮件>4.2 发送附件邮件</h3>
+<pre><code class=language-json> @Override
     public void sendMessageWithAttachment() {
         MimeMessage message = javaMailSender.createMimeMessage();
 
@@ -389,20 +185,20 @@ public class MailServiceImpl implements MailService {
         }
     }
 </code></pre>
-<h3 id="43-发送模板邮件">4.3 发送模板邮件</h3>
+<h3 id=43-发送模板邮件>4.3 发送模板邮件</h3>
 <p>Spring 中可以作为邮件模板的有几个选择：Velocity，Freemarker，Thymeleaf。 SpringBoot 1.4.0以后 Velocity 废弃了，官方建议用Freemarker。而Thymeleaf的效率没有freemaker高(评测见参考文章【4】）。</p>
 <blockquote>
 <p>Freemarker 的语法可以参考官网的手册:https://freemarker.apache.org/docs/index.html
 中文手册：https://sourceforge.net/projects/freemarker/files/chinese-manual/</p>
 </blockquote>
 <p>同样，我们先引入 Freemarker 的 Maven 依赖。</p>
-<pre><code class="language-xml">&lt;dependency&gt;
+<pre><code class=language-xml>&lt;dependency&gt;
 	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
 	&lt;artifactId&gt;spring-boot-starter-freemarker&lt;/artifactId&gt;
 &lt;/dependency&gt;
 </code></pre>
 <p>然后在项目的 <code>/resoource/templates</code> 目录下添加一个 Freemarker 模板文件 <code>notification.flt</code>。</p>
-<pre><code class="language-html">&lt;html&gt;
+<pre><code class=language-html>&lt;html&gt;
 &lt;head&gt;
   &lt;title&gt;Hello world!&lt;/title&gt;
 &lt;/head&gt;
@@ -413,7 +209,7 @@ public class MailServiceImpl implements MailService {
 &lt;/html&gt;
 </code></pre>
 <p>在 SpringBoot 的配置文件中加上 Freemarker 的相关配置：</p>
-<pre><code class="language-yaml">spring:
+<pre><code class=language-yaml>spring:
   freemarker:
     template-loader-path: classpath:/templates/
     enabled: true
@@ -423,7 +219,7 @@ public class MailServiceImpl implements MailService {
     check-template-location: true
 </code></pre>
 <p>在 <code>EmailServiceImpl</code> 中使用 Freemarker 模板发送邮件：</p>
-<pre><code class="language-java">@Service
+<pre><code class=language-java>@Service
 public class MailServiceImpl implements MailService {
 
     private static final Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
@@ -460,11 +256,11 @@ public class MailServiceImpl implements MailService {
 }
 </code></pre>
 <p>至此实现了三中方式：纯文本，富文本(图片/附件)，Freemarker模版的邮件发送功能，接下来就来测试一下我们的邮件是否能发送出去吧。</p>
-<h2 id="5-测试邮件发送服务">5. 测试邮件发送服务</h2>
-<p>我们为了测试邮件服务的发送功能，暂时可以先不用使用真正的邮件服务器，而是换成<a href="http://www.icegreen.com/greenmail/">GreenMail</a>。
-GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集成测试或用于开发的轻量级沙盒邮件服务器。具体的使用方法可以参考官网上的<a href="https://github.com/greenmail-mail-test/greenmail/tree/master/greenmail-core/src/test/java/com/icegreen/greenmail/examples">用例</a>。</p>
+<h2 id=5-测试邮件发送服务>5. 测试邮件发送服务</h2>
+<p>我们为了测试邮件服务的发送功能，暂时可以先不用使用真正的邮件服务器，而是换成<a href=http://www.icegreen.com/greenmail/>GreenMail</a>。
+GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集成测试或用于开发的轻量级沙盒邮件服务器。具体的使用方法可以参考官网上的<a href=https://github.com/greenmail-mail-test/greenmail/tree/master/greenmail-core/src/test/java/com/icegreen/greenmail/examples>用例</a>。</p>
 <p>这里先引入GreenMail 的Maven依赖：</p>
-<pre><code class="language-xml">&lt;dependency&gt;
+<pre><code class=language-xml>&lt;dependency&gt;
 	&lt;groupId&gt;com.icegreen&lt;/groupId&gt;
 	&lt;artifactId&gt;greenmail&lt;/artifactId&gt;
 	&lt;version&gt;1.5.11&lt;/version&gt;
@@ -472,7 +268,7 @@ GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集�
 &lt;/dependency&gt;
 </code></pre>
 <p>在Spring boot 的测试文件(application-test.yaml)中配置用于邮件服务的相关属性。</p>
-<pre><code class="language-yaml">spring:
+<pre><code class=language-yaml>spring:
   mail:
     default-encoding: UTF-8
     host: localhost
@@ -490,7 +286,7 @@ GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集�
     test-connection: false
 </code></pre>
 <p>我们创建一个自定义的 JUnit Rule 来初始化和停止GreenMail邮件服务器。</p>
-<pre><code class="language-java">public class SmtpServerRule extends ExternalResource {
+<pre><code class=language-java>public class SmtpServerRule extends ExternalResource {
 
 	# 设置发送邮件服务的用户的用户名
     private static final String USER_PASSWORD = &quot;password&quot;;
@@ -521,7 +317,7 @@ GreenMail是用于测试目的的电子邮件服务器，可以用于邮件集�
 </code></pre>
 <p>然后就可以开始写我们的测试用例了。
 我们使用JUnit @Rule注解配置SmtpServerRule。这标记了在每个集成测试之前和之后要调用的自定义规则。并允许我们拦截传入的电子邮件。最后，我们做出一些断言并验证发送的电子邮件是否等于接收的电子邮件。</p>
-<pre><code class="language-java">@ActiveProfiles(&quot;test&quot;)
+<pre><code class=language-java>@ActiveProfiles(&quot;test&quot;)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(SpringRunner.class)
 public class MailServiceImplTest {
@@ -544,70 +340,38 @@ public class MailServiceImplTest {
 }
 </code></pre>
 <p>另外的两种邮件参考上面的代码实现。</p>
-<h2 id="6-总结">6. 总结</h2>
-<p>在这篇文章中，我们展示了如何通过Spring Boot应用程序设置和发送电子邮件。所有这些示例和代码片段的实现都可以在<a href="https://github.com/XueqiangChen/footmark">MyGitHub</a>项目中找到。</p>
-<h2 id="7-参考文章">7. 参考文章</h2>
-<p>【1】<a href="https://blog.codeleak.pl/2014/09/testing-mail-code-in-spring-boot.html">Testing mail code in Spring Boot application</a></p>
-<p>【2】<a href="https://memorynotfound.com/spring-mail-integration-testing-junit-greenmail-example/">Spring Mail Integration Testing with JUnit and GreenMail Example</a></p>
-<p>【3】<a href="https://www.baeldung.com/spring-email">Guide to Spring Email</a></p>
+<h2 id=6-总结>6. 总结</h2>
+<p>在这篇文章中，我们展示了如何通过Spring Boot应用程序设置和发送电子邮件。所有这些示例和代码片段的实现都可以在<a href=https://github.com/XueqiangChen/footmark>MyGitHub</a>项目中找到。</p>
+<h2 id=7-参考文章>7. 参考文章</h2>
+<p>【1】<a href=https://blog.codeleak.pl/2014/09/testing-mail-code-in-spring-boot.html>Testing mail code in Spring Boot application</a></p>
+<p>【2】<a href=https://memorynotfound.com/spring-mail-integration-testing-junit-greenmail-example/>Spring Mail Integration Testing with JUnit and GreenMail Example</a></p>
+<p>【3】<a href=https://www.baeldung.com/spring-email>Guide to Spring Email</a></p>
 <p>【4】<a href="https://blog.52itstyle.vip/archives/1264/?spm=a2c4e.10696291.0.0.621d19a4VEN4S9">SpringBoot开发案例之整合mail发送服务</a></p>
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/spring-boot/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#spring boot</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/spring-boot/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#spring boot</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/java/java-source-code-learn/" class="block">JDK1.8 源代码阅读环境搭建</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/" class="block">Linux Shell 输入/输出重定向</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/java/java-source-code-learn/ class=block>JDK1.8 源代码阅读环境搭建</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class=block>Linux Shell 输入/输出重定向</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

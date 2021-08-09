@@ -1,313 +1,109 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>Linux Shell 输入/输出重定向 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
 重定向命令列表如下：
-   命令 说明     command &gt; file 将输出重定向到 file。   command &lt; file 将输入重定向到 file。   command &raquo; file 将输出以追加的方式重定向到 file。   n &gt; file 将文件描述符为 n 的文件重定向到 file。   n &raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n &gt;&amp; m 将输出文件 m 和 n 合并。   n &lt;&amp; m 将输入文件 m 和 n 合并。   &laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"Linux Shell 输入/输出重定向",
-      "item":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"
-    },
-    "headline": "Linux Shell 输入\/输出重定向 | AhaMoment","datePublished": "2019-11-26T19:54:15+08:00",
-    "dateModified": "2019-11-26T19:54:15+08:00",
-    "wordCount":  329 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。"
-}
-</script><meta property="og:title" content="Linux Shell 输入/输出重定向 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+   命令 说明     command > file 将输出重定向到 file。   command < file 将输入重定向到 file。   command &#187; file 将输出以追加的方式重定向到 file。   n > file 将文件描述符为 n 的文件重定向到 file。   n &#187; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n >& m 将输出文件 m 和 n 合并。   n <& m 将输入文件 m 和 n 合并。   &#171; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Linux Shell 输入/输出重定向","item":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"},"headline":"Linux Shell 输入\/输出重定向 | AhaMoment","datePublished":"2019-11-26T19:54:15+08:00","dateModified":"2019-11-26T19:54:15+08:00","wordCount":329,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。"}</script><meta property="og:title" content="Linux Shell 输入/输出重定向 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/">
 <meta property="og:description" content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
 重定向命令列表如下：
-   命令 说明     command &gt; file 将输出重定向到 file。   command &lt; file 将输入重定向到 file。   command &raquo; file 将输出以追加的方式重定向到 file。   n &gt; file 将文件描述符为 n 的文件重定向到 file。   n &raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n &gt;&amp; m 将输出文件 m 和 n 合并。   n &lt;&amp; m 将输入文件 m 和 n 合并。   &laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2019-11-26T19:54:15&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2019-11-26T19:54:15&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="shell" />
-
-
-
-
-
+   命令 说明     command > file 将输出重定向到 file。   command < file 将输入重定向到 file。   command &#187; file 将输出以追加的方式重定向到 file。   n > file 将文件描述符为 n 的文件重定向到 file。   n &#187; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n >& m 将输出文件 m 和 n 合并。   n <& m 将输入文件 m 和 n 合并。   &#171; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2019-11-26T19:54:15+08:00">
+<meta property="article:modified_time" content="2019-11-26T19:54:15+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="shell">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">Linux Shell 输入/输出重定向</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2019-11-26</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/linux/" class="hover:text-eureka">Linux</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">Linux Shell 输入/输出重定向</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2019-11-26</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <p>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。</p>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
+</div>
+</div>
+<div class=content>
+<p>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。</p>
 <p>重定向命令列表如下：</p>
 <table>
 <thead>
@@ -318,7 +114,7 @@
 </thead>
 <tbody>
 <tr>
-<td>command &gt; file</td>
+<td>command > file</td>
 <td>将输出重定向到 file。</td>
 </tr>
 <tr>
@@ -326,27 +122,27 @@
 <td>将输入重定向到 file。</td>
 </tr>
 <tr>
-<td>command &raquo; file</td>
+<td>command &#187; file</td>
 <td>将输出以追加的方式重定向到 file。</td>
 </tr>
 <tr>
-<td>n &gt; file</td>
+<td>n > file</td>
 <td>将文件描述符为 n 的文件重定向到 file。</td>
 </tr>
 <tr>
-<td>n &raquo; file</td>
+<td>n &#187; file</td>
 <td>将文件描述符为 n 的文件以追加的方式重定向到 file。</td>
 </tr>
 <tr>
-<td>n &gt;&amp; m</td>
+<td>n >& m</td>
 <td>将输出文件 m 和 n 合并。</td>
 </tr>
 <tr>
-<td>n &lt;&amp; m</td>
+<td>n &lt;& m</td>
 <td>将输入文件 m 和 n 合并。</td>
 </tr>
 <tr>
-<td>&laquo; tag</td>
+<td>&#171; tag</td>
 <td>将开始标记 tag 和结束标记 tag 之间的内容作为输入。</td>
 </tr>
 </tbody>
@@ -354,76 +150,76 @@
 <blockquote>
 <p>需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p>
 </blockquote>
-<h2 id="输出重定向">输出重定向</h2>
+<h2 id=输出重定向>输出重定向</h2>
 <p>重定向一般通过在命令间插入特定的符号来实现。特别的，这些符号的语法如下所示:</p>
-<p><code>command1 &gt; file1</code></p>
+<p><code>command1 > file1</code></p>
 <p>上面这个命令执行command1然后将输出的内容存入file1。</p>
-<p>注意任何file1内的已经存在的内容将被新内容替代。如果要将新内容添加在文件末尾，请使用&raquo;操作符。</p>
-<h3 id="实例">实例</h3>
+<p>注意任何file1内的已经存在的内容将被新内容替代。如果要将新内容添加在文件末尾，请使用&#187;操作符。</p>
+<h3 id=实例>实例</h3>
 <p>执行下面的 who 命令，它将命令的完整的输出重定向在用户文件中(users):</p>
-<pre><code class="language-bash">$ who &gt; users
+<pre><code class=language-bash>$ who &gt; users
 </code></pre>
 <p>执行后，并没有在终端输出信息，这是因为输出已被从默认的标准输出设备（终端）重定向到指定的文件。</p>
 <p>你可以使用 cat 命令查看文件内容：</p>
-<pre><code class="language-bash">$ cat users
+<pre><code class=language-bash>$ cat users
 _mbsetupuser console  Oct 31 17:35 
 laolan    console  Oct 31 17:35 
 laolan    ttys000  Dec  1 11:33 
 </code></pre>
 <p>输出重定向会覆盖文件内容，请看下面的例子：</p>
-<pre><code class="language-bash">$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt; users
+<pre><code class=language-bash>$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt; users
 $ cat users
 W3Cschool教程：www.w3cschool.cn
 $
 </code></pre>
-<p>如果不希望文件内容被覆盖，可以使用 &raquo; 追加到文件末尾，例如：</p>
-<pre><code class="language-bash">$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt;&gt; users
+<p>如果不希望文件内容被覆盖，可以使用 &#187; 追加到文件末尾，例如：</p>
+<pre><code class=language-bash>$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt;&gt; users
 $ cat users
 W3Cschool教程：www.w3cschool.cn
 W3Cschool教程：www.w3cschool.cn
 $
 </code></pre>
-<h2 id="输入重定向">输入重定向</h2>
+<h2 id=输入重定向>输入重定向</h2>
 <p>和输出重定向一样，Unix 命令也可以从文件获取输入，语法为：</p>
 <p><code>command1 &lt; file1</code></p>
 <p>这样，本来需要从键盘获取输入的命令会转移到文件读取内容。</p>
-<p>注意：输出重定向是大于号(&gt;)，输入重定向是小于号(&lt;)。</p>
-<h3 id="实例-1">实例</h3>
+<p>注意：输出重定向是大于号(>)，输入重定向是小于号(&lt;)。</p>
+<h3 id=实例-1>实例</h3>
 <p>接着以上实例，我们需要统计 users 文件的行数,执行以下命令：</p>
-<pre><code class="language-bash">$ wc -l users
+<pre><code class=language-bash>$ wc -l users
        2 users
 </code></pre>
 <p>也可以将输入重定向到 users 文件：</p>
-<pre><code class="language-bash">$  wc -l &lt; users
+<pre><code class=language-bash>$  wc -l &lt; users
        2 
 </code></pre>
 <p>注意：上面两个例子的结果不同：第一个例子，会输出文件名；第二个不会，因为它仅仅知道从标准输入读取内容。</p>
-<p><code>command1 &lt; infile &gt; outfile</code></p>
+<p><code>command1 &lt; infile > outfile</code></p>
 <p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中。</p>
-<h2 id="重定向深入讲解">重定向深入讲解</h2>
+<h2 id=重定向深入讲解>重定向深入讲解</h2>
 <p>一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：</p>
 <ul>
 <li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li>
 <li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li>
 <li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。</li>
 </ul>
-<p>默认情况下，command &gt; file 将 stdout 重定向到 file，command &lt; file 将stdin 重定向到 file。</p>
+<p>默认情况下，command > file 将 stdout 重定向到 file，command &lt; file 将stdin 重定向到 file。</p>
 <p>如果希望 stderr 重定向到 file，可以这样写：</p>
-<p><code>$ command 2 &gt; file</code></p>
+<p><code>$ command 2 > file</code></p>
 <p>如果希望 stderr 追加到 file 文件末尾，可以这样写：</p>
-<p><code>$ command 2 &gt;&gt; file</code></p>
+<p><code>$ command 2 >> file</code></p>
 <p>2 表示标准错误文件(stderr)。</p>
 <p>如果希望将 stdout 和 stderr 合并后重定向到 file，可以这样写：</p>
-<p><code>$ command &gt; file 2&gt;&amp;1</code></p>
+<p><code>$ command > file 2>&1</code></p>
 <p>或者</p>
-<p><code>$ command &gt;&gt; file 2&gt;&amp;1</code></p>
+<p><code>$ command >> file 2>&1</code></p>
 <p>如果希望对 stdin 和 stdout 都重定向，可以这样写：</p>
-<p><code>$ command &lt; file1 &gt;file2</code></p>
+<p><code>$ command &lt; file1 >file2</code></p>
 <p>command 命令将 stdin 重定向到 file1，将 stdout 重定向到 file2。</p>
-<h2 id="here-document">Here Document</h2>
+<h2 id=here-document>Here Document</h2>
 <p>Here Document 是 Shell 中的一种特殊的重定向方式，用来将输入重定向到一个交互式 Shell 脚本或程序。</p>
 <p>它的基本的形式如下：</p>
-<pre><code class="language-bash">command &lt;&lt; delimiter
+<pre><code class=language-bash>command &lt;&lt; delimiter
     document
 delimiter
 </code></pre>
@@ -431,9 +227,9 @@ delimiter
 <p>注意：</p>
 <p>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。
 开始的delimiter前后的空格会被忽略掉。</p>
-<h3 id="实例-2">实例</h3>
+<h3 id=实例-2>实例</h3>
 <p>在命令行中通过 wc -l 命令计算 Here Document 的行数：</p>
-<pre><code class="language-bash">$ wc -l &lt;&lt; EOF
+<pre><code class=language-bash>$ wc -l &lt;&lt; EOF
     欢迎来到
     W3Cschool教程
     www.w3cschool.cn
@@ -442,7 +238,7 @@ EOF
 $
 </code></pre>
 <p>我们也可以将 Here Document 用在脚本中，例如：</p>
-<pre><code class="language-bash">#!/bin/bash
+<pre><code class=language-bash>#!/bin/bash
 # author:W3Cschool教程
 # url:www.w3cschool.cn
 
@@ -457,73 +253,40 @@ EOF
 W3Cschool教程
 www.w3cschool.cn
 </code></pre>
-<h2 id="devnull-文件">/dev/null 文件</h2>
+<h2 id=devnull-文件>/dev/null 文件</h2>
 <p>如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null：</p>
-<p><code>$ command &gt; /dev/null</code></p>
-<p>/dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到&quot;禁止输出&quot;的效果。</p>
+<p><code>$ command > /dev/null</code></p>
+<p>/dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到"禁止输出"的效果。</p>
 <p>如果希望屏蔽 stdout 和 stderr，可以这样写：</p>
-<p><code>$ command &gt; /dev/null 2&gt;&amp;1</code></p>
+<p><code>$ command > /dev/null 2>&1</code></p>
 <blockquote>
 <p>注意：0 是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p>
 </blockquote>
-
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/shell/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#shell</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/shell/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#shell</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/java/framewordk-springboot-send-email/" class="block">Spring Boot 发送邮件</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/java/java-remote-debug/" class="block">IntellJ IDEA 远程调试 Java 程序</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/java/framewordk-springboot-send-email/ class=block>Spring Boot 发送邮件</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/java/java-remote-debug/ class=block>IntellJ IDEA 远程调试 Java 程序</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

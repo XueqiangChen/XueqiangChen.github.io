@@ -1,686 +1,273 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>[译]Kubernetes深入研究：CustomResources的代码生成 | K8s 学习笔记 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="
 原文链接：Kubernetes Deep Dive: Code Generation for CustomResources
 ">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"文档",
-      "item":"https://ahamoment.cn/docs/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"K8s 学习笔记",
-      "item":"https://ahamoment.cn/docs/k8s-doc/"},{
-      "@type": "ListItem",
-      "position": 3 ,
-      "name":"9. kubernetes 生态周边",
-      "item":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{
-      "@type": "ListItem",
-      "position": 4 ,
-      "name":"[译]Kubernetes深入研究：CustomResources的代码生成",
-      "item":"https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/"
-    },
-    "headline": "[译]Kubernetes深入研究：CustomResources的代码生成 | K8s 学习笔记 | AhaMoment","datePublished": "2021-03-12T10:57:25+08:00",
-    "dateModified": "2021-03-12T10:57:25+08:00",
-    "wordCount":  452 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "\u003cblockquote\u003e\n\u003cp\u003e原文链接：\u003ca href=\u0022https:\/\/www.openshift.com\/blog\/kubernetes-deep-dive-code-generation-customresources\u0022\u003eKubernetes Deep Dive: Code Generation for CustomResources\u003c\/a\u003e\u003c\/p\u003e\n\u003c\/blockquote\u003e"
-}
-</script><meta property="og:title" content="[译]Kubernetes深入研究：CustomResources的代码生成 | K8s 学习笔记 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"K8s 学习笔记","item":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":3,"name":"9. kubernetes 生态周边","item":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{"@type":"ListItem","position":4,"name":"[译]Kubernetes深入研究：CustomResources的代码生成","item":"https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/"},"headline":"[译]Kubernetes深入研究：CustomResources的代码生成 | K8s 学习笔记 | AhaMoment","datePublished":"2021-03-12T10:57:25+08:00","dateModified":"2021-03-12T10:57:25+08:00","wordCount":452,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"\u003cblockquote\u003e\n\u003cp\u003e原文链接：\u003ca href=\u0022https:\/\/www.openshift.com\/blog\/kubernetes-deep-dive-code-generation-customresources\u0022\u003eKubernetes Deep Dive: Code Generation for CustomResources\u003c\/a\u003e\u003c\/p\u003e\n\u003c\/blockquote\u003e"}</script><meta property="og:title" content="[译]Kubernetes深入研究：CustomResources的代码生成 | K8s 学习笔记 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">
 <meta property="og:description" content="
 原文链接：Kubernetes Deep Dive: Code Generation for CustomResources
-" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2021-03-12T10:57:25&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2021-03-12T10:57:25&#43;08:00" />
-
-
-
-<meta property="article:section" content="docs" />
-
-
-<meta property="article:tag" content="kubernetes" />
-
-<meta property="article:tag" content="codegen" />
-
-
-
-
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/" />
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/" />
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/" />
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/job/" />
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/" />
-
-<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/" />
-
-
-
+">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2021-03-12T10:57:25+08:00">
+<meta property="article:modified_time" content="2021-03-12T10:57:25+08:00">
+<meta property="article:section" content="docs">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="codegen">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">
+<meta property="og:see_also" content="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 selected-menu-item mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
-<div class="lg:pt-12">
-    <div class="flex flex-col md:flex-row bg-secondary-bg rounded">
-        <div class="md:w-1/4 lg:w-1/5 border-r">
-            <div class="sticky top-16 pt-6">
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="sidebar-title" class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
-    <span class="font-semibold">Table of Contents</span>
-    <i class="fas fa-caret-right ml-1"></i>
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class=lg:pt-12>
+<div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+<div class="md:w-1/4 lg:w-1/5 border-r">
+<div class="sticky top-16 pt-6">
+<div id=sidebar-title class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+<span class=font-semibold>Table of Contents</span>
+<i class="fas fa-caret-right ml-1"></i>
 </div>
-
-<div id="sidebar-toc"
-    class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
-    <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
-        <a class=" hover:text-eureka"
-            href="https://ahamoment.cn/docs/k8s-doc/">K8s 学习笔记</a>
-        
-        
-        
-
-
-    </div>
-    
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter2/">2. Kubernetes 集群搭建与实践</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/">使用kubeadm 安装k8s集群</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/">3. 容器编排与 kubernetes 作业管理</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">深入解析声明式API（一）：API对象的奥秘</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">声明式API与Kubernetes编程范式</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">撬动离线业务：Job与CronJob</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">深入理解StatefulSet（二）：存储状态</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">容器化守护进程的意义：DaemonSet</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/">深入理解StatefulSet（一）：拓扑状态</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/">Deployment：作业副本与水平扩容</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">谈谈“控制器”模式</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/">深入解析Pod对象(二): 使用进阶</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/">深入解析Pod对象(一)：基本概念</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/">为什么我们需要Pod</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/">6. kubernetes 作业调度与资源管理</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/">十字路口上的Kubernetes默认调度器</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/">QoS 源代码分析</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/">Kubernetes的资源模型和资源管理</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">K8s Go 客户端浅析</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/">9. kubernetes 生态周边</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" text-eureka  hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/">容器健康检查</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">常用的k8s命令</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-</ul>
-
+<div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+<div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/>K8s 学习笔记</a>
 </div>
-
-
-
-
-
-
-
-            </div>
-
-        </div>
-        <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
-            <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
-                <h1 class="font-bold text-3xl text-primary-text">[译]Kubernetes深入研究：CustomResources的代码生成</h1>
-                <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2021-03-12</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>3 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="hover:text-eureka">云计算</a>
-        
-    </div>
-    
-
-    
+<ul class=pl-6>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter2/>2. Kubernetes 集群搭建与实践</a>
 </div>
-            </div>
-            <div class="flex">
-                <div class="w-full lg:w-3/4 px-6">
-                    
-                    
-                    <div class="content">
-                        <blockquote>
-<p>原文链接：<a href="https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources">Kubernetes Deep Dive: Code Generation for CustomResources</a></p>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/>使用kubeadm 安装k8s集群</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/>3. 容器编排与 kubernetes 作业管理</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/>深入解析声明式API（一）：API对象的奥秘</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/>声明式API与Kubernetes编程范式</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/job/>撬动离线业务：Job与CronJob</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/>深入理解StatefulSet（二）：存储状态</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/>容器化守护进程的意义：DaemonSet</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/>深入理解StatefulSet（一）：拓扑状态</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/>Deployment：作业副本与水平扩容</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/>谈谈“控制器”模式</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/>深入解析Pod对象(二): 使用进阶</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/>深入解析Pod对象(一)：基本概念</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/>为什么我们需要Pod</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/>6. kubernetes 作业调度与资源管理</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/>十字路口上的Kubernetes默认调度器</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/>QoS 源代码分析</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/>Kubernetes的资源模型和资源管理</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/>K8s Go 客户端浅析</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/>9. kubernetes 生态周边</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class="text-eureka hover:text-eureka" href=https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/>容器健康检查</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/>常用的k8s命令</a>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+<div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
+<h1 class="font-bold text-3xl text-primary-text">[译]Kubernetes深入研究：CustomResources的代码生成</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-03-12</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>3 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/ class=hover:text-eureka>云计算</a>
+</div>
+</div>
+</div>
+<div class=flex>
+<div class="w-full lg:w-3/4 px-6">
+<div class=content>
+<blockquote>
+<p>原文链接：<a href=https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources>Kubernetes Deep Dive: Code Generation for CustomResources</a></p>
 </blockquote>
 <p>CustomResourceDefinitions (CRDs)是kubernetes 1.7 中引入的，并在1.8中从alpha版本升级为beta版本了，最新版本的kubernetes 1.20 中，CRDs的版本已经是v1了。由于CRDs的易用性，在很多实现了控制器模式的例子中都可以看到它的身影。</p>
 <p>在Kubernetes 1.8中， CRDs 在基于golang的项目中的使用也变得更加自然：通过用户提供的 CustomResources，我们可以利用在Kubernetes提供的代码生成工具来生成代码。这篇文章展示了代码生成器的工作方式，以及如何以最少的代码行将其应用到自己的项目中，为您提供了生成的Deepcopy函数，内置的clients，listers和informers，所有这些都带有一个Shell脚本调用和几个代码注释。</p>
 <blockquote>
 <p>注：deepcopy，意为”深拷贝“，深拷贝意味着会重新生成对象并拷贝对象中的所有字段、地址等数据；浅拷贝仅仅是对象的引用，并没有生成新的对象。</p>
 </blockquote>
-<h2 id="为什么要使用代码生成">为什么要使用代码生成？</h2>
-<p>那些在golang中原生使用ThirdPartyResources或CustomResourceDefinition的人可能会惊讶于突然在Kubernetes 1.8中需要生成client-go。更具体地说，client-go要求 runtime.Object 类型（golang中的CustomResources必须实现runtime.Object接口）必须具有DeepCopy方法。这里的代码生成通过deepcopy-gen生成器起作用，可以在<a href="https://github.com/kubernetes/code-generator">k8s.io/code-generator</a>存储库中找到。</p>
+<h2 id=为什么要使用代码生成>为什么要使用代码生成？</h2>
+<p>那些在golang中原生使用ThirdPartyResources或CustomResourceDefinition的人可能会惊讶于突然在Kubernetes 1.8中需要生成client-go。更具体地说，client-go要求 runtime.Object 类型（golang中的CustomResources必须实现runtime.Object接口）必须具有DeepCopy方法。这里的代码生成通过deepcopy-gen生成器起作用，可以在<a href=https://github.com/kubernetes/code-generator>k8s.io/code-generator</a>存储库中找到。</p>
 <p>除了deepcopy-gen 生成器外，还有几个代码生成器是大多数CustomResources用户都想使用的：</p>
 <ul>
 <li>deepcopy-gen - 为每个T类型的方法创建<code>func (t* T) DeepCopy() *T</code> 函数</li>
@@ -690,25 +277,25 @@
 </ul>
 <p>最后两个是构建控制器（或Operators）的基础。在后续博客中，我们将更详细地介绍控制器。这四个代码生成器使用与Kubernetes上游控制器所使用的相同的机制和软件包，构成了构建功能齐全，可用于生产环境的控制器的强大基础。</p>
 <p><code>k8s.io/code-generator</code> 中还有其他用于其他上下文的生成器，例如，如果您构建自己的聚合API服务器，则除了版本化类型外，还将使用内部类型。Conversion-gen 将在这些内部和外部类型之间创建转换函数。Defaulter-gen将负责默认某些字段。</p>
-<h2 id="在你的项目中调用代码生成器">在你的项目中调用代码生成器</h2>
-<p>所有的Kubernetes代码生成器都是在<a href="https://github.com/kubernetes/gengo">k8s.io/gengo</a>之上实现的。它们共享许多公共命令行标志。基本上，所有生成器都获得输入包<code>（--input-dirs）</code>的列表，它们通过类型进行检查，并输出生成的代码。生成的代码：</p>
+<h2 id=在你的项目中调用代码生成器>在你的项目中调用代码生成器</h2>
+<p>所有的Kubernetes代码生成器都是在<a href=https://github.com/kubernetes/gengo>k8s.io/gengo</a>之上实现的。它们共享许多公共命令行标志。基本上，所有生成器都获得输入包<code>（--input-dirs）</code>的列表，它们通过类型进行检查，并输出生成的代码。生成的代码：</p>
 <ul>
-<li>要么进入与输入文件相同的目录，例如deepcopy-gen （ <code>--output-file-base &quot;zz_generated.deepcopy&quot;</code>定义文件名）</li>
+<li>要么进入与输入文件相同的目录，例如deepcopy-gen （ <code>--output-file-base "zz_generated.deepcopy"</code>定义文件名）</li>
 <li>或者它们生成一个或多个输出包(<code>--output-package</code>)例如 client-, informer- 和 lister-gen 所做的（通常将生成的代码放在 pkg/client 目录下）</li>
 </ul>
 <p>k8s.io/code-generator附带了一个shell脚本<code>generator-group.sh</code>，这个脚本会帮我们处理这些繁重的工作，通常只要调用<code>hack/update-codegen.sh</code>就行，例如：</p>
-<pre><code class="language-bash">$ vendor/k8s.io/code-generator/generate-groups.sh all \
+<pre><code class=language-bash>$ vendor/k8s.io/code-generator/generate-groups.sh all \
 github.com/openshift-evangelist/crd-code-generation/pkg/client \ 
 github.com/openshift-evangelist/crd-code-generation/pkg/apis \
 example.com:v1
 </code></pre>
 <p>运行这个命令后生成的目录如下所示：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/Screen-Shot-2017-10-16-at-17_58_28.webp" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/Screen-Shot-2017-10-16-at-17_58_28.webp alt></p>
 <p>所有的 APIs 都被创建到 <code>pkg/apis</code> 目录下，clientsets，informers 以及 listers 被创建到 <code>pkg/client</code> 这个目录下。总而言之，<code>pkg/client</code> 文件夹完全都是生成的，并且包括<code>zz_generated.deepcopy.go</code>这个文件。两者都不应该手动修改，而是通过运行以下命令创建：</p>
-<pre><code class="language-bash">$ hack/update-codegen.sh
+<pre><code class=language-bash>$ hack/update-codegen.sh
 </code></pre>
-<p>这个脚本的<a href="https://github.com/kubernetes/code-generator/tree/master/hack">附近</a>还有一个 <code>hack/verify-codegen.sh</code> 脚本，如果生成的任何文件不是最新的，该脚本都将以非零的返回码终止。这对于放入CI脚本中非常有帮助：如果开发人员无意中修改了文件，或者如果文件刚刚过时，CI会注意到并报错。</p>
-<h2 id="控制生成的代码标签">控制生成的代码–标签</h2>
+<p>这个脚本的<a href=https://github.com/kubernetes/code-generator/tree/master/hack>附近</a>还有一个 <code>hack/verify-codegen.sh</code> 脚本，如果生成的任何文件不是最新的，该脚本都将以非零的返回码终止。这对于放入CI脚本中非常有帮助：如果开发人员无意中修改了文件，或者如果文件刚刚过时，CI会注意到并报错。</p>
+<h2 id=控制生成的代码标签>控制生成的代码–标签</h2>
 <p>如上所述，虽然代码生成器的某些行为是通过命令行标志（尤其是要处理的程序包）来控制的，但更多的属性是通过golang文件中的标签来控制的。</p>
 <p>标签有两种：</p>
 <ul>
@@ -716,9 +303,9 @@ example.com:v1
 <li>Local tags 在它需要处理的类型中定义</li>
 </ul>
 <p>标签通常是 <code>// +tag-name</code> 或者 <code>// +tag-name=value</code> 这两种形式，写在注释中。根据标签，注释的位置变得很重要。大部分的注释的标签应该直接标注在类型上（对于全局标签来说应该在<code>package</code>行中），其他的必须与类型分开，中间至少要有一条空线。</p>
-<h3 id="global-tags">GLOBAL TAGS</h3>
-<p>Global tags 被写入到包的 <code>doc.go</code> 文件中，一个典型的<code>pkg/apis/&lt;apigroup&gt;/&lt;version&gt;/doc.go</code>文件如下所示：</p>
-<pre><code class="language-go">// +k8s:deepcopy-gen=package,register
+<h3 id=global-tags>GLOBAL TAGS</h3>
+<p>Global tags 被写入到包的 <code>doc.go</code> 文件中，一个典型的<code>pkg/apis/&lt;apigroup>/&lt;version>/doc.go</code>文件如下所示：</p>
+<pre><code class=language-go>// +k8s:deepcopy-gen=package,register
 // Package v1 is the v1 version of the API.
 // +groupName=example.com
 package v1
@@ -729,9 +316,9 @@ package v1
 <p>Scheme定义了序列化和反序列化API对象的方法，用于将group、版本和类型信息转换为Go模式和从Go模式转换为Go模式的类型注册表，以及不同版本的Go模式之间的映射。</p>
 </blockquote>
 <p>最后，<code>// +groupName=example.com</code> 定义了API 组的全限定名称。如果你写错了这个名称，client-gen 会生成错误的代码。另外这个标签必须在包上的注释块中。</p>
-<h3 id="lacal-tags">LACAL TAGS</h3>
+<h3 id=lacal-tags>LACAL TAGS</h3>
 <p>本地标记要么直接写在API类型上方，要么写在它上方的第二个注释块中。如下的 <code>types.go</code> 文件所示：</p>
-<pre><code class="language-go">// +genclient
+<pre><code class=language-go>// +genclient
 
 // +genclient:noStatus
 
@@ -764,12 +351,12 @@ package v1
  
 </code></pre>
 <p>请注意，默认情况下，我们为所有类型启用了deepcopy，也就是说，可以选择不使用 deepcopy。但是，这些类型都是API类型，需要深度复制。因此，在此示例types.go中，我们不必打开或关闭deepcopy，而仅在<code>doc.go</code>中的程序包范围内即可。</p>
-<h3 id="runtimeobject-and-deepcopyobject">runtime.Object and DeepCopyObject</h3>
+<h3 id=runtimeobject-and-deepcopyobject>runtime.Object and DeepCopyObject</h3>
 <p>有一个特殊的 deepcopy 标签，需要更多说明：</p>
-<pre><code class="language-go">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+<pre><code class=language-go>// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 </code></pre>
 <p>如果您尝试将CustomResources与基于Kubernetes 1.8的客户端一起使用，有些人可能已经很高兴，因为他们不小心出售了master分支的k8s.op/apimachinery，您遇到了由于CustomResource类型未实现runtime.Object而导致的编译器错误，因为未在您的类型上定义DeepCopyObject（）runtime.Object。原因是在1.8中，<code>runtime.Object</code>接口使用此方法签名进行了扩展，因此每个<code>runtime.Objec</code>t都必须实现<code>DeepCopyObject</code>。 <code>DeepCopyObject（）runtime.Object</code>的实现很简单：</p>
-<pre><code class="language-go">func (in *T) DeepCopyObject() runtime.Object {
+<pre><code class=language-go>func (in *T) DeepCopyObject() runtime.Object {
     if c := in.DeepCopy(); c != nil {
         return c
     } else {
@@ -778,13 +365,13 @@ package v1
 }
 </code></pre>
 <p>但幸运的是，您不必为每种类型都实现此功能，而只需将以下本地标记放在顶级API类型的上方：</p>
-<pre><code class="language-go">// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+<pre><code class=language-go>// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 </code></pre>
 <p>在上面的示例中，<code>Database</code> 和<code>DatabaseList</code>都是顶级类型，因为它们被用作runtime.Objects。根据经验，顶级类型是那些嵌入了<code>metav1.TypeMeta</code>的类型。同样，这些是客户端使用client-gen创建的类型。</p>
 <p>请注意，<code>// + k8s：deepcopy-gen：interfaces</code> 标记可以并且也应该在定义具有某些接口类型的字段（例如，<code>field SomeInterface</code>）的API类型的情况下使用。然后<code>// + k8s：deepcopy-gen：interfaces=example.com/pkg/apis/example.SomeInterface</code>将导致<code>DeepeepSomeInterface（）SomeInterface</code>方法的生成。这允许它以类型正确的方式对这些字段进行深度复制。</p>
-<h3 id="client-gen-标签">Client-gen 标签</h3>
+<h3 id=client-gen-标签>Client-gen 标签</h3>
 <p>最后，有许多标记可控制client-gen，在我们的示例中可以看到其中两个：</p>
-<pre><code class="language-go">// +genclient
+<pre><code class=language-go>// +genclient
 
 // +genclient:noStatus
 
@@ -792,11 +379,11 @@ package v1
 <p>第一个标记告诉client-gen为该类型创建一个客户端（始终启用）。请注意，您不必将其放在API对象的列表类型上方。</p>
 <p>第二个标记告诉client-gen该类型未通过<code>/status</code>子资源使用规范状态分隔。生成的客户端将没有<code>UpdateStatus</code>方法（client-gen一旦在您的结构中找到<code>Status</code>字段，就会盲目生成该方法）。<code> /status</code>子资源仅在1.8中才适用于本地（在golang中）实现的资源。但是，随着PR 913中为CustomResources讨论子资源，这种情况可能很快就会改变。</p>
 <p>对于群集范围的资源，必须使用标签：</p>
-<pre><code class="language-go">// +genclient:nonNamespaced
+<pre><code class=language-go>// +genclient:nonNamespaced
 
 </code></pre>
 <p>对于特殊用途的客户端，您可能还希望详细控制客户端提供哪些HTTP方法。可以使用几个标签来完成此操作，例如：</p>
-<pre><code class="language-go">// +genclient:noVerbs
+<pre><code class=language-go>// +genclient:noVerbs
 
 // +genclient:onlyVerbs=create,delete
 
@@ -806,10 +393,10 @@ package v1
 
 </code></pre>
 <p>前三个应该是不言自明的，但是最后一个需要一些解释。上面写入此标记的类型将是仅创建的，并且不会返回API类型本身，而是metav1.Status。对于CustomResources来说，这没有多大意义，但是对于用golang编写的用户提供的API服务器，这些资源可以存在，并且实际上可以在OpenShift API中使用。</p>
-<h2 id="使用类型客户端的主要功能">使用类型客户端的主要功能</h2>
+<h2 id=使用类型客户端的主要功能>使用类型客户端的主要功能</h2>
 <p>尽管大多数基于Kubernetes 1.7和更早版本的示例都使用了<code>Client-go dynamic client</code> 作为CustomResources，但在很长一段时间内，本地Kubernetes API类型的类型化客户端都更加方便。在1.8版中进行了更改：如上所述，client-gen还为您的自定义类型创建了native，功能齐全且易于使用的类型化客户端。实际上，client-gen不知道您是将其应用于CustomResource类型还是native类型。
 因此，使用此客户端与使用客户端Gober客户端完全等效。这是一个非常简单的示例：</p>
-<pre><code class="language-go">import (
+<pre><code class=language-go>import (
     ...
     metav1 &quot;k8s.io/apimachinery/pkg/apis/meta/v1&quot;
     &quot;k8s.io/client-go/tools/clientcmd&quot;
@@ -853,17 +440,17 @@ func main() {
 </code></pre>
 <p>它与kubeconfig文件一起使用，实际上可以与kubectl和Kubernetes客户端一起使用。</p>
 <p>与动态客户端使用的旧版TPR或CustomResource代码相比，您无需进行类型转换。相反，实际的客户端调用看起来完全是本地的，它是：</p>
-<pre><code class="language-go">list, err := exampleClient.ExampleV1().Databases(&quot;default&quot;).List(metav1.ListOptions{})
+<pre><code class=language-go>list, err := exampleClient.ExampleV1().Databases(&quot;default&quot;).List(metav1.ListOptions{})
 </code></pre>
 <p>在此示例中，结果是群集中所有数据库的<code>DatabaseList</code>。如果您将类型切换为集群范围（即没有命名空间；请不要忘记使用<code>// + genclientnonNamespaced</code>标记告诉client-gen！），调用将变成</p>
-<pre><code class="language-go">list, err := exampleClient.ExampleV1().Databases().List(metav1.ListOptions{})
+<pre><code class=language-go>list, err := exampleClient.ExampleV1().Databases().List(metav1.ListOptions{})
 </code></pre>
-<h3 id="以编程方式在golang创建自定义资源">以编程方式在GOLANG创建自定义资源</h3>
+<h3 id=以编程方式在golang创建自定义资源>以编程方式在GOLANG创建自定义资源</h3>
 <p>由于这个问题经常出现，因此请您谈谈如何从您的golang代码中以编程方式创建CRD的几句话。</p>
 <p>客户代总是创建所谓的clinetsets。客户端集将一个或多个API组捆绑到一个客户端中。通常，这些API组来自一个存储库，并位于一个基本程序包中，例如，如本博文示例中的<code>pkg/apis</code>；对于Kubernetes，则来自<code>k8s.io/api</code>。</p>
 <p>CustomResourceDefinitions由
-<a href="https://github.com/kubernetes/apiextensions-apiserver">kubernetes/apiextensions-apiserver存储库</a>。该API服务器（也可以独立启动）是由kube-apiserver嵌入的，因此CRD在每个Kubernetes群集上都可用。但是创建CRD的客户端会创建到apiextensions-apiserver存储库中，当然也要使用client-gen。阅读此博客后，您可以在<code>kubernetes/apiextensions-apiserver/tree/master/pkg/client</code>上找到客户端也不会感到惊讶，创建客户端实例以及如何创建CRD看起来也不奇怪：</p>
-<pre><code class="language-go">import (
+<a href=https://github.com/kubernetes/apiextensions-apiserver>kubernetes/apiextensions-apiserver存储库</a>。该API服务器（也可以独立启动）是由kube-apiserver嵌入的，因此CRD在每个Kubernetes群集上都可用。但是创建CRD的客户端会创建到apiextensions-apiserver存储库中，当然也要使用client-gen。阅读此博客后，您可以在<code>kubernetes/apiextensions-apiserver/tree/master/pkg/client</code>上找到客户端也不会感到惊讶，创建客户端实例以及如何创建CRD看起来也不奇怪：</p>
+<pre><code class=language-go>import (
     ...
     apiextensionsclientset &quot;k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset”
 
@@ -874,75 +461,33 @@ apiextensionsClient, err := apiextensionsclientset.NewForConfig(cfg)
  
 </code></pre>
 <p>请注意，创建完成后，您将必须等待在新CRD上设置“已建立”条件。只有这样，kube-apiserver才会开始提供资源。如果您不等待该条件，则每次CR操作都会返回404 HTTP状态代码。</p>
-                    </div>
-                    
-                    <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
-    
-    <a href="https://ahamoment.cn/tags/codegen/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#codegen</a>
-    
 </div>
-                    
-                    
-
-                    
-
-
-
-                    
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/kubernetes/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+<a href=https://ahamoment.cn/tags/codegen/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#codegen</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/" class="block">容器健康检查</a>
-        
-    </div>
+<div>
 </div>
-
-                    
-
-
-
-                </div>
-                
-            </div>
-
-        </div>
-
-
-    </div>
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/ class=block>容器健康检查</a>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        hljs.initHighlightingOnLoad();
-        changeSidebarHeight();
-        switchDocToc();
-    })
-</script>
-
-
-
-
-
-
-
-
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad(),changeSidebarHeight(),switchDocToc()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

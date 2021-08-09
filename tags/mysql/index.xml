@@ -1,23 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>MySQL on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/mysql/</link>
-    <description>Recent content in MySQL on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Wed, 09 Dec 2020 11:48:24 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>MySQL 面试题</title>
-      <link>https://ahamoment.cn/posts/interview/interview-mysql/</link>
-      <pubDate>Wed, 09 Dec 2020 11:48:24 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/interview/interview-mysql/</guid>
-      <description>1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。
-2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>MySQL on AhaMoment</title><link>https://ahamoment.cn/tags/mysql/</link><description>Recent content in MySQL on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Wed, 09 Dec 2020 11:48:24 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/mysql/index.xml" rel="self" type="application/rss+xml"/><item><title>MySQL 面试题</title><link>https://ahamoment.cn/posts/interview/interview-mysql/</link><pubDate>Wed, 09 Dec 2020 11:48:24 +0800</pubDate><guid>https://ahamoment.cn/posts/interview/interview-mysql/</guid><description>1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。
+2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。</description></item></channel></rss>

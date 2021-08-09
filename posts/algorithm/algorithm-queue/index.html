@@ -1,320 +1,116 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>队列及其实现 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
  数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。
 2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：
  创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"队列及其实现",
-      "item":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/algorithm/algorithm-queue/"
-    },
-    "headline": "队列及其实现 | AhaMoment","datePublished": "2020-08-06T20:04:38+08:00",
-    "dateModified": "2020-08-06T20:04:38+08:00",
-    "wordCount":  359 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。\n 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。\n2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：\n 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。"
-}
-</script><meta property="og:title" content="队列及其实现 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"队列及其实现","item":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"},"headline":"队列及其实现 | AhaMoment","datePublished":"2020-08-06T20:04:38+08:00","dateModified":"2020-08-06T20:04:38+08:00","wordCount":359,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。\n 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。\n2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：\n 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。"}</script><meta property="og:title" content="队列及其实现 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-queue/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-queue/">
 <meta property="og:description" content="1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
  数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。
 2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：
- 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2020-08-06T20:04:38&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2020-08-06T20:04:38&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="队列" />
-
-
-
-
-
+ 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2020-08-06T20:04:38+08:00">
+<meta property="article:modified_time" content="2020-08-06T20:04:38+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="队列">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">队列及其实现</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2020-08-06</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="hover:text-eureka">数据结构与算法</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">队列及其实现</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-08-06</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <h2 id="1-什么是队列">1. 什么是队列</h2>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
+</div>
+</div>
+<div class=content>
+<h2 id=1-什么是队列>1. 什么是队列</h2>
 <blockquote>
 <p>具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。</p>
 </blockquote>
 <p>数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。</p>
-<h2 id="2-队列的抽象数据类型描述">2. 队列的抽象数据类型描述</h2>
+<h2 id=2-队列的抽象数据类型描述>2. 队列的抽象数据类型描述</h2>
 <p>与队列相关的操作主要包括以下几种：</p>
 <ul>
 <li>创建队列：生成长度为 size 的空队列。</li>
@@ -323,9 +119,9 @@
 <li>将数据元素插入到队列中。</li>
 <li>将数据元素从队列中删除。</li>
 </ul>
-<h2 id="3-队列的顺序存储实现">3. 队列的顺序存储实现</h2>
+<h2 id=3-队列的顺序存储实现>3. 队列的顺序存储实现</h2>
 <p>队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量<strong>front</strong>以及一个记录队列尾元素位置的变量<strong>rear</strong>组成。</p>
-<pre><code class="language-java">public class SeqQueue&lt;T&gt; implements Queue&lt;T&gt; {
+<pre><code class=language-java>public class SeqQueue&lt;T&gt; implements Queue&lt;T&gt; {
 
     private T elementData[];
 
@@ -333,18 +129,18 @@
 }
 </code></pre>
 <p>如下图所示，用顺序存储实现队列，由于数组的元素从 0 开始，所以 front 和 rear 同时指向 -1 这个位置，添加 Job1，rear 往后移动一个位置，删除 Job1 ，front 往后移动一个位置。当队列满了的时候，就无法添加元素了，但是很明显就能发现，此时之前删除的位置还是空的，队列中还有位置，只是无法添加而已，这样的结构会造成空间浪费，我们需要用循环结构来解决。</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/seqqueue.png" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/seqqueue.png alt></p>
 <p>循环队列的机构如下图所示。循环结构中，front 和 rear 开始时同时指向 0 这个位置，之后，每一次入队，rear 向着顺时针方向移动一个位置，每一次出队列，front 向顺时针方向移动一个位置。那么这里就有个问题：队列空和满的判别条件是什么？队列空和满的时候，<code>front=rear</code>，那么就造成无法判断队列空还是满了。那么要如何解决呢？这里提供两个解决方法：</p>
 <ol>
 <li>使用额外标记： <strong>Size</strong>或者<strong>tag</strong> 。size 用来记录当前元素的个数，当你加入一个元素的时候，size 加 1，删除一个元素的时候，size减1，所以只要根据size是0还是n就知道是空还是满的。tag （0，1）标记，添加一个元素，tag=1，删除一个元素 tag=0，当我们想判断队列是满还是空时，只要判断 tag 的值就知道最后一次操作是添加还是删除。</li>
 <li>仅使用n-1个数组空间。</li>
 </ol>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/circlequeue.png" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/circlequeue.png alt></p>
 <p>我们采用第二种方案，使用求余函数来查看列队是否已满。</p>
-<pre><code class="language-java">(rear + 1) % size == front
+<pre><code class=language-java>(rear + 1) % size == front
 </code></pre>
 <p>看看具体的实现代码：</p>
-<pre><code class="language-java">package leetcode.editor.datastructure.queue;
+<pre><code class=language-java>package leetcode.editor.datastructure.queue;
 
 import java.io.Serializable;
 
@@ -396,14 +192,14 @@ public class SeqQueue&lt;T&gt; implements Queue&lt;T&gt;, Serializable {
 }
 
 </code></pre>
-<h1 id="4-队列的链式存储实现">4. 队列的链式存储实现</h1>
+<h1 id=4-队列的链式存储实现>4. 队列的链式存储实现</h1>
 <blockquote>
 <p>队列的链式存储结构也可以用一个<strong>单链表</strong>实现。插入和删除操作分别在链表的两头进行；队列指针<strong>front</strong>和<strong>rear</strong>应该分别指向链表的表头和表尾。</p>
 </blockquote>
 <p>整个队列的结构如下图所示：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/linkqueue.png" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/linkqueue.png alt></p>
 <p>与顺序结构不同的是，链式存储实现的队列，出队需要在表头进行，因为是单向链表，如果在表尾进行删除操作，我们无法知道前一个元素是多少。因此入队和出队操作为：</p>
-<pre><code class="language-java">public class LinkedQueue&lt;T&gt; implements Queue&lt;T&gt; {
+<pre><code class=language-java>public class LinkedQueue&lt;T&gt; implements Queue&lt;T&gt; {
 
     private Node&lt;T&gt; front; //指向队头节点
 
@@ -473,64 +269,31 @@ public class Node&lt;T&gt; {
 <blockquote>
 <p>参考：浙江大学陈越老师的<a href="https://www.icourse163.org/learn/ZJU-93001?tid=1207006212#/learn/announce">数据结构课程</a></p>
 </blockquote>
-
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#队列</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/%E9%98%9F%E5%88%97/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#队列</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-tree/" class="block">树的定义及表示</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/java/java-multithread-dead-lock/" class="block">Java 多线程 - 死锁问题</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/ class=block>树的定义及表示</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/ class=block>Java 多线程 - 死锁问题</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

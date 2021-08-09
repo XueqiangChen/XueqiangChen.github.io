@@ -1,393 +1,387 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>Hugo 博客搭建 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
 1. 博客主体 博客主体是由
 https://github.com/peaceiris/actions-gh-pages
 https://github.com/GitbookIO/gitbook-cli
 https://github.com/marketplace/actions/publish-gitbook
 https://github.com/marketplace?type=actions">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"Hugo 博客搭建",
-      "item":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/tool/tool-hugo-blog/"
-    },
-    "headline": "Hugo 博客搭建 | AhaMoment","datePublished": "2021-06-17T20:28:05+08:00",
-    "dateModified": "2021-06-17T20:28:05+08:00",
-    "wordCount":  14 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。\n1. 博客主体 博客主体是由\nhttps:\/\/github.com\/peaceiris\/actions-gh-pages\nhttps:\/\/github.com\/GitbookIO\/gitbook-cli\nhttps:\/\/github.com\/marketplace\/actions\/publish-gitbook\nhttps:\/\/github.com\/marketplace?type=actions"
-}
-</script><meta property="og:title" content="Hugo 博客搭建 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Hugo 博客搭建","item":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},"headline":"Hugo 博客搭建 | AhaMoment","datePublished":"2021-06-17T20:28:05+08:00","dateModified":"2021-06-17T20:28:05+08:00","wordCount":14,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。\n1. 博客主体 博客主体是由\nhttps:\/\/github.com\/peaceiris\/actions-gh-pages\nhttps:\/\/github.com\/GitbookIO\/gitbook-cli\nhttps:\/\/github.com\/marketplace\/actions\/publish-gitbook\nhttps:\/\/github.com\/marketplace?type=actions"}</script><meta property="og:title" content="Hugo 博客搭建 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-hugo-blog/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-hugo-blog/">
 <meta property="og:description" content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
 1. 博客主体 博客主体是由
 https://github.com/peaceiris/actions-gh-pages
 https://github.com/GitbookIO/gitbook-cli
 https://github.com/marketplace/actions/publish-gitbook
-https://github.com/marketplace?type=actions" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2021-06-17T20:28:05&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2021-06-17T20:28:05&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="github action" />
-
-<meta property="article:tag" content="github pages" />
-
-<meta property="article:tag" content="gitbook" />
-
-<meta property="article:tag" content="hugo" />
-
-
-
-
-
+https://github.com/marketplace?type=actions">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2021-06-17T20:28:05+08:00">
+<meta property="article:modified_time" content="2021-06-17T20:28:05+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="github action">
+<meta property="article:tag" content="github pages">
+<meta property="article:tag" content="gitbook">
+<meta property="article:tag" content="hugo">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">Hugo 博客搭建</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2021-06-17</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>1 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/" class="hover:text-eureka">工具</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">Hugo 博客搭建</h1>
+<div class="flex flex-wrap flex-row items-center my-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-06-17</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <h2 id="前言">前言</h2>
-<p>原先的博客主题 <a href="https://github.com/olOwOlo/hugo-theme-even">even</a> 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 <a href="https://github.com/chipzoller/hugo-clarity">hugo-clarity</a>, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。</p>
-<h2 id="1-博客主体">1. 博客主体</h2>
-<p>博客主体是由</p>
-<p><a href="https://github.com/peaceiris/actions-gh-pages">https://github.com/peaceiris/actions-gh-pages</a></p>
-<p><a href="https://github.com/GitbookIO/gitbook-cli">https://github.com/GitbookIO/gitbook-cli</a></p>
-<p><a href="https://github.com/marketplace/actions/publish-gitbook">https://github.com/marketplace/actions/publish-gitbook</a></p>
-<p><a href="https://github.com/marketplace?type=actions">https://github.com/marketplace?type=actions</a></p>
-
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/github-action/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#github action</a>
-    
-    <a href="https://ahamoment.cn/tags/github-pages/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#github pages</a>
-    
-    <a href="https://ahamoment.cn/tags/gitbook/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#gitbook</a>
-    
-    <a href="https://ahamoment.cn/tags/hugo/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#hugo</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/" class="block">二叉树的中序遍历</a>
-        
-    </div>
+<div class=content>
+<script type=text/javascript src=https://lib.baomitu.com/jquery/1.11.1/jquery.min.js></script>
+<style type=text/css>.car-collapse .car-yearmonth{cursor:s-resize}</style>
+<script type=text/javascript>jQuery(document).ready(function(){jQuery('.car-collapse').find('.car-monthlisting').hide(),jQuery('.car-collapse').find('.car-monthlisting:first').show(),jQuery('.car-collapse').find('.car-yearmonth').click(function(){jQuery(this).next('ul').slideToggle('fast')}),jQuery('.car-collapse').find('.car-toggler').click(function(){return'展开全部'==jQuery(this).text()?(jQuery(this).parent('.car-container').find('.car-monthlisting').show(),jQuery(this).text('折叠全部')):(jQuery(this).parent('.car-container').find('.car-monthlisting').hide(),jQuery(this).text('展开全部')),!1})})</script>
+<div class="car-container car-collapse">
+<a href=# class=car-toggler>展开全部</a>
+<ul class=car-list>
+<li>
+<span class=car-yearmonth>06月 2021 <span title="Post Count">(1)</span></span>
+<ul class=car-monthlisting>
+<li>
+17: <a href=https://ahamoment.cn/posts/tool/tool-hugo-blog/>Hugo 博客搭建 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>04月 2021 <span title="Post Count">(6)</span></span>
+<ul class=car-monthlisting>
+<li>
+21: <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/>十字路口上的Kubernetes默认调度器 </a>
+</li>
+<li>
+20: <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/>QoS 源代码分析 </a>
+</li>
+<li>
+15: <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/>二叉树的中序遍历 </a>
+</li>
+<li>
+14: <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/>Kubernetes的资源模型和资源管理 </a>
+</li>
+<li>
+06: <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/>K8s Go 客户端浅析 </a>
+</li>
+<li>
+01: <a href=https://ahamoment.cn/posts/go/go-new-vs-make/>Go 语言中的 new 关键字和 make 关键字的区别 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>03月 2021 <span title="Post Count">(13)</span></span>
+<ul class=car-monthlisting>
+<li>
+25: <a href=https://ahamoment.cn/posts/tool/tool-mac-os-commands/>Mac 命令汇总 </a>
+</li>
+<li>
+25: <a href=https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/>安装 Tensorflow2 </a>
+</li>
+<li>
+16: <a href=https://ahamoment.cn/posts/tool/tool-vim/>Vim 折腾记 </a>
+</li>
+<li>
+15: <a href=https://ahamoment.cn/posts/go/go-project-catalogs/>Go 语言工作目录 </a>
+</li>
+<li>
+12: <a href=https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成 </a>
+</li>
+<li>
+12: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成 </a>
+</li>
+<li>
+12: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/>深入解析声明式API（一）：API对象的奥秘 </a>
+</li>
+<li>
+12: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/>声明式API与Kubernetes编程范式 </a>
+</li>
+<li>
+09: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/job/>撬动离线业务：Job与CronJob </a>
+</li>
+<li>
+09: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/>深入理解StatefulSet（二）：存储状态 </a>
+</li>
+<li>
+09: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/>容器化守护进程的意义：DaemonSet </a>
+</li>
+<li>
+03: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/>深入理解StatefulSet（一）：拓扑状态 </a>
+</li>
+<li>
+01: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/>Deployment：作业副本与水平扩容 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>02月 2021 <span title="Post Count">(9)</span></span>
+<ul class=car-monthlisting>
+<li>
+28: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/>谈谈“控制器”模式 </a>
+</li>
+<li>
+27: <a href=https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/>容器健康检查 </a>
+</li>
+<li>
+27: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/>深入解析Pod对象(二): 使用进阶 </a>
+</li>
+<li>
+26: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/>深入解析Pod对象(一)：基本概念 </a>
+</li>
+<li>
+26: <a href=https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/>为什么我们需要Pod </a>
+</li>
+<li>
+25: <a href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/>常用的k8s命令 </a>
+</li>
+<li>
+20: <a href=https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/>使用kubeadm 安装k8s集群 </a>
+</li>
+<li>
+10: <a href=https://ahamoment.cn/posts/tool/tool-bazel/>bazel 外部存储库缓存 </a>
+</li>
+<li>
+10: <a href=https://ahamoment.cn/posts/linux/linux-commands/>Linux 常用命令 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>01月 2021 <span title="Post Count">(1)</span></span>
+<ul class=car-monthlisting>
+<li>
+26: <a href=https://ahamoment.cn/posts/java/framework-mybatis-generator/>MyBatis Generator 使用与原理(上) </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>12月 2020 <span title="Post Count">(7)</span></span>
+<ul class=car-monthlisting>
+<li>
+28: <a href=https://ahamoment.cn/posts/interview/interview-docker-k8s/>Docker 和 Kubernetes 面试题 </a>
+</li>
+<li>
+22: <a href=https://ahamoment.cn/posts/interview/interview-questions/>面试题目录 </a>
+</li>
+<li>
+18: <a href=https://ahamoment.cn/posts/interview/interview-distributed-system/>分布式面试题 </a>
+</li>
+<li>
+17: <a href=https://ahamoment.cn/posts/interview/interview-spring/>Spring系列面试题 </a>
+</li>
+<li>
+16: <a href=https://ahamoment.cn/posts/interview/interview-java/>Java 基础面试题 </a>
+</li>
+<li>
+10: <a href=https://ahamoment.cn/posts/interview/interview-network/>计算机网络面试题 </a>
+</li>
+<li>
+09: <a href=https://ahamoment.cn/posts/interview/interview-mysql/>MySQL 面试题 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>11月 2020 <span title="Post Count">(4)</span></span>
+<ul class=car-monthlisting>
+<li>
+24: <a href=https://ahamoment.cn/posts/tool/tool-git-common-operations/>Git 常用命令汇总 </a>
+</li>
+<li>
+12: <a href=https://ahamoment.cn/posts/java/java-multithread-thread-pool/>Java 多线程 - 自定义线程池 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/>Java 多线程 - 线程生命周期 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/>Java 多线程面试题总结 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>10月 2020 <span title="Post Count">(4)</span></span>
+<ul class=car-monthlisting>
+<li>
+25: <a href=https://ahamoment.cn/posts/java/java-multithread-synchronized2/>Java 多线程 - 深入理解synchronized关键字 </a>
+</li>
+<li>
+24: <a href=https://ahamoment.cn/posts/java/java-multithread-interrupt/>Java 多线程 - 线程中断 Interrupt </a>
+</li>
+<li>
+15: <a href=https://ahamoment.cn/posts/java/java-jvm-jmm/>JVM 内存结构 </a>
+</li>
+<li>
+15: <a href=https://ahamoment.cn/posts/algorithm/algorithm-hashtable/>散列表那些事 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>09月 2020 <span title="Post Count">(4)</span></span>
+<ul class=car-monthlisting>
+<li>
+27: <a href=https://ahamoment.cn/posts/linux/linux-nscd/>认识 Linux NSCD 服务缓存 </a>
+</li>
+<li>
+15: <a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/>堆 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/>容器内获取 CPU 核数问题 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/linux/linux-cap/>解决setcap导致Java加载libjli.so 失败问题 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>08月 2020 <span title="Post Count">(6)</span></span>
+<ul class=car-monthlisting>
+<li>
+31: <a href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/>平衡二叉树 </a>
+</li>
+<li>
+27: <a href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/>Linux Shell Script 基础教程 </a>
+</li>
+<li>
+19: <a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/>二叉搜索树 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/>二叉树及存储结构 </a>
+</li>
+<li>
+11: <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/>树的定义及表示 </a>
+</li>
+<li>
+06: <a href=https://ahamoment.cn/posts/algorithm/algorithm-queue/>队列及其实现 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>06月 2020 <span title="Post Count">(3)</span></span>
+<ul class=car-monthlisting>
+<li>
+10: <a href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/>Java 多线程 - 死锁问题 </a>
+</li>
+<li>
+10: <a href=https://ahamoment.cn/posts/java/java-multithread-synchronized/>Java 多线程 - 初识 Synchronized </a>
+</li>
+<li>
+02: <a href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/>20 常用的 RPM 命令 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>05月 2020 <span title="Post Count">(1)</span></span>
+<ul class=car-monthlisting>
+<li>
+11: <a href=https://ahamoment.cn/posts/java/java-source-code-learn/>JDK1.8 源代码阅读环境搭建 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>03月 2020 <span title="Post Count">(1)</span></span>
+<ul class=car-monthlisting>
+<li>
+27: <a href=https://ahamoment.cn/posts/java/framewordk-springboot-send-email/>Spring Boot 发送邮件 </a>
+</li>
+</ul>
+</li>
+<li>
+<span class=car-yearmonth>11月 2019 <span title="Post Count">(3)</span></span>
+<ul class=car-monthlisting>
+<li>
+26: <a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/>Linux Shell 输入/输出重定向 </a>
+</li>
+<li>
+21: <a href=https://ahamoment.cn/posts/java/java-remote-debug/>IntellJ IDEA 远程调试 Java 程序 </a>
+</li>
+<li>
+16: <a href=https://ahamoment.cn/posts/tool/tool-git-set-config/>自动配置Git仓库提交作者 </a>
+</li>
+</ul>
+</li>
+</ul>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

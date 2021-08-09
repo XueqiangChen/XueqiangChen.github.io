@@ -1,670 +1,265 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>谈谈“控制器”模式 | K8s 学习笔记 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="
 本文转自张磊老师的《深入剖析 Kubernetes》课程
 ">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"文档",
-      "item":"https://ahamoment.cn/docs/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"K8s 学习笔记",
-      "item":"https://ahamoment.cn/docs/k8s-doc/"},{
-      "@type": "ListItem",
-      "position": 3 ,
-      "name":"3. 容器编排与 kubernetes 作业管理",
-      "item":"https://ahamoment.cn/docs/k8s-doc/chapter3/"},{
-      "@type": "ListItem",
-      "position": 4 ,
-      "name":"谈谈“控制器”模式",
-      "item":"https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/"
-    },
-    "headline": "谈谈“控制器”模式 | K8s 学习笔记 | AhaMoment","datePublished": "2021-02-28T15:15:52+08:00",
-    "dateModified": "2021-02-28T15:15:52+08:00",
-    "wordCount":  285 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "\u003cblockquote\u003e\n\u003cp\u003e本文转自张磊老师的《深入剖析 Kubernetes》课程\u003c\/p\u003e\n\u003c\/blockquote\u003e"
-}
-</script><meta property="og:title" content="谈谈“控制器”模式 | K8s 学习笔记 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"K8s 学习笔记","item":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":3,"name":"3. 容器编排与 kubernetes 作业管理","item":"https://ahamoment.cn/docs/k8s-doc/chapter3/"},{"@type":"ListItem","position":4,"name":"谈谈“控制器”模式","item":"https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/"},"headline":"谈谈“控制器”模式 | K8s 学习笔记 | AhaMoment","datePublished":"2021-02-28T15:15:52+08:00","dateModified":"2021-02-28T15:15:52+08:00","wordCount":285,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"\u003cblockquote\u003e\n\u003cp\u003e本文转自张磊老师的《深入剖析 Kubernetes》课程\u003c\/p\u003e\n\u003c\/blockquote\u003e"}</script><meta property="og:title" content="谈谈“控制器”模式 | K8s 学习笔记 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">
 <meta property="og:description" content="
 本文转自张磊老师的《深入剖析 Kubernetes》课程
-" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2021-02-28T15:15:52&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2021-02-28T15:15:52&#43;08:00" />
-
-
-
-<meta property="article:section" content="docs" />
-
-
-<meta property="article:tag" content="Kubernetes" />
-
-<meta property="article:tag" content="contoller loop" />
-
-
-
-
-
+">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2021-02-28T15:15:52+08:00">
+<meta property="article:modified_time" content="2021-02-28T15:15:52+08:00">
+<meta property="article:section" content="docs">
+<meta property="article:tag" content="Kubernetes">
+<meta property="article:tag" content="contoller loop">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  selected-menu-item  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 selected-menu-item mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
-<div class="lg:pt-12">
-    <div class="flex flex-col md:flex-row bg-secondary-bg rounded">
-        <div class="md:w-1/4 lg:w-1/5 border-r">
-            <div class="sticky top-16 pt-6">
-                
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div id="sidebar-title" class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
-    <span class="font-semibold">Table of Contents</span>
-    <i class="fas fa-caret-right ml-1"></i>
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class=lg:pt-12>
+<div class="flex flex-col md:flex-row bg-secondary-bg rounded">
+<div class="md:w-1/4 lg:w-1/5 border-r">
+<div class="sticky top-16 pt-6">
+<div id=sidebar-title class="md:hidden mx-4 px-2 pt-4 pb-2 md:border-b text-tertiary-text md:text-primary-text">
+<span class=font-semibold>Table of Contents</span>
+<i class="fas fa-caret-right ml-1"></i>
 </div>
-
-<div id="sidebar-toc"
-    class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
-    <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
-        <a class=" hover:text-eureka"
-            href="https://ahamoment.cn/docs/k8s-doc/">K8s 学习笔记</a>
-        
-        
-        
-
-
-    </div>
-    
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter2/">2. Kubernetes 集群搭建与实践</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/">使用kubeadm 安装k8s集群</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/">3. 容器编排与 kubernetes 作业管理</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/">深入解析声明式API（一）：API对象的奥秘</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/">声明式API与Kubernetes编程范式</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/job/">撬动离线业务：Job与CronJob</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/">深入理解StatefulSet（二）：存储状态</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/">容器化守护进程的意义：DaemonSet</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/">深入理解StatefulSet（一）：拓扑状态</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/">Deployment：作业副本与水平扩容</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" text-eureka  hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/">谈谈“控制器”模式</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/">深入解析Pod对象(二): 使用进阶</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/">深入解析Pod对象(一)：基本概念</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/">为什么我们需要Pod</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/">6. kubernetes 作业调度与资源管理</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/">十字路口上的Kubernetes默认调度器</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/">QoS 源代码分析</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/">Kubernetes的资源模型和资源管理</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">K8s Go 客户端浅析</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class=" pb-2 ">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/">9. kubernetes 生态周边</a>
-        </div>
-        
-        
-<ul class="pl-6">
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/">[译]Kubernetes深入研究：CustomResources的代码生成</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/">容器健康检查</a>
-        </div>
-        
-    </li>
-    
-    
-    
-    
-    <li class="py-2">
-        <div class="">
-            <a class=" hover:text-eureka"
-                href="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">常用的k8s命令</a>
-        </div>
-        
-    </li>
-    
-    
-</ul>
-
-        
-    </li>
-    
-    
-</ul>
-
+<div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
+<div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/>K8s 学习笔记</a>
 </div>
-
-
-
-
-
-
-
-            </div>
-
-        </div>
-        <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
-            <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
-                <h1 class="font-bold text-3xl text-primary-text">谈谈“控制器”模式</h1>
-                <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2021-02-28</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>2 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/" class="hover:text-eureka">云计算</a>
-        
-    </div>
-    
-
-    
+<ul class=pl-6>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter2/>2. Kubernetes 集群搭建与实践</a>
 </div>
-            </div>
-            <div class="flex">
-                <div class="w-full lg:w-3/4 px-6">
-                    
-                    
-                    <div class="content">
-                        <blockquote>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/>使用kubeadm 安装k8s集群</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/>3. 容器编排与 kubernetes 作业管理</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/api-object/>深入解析声明式API（一）：API对象的奥秘</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/declarative-api/>声明式API与Kubernetes编程范式</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/job/>撬动离线业务：Job与CronJob</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-2/>深入理解StatefulSet（二）：存储状态</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/daemonset/>容器化守护进程的意义：DaemonSet</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/statefulset-1/>深入理解StatefulSet（一）：拓扑状态</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/>Deployment：作业副本与水平扩容</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class="text-eureka hover:text-eureka" href=https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/>谈谈“控制器”模式</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/>深入解析Pod对象(二): 使用进阶</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/>深入解析Pod对象(一)：基本概念</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/>为什么我们需要Pod</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/>6. kubernetes 作业调度与资源管理</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/default-scheduler/>十字路口上的Kubernetes默认调度器</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/qos-sc/>QoS 源代码分析</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/>Kubernetes的资源模型和资源管理</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/>K8s Go 客户端浅析</a>
+</div>
+</li>
+</ul>
+</li>
+<li class=py-2>
+<div class=pb-2>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/>9. kubernetes 生态周边</a>
+</div>
+<ul class=pl-6>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/>[译]Kubernetes深入研究：CustomResources的代码生成</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/>容器健康检查</a>
+</div>
+</li>
+<li class=py-2>
+<div>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/>常用的k8s命令</a>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
+<div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
+<h1 class="font-bold text-3xl text-primary-text">谈谈“控制器”模式</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-02-28</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/ class=hover:text-eureka>云计算</a>
+</div>
+</div>
+</div>
+<div class=flex>
+<div class="w-full lg:w-3/4 px-6">
+<div class=content>
+<blockquote>
 <p>本文转自张磊老师的《深入剖析 Kubernetes》课程</p>
 </blockquote>
 <p>实际上，你可能已经有所感悟：<strong>Pod 这个看似复杂的 API 对象，实际上就是对容器的进一步抽象和封装而已。</strong></p>
 <p>说得更形象些，“容器”镜像虽然好用，但是容器这样一个“沙盒”的概念，对于描述应用来说，还是太过简单了。这就好比，集装箱固然好用，但是如果它四面都光秃秃的，吊车还怎么把这个集装箱吊起来并摆放好呢？所以，Pod 对象，其实就是容器的升级版。它对容器进行了组合，添加了更多的属性和字段。这就好比给集装箱四面安装了吊环，使得 Kubernetes 这架“吊车”，可以更轻松地操作它。</p>
 <p>而 Kubernetes 操作这些“集装箱”的逻辑，都由控制器（Controller）完成。在前面的第 12 篇文章《牛刀小试：我的第一个容器化应用》中，我们曾经使用过 Deployment 这个最基本的控制器对象。</p>
 <p>现在，我们一起来回顾一下这个名叫 nginx-deployment 的例子：</p>
-<pre><code class="language-yaml">apiVersion: apps/v1
+<pre><code class=language-yaml>apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
@@ -689,7 +284,7 @@ spec:
 <p>这时，你也许就会好奇：究竟是 Kubernetes 项目中的哪个组件，在执行这些操作呢？</p>
 <p>我在前面介绍 Kubernetes 架构的时候，曾经提到过一个叫作 kube-controller-manager 的组件。</p>
 <p>实际上，这个组件，就是一系列控制器的集合。我们可以查看一下 Kubernetes 项目的 pkg/controller 目录：</p>
-<pre><code class="language-bash">$ cd kubernetes/pkg/controller/
+<pre><code class=language-bash>$ cd kubernetes/pkg/controller/
 $ ls -d */              
 deployment/             job/                    podautoscaler/          
 cloud/                  disruption/             namespace/              
@@ -700,7 +295,7 @@ cronjob/                garbagecollector/       nodelifecycle/          replicat
 <p>这个目录下面的每一个控制器，都以独有的方式负责某种编排功能。而我们的 Deployment，正是这些控制器中的一种。</p>
 <p>实际上，这些控制器之所以被统一放在 pkg/controller 目录下，就是因为它们都遵循 Kubernetes 项目中的一个通用编排模式，即：<strong>控制循环（control loop）</strong>。</p>
 <p>比如，现在有一种待编排的对象 X，它有一个对应的控制器。那么，我就可以用一段 Go 语言风格的伪代码，为你描述这个控制循环：</p>
-<pre><code class="language-go">for {
+<pre><code class=language-go>for {
   实际状态 := 获取集群中对象X的实际状态（Actual State）
   期望状态 := 获取集群中对象X的期望状态（Desired State）
   if 实际状态 == 期望状态{
@@ -728,7 +323,7 @@ cronjob/                garbagecollector/       nodelifecycle/          replicat
 <p>其实，像 Deployment 这种控制器的设计原理，就是我们前面提到过的，“用一种对象管理另一种对象”的“艺术”。</p>
 <p>其中，这个控制器对象本身，负责定义被管理对象的期望状态。比如，Deployment 里的 replicas=2 这个字段。而被控制对象的定义，则来自于一个“模板”。比如，Deployment 里的 template 字段。可以看到，Deployment 这个 template 字段里的内容，跟一个标准的 Pod 对象的 API 定义，丝毫不差。而所有被这个 Deployment 管理的 Pod 实例，其实都是根据这个 template 字段的内容创建出来的。像 Deployment 定义的 template 字段，在 Kubernetes 项目中有一个专有的名字，叫作 PodTemplate（Pod 模板）。</p>
 <p>这个概念非常重要，因为后面我要讲解到的大多数控制器，都会使用 PodTemplate 来统一定义它所要管理的 Pod。更有意思的是，我们还会看到其他类型的对象模板，比如 Volume 的模板。至此，我们就可以对 Deployment 以及其他类似的控制器，做一个简单总结了：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/template.png" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/template.png alt></p>
 <p>如上图所示，<strong>类似 Deployment 这样的一个控制器，实际上都是由上半部分的控制器定义（包括期望状态），加上下半部分的被控制对象的模板组成的。</strong></p>
 <p>这就是为什么，在所有 API 对象的 Metadata 里，都有一个字段叫作 ownerReference，用于保存当前这个 API 对象的拥有者（Owner）的信息。</p>
 <p>那么，对于我们这个 nginx-deployment 来说，它创建出来的 Pod 的 ownerReference 就是 nginx-deployment 吗？或者说，nginx-deployment 所直接控制的，就是 Pod 对象么？这个问题的答案，我就留到下一篇文章时再做详细解释吧。</p>
@@ -751,78 +346,35 @@ cronjob/                garbagecollector/       nodelifecycle/          replicat
 </li>
 </ol>
 </blockquote>
-                    </div>
-                    
-                    <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/kubernetes/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
-    
-    <a href="https://ahamoment.cn/tags/contoller-loop/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#contoller loop</a>
-    
 </div>
-                    
-                    
-
-                    
-
-
-
-                    
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/kubernetes/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kubernetes</a>
+<a href=https://ahamoment.cn/tags/contoller-loop/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#contoller loop</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/" class="block">Deployment：作业副本与水平扩容</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/" class="block">深入解析Pod对象(二): 使用进阶</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/ class=block>Deployment：作业副本与水平扩容</a>
 </div>
-
-                    
-
-
-
-                </div>
-                
-            </div>
-
-        </div>
-
-
-    </div>
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/ class=block>深入解析Pod对象(二): 使用进阶</a>
 </div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        hljs.initHighlightingOnLoad();
-        changeSidebarHeight();
-        switchDocToc();
-    })
-</script>
-
-
-
-
-
-
-
-
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad(),changeSidebarHeight(),switchDocToc()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

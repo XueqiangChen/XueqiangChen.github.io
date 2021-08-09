@@ -1,37 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Go on AhaMoment</title>
-    <link>https://ahamoment.cn/categories/go/</link>
-    <description>Recent content in Go on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 01 Apr 2021 16:23:40 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/go/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Go 语言中的 new 关键字和 make 关键字的区别</title>
-      <link>https://ahamoment.cn/posts/go/go-new-vs-make/</link>
-      <pubDate>Thu, 01 Apr 2021 16:23:40 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/go/go-new-vs-make/</guid>
-      <description>Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Go on AhaMoment</title><link>https://ahamoment.cn/categories/go/</link><description>Recent content in Go on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 01 Apr 2021 16:23:40 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/go/index.xml" rel="self" type="application/rss+xml"/><item><title>Go 语言中的 new 关键字和 make 关键字的区别</title><link>https://ahamoment.cn/posts/go/go-new-vs-make/</link><pubDate>Thu, 01 Apr 2021 16:23:40 +0800</pubDate><guid>https://ahamoment.cn/posts/go/go-new-vs-make/</guid><description>Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
 对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
-package main import &amp;quot;fmt&amp;quot; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。</description>
-    </item>
-    
-    <item>
-      <title>Go 语言工作目录</title>
-      <link>https://ahamoment.cn/posts/go/go-project-catalogs/</link>
-      <pubDate>Mon, 15 Mar 2021 10:16:45 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/go/go-project-catalogs/</guid>
-      <description>GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
+package main import &amp;quot;fmt&amp;quot; func main() { var i int fmt.Println(i) } 而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。</description></item><item><title>Go 语言工作目录</title><link>https://ahamoment.cn/posts/go/go-project-catalogs/</link><pubDate>Mon, 15 Mar 2021 10:16:45 +0800</pubDate><guid>https://ahamoment.cn/posts/go/go-project-catalogs/</guid><description>GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
 工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
 GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
 在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
-# go env GO111MODULE=&amp;quot;&amp;quot; GOARCH=&amp;quot;amd64&amp;quot; GOBIN=&amp;quot;&amp;quot; GOCACHE=&amp;quot;/root/.cache/go-build&amp;quot; GOENV=&amp;quot;/root/.</description>
-    </item>
-    
-  </channel>
-</rss>
+# go env GO111MODULE=&amp;quot;&amp;quot; GOARCH=&amp;quot;amd64&amp;quot; GOBIN=&amp;quot;&amp;quot; GOCACHE=&amp;quot;/root/.cache/go-build&amp;quot; GOENV=&amp;quot;/root/.</description></item></channel></rss>

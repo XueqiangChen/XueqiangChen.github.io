@@ -1,43 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>9. kubernetes 生态周边 on AhaMoment</title>
-    <link>https://ahamoment.cn/docs/k8s-doc/chapter9/</link>
-    <description>Recent content in 9. kubernetes 生态周边 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/chapter9/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>[译]Kubernetes深入研究：CustomResources的代码生成</title>
-      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</link>
-      <pubDate>Fri, 12 Mar 2021 10:57:25 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;原文链接：&lt;a href=&#34;https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources&#34;&gt;Kubernetes Deep Dive: Code Generation for CustomResources&lt;/a&gt;&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-    <item>
-      <title>容器健康检查</title>
-      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</link>
-      <pubDate>Sat, 27 Feb 2021 17:40:49 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>常用的k8s命令</title>
-      <link>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</link>
-      <pubDate>Thu, 25 Feb 2021 07:37:43 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</guid>
-      <description>1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
-$ kubectl replace -f nginx-deployment.</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>9. kubernetes 生态周边 on AhaMoment</title><link>https://ahamoment.cn/docs/k8s-doc/chapter9/</link><description>Recent content in 9. kubernetes 生态周边 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/chapter9/index.xml" rel="self" type="application/rss+xml"/><item><title>[译]Kubernetes深入研究：CustomResources的代码生成</title><link>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</link><pubDate>Fri, 12 Mar 2021 10:57:25 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter9/code-generation-for-customresources/</guid><description>&lt;blockquote>
+&lt;p>原文链接：&lt;a href="https://www.openshift.com/blog/kubernetes-deep-dive-code-generation-customresources">Kubernetes Deep Dive: Code Generation for CustomResources&lt;/a>&lt;/p>
+&lt;/blockquote></description></item><item><title>容器健康检查</title><link>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</link><pubDate>Sat, 27 Feb 2021 17:40:49 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter9/health-check/</guid><description/></item><item><title>常用的k8s命令</title><link>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</link><pubDate>Thu, 25 Feb 2021 07:37:43 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter9/commands/</guid><description>1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件：
+$ kubectl replace -f nginx-deployment.</description></item></channel></rss>

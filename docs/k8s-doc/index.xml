@@ -1,13 +1,1 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>K8s 学习笔记 on AhaMoment</title>
-    <link>https://ahamoment.cn/docs/k8s-doc/</link>
-    <description>Recent content in K8s 学习笔记 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/index.xml" rel="self" type="application/rss+xml" />
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>K8s 学习笔记 on AhaMoment</title><link>https://ahamoment.cn/docs/k8s-doc/</link><description>Recent content in K8s 学习笔记 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Fri, 06 Aug 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/docs/k8s-doc/index.xml" rel="self" type="application/rss+xml"/></channel></rss>

@@ -1,342 +1,134 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>认识 Linux NSCD 服务缓存 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装   RHEL/CentOS
 yum -y install nscd    Debian/Ubuntu
 apt-get install nscd    RPM">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"认识 Linux NSCD 服务缓存",
-      "item":"https://ahamoment.cn/posts/linux/linux-nscd/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/linux/linux-nscd/"
-    },
-    "headline": "认识 Linux NSCD 服务缓存 | AhaMoment","datePublished": "2020-09-27T13:23:05+08:00",
-    "dateModified": "2020-09-27T13:23:05+08:00",
-    "wordCount":  490 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL\/CentOS\nyum -y install nscd    Debian\/Ubuntu\napt-get install nscd    RPM"
-}
-</script><meta property="og:title" content="认识 Linux NSCD 服务缓存 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"认识 Linux NSCD 服务缓存","item":"https://ahamoment.cn/posts/linux/linux-nscd/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-nscd/"},"headline":"认识 Linux NSCD 服务缓存 | AhaMoment","datePublished":"2020-09-27T13:23:05+08:00","dateModified":"2020-09-27T13:23:05+08:00","wordCount":490,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL\/CentOS\nyum -y install nscd    Debian\/Ubuntu\napt-get install nscd    RPM"}</script><meta property="og:title" content="认识 Linux NSCD 服务缓存 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-nscd/" />
-
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-nscd/">
 <meta property="og:description" content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装   RHEL/CentOS
 yum -y install nscd    Debian/Ubuntu
-apt-get install nscd    RPM" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2020-09-27T13:23:05&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2020-09-27T13:23:05&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="linux" />
-
-<meta property="article:tag" content="nscd" />
-
-
-
-
-
-<meta property="og:see_also" content="https://ahamoment.cn/posts/linux/linux-cap/" />
-
-
-
+apt-get install nscd    RPM">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2020-09-27T13:23:05+08:00">
+<meta property="article:modified_time" content="2020-09-27T13:23:05+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="linux">
+<meta property="article:tag" content="nscd">
+<meta property="og:see_also" content="https://ahamoment.cn/posts/linux/linux-cap/">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">认识 Linux NSCD 服务缓存</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2020-09-27</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>3 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/linux/" class="hover:text-eureka">Linux</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">认识 Linux NSCD 服务缓存</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-09-27</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <p>NSCD(Name Service Cache Daemon)是服务缓存守护进程。</p>
-<h2 id="nscd-安装">NSCD 安装</h2>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>3 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
+</div>
+</div>
+<div class=content>
+<p>NSCD(Name Service Cache Daemon)是服务缓存守护进程。</p>
+<h2 id=nscd-安装>NSCD 安装</h2>
 <ul>
 <li>
 <p>RHEL/CentOS</p>
-<pre><code class="language-bash">yum -y install nscd
+<pre><code class=language-bash>yum -y install nscd
 </code></pre>
 </li>
 <li>
 <p>Debian/Ubuntu</p>
-<pre><code class="language-bash">apt-get install nscd
+<pre><code class=language-bash>apt-get install nscd
 </code></pre>
 </li>
 <li>
 <p>RPM</p>
-<pre><code class="language-bash">https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
+<pre><code class=language-bash>https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
 </code></pre>
 </li>
 </ul>
 <p>CentOS7 之后 NSCD 使用 systemd 进行管理。</p>
-<h2 id="nscd-命令选项">NSCD 命令选项</h2>
-<pre><code class="language-bash">$ nscd  --help
+<h2 id=nscd-命令选项>NSCD 命令选项</h2>
+<pre><code class=language-bash>$ nscd  --help
 用法： nscd [选项...]
 Name Service Cache Daemon.
   -d, --debug                Do not fork and display messages on the current
@@ -352,11 +144,11 @@ Name Service Cache Daemon.
 
 长选项的强制或可选参数对对应的短选项也是强制或可选的。
 </code></pre>
-<h2 id="nscd-配置文件">NSCD 配置文件</h2>
+<h2 id=nscd-配置文件>NSCD 配置文件</h2>
 <p>NSCD配置文件为<code>/etc/nscd.conf</code>，NSCD程序在启动的时候会读取<code>/etc/nscd.conf</code>文件，每一行指定一个属性和对应的值，或者指定一个服务和对应的值，#表示注释。有效的服务设定是：passwd, group, hosts, services, or netgroup五个。</p>
 <p>NSCD 的缓存文件路径默认为 <code>/var/db/nscd/</code>。</p>
 <p>NSCD 的配置文件相关参数</p>
-<pre><code class="language-bash">#设置日志文件
+<pre><code class=language-bash>#设置日志文件
 logfile debug-file-name
 
 #设置debug记录的级别，默认是0
@@ -410,8 +202,8 @@ max-db-size service bytes
 #此选项仅使用于passwd和group服务
 auto-propagate service &lt;yes|no&gt;
 </code></pre>
-<h2 id="nscd-使用示例对dns进行缓存">NSCD 使用示例：对DNS进行缓存</h2>
-<h3 id="dns缓存在服务器上的作用">DNS缓存在服务器上的作用</h3>
+<h2 id=nscd-使用示例对dns进行缓存>NSCD 使用示例：对DNS进行缓存</h2>
+<h3 id=dns缓存在服务器上的作用>DNS缓存在服务器上的作用</h3>
 <p>在需要通过域名与外界进行数据交互的时候,dns缓存就派上用场了,它可以减少域名解析的时间,提高效率。例如以下情况</p>
 <ul>
 <li>使用爬虫采集网络上的页面数据,</li>
@@ -419,7 +211,7 @@ auto-propagate service &lt;yes|no&gt;
 <li>使用第三方支付接口,</li>
 <li>使用短信通道下发短信等.</li>
 </ul>
-<h3 id="开启nscd-dns-缓存服务的优缺点">开启NSCD DNS 缓存服务的优缺点</h3>
+<h3 id=开启nscd-dns-缓存服务的优缺点>开启NSCD DNS 缓存服务的优缺点</h3>
 <ul>
 <li>优点：
 <ul>
@@ -436,12 +228,12 @@ auto-propagate service &lt;yes|no&gt;
 </ul>
 </li>
 </ul>
-<h3 id="配置dns缓存">配置DNS缓存</h3>
+<h3 id=配置dns缓存>配置DNS缓存</h3>
 <p>通过编辑<code>/etc/nscd.conf</code>文件，在其中增加如下一行可以开启本地DNS Cache</p>
-<pre><code class="language-bash">enable-cache hosts yes #这个服务除了dns缓存之外还可以缓存passwd,group,servers
+<pre><code class=language-bash>enable-cache hosts yes #这个服务除了dns缓存之外还可以缓存passwd,group,servers
 </code></pre>
 <p>完整配置如下：</p>
-<pre><code class="language-bash">$ cat /etc/nscd.conf
+<pre><code class=language-bash>$ cat /etc/nscd.conf
 
 logfile                 /var/log/nscd.log
 threads                 5
@@ -461,26 +253,26 @@ persistent              hosts           yes
 shared                  hosts           yes
 max-db-size             hosts           33554432
 </code></pre>
-<h4 id="关于主动刷新">关于主动刷新</h4>
-<pre><code class="language-bash">reload-count 5    默认值是5，代表SUCCESS的缓存在内存中会Reload  5次
+<h4 id=关于主动刷新>关于主动刷新</h4>
+<pre><code class=language-bash>reload-count 5    默认值是5，代表SUCCESS的缓存在内存中会Reload  5次
 </code></pre>
 <p>reload的time是DNS应答<code>TTL</code>+<code>CACHE_PRUNE_INTERVAL</code>，reload过程中NSCD会主动发起DNS请求（非客户端发起），如果期间发生解析结果变更会将结果主动更新至NSCD缓存。这里的CACHE_PRUNE_INTERVAL来自于相关的宏定义：</p>
-<pre><code class="language-text">#define CACHE_PRUNE_INTERVAL    15
+<pre><code class=language-text>#define CACHE_PRUNE_INTERVAL    15
 </code></pre>
-<h4 id="关于非success域名的缓存">关于非success域名的缓存</h4>
+<h4 id=关于非success域名的缓存>关于非success域名的缓存</h4>
 <p>查看代码发现对于非success域名的缓存，NSCD会读取配置中的negative-time-to-live hosts，将缓存一个negative-time-to-live hosts+CACHE_PRUNE_INTERVAL的时间</p>
-<pre><code class="language-text">dataset-&gt;head.ttl = ttl == INT32_MAX ? db-&gt;negtimeout : ttl;
+<pre><code class=language-text>dataset-&gt;head.ttl = ttl == INT32_MAX ? db-&gt;negtimeout : ttl;
   timeout = dataset-&gt;head.timeout = t + dataset-&gt;head.ttl;
 </code></pre>
-<h4 id="关于缓存的rr轮询">关于缓存的RR轮询</h4>
+<h4 id=关于缓存的rr轮询>关于缓存的RR轮询</h4>
 <p>NSCD是直接缓存了GETHOSTBYNAME/GETHOSTBYADD的应答结果，如果存在多条RR的情况下，将只会读取应答结果中的第一条结果作为函数的返回值。多条RR在NSCD的缓存中并没有RR轮询的效果，直到下一次reload更新缓存结果。这里可能导致域名原本的负载均衡机制失效。</p>
-<h4 id="关于cnamea的结果">关于CNAME+A的结果</h4>
+<h4 id=关于cnamea的结果>关于CNAME+A的结果</h4>
 <p>GLIBC的GETHOSTBYNAME/GETHOSTBYADD返回的TTL中直接读取的是A类型的TTL，代码中并没有针对CNAME的TTL做特殊处理，因此在有CNAME+A的级联应答结果中，缓存的timeout将只会读取对应的A记录的TTL。
 当DNS应答结果只有CNAME时，DNS请求将被判定为失败，这时CNAME的TTL将不起作用，缓存的时间将遵循非success域名的timeout计算。</p>
-<pre><code class="language-text">return ((qtype == T_A || qtype == T_AAAA) &amp;&amp; ap != host_data-&gt;aliases
+<pre><code class=language-text>return ((qtype == T_A || qtype == T_AAAA) &amp;&amp; ap != host_data-&gt;aliases
            ? NSS_STATUS_NOTFOUND : NSS_STATUS_TRYAGAIN);
 </code></pre>
-<h3 id="启动-nscd-进程">启动 NSCD 进程</h3>
+<h3 id=启动-nscd-进程>启动 NSCD 进程</h3>
 <p>默认该服务在Redhat或Centos下是关闭的，可以通过以下指令开启</p>
 <pre><code>$ systemctl start nscd
 </code></pre>
@@ -489,9 +281,9 @@ max-db-size             hosts           33554432
 nscd       1284  0.1  0.3 708056  1580 ?        Ssl  23:37   0:00 /usr/sbin/nscd
 </code></pre>
 <p>说明已经正常运行了。</p>
-<h3 id="nscd服务查看和清除">NSCD服务查看和清除</h3>
+<h3 id=nscd服务查看和清除>NSCD服务查看和清除</h3>
 <p>NSCD缓存DB文件在<code>/var/db/nscd</code>下。可以通过<code>nscd -g</code>查看统计的信息，这里列出部分：</p>
-<pre><code class="language-bash">$ nscd -g
+<pre><code class=language-bash>$ nscd -g
 
 nscd 配置：
 
@@ -531,89 +323,51 @@ hosts cache:
 
 ... 省略输出信息若干 ...
 </code></pre>
-<h3 id="清除指定类型缓存">清除指定类型缓存</h3>
-<pre><code class="language-bash">$ nscd -i passwd
+<h3 id=清除指定类型缓存>清除指定类型缓存</h3>
+<pre><code class=language-bash>$ nscd -i passwd
 $ nscd -i group
 $ nscd -i hosts
 </code></pre>
-<h3 id="关闭服务">关闭服务</h3>
-<pre><code class="language-bash">$ nscd -K
+<h3 id=关闭服务>关闭服务</h3>
+<pre><code class=language-bash>$ nscd -K
 </code></pre>
-<h2 id="参考文章">参考文章</h2>
-<p>【1】<a href="https://www.hi-linux.com/posts/9461.html">Linux 下开启缓存服务 NSCD</a></p>
-<p>【2】<a href="https://zhuanlan.zhihu.com/p/44556919">阿里DNS: NSCD-DNS缓存详解</a></p>
-<p>【3】<a href="https://linux.die.net/man/8/nscd">Linux man page</a></p>
-
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/linux/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#linux</a>
-    
-    <a href="https://ahamoment.cn/tags/nscd/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#nscd</a>
-    
+<h2 id=参考文章>参考文章</h2>
+<p>【1】<a href=https://www.hi-linux.com/posts/9461.html>Linux 下开启缓存服务 NSCD</a></p>
+<p>【2】<a href=https://zhuanlan.zhihu.com/p/44556919>阿里DNS: NSCD-DNS缓存详解</a></p>
+<p>【3】<a href=https://linux.die.net/man/8/nscd>Linux man page</a></p>
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/linux/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#linux</a>
+<a href=https://ahamoment.cn/tags/nscd/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#nscd</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-hashtable/" class="block">散列表那些事</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-heap/" class="block">堆</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-hashtable/ class=block>散列表那些事</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-        <h2 class="text-lg font-semibold mb-4">See Also</h2>
-        <div class="content">
-            
-            <a href="https://ahamoment.cn/posts/linux/linux-cap/">解决setcap导致Java加载libjli.so 失败问题</a>
-            <br />
-            
-        </div>
-    </div>
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class=block>堆</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+<h2 class="text-lg font-semibold mb-4">See Also</h2>
+<div class=content>
+<a href=https://ahamoment.cn/posts/linux/linux-cap/>解决setcap导致Java加载libjli.so 失败问题</a>
+<br>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

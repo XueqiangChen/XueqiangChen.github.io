@@ -1,29 +1,8 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>jvm on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/jvm/</link>
-    <description>Recent content in jvm on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 15 Oct 2020 19:55:31 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/jvm/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>JVM 内存结构</title>
-      <link>https://ahamoment.cn/posts/java/java-jvm-jmm/</link>
-      <pubDate>Thu, 15 Oct 2020 19:55:31 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/java/java-jvm-jmm/</guid>
-      <description>http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf
- JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>jvm on AhaMoment</title><link>https://ahamoment.cn/tags/jvm/</link><description>Recent content in jvm on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 15 Oct 2020 19:55:31 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/jvm/index.xml" rel="self" type="application/rss+xml"/><item><title>JVM 内存结构</title><link>https://ahamoment.cn/posts/java/java-jvm-jmm/</link><pubDate>Thu, 15 Oct 2020 19:55:31 +0800</pubDate><guid>https://ahamoment.cn/posts/java/java-jvm-jmm/</guid><description>http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf
+JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。
 程序计数器 无论任何语言，其实最终都是需要由操作系统通过控制总线向CPU发送机器指令，Java也不例外，程序计数器在JVM中所起的作用就是用于存放当前线程接下来将要执行的字节码指令、分支、循环、跳转、异常处理等信息。在任何时候，一个处理器只执行其中一个线程中的指令，为了能够在CPU时间片轮转切换上下文之后顺利回到正确的执行位置，每条线程都需要具有一个独立的程序计数器，各个线程之间互相不影响，因此JVM将此块内存区域设计成了线程私有的。
 Java 虚拟机栈 与程序计数器内存相类似，Java虚拟机栈也是线程私有的，它的生命周期与线程相同，是在JVM运行时所创建的，在线程中，方法在执行的时候都会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息，如图所示，方法的调用对应着栈帧在虚拟机栈中的压栈和弹栈过程。
 每一个线程在创建的时候，JVM都会为其创建对应的虚拟机栈，虚拟机栈的大小可以通过-xss来配置，方法的调用是栈帧被压入和弹出的过程，通过上图可以看出，同等的虚拟机栈如果局部变量表等占用内存越小则可被压入的栈帧就会越多，反之则可被压入的栈帧就会越少，一般将栈帧内存的大小称为宽度，而栈帧的数量则称为虚拟机栈的深度。
 本地方法栈 Java中提供了调用本地方法的接口（Java Native Interface），也就是C/C++程序，在线程的执行过程中，经常会碰到调用JNI方法的情况，比如网络通信、文件操作的底层，甚至是String的intern等都是JNI方法，JVM为本地方法所划分的内存区域便是本地方法栈，这块内存区域其自由度非常高，完全靠不同的JVM厂商来实现，Java虚拟机规范并未给出强制的规定，同样它也是线程私有的内存区域。
 堆内存 堆内存是JVM中最大的一块内存区域，被所有的线程所共享，Java在运行期间创建的所有对象几乎都存放在该内存区域，该内存区域也是垃圾回收器重点照顾的区域，因此有些时候堆内存被称为“GC堆”。
-堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。</description>
-    </item>
-    
-  </channel>
-</rss>
+堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。</description></item></channel></rss>

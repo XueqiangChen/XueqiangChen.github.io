@@ -1,23 +1,2 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>源代码 on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/</link>
-    <description>Recent content in 源代码 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Mon, 11 May 2020 18:57:51 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>JDK1.8 源代码阅读环境搭建</title>
-      <link>https://ahamoment.cn/posts/java/java-source-code-learn/</link>
-      <pubDate>Mon, 11 May 2020 18:57:51 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/java/java-source-code-learn/</guid>
-      <description>一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
-二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>源代码 on AhaMoment</title><link>https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/</link><description>Recent content in 源代码 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Mon, 11 May 2020 18:57:51 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/index.xml" rel="self" type="application/rss+xml"/><item><title>JDK1.8 源代码阅读环境搭建</title><link>https://ahamoment.cn/posts/java/java-source-code-learn/</link><pubDate>Mon, 11 May 2020 18:57:51 +0800</pubDate><guid>https://ahamoment.cn/posts/java/java-source-code-learn/</guid><description>一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
+二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。</description></item></channel></rss>

@@ -1,24 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>Job on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/job/</link>
-    <description>Recent content in Job on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Tue, 09 Mar 2021 14:45:46 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/job/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>撬动离线业务：Job与CronJob</title>
-      <link>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</link>
-      <pubDate>Tue, 09 Mar 2021 14:45:46 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</guid>
-      <description>&lt;blockquote&gt;
-&lt;p&gt;本文转自张磊老师的《深入剖析Kubernetes》课程.&lt;/p&gt;
-&lt;/blockquote&gt;</description>
-    </item>
-    
-  </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Job on AhaMoment</title><link>https://ahamoment.cn/tags/job/</link><description>Recent content in Job on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Tue, 09 Mar 2021 14:45:46 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/job/index.xml" rel="self" type="application/rss+xml"/><item><title>撬动离线业务：Job与CronJob</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</link><pubDate>Tue, 09 Mar 2021 14:45:46 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/job/</guid><description>&lt;blockquote>
+&lt;p>本文转自张磊老师的《深入剖析Kubernetes》课程.&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

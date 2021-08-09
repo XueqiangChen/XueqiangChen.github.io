@@ -1,28 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>散列表 on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/</link>
-    <description>Recent content in 散列表 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 15 Oct 2020 10:04:54 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>散列表那些事</title>
-      <link>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</link>
-      <pubDate>Thu, 15 Oct 2020 10:04:54 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</guid>
-      <description>基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>散列表 on AhaMoment</title><link>https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/</link><description>Recent content in 散列表 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 15 Oct 2020 10:04:54 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/%E6%95%A3%E5%88%97%E8%A1%A8/index.xml" rel="self" type="application/rss+xml"/><item><title>散列表那些事</title><link>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</link><pubDate>Thu, 15 Oct 2020 10:04:54 +0800</pubDate><guid>https://ahamoment.cn/posts/algorithm/algorithm-hashtable/</guid><description>基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？
 我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。
 这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：
- 以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。  散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。
+以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。 散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。
 一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。
 散列映射法的关键问题有两个：
- 如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。  散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：</description>
-    </item>
-    
-  </channel>
-</rss>
+如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。 散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：</description></item></channel></rss>

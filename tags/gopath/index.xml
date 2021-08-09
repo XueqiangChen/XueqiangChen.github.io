@@ -1,26 +1,5 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>gopath on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/gopath/</link>
-    <description>Recent content in gopath on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Mon, 15 Mar 2021 10:16:45 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/gopath/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Go 语言工作目录</title>
-      <link>https://ahamoment.cn/posts/go/go-project-catalogs/</link>
-      <pubDate>Mon, 15 Mar 2021 10:16:45 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/go/go-project-catalogs/</guid>
-      <description>GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>gopath on AhaMoment</title><link>https://ahamoment.cn/tags/gopath/</link><description>Recent content in gopath on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Mon, 15 Mar 2021 10:16:45 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/gopath/index.xml" rel="self" type="application/rss+xml"/><item><title>Go 语言工作目录</title><link>https://ahamoment.cn/posts/go/go-project-catalogs/</link><pubDate>Mon, 15 Mar 2021 10:16:45 +0800</pubDate><guid>https://ahamoment.cn/posts/go/go-project-catalogs/</guid><description>GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
 工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
 GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
 在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
-# go env GO111MODULE=&amp;quot;&amp;quot; GOARCH=&amp;quot;amd64&amp;quot; GOBIN=&amp;quot;&amp;quot; GOCACHE=&amp;quot;/root/.cache/go-build&amp;quot; GOENV=&amp;quot;/root/.</description>
-    </item>
-    
-  </channel>
-</rss>
+# go env GO111MODULE=&amp;quot;&amp;quot; GOARCH=&amp;quot;amd64&amp;quot; GOBIN=&amp;quot;&amp;quot; GOCACHE=&amp;quot;/root/.cache/go-build&amp;quot; GOENV=&amp;quot;/root/.</description></item></channel></rss>

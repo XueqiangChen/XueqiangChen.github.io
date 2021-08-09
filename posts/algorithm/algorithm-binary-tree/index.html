@@ -1,344 +1,137 @@
-<!DOCTYPE html>
-<html lang='en' ><meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-
-
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
 <title>二叉树及存储结构 | AhaMoment</title>
-
-<meta name="generator" content="Hugo Eureka 0.8.3-dev" />
-<link rel="stylesheet" href="https://ahamoment.cn/css/eureka.min.css">
-<script defer src="https://ahamoment.cn/js/eureka.min.js"></script>
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload"
-  href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap"
-  as="style" onload="this.onload=null;this.rel='stylesheet'">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css"
-   media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js"
-   crossorigin></script>
-
-  <script defer src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js"
-     crossorigin></script>
-
-<script defer src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js"
-   integrity="sha256-uNYoXefWRqv&#43;PsIF/OflNmwtKM4lStn9yrz2gVl6ymo="  crossorigin></script>
-
-
-
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css"
-   integrity="sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3&#43;Aro6EYUG4&#43;cU&#43;KJWu/X"  media="print"
-  onload="this.media='all';this.onload=null" crossorigin>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js" 
-  integrity="sha384-g7c&#43;Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI&#43;sEnkvrMWph2EDg4"  crossorigin></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js"
-   integrity="sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC&#43;Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa"  crossorigin></script>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    renderMathInElement(document.body, {
-      delimiters: [
-        { left: "$$", right: "$$", display: true },
-        { left: "$", right: "$", display: false },
-        { left: "\\(", right: "\\)", display: false },
-        { left: "\\[", right: "\\]", display: true }
-      ],
-    });
-  });
-</script>
-
-
-<script defer src="https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js" 
-  integrity="sha256-Zmpaaj&#43;GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE="  crossorigin></script>
-
-<style type="text/css">
-    .widget + .widget {
-        margin-top: 1rem;
-    }
-    .widget-title {
-        font-weight: bold;
-        margin-bottom: 1rem;
-    }
-    .widget-list li {
-        font-size: 0.9rem;
-    }
-    .bg-cover img {
-        opacity: 1;
-        transition: all .5s ease-in-out;
-    }
-    .bg-cover img.dark {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.day {
-        opacity: 0;
-        height: 0;
-    }
-    .dark .bg-cover img.dark {
-        opacity: 1;
-        height: auto;
-    }
-    .search-container {
-        margin-top: -0.3rem;
-    }
-    .search-container .search {
-        border: 1px solid #e2e8f0;
-        border-radius: 4px;
-    }
-    .search-container input {
-        padding-left: 1rem;
-        line-height: 2rem;
-        outline: none;
-        background: transparent;
-    }
-    .search-container button {
-        font-size: 0.8rem;
-        margin-right: 0.5rem;
-        color: #e2e8f0;
-    }
-</style>
-<link rel="icon" type="image/png" sizes="32x32" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png">
-<link rel="apple-touch-icon" sizes="180x180" href="https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png">
-
-<meta name="description"
-  content="摘要：二叉树的定义，遍历二叉树">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [{
-      "@type": "ListItem",
-      "position": 1 ,
-      "name":"Posts",
-      "item":"https://ahamoment.cn/posts/"},{
-      "@type": "ListItem",
-      "position": 2 ,
-      "name":"二叉树及存储结构",
-      "item":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"}]
-}
-</script>
-
-
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"
-    },
-    "headline": "二叉树及存储结构 | AhaMoment","datePublished": "2020-08-11T10:40:08+08:00",
-    "dateModified": "2020-08-11T10:40:08+08:00",
-    "wordCount":  602 ,
-    "publisher": {
-        "@type": "Person",
-        "name": "Chenxueqiang",
-        "logo": {
-            "@type": "ImageObject",
-            "url": "https://ahamoment.cn/images/icon.png"
-        }
-        },
-    "description": "\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c\/p\u003e"
-}
-</script><meta property="og:title" content="二叉树及存储结构 | AhaMoment" />
-<meta property="og:type" content="article" />
-
-
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="摘要：二叉树的定义，遍历二叉树">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"二叉树及存储结构","item":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"},"headline":"二叉树及存储结构 | AhaMoment","datePublished":"2020-08-11T10:40:08+08:00","dateModified":"2020-08-11T10:40:08+08:00","wordCount":602,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c\/p\u003e"}</script><meta property="og:title" content="二叉树及存储结构 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-
-
-<meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/" />
-
-
-
-
-<meta property="og:description" content="摘要：二叉树的定义，遍历二叉树" />
-
-
-
-
-<meta property="og:locale" content="en" />
-
-
-
-
-<meta property="og:site_name" content="AhaMoment" />
-
-
-
-
-
-
-<meta property="article:published_time" content="2020-08-11T10:40:08&#43;08:00" />
-
-
-<meta property="article:modified_time" content="2020-08-11T10:40:08&#43;08:00" />
-
-
-
-<meta property="article:section" content="posts" />
-
-
-<meta property="article:tag" content="树" />
-
-
-
-
-
-<meta property="og:see_also" content="https://ahamoment.cn/posts/algorithm/algorithm-tree/" />
-
-
-
+<meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/">
+<meta property="og:description" content="摘要：二叉树的定义，遍历二叉树">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2020-08-11T10:40:08+08:00">
+<meta property="article:modified_time" content="2020-08-11T10:40:08+08:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="树">
+<meta property="og:see_also" content="https://ahamoment.cn/posts/algorithm/algorithm-tree/">
 <body class="flex flex-col min-h-screen">
-  <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-    <div class="w-full max-w-screen-xl mx-auto"><script>
-    let storageColorScheme = localStorage.getItem("lightDarkMode")
-    if (((storageColorScheme == 'Auto' || storageColorScheme == null) && window.matchMedia("(prefers-color-scheme: dark)").matches) || storageColorScheme == "Dark") {
-        document.getElementsByTagName('html')[0].classList.add('dark')
-    }
-</script>
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
 <nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-    <a href="/" class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-    <button id="navbar-btn" class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-        <i class="fas fa-bars"></i>
-    </button>
-
-    <div id="target"
-        class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-        <div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-            <a href="/docs/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">文档</a>
-            <a href="/archive/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">日志</a>
-            <a href="/authors/chenxq/" class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2  border-transparent  mr-4">关于我</a>
-        </div>
-
-        <div class="flex">
-            <div class="search-container relative pt-4 md:pt-0">
-                <div class="search">
-                    <form role="search" class="search-form" action="/search.html" method="get">
-                        <label>
-                            <input name="q" type="text" placeholder="搜索 ..." class="search-field">
-                        </label>
-                        <button>
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="relative pt-4 md:pt-0">
-                <div class="cursor-pointer hover:text-eureka" id="lightDarkMode">
-                    <i class="fas fa-adjust"></i>
-                </div>
-                <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id="is-open">
-                </div>
-                <div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40"
-                    id='lightDarkOptions'>
-                    <span class="px-4 py-1 hover:text-eureka" name="Light">Light</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Dark">Dark</span>
-                    <span class="px-4 py-1 hover:text-eureka" name="Auto">Auto</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id="is-open-mobile">
-    </div>
-
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
 </nav>
-<script>
-    
-    let element = document.getElementById('lightDarkMode')
-    if (storageColorScheme == null || storageColorScheme == 'Auto') {
-        document.addEventListener('DOMContentLoaded', () => {
-            window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', switchDarkMode)
-        })
-    } else if (storageColorScheme == "Light") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'sun')
-        element.firstElementChild.classList.add('fa-sun')
-    } else if (storageColorScheme == "Dark") {
-        element.firstElementChild.classList.remove('fa-adjust')
-        element.firstElementChild.setAttribute("data-icon", 'moon')
-        element.firstElementChild.classList.add('fa-moon')
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        getcolorscheme();
-        switchBurger();
-    });
-</script>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
 </div>
-  </header>
-  <main class="flex-grow pt-16">
-    <div class="pl-scrollbar">
-      <div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-
-
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
 <div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-        <h1 class="font-bold text-3xl text-primary-text">二叉树及存储结构</h1>
-        <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-    <div class="mr-6 my-2">
-        <i class="fas fa-calendar mr-1"></i>
-        <span>2020-08-11</span>
-    </div>
-    <div class="mr-6 my-2">
-        <i class="fas fa-clock mr-1"></i>
-        <span>3 min read</span>
-    </div>
-    
-    
-    <div class="mr-6 my-2">
-        <i class="fas fa-folder mr-1"></i>
-        
-        <a href="https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/" class="hover:text-eureka">数据结构与算法</a>
-        
-    </div>
-    
-
-    
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">二叉树及存储结构</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-08-11</span>
 </div>
-        
-        
-        
-
-        <div class="content">
-            <p>摘要：二叉树的定义，遍历二叉树</p>
-<h2 id="1-二叉树的定义">1. 二叉树的定义</h2>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>3 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
+</div>
+</div>
+<div class=content>
+<p>摘要：二叉树的定义，遍历二叉树</p>
+<h2 id=1-二叉树的定义>1. 二叉树的定义</h2>
 <blockquote>
 <p>二叉树：一个有穷的结点集合。这个集合可以为空，若不为空，则它是由根结点和称为其左子树 T<sub>L</sub> 和右子树 T<sub>R</sub> 的两个不想交的二叉树组成。</p>
 </blockquote>
 <ul>
 <li>
 <p>二叉树具体五种基本形态</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104404571.png" alt="image-20200811104404571"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104404571.png alt=image-20200811104404571></p>
 </li>
 <li>
 <p>二叉树的子树有左右顺序之分</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104443804.png" alt="image-20200811104443804"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104443804.png alt=image-20200811104443804></p>
 </li>
 </ul>
-<h3 id="特殊二叉树">特殊二叉树</h3>
+<h3 id=特殊二叉树>特殊二叉树</h3>
 <ul>
 <li>
 <p>斜二叉树（Skewed Binary Tree）</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104827529.png" alt="image-20200811104827529"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104827529.png alt=image-20200811104827529></p>
 </li>
 <li>
 <p>完美二叉树（Perfect Binary Tree），又称为满二叉树（Full Binary Tree）</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104932580.png" alt="image-20200811104932580"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811104932580.png alt=image-20200811104932580></p>
 <p>一棵完美二叉树所有的结点都有左右两个子结点。</p>
 </li>
 <li>
 <p>完全二叉树（Complete Binary Tree）</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811105230817.png" alt="image-20200811105230817"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811105230817.png alt=image-20200811105230817></p>
 <p>完全二叉树的最后一层可以却是部分结点，例如右半部分缺失了12-15号结点，但是这样的二叉树不是完全二叉树：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811105352607.png" alt="image-20200811105352607"></p>
-<h2 id="2-二叉树的几个重要性质">2. 二叉树的几个重要性质</h2>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811105352607.png alt=image-20200811105352607></p>
+<h2 id=2-二叉树的几个重要性质>2. 二叉树的几个重要性质</h2>
 <ol>
 <li>
 <p>一个二叉树第 i 层的最大结点数为：$2^{i-1},i\geq1$</p>
@@ -355,9 +148,9 @@ $$
 化简后就可以得到上面那个式子。</p>
 </li>
 </ol>
-<h2 id="3-二叉树的抽象数据类型定义">3. 二叉树的抽象数据类型定义</h2>
+<h2 id=3-二叉树的抽象数据类型定义>3. 二叉树的抽象数据类型定义</h2>
 <p>二叉树的结构由数据，左子树，右子树组成，操作集包括：判空，遍历，创建一个二叉树。</p>
-<pre><code class="language-java">/**
+<pre><code class=language-java>/**
  * 二叉树树节点定义
  * @param &lt;T&gt;
  */
@@ -407,26 +200,26 @@ public interface Tree&lt;T&gt; {
 <p>其中，最重要的就是二叉树的遍历，包括先序，中序，后序和层次遍历四种，后面我们会详细讲一下。</p>
 </li>
 </ul>
-<h2 id="4-二叉树的存储结构">4. 二叉树的存储结构</h2>
-<h3 id="41-顺序存储结构">4.1 顺序存储结构</h3>
+<h2 id=4-二叉树的存储结构>4. 二叉树的存储结构</h2>
+<h3 id=41-顺序存储结构>4.1 顺序存储结构</h3>
 <p>二叉树可以采用顺序存储结构来存储，对于一棵完全二叉树来说，按照从上到下，从左到右的顺序存储 n 个结点的完全二叉树的结点父子关系：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112438176.png" alt="image-20200811112438176"></p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112453094.png" alt="image-20200811112453094"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112438176.png alt=image-20200811112438176></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112453094.png alt=image-20200811112453094></p>
 <ul>
 <li>非根结点的父结点的序号是 $i/2$ 向下取整的值</li>
 <li>结点的左孩子结点的序号是 $2i$，（若$2i\leq n$，否则没有左孩子 ）</li>
 <li>结点的右孩子的序号为$2i+1$，（若 $2i+1 \leq n$, 否则没有右孩子）</li>
 </ul>
 <p>一般的二叉树也可以采用这种结构，但是需要补充空的结点，会造成空间浪费。</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112833149.png" alt="image-20200811112833149"></p>
-<h3 id="42-链表存储">4.2. 链表存储</h3>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112833149.png alt=image-20200811112833149></p>
+<h3 id=42-链表存储>4.2. 链表存储</h3>
 <p>链表的存储结构，我们在前面已经展示过，这里不再过多赘述。</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112958981.png" alt="image-20200811112958981"></p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811113009904.png" alt="image-20200811113009904"></p>
-<h2 id="5-二叉树的遍历">5. 二叉树的遍历</h2>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811112958981.png alt=image-20200811112958981></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200811113009904.png alt=image-20200811113009904></p>
+<h2 id=5-二叉树的遍历>5. 二叉树的遍历</h2>
 <p>二叉树的遍历方式一共有四种，分别是：先序遍历，中序遍历，后序遍历和层序遍历。其中先序，中序和后序遍历的实现方式又有两种，分别是递归和非递归。下面，我们就来详细的介绍一下：</p>
-<h3 id="51-递归实现">5.1 递归实现</h3>
-<h5 id="511-先序遍历">5.1.1 先序遍历</h5>
+<h3 id=51-递归实现>5.1 递归实现</h3>
+<h5 id=511-先序遍历>5.1.1 先序遍历</h5>
 <p>先序遍历的过程可以描述为：</p>
 <ol>
 <li>访问根结点</li>
@@ -434,9 +227,9 @@ public interface Tree&lt;T&gt; {
 <li>先序遍历其右子树</li>
 </ol>
 <p>例如，我们有这样一棵树：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812202856032.png" alt="image-20200812202856032"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812202856032.png alt=image-20200812202856032></p>
 <p>按照先序遍历的顺序将结点打印出来，依此是：A B D F E C G H I，程序描述为：</p>
-<pre><code class="language-java">public void preOrderTraversal(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void preOrderTraversal(TreeNode&lt;T&gt; binTree) {
     if (binTree != null) {
         System.out.println(binTree.data);
         preOrderTraversal(binTree.left);
@@ -444,16 +237,16 @@ public interface Tree&lt;T&gt; {
     }
 }
 </code></pre>
-<h5 id="512-中序遍历">5.1.2 中序遍历</h5>
+<h5 id=512-中序遍历>5.1.2 中序遍历</h5>
 <p>中序遍历的过程可以描述为：</p>
 <ol>
 <li>中序遍历其左子树</li>
 <li>访问根结点</li>
 <li>中序遍历其右子树</li>
 </ol>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812203317277.png" alt="image-20200812203317277"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812203317277.png alt=image-20200812203317277></p>
 <p>按照中序遍历的方式将上面这棵树的结果输出，依次是：D B E F A G H C I ,使用程序描述为：</p>
-<pre><code class="language-java">public void inOrderTraversal(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void inOrderTraversal(TreeNode&lt;T&gt; binTree) {
     if (binTree != null) {
         inOrderTraversal(binTree.left);
         System.out.println(binTree.data);
@@ -461,16 +254,16 @@ public interface Tree&lt;T&gt; {
     }
 }
 </code></pre>
-<h5 id="513-后序遍历">5.1.3 后序遍历</h5>
+<h5 id=513-后序遍历>5.1.3 后序遍历</h5>
 <p>后序遍历的过程为：</p>
 <ol>
 <li>后序遍历其左子树</li>
 <li>后序遍历其右子树</li>
 <li>访问根结点</li>
 </ol>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812203613025.png" alt="image-20200812203613025"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200812203613025.png alt=image-20200812203613025></p>
 <p>按照后序遍历的方式将上面这棵树的结点输出，依此是：D E F B H G I C A</p>
-<h3 id="52-非递归实现">5.2 非递归实现</h3>
+<h3 id=52-非递归实现>5.2 非递归实现</h3>
 <p>递归的本质是利用堆栈来做的，那么我们直接使用堆栈来实现上面的三种方式。</p>
 <p>先从中序遍历开始，中序遍历的非递归实现过程可以描述为以下几个步骤：</p>
 <ol>
@@ -484,11 +277,11 @@ public interface Tree&lt;T&gt; {
 <p>然后按其右指针再去中序遍历该结点的右子树。</p>
 </li>
 </ol>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200813091042459.png" alt="image-20200813091042459"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200813091042459.png alt=image-20200813091042459></p>
 <p>对于上面的这样一棵树，我们按照中序遍历的过程操作堆栈：</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/inorder.png" alt=""></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/inorder.png alt></p>
 <p>入栈和出栈的过程如上图所示。</p>
-<pre><code class="language-java">public void nonRecursiveInOrderTraversal(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void nonRecursiveInOrderTraversal(TreeNode&lt;T&gt; binTree) {
         TreeNode&lt;T&gt; tmpTree = binTree;
         Stack&lt;TreeNode&lt;T&gt;&gt; stack = new Stack&lt;&gt;();
         while ( tmpTree != null || !stack.isEmpty(stack)) {
@@ -510,7 +303,7 @@ public interface Tree&lt;T&gt; {
     }
 </code></pre>
 <p>先序遍历的过程跟中序遍历类似，只需要在第一次遍历到结点的时候把结点的值打印出来即可。</p>
-<pre><code class="language-java">public void nonRecursivePreOrderTraversal(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void nonRecursivePreOrderTraversal(TreeNode&lt;T&gt; binTree) {
         TreeNode&lt;T&gt; tmpTree = binTree;
         Stack&lt;TreeNode&lt;T&gt;&gt; stack = new Stack&lt;&gt;();
         while ( tmpTree != null || !stack.isEmpty(stack)) {
@@ -532,7 +325,7 @@ public interface Tree&lt;T&gt; {
     }
 </code></pre>
 <p>后序遍历的方式略有不同， 后序遍历应该把数据两次压入堆栈，第二次pop出来再 print 鉴于没有记录访问次数的结构，第二次pop的时候要么右节点是空的，要么右节点刚刚被print。所以，需要另一个指针pt来记录被刚刚print的节点。</p>
-<pre><code class="language-java">public void nonRecursivepostOrderTraversal(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void nonRecursivepostOrderTraversal(TreeNode&lt;T&gt; binTree) {
         TreeNode&lt;T&gt; tmpTree = binTree;
         TreeNode&lt;T&gt; pt = null;
         Stack&lt;TreeNode&lt;T&gt;&gt; stack = new Stack&lt;&gt;();
@@ -556,9 +349,9 @@ public interface Tree&lt;T&gt; {
         }
     }
 </code></pre>
-<h3 id="53-层序遍历">5.3 层序遍历</h3>
+<h3 id=53-层序遍历>5.3 层序遍历</h3>
 <p>层序遍历即将树从上到下，从左到右输出，例如下面这样的一棵树，按照层序遍历输出的结果为：A B C D F G I E H.</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200813203404840.png" alt="image-20200813203404840"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200813203404840.png alt=image-20200813203404840></p>
 <p>层序遍历可以通过队列来实现，遍历从根结点开始，首先将根结点入队，然后开始执行循环：结点入队，访问该结点、其左右儿子入队。</p>
 <p>层序基本过程：先根结点入队，然后：</p>
 <ol>
@@ -566,7 +359,7 @@ public interface Tree&lt;T&gt; {
 <li>访问该元素所指的结点；</li>
 <li>若该元素所指结点的左、右孩子结点非空，则将其左、右孩子的指针顺序入队。</li>
 </ol>
-<pre><code class="language-java">public void levelOrderTraveral(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void levelOrderTraveral(TreeNode&lt;T&gt; binTree) {
         SeqQueue&lt;TreeNode&lt;T&gt;&gt; queue = new SeqQueue&lt;&gt;(20);
         TreeNode&lt;T&gt; t;
         // 若是空树则直接返回
@@ -586,12 +379,12 @@ public interface Tree&lt;T&gt; {
         }
     }
 </code></pre>
-<h2 id="6-二叉树应用的例子">6. 二叉树应用的例子</h2>
+<h2 id=6-二叉树应用的例子>6. 二叉树应用的例子</h2>
 <blockquote>
 <p>例：输出二叉树中的叶子结点</p>
 </blockquote>
 <p>在二叉树的遍历算法中增加检测结点的判断：左右子树是否都为空</p>
-<pre><code class="language-java">public void preOrderPrintLeaves(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public void preOrderPrintLeaves(TreeNode&lt;T&gt; binTree) {
     if (binTree != null) {
         //叶子结点的左右都为空
         if (binTree.left == null &amp;&amp; binTree.right == null) {
@@ -605,9 +398,9 @@ public interface Tree&lt;T&gt; {
 <blockquote>
 <p>求二叉树的高度</p>
 </blockquote>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200814092320757.png" alt="image-20200814092320757"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200814092320757.png alt=image-20200814092320757></p>
 <p>二叉树的高度是左子树和右子树两者中最大的一个再加上根结点的高度1.</p>
-<pre><code class="language-java">public int postOrderGetHight(TreeNode&lt;T&gt; binTree) {
+<pre><code class=language-java>public int postOrderGetHight(TreeNode&lt;T&gt; binTree) {
     int hl, hr, maxH;
     if (binTree != null) {
         hl = postOrderGetHight(binTree.left); //求左子树的高度
@@ -624,79 +417,43 @@ public interface Tree&lt;T&gt; {
 </blockquote>
 <p>答案是：必须要有中序遍历才行。</p>
 <p>假如没有中序遍历，来看个例子：先序：A B，后序：B A，就会出现两种不同的结构。</p>
-<p><img src="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200814093448865.png" alt="image-20200814093448865"></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200814093448865.png alt=image-20200814093448865></p>
 <p>在知道中序的情况下，可以利用中序序列分割出左右两个子序列。</p>
 <blockquote>
 <p>参考：浙江大学陈越老师的<a href="https://www.icourse163.org/learn/ZJU-93001?tid=1207006212#/learn/announce">数据结构课程</a></p>
 </blockquote>
-        </div>
-        
-        <div class="my-4">
-    
-    <a href="https://ahamoment.cn/tags/%E6%A0%91/" class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#树</a>
-    
 </div>
-        
-        
-        
-
-
-        
-        
-        
-        
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#树</a>
+</div>
 <div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-    <div>
-        
-        <span class="block font-bold">Previous</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/" class="block">二叉搜索树</a>
-        
-    </div>
-    <div class="md:text-right mt-4 md:mt-0">
-        
-        <span class="block font-bold">Next</span>
-        <a href="https://ahamoment.cn/posts/algorithm/algorithm-tree/" class="block">树的定义及表示</a>
-        
-    </div>
+<div>
+<span class="block font-bold">Previous</span>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/ class=block>二叉搜索树</a>
 </div>
-
-        
-
-
-
-    </div>
-    
-
-    
-    
-    <div
-        class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-        <h2 class="text-lg font-semibold mb-4">See Also</h2>
-        <div class="content">
-            
-            <a href="https://ahamoment.cn/posts/algorithm/algorithm-tree/">树的定义及表示</a>
-            <br />
-            
-        </div>
-    </div>
-    
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/ class=block>树的定义及表示</a>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', ()=>{
-        hljs.initHighlightingOnLoad();
-    })
-</script>
-
-      </div>
-    </div>
-    
-  </main>
-  <footer class="pl-scrollbar">
-    <div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-    <p class="text-sm text-tertiary-text">&copy; 2021
- &middot;  Powered by the <a href="https://github.com/wangchucheng/hugo-eureka" class="hover:text-eureka">Eureka</a> theme for <a href="https://gohugo.io" class="hover:text-eureka">Hugo</a></p>
+</div>
+</div>
+<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
+<h2 class="text-lg font-semibold mb-4">See Also</h2>
+<div class=content>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/>树的定义及表示</a>
+<br>
+</div>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
 </div></div>
-  </footer>
+</footer>
 </body>
-
 </html>

@@ -1,80 +1,14 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>工具 on AhaMoment</title>
-    <link>https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/</link>
-    <description>Recent content in 工具 on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 17 Jun 2021 20:28:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Hugo 博客搭建</title>
-      <link>https://ahamoment.cn/posts/tool/tool-hugo-blog/</link>
-      <pubDate>Thu, 17 Jun 2021 20:28:05 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-hugo-blog/</guid>
-      <description>前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>工具 on AhaMoment</title><link>https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/</link><description>Recent content in 工具 on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 17 Jun 2021 20:28:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/index.xml" rel="self" type="application/rss+xml"/><item><title>Hugo 博客搭建</title><link>https://ahamoment.cn/posts/tool/tool-hugo-blog/</link><pubDate>Thu, 17 Jun 2021 20:28:05 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-hugo-blog/</guid><description>前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是 hugo-clarity, 不能说十全十美，但是比较满足我现在的需求。这款主题的代码高亮和显示特别有特点，符合程序员的需求。另外之前一直想用github action的自动化来部署博客，一直都没有时间，这次一起做了。
 1. 博客主体 博客主体是由
 https://github.com/peaceiris/actions-gh-pages
 https://github.com/GitbookIO/gitbook-cli
 https://github.com/marketplace/actions/publish-gitbook
-https://github.com/marketplace?type=actions</description>
-    </item>
-    
-    <item>
-      <title>Mac 命令汇总</title>
-      <link>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</link>
-      <pubDate>Thu, 25 Mar 2021 16:03:00 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</guid>
-      <description>常用快捷键 Overall Mac 键盘快捷键
-修饰键  Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn  在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。</description>
-    </item>
-    
-    <item>
-      <title>Vim 折腾记</title>
-      <link>https://ahamoment.cn/posts/tool/tool-vim/</link>
-      <pubDate>Tue, 16 Mar 2021 16:12:24 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-vim/</guid>
-      <description>&lt;p&gt;折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>bazel 外部存储库缓存</title>
-      <link>https://ahamoment.cn/posts/tool/tool-bazel/</link>
-      <pubDate>Wed, 10 Feb 2021 14:05:07 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-bazel/</guid>
-      <description>bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
+https://github.com/marketplace?type=actions</description></item><item><title>Mac 命令汇总</title><link>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</link><pubDate>Thu, 25 Mar 2021 16:03:00 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-mac-os-commands/</guid><description>常用快捷键 Overall Mac 键盘快捷键
+修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。</description></item><item><title>Vim 折腾记</title><link>https://ahamoment.cn/posts/tool/tool-vim/</link><pubDate>Tue, 16 Mar 2021 16:12:24 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-vim/</guid><description>&lt;p>折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上&lt;/p></description></item><item><title>bazel 外部存储库缓存</title><link>https://ahamoment.cn/posts/tool/tool-bazel/</link><pubDate>Wed, 10 Feb 2021 14:05:07 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-bazel/</guid><description>bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
 Step1：
 从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
 Step2:
 运行 yum install bazel3 命令安装。
-教程 java / c++</description>
-    </item>
-    
-    <item>
-      <title>Git 常用命令汇总</title>
-      <link>https://ahamoment.cn/posts/tool/tool-git-common-operations/</link>
-      <pubDate>Tue, 24 Nov 2020 14:31:32 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-git-common-operations/</guid>
-      <description>1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
- commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。</description>
-    </item>
-    
-    <item>
-      <title>自动配置Git仓库提交作者</title>
-      <link>https://ahamoment.cn/posts/tool/tool-git-set-config/</link>
-      <pubDate>Sat, 16 Nov 2019 19:12:17 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/tool/tool-git-set-config/</guid>
-      <description>1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
-2. 方法 2.1 安装Git  Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址  2.</description>
-    </item>
-    
-  </channel>
-</rss>
+教程 java / c++</description></item><item><title>Git 常用命令汇总</title><link>https://ahamoment.cn/posts/tool/tool-git-common-operations/</link><pubDate>Tue, 24 Nov 2020 14:31:32 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-git-common-operations/</guid><description>1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
+commit - 分支提交错误 reset - 误删代码 1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。</description></item><item><title>自动配置Git仓库提交作者</title><link>https://ahamoment.cn/posts/tool/tool-git-set-config/</link><pubDate>Sat, 16 Nov 2019 19:12:17 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-git-set-config/</guid><description>1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
+2. 方法 2.1 安装Git Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址 2.</description></item></channel></rss>

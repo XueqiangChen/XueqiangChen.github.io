@@ -1,24 +1,3 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>IDEA on AhaMoment</title>
-    <link>https://ahamoment.cn/tags/idea/</link>
-    <description>Recent content in IDEA on AhaMoment</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en</language>
-    <copyright>&amp;copy; 2021
-</copyright>
-    <lastBuildDate>Thu, 21 Nov 2019 20:04:16 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/idea/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>IntellJ IDEA 远程调试 Java 程序</title>
-      <link>https://ahamoment.cn/posts/java/java-remote-debug/</link>
-      <pubDate>Thu, 21 Nov 2019 20:04:16 +0800</pubDate>
-      
-      <guid>https://ahamoment.cn/posts/java/java-remote-debug/</guid>
-      <description>1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>IDEA on AhaMoment</title><link>https://ahamoment.cn/tags/idea/</link><description>Recent content in IDEA on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Thu, 21 Nov 2019 20:04:16 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/idea/index.xml" rel="self" type="application/rss+xml"/><item><title>IntellJ IDEA 远程调试 Java 程序</title><link>https://ahamoment.cn/posts/java/java-remote-debug/</link><pubDate>Thu, 21 Nov 2019 20:04:16 +0800</pubDate><guid>https://ahamoment.cn/posts/java/java-remote-debug/</guid><description>1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
 2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
- 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea  2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</description>
-    </item>
-    
-  </channel>
-</rss>
+应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea 2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</description></item></channel></rss>
