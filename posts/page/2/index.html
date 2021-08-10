@@ -19,14 +19,14 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docker 和 Kubernetes 面试题","description":"1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。\nAUFS\nAUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：","url":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"},{"@type":"ListItem","position":2,"name":"面试题目录","description":"\u003cblockquote\u003e\n\u003cp\u003e面试题目录\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-questions/"},{"@type":"ListItem","position":3,"name":"分布式面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集有关分布式面试题的内容\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-distributed-system/"},{"@type":"ListItem","position":4,"name":"Spring系列面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文包含spring, spring boot, spring mvc 以及 mybatis的面试题\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-spring/"},{"@type":"ListItem","position":5,"name":"Java 基础面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集Java基础知识点相关的面试题目\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-java/"},{"@type":"ListItem","position":6,"name":"计算机网络面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文主要收集面试过程中遇到的计算机网络的面试题。\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-network/"},{"@type":"ListItem","position":7,"name":"MySQL 面试题","description":"1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。\n2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。","url":"https://ahamoment.cn/posts/interview/interview-mysql/"},{"@type":"ListItem","position":8,"name":"Git 常用命令汇总","description":"1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：\n commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。","url":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"},{"@type":"ListItem","position":9,"name":"Java 多线程 - 自定义线程池","description":"1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。\n 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。\n这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：\n 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：\n 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2.","url":"https://ahamoment.cn/posts/java/java-multithread-thread-pool/"},{"@type":"ListItem","position":10,"name":"Java 多线程 - 线程生命周期","description":"线程的生命周期大体可以分为如下6个主要的阶段：\n NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：\n// Thread.State public enum State { /** * Thread state for a thread which has not yet started.","url":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"面试题目录","description":"\u003cblockquote\u003e\n\u003cp\u003e面试题目录\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-questions/"},{"@type":"ListItem","position":2,"name":"分布式面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集有关分布式面试题的内容\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-distributed-system/"},{"@type":"ListItem","position":3,"name":"Spring系列面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文包含spring, spring boot, spring mvc 以及 mybatis的面试题\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-spring/"},{"@type":"ListItem","position":4,"name":"Java 基础面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集Java基础知识点相关的面试题目\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-java/"},{"@type":"ListItem","position":5,"name":"计算机网络面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文主要收集面试过程中遇到的计算机网络的面试题。\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-network/"},{"@type":"ListItem","position":6,"name":"MySQL 面试题","description":"1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。\n2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。","url":"https://ahamoment.cn/posts/interview/interview-mysql/"},{"@type":"ListItem","position":7,"name":"Git 常用命令汇总","description":"1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：\n commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。","url":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"},{"@type":"ListItem","position":8,"name":"Java 多线程 - 自定义线程池","description":"1. 为什么要用线程池？  池化技术相比大家已经屡见不鲜了，线程池、数据库连接池、Http 连接池等等都是对这个思想的应用。池化技术的思想主要是为了减少每次获取资源的消耗，提高对资源的利用率。\n 线程池提供了一种限制和管理资源（包括执行一个任务）。 每个线程池还维护一些基本统计信息，例如已完成任务的数量。\n这里借用《Java 并发编程的艺术》提到的来说一下使用线程池的好处：\n 降低资源消耗。通过重复利用已创建的线程降低线程创建和销毁造成的消耗。 提高响应速度。当任务到达时，任务可以不需要的等到线程创建就能立即执行。 提高线程的可管理性。线程是稀缺资源，如果无限制的创建，不仅会消耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。  2. 自定义一个简单的线程池 一个线程池应该具备以下要素：\n 任务队列：用于缓存提交的任务。 任务线程管理功能：一个线程池必须能够很好地管理和控制线程数量，可通过如下三个参数来实现，比如创建线程池时初始的线程数量init；线程池自动扩充时最大的线程数量max；在线程池空闲时需要释放线程但是也要维护一定数量的活跃数量或者核心数量core。有了这三个参数，就能够很好地控制线程池中的线程数量，将其维护在一个合理的范围之内，三者之间的关系是init＜=core＜=max。 任务拒绝策略：如果线程数量已达到上限且任务队列已满，则需要有相应的拒绝策略来通知任务提交者。 线程工厂：主要用于个性化定制线程，比如将线程设置为守护线程以及设置线程名称等。 QueueSize：任务队列主要存放提交的Runnable，但是为了防止内存溢出，需要有limit数量对其进行控制。 Keepedalive时间：该时间主要决定线程各个重要参数自动维护的时间间隔。  2.","url":"https://ahamoment.cn/posts/java/java-multithread-thread-pool/"},{"@type":"ListItem","position":9,"name":"Java 多线程 - 线程生命周期","description":"线程的生命周期大体可以分为如下6个主要的阶段：\n NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：\n// Thread.State public enum State { /** * Thread state for a thread which has not yet started.","url":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"},{"@type":"ListItem","position":10,"name":"Java 多线程面试题总结","description":"Eureka is a elegant and powerful theme for Hugo.","url":"https://ahamoment.cn/posts/java/java-multithread-interview-questions/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/">
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-06-17T20:28:05+08:00">
+<meta property="og:updated_time" content="2021-04-15T10:03:48+08:00">
 <meta property="article:section" content="posts">
 <meta property="article:tag" content="index">
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/posts/index.xml title=AhaMoment>
@@ -85,34 +85,6 @@
 </article>
 <div class="bg-secondary-bg rounded px-6">
 <div class="overflow-hidden divide-y">
-<div class=py-6>
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/interview/interview-docker-k8s/ class="font-bold text-xl hover:text-eureka">Docker 和 Kubernetes 面试题</a>
-</div>
-<div class=content>
-1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
-AUFS
-AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-12-28</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class=hover:text-eureka>面试题</a>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class=py-6>
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -346,6 +318,31 @@ NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
 <span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class=py-6>
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/ class="font-bold text-xl hover:text-eureka">Java 多线程面试题总结</a>
+</div>
+<div class=content>
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-11-11</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>1 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

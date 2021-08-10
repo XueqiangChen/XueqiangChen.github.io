@@ -19,14 +19,14 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Java 多线程面试题总结","description":"Eureka is a elegant and powerful theme for Hugo.","url":"https://ahamoment.cn/posts/java/java-multithread-interview-questions/"},{"@type":"ListItem","position":2,"name":"Java 多线程 - 深入理解synchronized关键字","description":"synchronized关键字提供了一种互斥机制，也就是说在同一时刻，只能有一个线程访问同步资源，很多资料、书籍将synchronized（mutex）称为锁，其实这种说法是不严谨的，准确地讲应该是某线程获取了与mutex关联的monitor锁（当然写程序的时候知道它想要表达的语义即可）。\n使用JDK命令javap对Mutex class进行反汇编，输出了大量的JVM指令，在这些指令中，你将发现monitor enter和monitor exit是成对出现的（有些时候会出现一个monitor enter多个monitor exit，但是每一个monitor exit之前必有对应的monitor enter，这是肯定的）.\n Monitorenter 每个对象都与一个monitor相关联，一个monitor的lock的锁只能被一个线程在同一时间获得，在一个线程尝试获得与对象关联monitor的所有权时会发生如下的几件事情。  如果monitor的计数器为0，则意味着该monitor的lock还没有被获得，某个线程获得之后将立即对该计数器加一，从此该线程就是这个monitor的所有者了。 如果一个已经拥有该monitor所有权的线程重入，则会导致monitor计数器再次累加。 如果monitor已经被其他线程所拥有，则其他线程尝试获取该monitor的所有权时，会被陷入阻塞状态直到monitor计数器变为0，才能再次尝试获取对monitor的所有权。   Monitorexit 释放对monitor的所有权，想要释放对某个对象关联的monitor的所有权的前提是，你曾经获得了所有权。释放monitor所有权的过程比较简单，就是将monitor的计数器减一，如果计数器的结果为0，那就意味着该线程不再拥有对该monitor的所有权，通俗地讲就是解锁。与此同时被该monitor block的线程将再次尝试获得对该monitor的所有权。  使用synchronized方法需要注意几个问题：","url":"https://ahamoment.cn/posts/java/java-multithread-synchronized2/"},{"@type":"ListItem","position":3,"name":"Java 多线程 - 线程中断 Interrupt","description":"\u003cp\u003e线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。\u003c/p\u003e","url":"https://ahamoment.cn/posts/java/java-multithread-interrupt/"},{"@type":"ListItem","position":4,"name":"JVM 内存结构","description":"http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf\n JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。\n程序计数器 无论任何语言，其实最终都是需要由操作系统通过控制总线向CPU发送机器指令，Java也不例外，程序计数器在JVM中所起的作用就是用于存放当前线程接下来将要执行的字节码指令、分支、循环、跳转、异常处理等信息。在任何时候，一个处理器只执行其中一个线程中的指令，为了能够在CPU时间片轮转切换上下文之后顺利回到正确的执行位置，每条线程都需要具有一个独立的程序计数器，各个线程之间互相不影响，因此JVM将此块内存区域设计成了线程私有的。\nJava 虚拟机栈 与程序计数器内存相类似，Java虚拟机栈也是线程私有的，它的生命周期与线程相同，是在JVM运行时所创建的，在线程中，方法在执行的时候都会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息，如图所示，方法的调用对应着栈帧在虚拟机栈中的压栈和弹栈过程。\n每一个线程在创建的时候，JVM都会为其创建对应的虚拟机栈，虚拟机栈的大小可以通过-xss来配置，方法的调用是栈帧被压入和弹出的过程，通过上图可以看出，同等的虚拟机栈如果局部变量表等占用内存越小则可被压入的栈帧就会越多，反之则可被压入的栈帧就会越少，一般将栈帧内存的大小称为宽度，而栈帧的数量则称为虚拟机栈的深度。\n本地方法栈 Java中提供了调用本地方法的接口（Java Native Interface），也就是C/C++程序，在线程的执行过程中，经常会碰到调用JNI方法的情况，比如网络通信、文件操作的底层，甚至是String的intern等都是JNI方法，JVM为本地方法所划分的内存区域便是本地方法栈，这块内存区域其自由度非常高，完全靠不同的JVM厂商来实现，Java虚拟机规范并未给出强制的规定，同样它也是线程私有的内存区域。\n堆内存 堆内存是JVM中最大的一块内存区域，被所有的线程所共享，Java在运行期间创建的所有对象几乎都存放在该内存区域，该内存区域也是垃圾回收器重点照顾的区域，因此有些时候堆内存被称为“GC堆”。\n堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。","url":"https://ahamoment.cn/posts/java/java-jvm-jmm/"},{"@type":"ListItem","position":5,"name":"散列表那些事","description":"基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？\n我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。\n这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：\n 以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。  散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。\n一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。\n散列映射法的关键问题有两个：\n 如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。  散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：","url":"https://ahamoment.cn/posts/algorithm/algorithm-hashtable/"},{"@type":"ListItem","position":6,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM","url":"https://ahamoment.cn/posts/linux/linux-nscd/"},{"@type":"ListItem","position":7,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},{"@type":"ListItem","position":8,"name":"容器内获取 CPU 核数问题","description":"现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。\n但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：\nint cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中\n   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码","url":"https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/"},{"@type":"ListItem","position":9,"name":"解决setcap导致Java加载libjli.so 失败问题","description":"背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：\njava: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.","url":"https://ahamoment.cn/posts/linux/linux-cap/"},{"@type":"ListItem","position":10,"name":"平衡二叉树","description":"平衡二叉树 平衡二叉树也是一种搜索树。\n搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。\n平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|\u0026lt;=1。\n平衡二叉树的高度能够达到 $log_2n$\n平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。\n右单旋 按照字母大小插入三个结点，Mar, May, Nov：\n如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。","url":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Java 多线程 - 深入理解synchronized关键字","description":"synchronized关键字提供了一种互斥机制，也就是说在同一时刻，只能有一个线程访问同步资源，很多资料、书籍将synchronized（mutex）称为锁，其实这种说法是不严谨的，准确地讲应该是某线程获取了与mutex关联的monitor锁（当然写程序的时候知道它想要表达的语义即可）。\n使用JDK命令javap对Mutex class进行反汇编，输出了大量的JVM指令，在这些指令中，你将发现monitor enter和monitor exit是成对出现的（有些时候会出现一个monitor enter多个monitor exit，但是每一个monitor exit之前必有对应的monitor enter，这是肯定的）.\n Monitorenter 每个对象都与一个monitor相关联，一个monitor的lock的锁只能被一个线程在同一时间获得，在一个线程尝试获得与对象关联monitor的所有权时会发生如下的几件事情。  如果monitor的计数器为0，则意味着该monitor的lock还没有被获得，某个线程获得之后将立即对该计数器加一，从此该线程就是这个monitor的所有者了。 如果一个已经拥有该monitor所有权的线程重入，则会导致monitor计数器再次累加。 如果monitor已经被其他线程所拥有，则其他线程尝试获取该monitor的所有权时，会被陷入阻塞状态直到monitor计数器变为0，才能再次尝试获取对monitor的所有权。   Monitorexit 释放对monitor的所有权，想要释放对某个对象关联的monitor的所有权的前提是，你曾经获得了所有权。释放monitor所有权的过程比较简单，就是将monitor的计数器减一，如果计数器的结果为0，那就意味着该线程不再拥有对该monitor的所有权，通俗地讲就是解锁。与此同时被该monitor block的线程将再次尝试获得对该monitor的所有权。  使用synchronized方法需要注意几个问题：","url":"https://ahamoment.cn/posts/java/java-multithread-synchronized2/"},{"@type":"ListItem","position":2,"name":"Java 多线程 - 线程中断 Interrupt","description":"\u003cp\u003e线程interrupt，是一个非常重要的API，也是经常使用的方法，在本文中我们将Thread深入源码对其进行详细的剖析。\u003c/p\u003e","url":"https://ahamoment.cn/posts/java/java-multithread-interrupt/"},{"@type":"ListItem","position":3,"name":"JVM 内存结构","description":"http://www.oracle.com/technetwork/java/javase/memorymanagement-whitepaper-150215.pdf\n JVM在执行Java程序的时候会把对应的物理内存划分成不同的内存区域，每一个区域都存放着不同的数据，也有不同的创建与销毁时机，有些分区会在JVM启动的时候就创建，有些则是在运行时才创建，比如虚拟机栈，根据虚拟机规范，JVM的内存结构如图所示。\n程序计数器 无论任何语言，其实最终都是需要由操作系统通过控制总线向CPU发送机器指令，Java也不例外，程序计数器在JVM中所起的作用就是用于存放当前线程接下来将要执行的字节码指令、分支、循环、跳转、异常处理等信息。在任何时候，一个处理器只执行其中一个线程中的指令，为了能够在CPU时间片轮转切换上下文之后顺利回到正确的执行位置，每条线程都需要具有一个独立的程序计数器，各个线程之间互相不影响，因此JVM将此块内存区域设计成了线程私有的。\nJava 虚拟机栈 与程序计数器内存相类似，Java虚拟机栈也是线程私有的，它的生命周期与线程相同，是在JVM运行时所创建的，在线程中，方法在执行的时候都会创建一个名为栈帧（stack frame）的数据结构，主要用于存放局部变量表、操作栈、动态链接、方法出口等信息，如图所示，方法的调用对应着栈帧在虚拟机栈中的压栈和弹栈过程。\n每一个线程在创建的时候，JVM都会为其创建对应的虚拟机栈，虚拟机栈的大小可以通过-xss来配置，方法的调用是栈帧被压入和弹出的过程，通过上图可以看出，同等的虚拟机栈如果局部变量表等占用内存越小则可被压入的栈帧就会越多，反之则可被压入的栈帧就会越少，一般将栈帧内存的大小称为宽度，而栈帧的数量则称为虚拟机栈的深度。\n本地方法栈 Java中提供了调用本地方法的接口（Java Native Interface），也就是C/C++程序，在线程的执行过程中，经常会碰到调用JNI方法的情况，比如网络通信、文件操作的底层，甚至是String的intern等都是JNI方法，JVM为本地方法所划分的内存区域便是本地方法栈，这块内存区域其自由度非常高，完全靠不同的JVM厂商来实现，Java虚拟机规范并未给出强制的规定，同样它也是线程私有的内存区域。\n堆内存 堆内存是JVM中最大的一块内存区域，被所有的线程所共享，Java在运行期间创建的所有对象几乎都存放在该内存区域，该内存区域也是垃圾回收器重点照顾的区域，因此有些时候堆内存被称为“GC堆”。\n堆内存一般会被细分为新生代和老年代，更细致的划分为Eden区、From Survivor区和To Survivor区，如图所示。","url":"https://ahamoment.cn/posts/java/java-jvm-jmm/"},{"@type":"ListItem","position":4,"name":"散列表那些事","description":"基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？\n我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。\n这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：\n 以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。  散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。\n一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。\n散列映射法的关键问题有两个：\n 如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。  散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：","url":"https://ahamoment.cn/posts/algorithm/algorithm-hashtable/"},{"@type":"ListItem","position":5,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM","url":"https://ahamoment.cn/posts/linux/linux-nscd/"},{"@type":"ListItem","position":6,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},{"@type":"ListItem","position":7,"name":"容器内获取 CPU 核数问题","description":"现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。\n但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：\nint cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中\n   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码","url":"https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/"},{"@type":"ListItem","position":8,"name":"解决setcap导致Java加载libjli.so 失败问题","description":"背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：\njava: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.","url":"https://ahamoment.cn/posts/linux/linux-cap/"},{"@type":"ListItem","position":9,"name":"平衡二叉树","description":"平衡二叉树 平衡二叉树也是一种搜索树。\n搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。\n平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|\u0026lt;=1。\n平衡二叉树的高度能够达到 $log_2n$\n平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。\n右单旋 按照字母大小插入三个结点，Mar, May, Nov：\n如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。","url":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"},{"@type":"ListItem","position":10,"name":"Linux Shell Script 基础教程","description":"本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。\n 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。\n1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：","url":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/">
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-06-17T20:28:05+08:00">
+<meta property="og:updated_time" content="2021-04-15T10:03:48+08:00">
 <meta property="article:section" content="posts">
 <meta property="article:tag" content="index">
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/posts/index.xml title=AhaMoment>
@@ -85,31 +85,6 @@
 </article>
 <div class="bg-secondary-bg rounded px-6">
 <div class="overflow-hidden divide-y">
-<div class=py-6>
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/ class="font-bold text-xl hover:text-eureka">Java 多线程面试题总结</a>
-</div>
-<div class=content>
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-11-11</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-</div>
-</div>
-</div>
 <div class=py-6>
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -372,6 +347,34 @@ java: error while loading shared libraries: libjli.so: cannot open shared object
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
 <a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class=py-6>
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ class="font-bold text-xl hover:text-eureka">Linux Shell Script 基础教程</a>
+</div>
+<div class=content>
+本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
+1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
+1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-08-27</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>6 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
 </div>
 </div>
 </div>
