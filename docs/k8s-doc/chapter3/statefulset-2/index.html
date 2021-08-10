@@ -407,7 +407,7 @@ www-web-1   Bound     pvc-15c79307-b507-11e6-932f-42010a800002   1Gi        RWO 
 </code></pre>
 <p>可以看到，这些 PVC，都以“&lt;PVC 名字 >-&lt;StatefulSet 名字 >-&lt; 编号 >”的方式命名，并且处于 Bound 状态。</p>
 <p>我们前面已经讲到过，这个 StatefulSet 创建出来的所有 Pod，都会声明使用编号的 PVC。比如，在名叫 web-0 的 Pod 的 volumes 字段，它会声明使用名叫 www-web-0 的 PVC，从而挂载到这个 PVC 所绑定的 PV。所以，我们就可以使用如下所示的指令，在 Pod 的 Volume 目录里写入一个文件，来验证一下上述 Volume 的分配情况：</p>
-<pre><code class=language-bash>$ for i in 0 1; do kubectl exec web-$i -- sh -c 'echo hello $(hostname) &gt; /usr/share/nginx/html/index.html'; done
+<pre><code class=language-bash>$ for i in 0 1; do kubectl exec web-$i -- sh -c 'echo hello $(hostname) &gt; /usr/share/nginx/html/admin.html'; done
 </code></pre>
 <p>如上所示，通过 kubectl exec 指令，我们在每个 Pod 的 Volume 目录里，写入了一个 index.html 文件。这个文件的内容，正是 Pod 的 hostname。比如，我们在 web-0 的 index.html 里写入的内容就是"hello web-0"。</p>
 <p>此时，如果你在这个 Pod 容器里访问“http://localhost”，你实际访问到的就是 Pod 里 Nginx 服务器进程，而它会为你返回 /usr/share/nginx/html/index.html 里的内容。这个操作的执行方法如下所示：</p>

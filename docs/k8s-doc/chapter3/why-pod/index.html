@@ -362,7 +362,7 @@ spec:
     - name: shared-data
       mountPath: /pod-data
     command: [&quot;/bin/sh&quot;]
-    args: [&quot;-c&quot;, &quot;echo Hello from the debian container &gt; /pod-data/index.html&quot;]
+    args: [&quot;-c&quot;, &quot;echo Hello from the debian container &gt; /pod-data/admin.html&quot;]
 </code></pre>
 <p>在这个例子中，debian-container 和 nginx-container 都声明挂载了 shared-data 这个 Volume。而 shared-data 是 hostPath 类型。所以，它对应在宿主机上的目录就是：/data。而这个目录，其实就被同时绑定挂载进了上述两个容器当中。</p>
 <p>这就是为什么，nginx-container 可以从它的 /usr/share/nginx/html 目录中，读取到 debian-container 生成的 index.html 文件的原因。</p>
