@@ -19,14 +19,14 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"二叉搜索树","description":"1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：\n 非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。  2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：\n 查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。  x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。    我们用递归来实现查找过程，","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/"},{"@type":"ListItem","position":2,"name":"二叉树及存储结构","description":"\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c/p\u003e","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"},{"@type":"ListItem","position":3,"name":"树的定义及表示","description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。\n1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。\n1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。\n如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。\npublic int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},{"@type":"ListItem","position":4,"name":"队列及其实现","description":"1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。\n 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。\n2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：\n 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。","url":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"},{"@type":"ListItem","position":5,"name":"Java 多线程 - 死锁问题","description":"锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。\n1. 什么是死锁  百度百科中对于死锁的定义：死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。\n 简而言之，当线程1持有资源A，线程2持有资源B。此时线程1想要获取资源B，线程2想要获取资源A。两个线程都想要获取对方手中的资源，自己又不肯让出已有资源，一直僵持不下就形成了死锁。\n2. 死锁产生的四个条件  互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。 请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。 不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。 环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个 P1 占用的资源；P1 正在等待 P2 占用的资源，……，Pn 正在等待已被 P0 占用的资源。  3.","url":"https://ahamoment.cn/posts/java/java-multithread-dead-lock/"},{"@type":"ListItem","position":6,"name":"Java 多线程 - 初识 Synchronized","description":"Synchronized 简介  本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！\n 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。\npublic class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, \u0026quot;一号窗口\u0026quot;); Thread windowThread2 = new Thread(ticketWindow, \u0026quot;二号窗口\u0026quot;); Thread windowThread3 = new Thread(ticketWindow, \u0026quot;三号窗口\u0026quot;); windowThread1.","url":"https://ahamoment.cn/posts/java/java-multithread-synchronized/"},{"@type":"ListItem","position":7,"name":"20 常用的 RPM 命令","description":"本文翻译自20 Practical Examples of RPM Commands in Linux\n RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。","url":"https://ahamoment.cn/posts/linux/linux-20-rpm-command/"},{"@type":"ListItem","position":8,"name":"JDK1.8 源代码阅读环境搭建","description":"一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)\n二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。","url":"https://ahamoment.cn/posts/java/java-source-code-learn/"},{"@type":"ListItem","position":9,"name":"Spring Boot 发送邮件","description":"\u003cp\u003e这篇文章主要介绍使用\u003ccode\u003espring boot\u003c/code\u003e 发送邮件。\u003c/p\u003e","url":"https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"},{"@type":"ListItem","position":10,"name":"Linux Shell 输入/输出重定向","description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。","url":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Linux Shell Script 基础教程","description":"本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。\n 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。\n1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：","url":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"},{"@type":"ListItem","position":2,"name":"二叉搜索树","description":"1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：\n 非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。  2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：\n 查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。  x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。    我们用递归来实现查找过程，","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/"},{"@type":"ListItem","position":3,"name":"二叉树及存储结构","description":"\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c/p\u003e","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"},{"@type":"ListItem","position":4,"name":"树的定义及表示","description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。\n1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。\n1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。\n如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。\npublic int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},{"@type":"ListItem","position":5,"name":"队列及其实现","description":"1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。\n 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。\n2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：\n 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。","url":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"},{"@type":"ListItem","position":6,"name":"Java 多线程 - 死锁问题","description":"锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。\n1. 什么是死锁  百度百科中对于死锁的定义：死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。\n 简而言之，当线程1持有资源A，线程2持有资源B。此时线程1想要获取资源B，线程2想要获取资源A。两个线程都想要获取对方手中的资源，自己又不肯让出已有资源，一直僵持不下就形成了死锁。\n2. 死锁产生的四个条件  互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。 请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。 不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。 环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个 P1 占用的资源；P1 正在等待 P2 占用的资源，……，Pn 正在等待已被 P0 占用的资源。  3.","url":"https://ahamoment.cn/posts/java/java-multithread-dead-lock/"},{"@type":"ListItem","position":7,"name":"Java 多线程 - 初识 Synchronized","description":"Synchronized 简介  本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！\n 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。\npublic class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, \u0026quot;一号窗口\u0026quot;); Thread windowThread2 = new Thread(ticketWindow, \u0026quot;二号窗口\u0026quot;); Thread windowThread3 = new Thread(ticketWindow, \u0026quot;三号窗口\u0026quot;); windowThread1.","url":"https://ahamoment.cn/posts/java/java-multithread-synchronized/"},{"@type":"ListItem","position":8,"name":"20 常用的 RPM 命令","description":"本文翻译自20 Practical Examples of RPM Commands in Linux\n RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。","url":"https://ahamoment.cn/posts/linux/linux-20-rpm-command/"},{"@type":"ListItem","position":9,"name":"JDK1.8 源代码阅读环境搭建","description":"一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)\n二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。","url":"https://ahamoment.cn/posts/java/java-source-code-learn/"},{"@type":"ListItem","position":10,"name":"Spring Boot 发送邮件","description":"\u003cp\u003e这篇文章主要介绍使用\u003ccode\u003espring boot\u003c/code\u003e 发送邮件。\u003c/p\u003e","url":"https://ahamoment.cn/posts/java/framewordk-springboot-send-email/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/">
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-04-15T10:03:48+08:00">
+<meta property="og:updated_time" content="2021-06-17T20:28:05+08:00">
 <meta property="article:section" content="posts">
 <meta property="article:tag" content="index">
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/posts/index.xml title=AhaMoment>
@@ -85,6 +85,34 @@
 </article>
 <div class="bg-secondary-bg rounded px-6">
 <div class="overflow-hidden divide-y">
+<div class=py-6>
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ class="font-bold text-xl hover:text-eureka">Linux Shell Script 基础教程</a>
+</div>
+<div class=content>
+本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
+1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
+1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-08-27</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>6 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class=py-6>
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -330,34 +358,6 @@ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具�
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
 <a href=https://ahamoment.cn/categories/springboot/ class=hover:text-eureka>SpringBoot</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class=py-6>
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class="font-bold text-xl hover:text-eureka">Linux Shell 输入/输出重定向</a>
-</div>
-<div class=content>
-大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
-重定向命令列表如下：
-命令 说明 command > file 将输出重定向到 file。 command &lt; file 将输入重定向到 file。 command » file 将输出以追加的方式重定向到 file。 n > file 将文件描述符为 n 的文件重定向到 file。 n » file 将文件描述符为 n 的文件以追加的方式重定向到 file。 n >& m 将输出文件 m 和 n 合并。 n &lt;& m 将输入文件 m 和 n 合并。 « tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。 需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2019-11-26</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
 </div>
 </div>
 </div>

@@ -91,6 +91,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
+</li>
+<li>
 <a href=/posts/algorithm/algorithm-tree-inorder/ class=nav-link>二叉树的中序遍历</a>
 </li>
 <li>
@@ -101,9 +104,6 @@
 </li>
 <li>
 <a href=/posts/machinelearning/ml-tensorflow2.0-install/ class=nav-link>安装 Tensorflow2</a>
-</li>
-<li>
-<a href=/posts/tool/tool-vim/ class=nav-link>Vim 折腾记</a>
 </li>
 </ul>
 </div>
@@ -132,6 +132,24 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/ class="font-bold text-xl hover:text-eureka">谈谈“控制器”模式</a>
+</div>
+<div class=content>
+本文转自张磊老师的《深入剖析 Kubernetes》课程
+</div>
+<div class="px-6 pt-4">
+<div class="pt-6 hover:text-eureka">
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter3/controller-mode/ class=font-semibold>Read More</a>
+<i class="fas fa-caret-right ml-1"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -320,34 +338,6 @@ export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))" tee Linux te
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
 <a href=https://ahamoment.cn/categories/%E6%A1%86%E6%9E%B6/ class=hover:text-eureka>框架</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/interview/interview-docker-k8s/ class="font-bold text-xl hover:text-eureka">Docker 和 Kubernetes 面试题</a>
-</div>
-<div class=content>
-1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
-AUFS
-AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-12-28</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class=hover:text-eureka>面试题</a>
 </div>
 </div>
 </div>
