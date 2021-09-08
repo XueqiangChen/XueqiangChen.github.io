@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-08-13T03:54:23+00:00">
+<meta property="og:updated_time" content="2021-09-08T14:47:54+08:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/java/springboot-send-email/ class=nav-link>Spring Boot 发送邮件</a>
+</li>
+<li>
 <a href=/posts/linux/linux-commands/ class=nav-link>Linux 常用命令</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/go/go-new-vs-make/ class=nav-link>Go 语言中的 new 关键字和 make 关键字的区别</a>
-</li>
-<li>
-<a href=/posts/tool/tool-mac-os-commands/ class=nav-link>Mac 命令汇总</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,38 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ class="font-bold text-xl hover:text-eureka">平衡二叉树</a>
+</div>
+<div class=content>
+平衡二叉树 平衡二叉树也是一种搜索树。
+搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。
+平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|&lt;=1。
+平衡二叉树的高度能够达到 $log_2n$
+平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。
+右单旋 按照字母大小插入三个结点，Mar, May, Nov：
+如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-08-31</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -382,34 +414,6 @@ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具�
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
 <a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class="font-bold text-xl hover:text-eureka">Linux Shell 输入/输出重定向</a>
-</div>
-<div class=content>
-大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
-重定向命令列表如下：
-命令 说明 command > file 将输出重定向到 file。 command &lt; file 将输入重定向到 file。 command » file 将输出以追加的方式重定向到 file。 n > file 将文件描述符为 n 的文件重定向到 file。 n » file 将文件描述符为 n 的文件以追加的方式重定向到 file。 n >& m 将输出文件 m 和 n 合并。 n &lt;& m 将输入文件 m 和 n 合并。 « tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。 需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2019-11-26</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
 </div>
 </div>
 </div>
