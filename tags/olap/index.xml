@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>olap on AhaMoment</title><link>https://ahamoment.cn/tags/olap/</link><description>Recent content in olap on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Wed, 15 Sep 2021 02:35:35 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/tags/olap/index.xml" rel="self" type="application/rss+xml"/><item><title>OLAP概述</title><link>https://ahamoment.cn/posts/bigdata/olap/</link><pubDate>Wed, 15 Sep 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap/</guid><description>OLAP OLAP vs OLTP 的差异
+OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
+OLAP 的目标：查询和报表
+相关概念：
+维度 维的层次 维的成员 多维数组 度量 基本特征：
+快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：</description></item></channel></rss>
