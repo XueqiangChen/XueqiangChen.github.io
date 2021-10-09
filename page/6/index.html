@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-09-15T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/bigdata/olap-presto/ class=nav-link>大数据 OLAP 引擎：Presto 概述</a>
+</li>
+<li>
 <a href=/posts/bigdata/olap/ class=nav-link>OLAP概述</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
-</li>
-<li>
-<a href=/posts/algorithm/algorithm-tree-inorder/ class=nav-link>二叉树的中序遍历</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,35 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/ class="font-bold text-xl hover:text-eureka">容器内获取 CPU 核数问题</a>
+</div>
+<div class=content>
+现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
+但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
+int cores = Runtime.getRuntime().availableProcessors(); 这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
+ENV Description _SC_NPROCESSORS_CONF number of processors configured _SC_NPROCESSORS_ONLN The number of processors currently online (available) 其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-09-11</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>1 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E4%BA%91%E8%AE%A1%E7%AE%97/ class=hover:text-eureka>云计算</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -387,33 +416,6 @@ public class BankRunnable { public static void main(String[] args) { // 一个ru
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
 <a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ class="font-bold text-xl hover:text-eureka">20 常用的 RPM 命令</a>
-</div>
-<div class=content>
-本文翻译自20 Practical Examples of RPM Commands in Linux
-RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-06-02</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>7 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
 </div>
 </div>
 </div>

@@ -23,14 +23,14 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Categories","item":"https://ahamoment.cn/categories/"},{"@type":"ListItem","position":2,"name":"bigdata","item":"https://ahamoment.cn/categories/bigdata/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异\nOLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。\nOLAP 的目标：查询和报表\n相关概念：\n 维度 维的层次 维的成员 多维数组 度量  基本特征：\n 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"}]}</script><meta property="og:title" content="bigdata | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"大数据 OLAP 引擎：Presto 概述","description":"大数据 OLAP 引擎：Presto 概述  SQL on Anything\n  presto特点\n  presto架构\n Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","url":"https://ahamoment.cn/posts/bigdata/olap-presto/"},{"@type":"ListItem","position":2,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异\nOLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。\nOLAP 的目标：查询和报表\n相关概念：\n 维度 维的层次 维的成员 多维数组 度量  基本特征：\n 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"}]}</script><meta property="og:title" content="bigdata | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/categories/bigdata/">
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-09-15T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
 <meta property="article:section" content="categories">
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/categories/bigdata/index.xml title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -88,6 +88,38 @@
 </article>
 <div class="bg-secondary-bg rounded px-6">
 <div class="overflow-hidden divide-y">
+<div class=py-6>
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class="w-full lg:w-2/3">
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/bigdata/olap-presto/ class="font-bold text-xl hover:text-eureka">大数据 OLAP 引擎：Presto 概述</a>
+</div>
+<div class=content>
+大数据 OLAP 引擎：Presto 概述 SQL on Anything
+presto特点
+presto架构
+Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-10-09</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>1 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/bigdata/ class=hover:text-eureka>bigdata</a>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/3 mb-4 lg:mb-0 lg:ml-8">
+<img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png class=w-full alt="Featured Image">
+</div>
+</div>
+</div>
 <div class=py-6>
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class="w-full lg:w-2/3">
