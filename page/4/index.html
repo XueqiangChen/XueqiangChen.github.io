@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-11T02:35:35+00:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/bigdata/kafka/ class=nav-link>流式处理和实时计算：Kafka</a>
+</li>
+<li>
 <a href=/posts/bigdata/olap-presto/ class=nav-link>大数据 OLAP 引擎：Presto 概述</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/linux/linux-commands/ class=nav-link>Linux 常用命令</a>
-</li>
-<li>
-<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,25 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/ class="font-bold text-xl hover:text-eureka">常用的k8s命令</a>
+</div>
+<div class=content>
+1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件：
+$ kubectl replace -f nginx-deployment.
+</div>
+<div class="px-6 pt-4">
+<div class="pt-6 hover:text-eureka">
+<a href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/ class=font-semibold>Read More</a>
+<i class="fas fa-caret-right ml-1"></i>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -358,33 +377,6 @@ AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUF
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
 <span>1 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/%E9%9D%A2%E8%AF%95%E9%A2%98/ class=hover:text-eureka>面试题</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/interview/interview-mysql/ class="font-bold text-xl hover:text-eureka">MySQL 面试题</a>
-</div>
-<div class=content>
-1. 什么是MySQL？ MySQL 是一种关系型数据库，在Java企业级开发中非常常用，因为 MySQL 是开源免费的，并且方便扩展。阿里巴巴数据库系统也大量用到了 MySQL，因此它的稳定性是有保障的。MySQL是开放源代码的，因此任何人都可以在 GPL(General Public License) 的许可下下载并根据个性化的需要对其进行修改。MySQL的默认端口号是3306。
-2. 存储引擎 2.1. MyISAM 和 InnoDB 的区别 MyISAM是MySQL的默认数据库引擎（5.5版之前）。虽然性能极佳，而且提供了大量的特性，包括全文索引、压缩、空间函数等，但MyISAM不支持事务和行级锁，而且最大的缺陷就是崩溃后无法安全恢复。不过，5.5版本之后，MySQL引入了InnoDB（事务性数据库引擎），MySQL 5.5版本后默认的存储引擎为InnoDB。
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-12-09</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

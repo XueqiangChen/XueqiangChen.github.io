@@ -1,0 +1,409 @@
+<!doctype html><html lang=en><meta charset=utf-8>
+<meta name=viewport content="width=device-width">
+<title>流式处理和实时计算：Kafka | AhaMoment</title>
+<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
+<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
+<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
+<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
+<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
+<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
+<link rel=preconnect href=https://www.google-analytics.com crossorigin>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
+<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
+<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
+<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
+<meta name=description content="流式处理和实时计算：Kafka 消息系统概述  为什么需要消息系统
+ 解耦、冗余、扩展性、灵活性&峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信
+kafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源
+ 消息系统
+ ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ
+ 生产者和消费者模式
+ 在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责
+使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。
+Kafka的发展历程和现状  KSQL
+ 流式计算，针对流进行增强">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"流式处理和实时计算：Kafka","item":"https://ahamoment.cn/posts/bigdata/kafka/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/bigdata/kafka/"},"headline":"流式处理和实时计算：Kafka | AhaMoment","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg","datePublished":"2021-10-11T02:35:35+00:00","dateModified":"2021-10-11T01:48:41+00:00","wordCount":215,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"流式处理和实时计算：Kafka 消息系统概述  为什么需要消息系统\n 解耦、冗余、扩展性、灵活性\u0026amp;峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信\nkafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源\n 消息系统\n ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ\n 生产者和消费者模式\n 在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责\n使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。\nKafka的发展历程和现状  KSQL\n 流式计算，针对流进行增强"}</script><meta property="og:title" content="流式处理和实时计算：Kafka | AhaMoment">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
+<meta property="og:url" content="https://ahamoment.cn/posts/bigdata/kafka/">
+<meta property="og:description" content="流式处理和实时计算：Kafka 消息系统概述  为什么需要消息系统
+ 解耦、冗余、扩展性、灵活性&峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信
+kafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源
+ 消息系统
+ ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ
+ 生产者和消费者模式
+ 在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责
+使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。
+Kafka的发展历程和现状  KSQL
+ 流式计算，针对流进行增强">
+<meta property="og:locale" content="en">
+<meta property="og:site_name" content="AhaMoment">
+<meta property="article:published_time" content="2021-10-11T02:35:35+00:00">
+<meta property="article:modified_time" content="2021-10-11T01:48:41+00:00">
+<meta property="article:section" content="posts">
+<meta property="article:tag" content="kafka">
+<body class="flex flex-col min-h-screen">
+<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
+<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
+<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
+<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
+<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
+<i class="fas fa-bars"></i>
+</button>
+<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
+<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
+<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
+<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
+<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
+</div>
+<div class=flex>
+<div class="search-container relative pt-4 md:pt-0">
+<div class=search>
+<form role=search class=search-form action=/search/index.html method=get>
+<label>
+<input name=q type=text placeholder="搜索 ..." class=search-field>
+</label>
+<button>
+<i class="fas fa-search"></i>
+</button>
+</form>
+</div>
+</div>
+<div class="relative pt-4 md:pt-0">
+<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
+<i class="fas fa-adjust"></i>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
+</div>
+<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
+<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
+<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
+<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
+</div>
+</nav>
+<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
+</div>
+</header>
+<main class="flex-grow pt-16">
+<div class=pl-scrollbar>
+<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
+<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
+<div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
+<h1 class="font-bold text-3xl text-primary-text">流式处理和实时计算：Kafka</h1>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-10-11</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/bigdata/ class=hover:text-eureka>bigdata</a>
+</div>
+</div>
+<div class=my-4>
+<img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg class=w-full alt="Featured Image">
+</div>
+<div class=content>
+<h2 id=流式处理和实时计算kafka>流式处理和实时计算：Kafka</h2>
+<h3 id=消息系统概述>消息系统概述</h3>
+<blockquote>
+<p>为什么需要消息系统</p>
+</blockquote>
+<p>解耦、冗余、扩展性、灵活性&峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信</p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/system-kafka.png alt></p>
+<p>kafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源</p>
+<blockquote>
+<p>消息系统</p>
+</blockquote>
+<p>ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ</p>
+<blockquote>
+<p>生产者和消费者模式</p>
+</blockquote>
+<p>在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责<br>
+使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。<br>
+<img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/consumer-producer.png alt></p>
+<h3 id=kafka的发展历程和现状>Kafka的发展历程和现状</h3>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafa_history.png alt></p>
+<blockquote>
+<p>KSQL</p>
+</blockquote>
+<p>流式计算，针对流进行增强</p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/ksql1.png alt></p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/ksql2.png alt></p>
+<h3 id=kafka系统架构和原理>Kafka系统架构和原理</h3>
+<blockquote>
+<p>Topics 和 Append Log</p>
+</blockquote>
+<p>一个topic是对一组消息的归纳，一个topic是对一组消息的归纳，每个partition会生成一个append log文件。每条消息在文件中的位置称为offset（偏移量），唯一标记一条消息。</p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/topic.png alt></p>
+<blockquote>
+<p>Producer和Consumer</p>
+</blockquote>
+<p>Producer即生产者，向Kafka集群发送消息，消息会按照Topic进行分类。<br>
+Consumer即消费者，消费者通过与Kafka集群建立长连接的方式，不断地从集群中<br>
+拉取消息，然后可以对这些消息进行处理。它需要保存消费消息的offset：当<br>
+consumer正常消费消息时，offset将会“线性”的增加，即消息将依次顺序被消费。<br>
+通过设置offset，consumer可以从任意位置消费消息。<br>
+Consumer可以在本地保存最后消息的offset，并向ZooKeeper注册offset。</p>
+<blockquote>
+<p>Consumer Group</p>
+</blockquote>
+<p>这是Kafka用来实现一个topic消息广播的手段。即多个不同的group来同时消费同一<br>
+个topic下的消息。他们消费的offset各不相同，各不干扰。<br>
+一个group中，Consumer的数量不应该多于Partition的数量，即一个消费者可以消<br>
+费多个分区，但一个分区只能给一个消费者消费。若一个group中的消费者数量大于<br>
+Partition数量的话，多余的消费者将不会收到任何消息。</p>
+<blockquote>
+<p>Broker</p>
+</blockquote>
+<p>消息保存在一组服务器中，它们被称为代理（Broker）或Kafka集群。<br>
+每个Broker有一个Broker id。<br>
+每个Broker存储Topic的部分数据。<br>
+Kafka的存储文件按照offset.kafka来命名，用offset做名字的好处是方便查找。例如<br>
+你想找位于2049的位置，只要找到2048.kafka的文件即可。第一个个存储文件是<br>
+00000000000.kafka。</p>
+<blockquote>
+<p>整体架构图</p>
+</blockquote>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafka_arch.png alt></p>
+<blockquote>
+<p>消息传送机制</p>
+</blockquote>
+<p>对于传统消息系统，消息传输担保非常直接：有且只有一次(exactly once)。在Kafka<br>
+中稍有不同：<br>
+• at most once：消息最多发生一次，无论消费者是否接受到，都不会重发。<br>
+• at least once：消息至少发送一次，如果消息未能接受成功，会重发直到接收成功。<br>
+• exactly once：消息只会发送一次</p>
+<p>新版本才有。</p>
+<blockquote>
+<p>Kafka中各语义如何实现</p>
+</blockquote>
+<p>at most once：消费者fetch消息，先保存消息的offset，然后处理消息。当消费者保<br>
+存offset之后，但是在消息处理过程中出现了异常，导致部分消息未能继续处理。那<br>
+么此后“未处理”的消息将不能被fetch到，这就是“at most once”。<br>
+at least once：消费者fetch消息，先处理消息，然后保存offset。如果消息处理成功<br>
+之后，但是在保存offset阶段，ZooKeeper异常导致保存操作未能执行成功，这就导<br>
+致接下来再次fetch时可能获得上次已经处理过的消息，这就是“at least once”。<br>
+exactly once：Kafka中并没有严格的去实现（基于2阶段提交、事务），我们认为这<br>
+种策略在Kafka中是没有必要的</p>
+<h3 id=如何做到可靠数据传递>如何做到可靠数据传递</h3>
+<blockquote>
+<p>Replica</p>
+</blockquote>
+<p>Kafka将每个partition数据复制到多个server上，任何一个partition有一个leader和<br>
+零个或多个follower（ISR），称为partition的副本（replica）。<br>
+• Leader处理所有的读写请求，follower需要和leader保持同步。Follower和<br>
+consumer一样，消费消息并保存在本地日志中。<br>
+• 当所有的follower都将一条消息保存成功，此消息才被认为是“committed”。只有<br>
+committed的消息，consumer才能消费它。<br>
+• 当leader失效时，需在followers中选取出新的leader。可能此时follower落后于<br>
+leader，因此需要选择一个尽可能“新”的follower。</p>
+<blockquote>
+<p>容灾</p>
+</blockquote>
+<blockquote>
+<p>Producer ACK</p>
+</blockquote>
+<ul>
+<li>ACK=0，即没有ack，可能会造成数据丢失（at most once）</li>
+<li>ACK=1，producer会等接收到Leader的ack再发生下一条消息（at most once）</li>
+<li>ACK=all，producer会等接收到Leader+Follower的ack再发生下一条消息（at least<br>
+once / exactly once）</li>
+</ul>
+<blockquote>
+<p>Producer Key</p>
+</blockquote>
+<ul>
+<li>Producer可以为发送的消息设置Key来进行发生模式选择。</li>
+<li>当key=null，数据才用轮训（Round Robin）方式进行发送。</li>
+<li>当key!=null，数据可以根据散列键（Hash）方式进行发送，相同Key的数据能发送<br>
+到同一个Partition。</li>
+</ul>
+<blockquote>
+<p>Consumer Rebalance</p>
+</blockquote>
+<ul>
+<li>Consumer记录每个partition所消费的maximum offset，并定期commit到offset<br>
+manager。</li>
+<li>属于同一个group的consumer（group id一样）平均分配partition，每个partition<br>
+只会被一个consumer消费。</li>
+</ul>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/producer_key.png alt></p>
+<ul>
+<li>ZooKeeper会管理broker与consumer的动态关系。</li>
+<li>当broker或consumer加入或离开时会触发负载均衡算法，使得一个consumer group内的多个consumer的订阅负载平衡。</li>
+<li>ZooKeeper还维护每个partition的消费offset。</li>
+<li>算法：<br>
+假如topic1,具有如下partitions: P0,P1,P2,P3<br>
+假如group中,有如下consumer: C1,C2<br>
+首先根据partition索引号对partitions排序: P0,P1,P2,P3<br>
+根据consumer.id排序: C0,C1<br>
+计算倍数: M = [P0,P1,P2,P3].size / [C0,C1].size,本例值M=2(向上取整)<br>
+然后依次分配partitions: C0 = [P0,P1],C1=[P2,P3]<br>
+Ci = [P(i * M),P((i + 1) * M -1)]</li>
+</ul>
+<h3 id=page-cache和零拷贝>Page Cache和零拷贝</h3>
+<blockquote>
+<p>文件存储</p>
+</blockquote>
+<ul>
+<li>在Kafka文件存储中，同一个topic下有多个不同partition，每个partition为一个目录，<br>
+partiton目录的命名规则为topic名称+有序序号，第一个partiton序号从0开始。</li>
+<li>每个partition目录存储着多个segment数据文件。Segment数据文件size固定，但消息数量不一定相等。默认保留7天。</li>
+<li>每个segment由index file（.index后缀）和data file（.log后缀）”组成。</li>
+<li>Partition全局的第一个segment从0开始，后续每个segment文件名为上一个segment文件最后一条消息的offset值。</li>
+</ul>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/segment.png alt></p>
+<blockquote>
+<p>Segment 存储</p>
+</blockquote>
+<ul>
+<li>
+<p>疑问一：为什么要分区呢？<br>
+为了性能考虑，如果不分区每个topic的消息只存在一个broker上，那么所有的消费者都是从这个broker上消费消息，那么单节点的broker成为性能的瓶颈，如果有分区的话生产者发过来的消息分别存储在各个broker不同的partition上，这样消费者可以并行的从不同的broker不同的partition上读消息，实现了水平扩展。</p>
+</li>
+<li>
+<p>疑问二：为什么有了partition还需要segment ？<br>
+如果不引入segment，那么一个partition只对应一个文件（log），随着消息的不断发送这个文件不断增大，由于Kafka的消息不会做更新操作都是顺序写入的，如果做消息清理的时候只能删除文件的前面部分删除，不符合Kafka顺序写入的设计，如果多个segment的话那就比较方便了，直接删除整个文件即可保证了每个segment的顺序写入。</p>
+</li>
+<li>
+<p>疑问三：分区文件下到底存了那些东西？</p>
+<p>其实每个分区下保存了很多文件，而概念上我们把他叫segment，即每个分区都是又多个<br>
+segment构成的，其中index（索引文件）、log（数据文件）、time index（时间索引文件）统称为一个segment。</p>
+</li>
+</ul>
+<blockquote>
+<p>消费者如何通过offset查找message</p>
+</blockquote>
+<p>假如我们想要读取offset=1066的message，需要通过下面2个步骤查找：</p>
+<ol>
+<li>
+<p>查找segment file</p>
+<p>0000.index表示最开始的文件，起始偏移量(offset)为0。第二个文件1018.index的消息量起始偏移量为1019(1018 +1)。同样，第三个文件2042.index的起始偏移量为2043(2042 + 1)。只要根据offset进行二分查找文件列表，就可以快速定位到具体文件。当offset=1066时定位到1018.index|log。</p>
+</li>
+<li>
+<p>通过segment file 查找message</p>
+<p>通过第一步定位到segment file，当offset=1066时，依次定位到1018.index的元数据物理位置和1018.log的物理偏移地址，此时我们只能拿到1065的物理偏移地址，然后再通过368769.log顺序查找直到offset=1066为止。</p>
+</li>
+</ol>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/find_message.png alt></p>
+<blockquote>
+<p>高性能</p>
+</blockquote>
+<p>Kafka官方测试其数据读写速率能达到600M/s，那么为什么性能会这么高呢？</p>
+<ul>
+<li>sequence IO</li>
+<li>PageCache</li>
+<li>Zero Copy（SendFile）</li>
+</ul>
+<blockquote>
+<p>Sequence IO</p>
+</blockquote>
+<p>Kafka在将数据持久化到磁盘时，采用只追加的顺序写，有效降低了寻址时间，提高效率。</p>
+<blockquote>
+<p>PageCache</p>
+</blockquote>
+<p>PageCache是Linux系统级别的缓存，它把尽可能多的空闲内存当作磁盘缓存使用来进一步提高IO效率。</p>
+<p>当写操作发生时，操作系统只是将数据写入PageCache，同时标记Page属性为Dirty。当读操作发生时，先从PageCache中查找，如果发生缺页才进行磁盘调度，最终返回需要的数据。</p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/page_cache.png alt></p>
+<ul>
+<li>Producer把消息发到broker后，数据并不是直接落入磁盘的，而是先进入PageCache。PageCache中的数据会被内核中的处理线程采用同步或异步的方式写回到磁盘。</li>
+<li>Consumer消费消息时，会先从PageCache获取消息，获取不到才回去磁盘读取，并且会预读出一些相邻的块放入PageCache，以方便下一次读取。</li>
+</ul>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/page_cache2.png alt></p>
+<blockquote>
+<p>Zero Copy</p>
+</blockquote>
+<p>传统的网络I/O过程：</p>
+<ol>
+<li>操作系统从磁盘把数据读到内核区</li>
+<li>用户进程把数据从内核区copy到用户区</li>
+<li>然后用户进程再把数据写入到内核区的socket buffer上</li>
+<li>最后把数据从socket buffer中发送到网卡</li>
+</ol>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/tradition_copy.png alt></p>
+<p>通过SendFile（又称Zero Copy）优化后，数据从内核区copy到socket，然后发送到网卡，避免了数据在内核态和用户态的来回拷贝。</p>
+<p>从Linux内核2.4版本开始，对于网卡支持SG-DMA的，SendFile进一步减少通过CPU把内核缓冲区里的数据拷贝到socket缓冲区的过程。</p>
+<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/zero_copy.png alt></p>
+<h3 id=ksql>KSQL</h3>
+</div>
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/kafka/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#kafka</a>
+</div>
+<div class=py-2>
+<div class="flex flex-col md:flex-row items-center my-8">
+<a href=https://ahamoment.cn/authors/chenxq/ class="w-24 h-24 md:mr-4">
+<img src=https://ahamoment.cn/images/icon.png class="w-full bg-primary-bg rounded-full" alt=Avatar>
+</a>
+<div class="w-full md:w-auto mt-4 md:mt-0">
+<a href=https://ahamoment.cn/authors/chenxq/ class="block font-bold text-lg pb-1 mb-2 border-b">Chenxq</a>
+<span class="block pb-2"></span>
+<a href=https://github.com/XueqiangChen class=mr-1>
+<i class="fab fa-github"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
+<div>
+</div>
+<div class="md:text-right mt-4 md:mt-0">
+<span class="block font-bold">Next</span>
+<a href=https://ahamoment.cn/posts/bigdata/olap-presto/ class=block>大数据 OLAP 引擎：Presto 概述</a>
+</div>
+</div>
+</div>
+<div class=col-span-2>
+<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-primary-bg">
+<span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#流式处理和实时计算kafka>流式处理和实时计算：Kafka</a>
+<ul>
+<li><a href=#消息系统概述>消息系统概述</a></li>
+<li><a href=#kafka的发展历程和现状>Kafka的发展历程和现状</a></li>
+<li><a href=#kafka系统架构和原理>Kafka系统架构和原理</a></li>
+<li><a href=#如何做到可靠数据传递>如何做到可靠数据传递</a></li>
+<li><a href=#page-cache和零拷贝>Page Cache和零拷贝</a></li>
+<li><a href=#ksql>KSQL</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
+</div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
+</div>
+</div>
+</main>
+<footer class=pl-scrollbar>
+<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
+<p class="text-sm text-tertiary-text">&copy; 2021
+&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
+</div></div>
+</footer>
+</body>
+</html>

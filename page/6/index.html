@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-11T02:35:35+00:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/bigdata/kafka/ class=nav-link>流式处理和实时计算：Kafka</a>
+</li>
+<li>
 <a href=/posts/bigdata/olap-presto/ class=nav-link>大数据 OLAP 引擎：Presto 概述</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/linux/linux-commands/ class=nav-link>Linux 常用命令</a>
-</li>
-<li>
-<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,37 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class="font-bold text-xl hover:text-eureka">堆</a>
+</div>
+<div class=content>
+什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
+若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
+若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
+如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
+优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
+结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值） “最大堆”，也称 “大顶堆”：堆顶元素是整个树的最大值 “最小堆”，也称"小顶堆"：堆顶元素是整个树的最小值 如下图所示的几个二叉树，不是堆。
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-09-15</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>4 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>
@@ -384,34 +415,6 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
 <span>2 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/posts/java/java-multithread-synchronized/ class="font-bold text-xl hover:text-eureka">Java 多线程 - 初识 Synchronized</a>
-</div>
-<div class=content>
-Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！
-先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。
-public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, "一号窗口"); Thread windowThread2 = new Thread(ticketWindow, "二号窗口"); Thread windowThread3 = new Thread(ticketWindow, "三号窗口"); windowThread1.
-</div>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-06-10</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

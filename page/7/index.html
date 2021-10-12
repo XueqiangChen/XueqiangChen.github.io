@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-11T02:35:35+00:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/bigdata/kafka/ class=nav-link>流式处理和实时计算：Kafka</a>
+</li>
+<li>
 <a href=/posts/bigdata/olap-presto/ class=nav-link>大数据 OLAP 引擎：Presto 概述</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/linux/linux-commands/ class=nav-link>Linux 常用命令</a>
-</li>
-<li>
-<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,34 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class=w-full>
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/java/java-multithread-synchronized/ class="font-bold text-xl hover:text-eureka">Java 多线程 - 初识 Synchronized</a>
+</div>
+<div class=content>
+Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！
+先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。
+public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, "一号窗口"); Thread windowThread2 = new Thread(ticketWindow, "二号窗口"); Thread windowThread3 = new Thread(ticketWindow, "三号窗口"); windowThread1.
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2020-06-10</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>3 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class=w-full>

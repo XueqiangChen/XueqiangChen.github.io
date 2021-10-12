@@ -29,7 +29,7 @@
 <meta property="og:description" content="Eureka is a elegant and powerful theme for Hugo.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-10-09T02:35:35+00:00">
+<meta property="og:updated_time" content="2021-10-11T02:35:35+00:00">
 <meta property="article:section" content>
 <link rel=alternate type=application/rss+xml href=https://ahamoment.cn/index.xml title=AhaMoment><link rel=alternate type=application/json href=https://ahamoment.cn/index.json title=AhaMoment>
 <body class="flex flex-col min-h-screen">
@@ -94,6 +94,9 @@
 <h2 class=widget-title>最新文章</h2>
 <ul class=widget-list>
 <li>
+<a href=/posts/bigdata/kafka/ class=nav-link>流式处理和实时计算：Kafka</a>
+</li>
+<li>
 <a href=/posts/bigdata/olap-presto/ class=nav-link>大数据 OLAP 引擎：Presto 概述</a>
 </li>
 <li>
@@ -104,9 +107,6 @@
 </li>
 <li>
 <a href=/posts/linux/linux-commands/ class=nav-link>Linux 常用命令</a>
-</li>
-<li>
-<a href=/posts/tool/tool-hugo-blog/ class=nav-link>Hugo 博客搭建</a>
 </li>
 </ul>
 </div>
@@ -135,6 +135,44 @@
 </div>
 <div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
 <div class="bg-secondary-bg rounded overflow-hidden px-4 divide-y">
+<div class="px-2 py-6">
+<div class="flex flex-col-reverse lg:flex-row justify-between">
+<div class="w-full lg:w-2/3">
+<div class=mb-4>
+<a href=https://ahamoment.cn/posts/bigdata/kafka/ class="font-bold text-xl hover:text-eureka">流式处理和实时计算：Kafka</a>
+</div>
+<div class=content>
+流式处理和实时计算：Kafka 消息系统概述 为什么需要消息系统
+解耦、冗余、扩展性、灵活性&峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信
+kafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源
+消息系统
+ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ
+生产者和消费者模式
+在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责
+使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。
+Kafka的发展历程和现状 KSQL
+流式计算，针对流进行增强
+</div>
+<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
+<div class="mr-6 my-2">
+<i class="fas fa-calendar mr-1"></i>
+<span>2021-10-11</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-clock mr-1"></i>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/bigdata/ class=hover:text-eureka>bigdata</a>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/3 mb-4 lg:mb-0 lg:ml-8">
+<img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg class=w-full alt="Featured Image">
+</div>
+</div>
+</div>
 <div class="px-2 py-6">
 <div class="flex flex-col-reverse lg:flex-row justify-between">
 <div class="w-full lg:w-2/3">
@@ -368,25 +406,6 @@ leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] �
 <div class="px-6 pt-4">
 <div class="pt-6 hover:text-eureka">
 <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/resource-model/ class=font-semibold>Read More</a>
-<i class="fas fa-caret-right ml-1"></i>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="px-2 py-6">
-<div class="flex flex-col-reverse lg:flex-row justify-between">
-<div class=w-full>
-<div class=mb-4>
-<a href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/ class="font-bold text-xl hover:text-eureka">K8s Go 客户端浅析</a>
-</div>
-<div class=content>
-在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
-客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。
-</div>
-<div class="px-6 pt-4">
-<div class="pt-6 hover:text-eureka">
-<a href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/ class=font-semibold>Read More</a>
 <i class="fas fa-caret-right ml-1"></i>
 </div>
 </div>

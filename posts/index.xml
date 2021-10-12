@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on AhaMoment</title><link>https://ahamoment.cn/posts/</link><description>Recent content in Posts on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Sat, 09 Oct 2021 02:35:35 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>大数据 OLAP 引擎：Presto 概述</title><link>https://ahamoment.cn/posts/bigdata/olap-presto/</link><pubDate>Sat, 09 Oct 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap-presto/</guid><description>大数据 OLAP 引擎：Presto 概述 SQL on Anything
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on AhaMoment</title><link>https://ahamoment.cn/posts/</link><description>Recent content in Posts on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Mon, 11 Oct 2021 02:35:35 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>流式处理和实时计算：Kafka</title><link>https://ahamoment.cn/posts/bigdata/kafka/</link><pubDate>Mon, 11 Oct 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/kafka/</guid><description>流式处理和实时计算：Kafka 消息系统概述 为什么需要消息系统
+解耦、冗余、扩展性、灵活性&amp;amp;峰值处理、可恢复性、顺序保证、缓冲、异步处理、消息通信
+kafka是个消息队列，但是又不是简单的消息队列。首先有主题，针对不同的主题有不同的消费。特性：主题、不同订阅端消费不同的主题、接受不同的生产者，数据源
+消息系统
+ActiveMQ、Kafka、RabbitMQ、Redis、Jafka、ZeroMQ
+生产者和消费者模式
+在生产者／消费者模型中，生产者Producer负责生产数据，而消费者Consumer负责
+使用数据。多个生产者会在同一时间生产数据，并放到内存中一个共享的区域。
+Kafka的发展历程和现状 KSQL
+流式计算，针对流进行增强</description></item><item><title>大数据 OLAP 引擎：Presto 概述</title><link>https://ahamoment.cn/posts/bigdata/olap-presto/</link><pubDate>Sat, 09 Oct 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap-presto/</guid><description>大数据 OLAP 引擎：Presto 概述 SQL on Anything
 presto特点
 presto架构
 Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。</description></item><item><title>OLAP概述</title><link>https://ahamoment.cn/posts/bigdata/olap/</link><pubDate>Wed, 15 Sep 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap/</guid><description>OLAP OLAP vs OLTP 的差异
