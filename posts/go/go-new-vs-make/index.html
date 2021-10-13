@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>Go 语言中的 new 关键字和 make 关键字的区别 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,15 +23,23 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
 对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
-package main import &#34;fmt&#34; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。">
+package main import &#34;fmt&#34; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。
+var j *int fmt.Println(j) *j = 10 //panic: runtime error: invalid memory address or nil pointer dereference  也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。
+var j *int j = new(int) fmt.Println(j) fmt.Println(*j) *j = 10 fmt.Println(*j)  0xc00000a0e0 0 10  声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。
+我们来看一下new函数
+// The new built-in function allocates memory. The first argument is a type, // not a value, and the value returned is a pointer to a newly // allocated zero value of that type.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Go 语言中的 new 关键字和 make 关键字的区别","item":"https://ahamoment.cn/posts/go/go-new-vs-make/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/go/go-new-vs-make/"},"headline":"Go 语言中的 new 关键字和 make 关键字的区别 | AhaMoment","datePublished":"2021-04-01T16:23:40+08:00","dateModified":"2021-04-01T16:23:40+08:00","wordCount":311,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。\n对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。\npackage main import \u0026quot;fmt\u0026quot; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。"}</script><meta property="og:title" content="Go 语言中的 new 关键字和 make 关键字的区别 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/go/go-new-vs-make/"},"headline":"Go 语言中的 new 关键字和 make 关键字的区别 | AhaMoment","datePublished":"2021-04-01T16:23:40+08:00","dateModified":"2021-04-01T16:23:40+08:00","wordCount":311,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。\n对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。\npackage main import \u0026quot;fmt\u0026quot; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。\nvar j *int fmt.Println(j) *j = 10 \/\/panic: runtime error: invalid memory address or nil pointer dereference  也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。\nvar j *int j = new(int) fmt.Println(j) fmt.Println(*j) *j = 10 fmt.Println(*j)  0xc00000a0e0 0 10  声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。\n我们来看一下new函数\n\/\/ The new built-in function allocates memory. The first argument is a type, \/\/ not a value, and the value returned is a pointer to a newly \/\/ allocated zero value of that type."}</script><meta property="og:title" content="Go 语言中的 new 关键字和 make 关键字的区别 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/go/go-new-vs-make/">
 <meta property="og:description" content="Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
 对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
-package main import &#34;fmt&#34; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。">
+package main import &#34;fmt&#34; func main() { var i int fmt.Println(i) }  而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。
+var j *int fmt.Println(j) *j = 10 //panic: runtime error: invalid memory address or nil pointer dereference  也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。
+var j *int j = new(int) fmt.Println(j) fmt.Println(*j) *j = 10 fmt.Println(*j)  0xc00000a0e0 0 10  声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。
+我们来看一下new函数
+// The new built-in function allocates memory. The first argument is a type, // not a value, and the value returned is a pointer to a newly // allocated zero value of that type.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-04-01T16:23:40+08:00">

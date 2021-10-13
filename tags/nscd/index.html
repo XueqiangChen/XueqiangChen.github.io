@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>nscd | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"nscd","item":"https://ahamoment.cn/tags/nscd/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM","url":"https://ahamoment.cn/posts/linux/linux-nscd/"}]}</script><meta property="og:title" content="nscd | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM\nhttps://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html    CentOS7 之后 NSCD 使用 systemd 进行管理。\nNSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?","url":"https://ahamoment.cn/posts/linux/linux-nscd/"}]}</script><meta property="og:title" content="nscd | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/nscd/">
@@ -99,6 +99,8 @@ NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装 RHEL/CentOS
 yum -y install nscd Debian/Ubuntu
 apt-get install nscd RPM
+https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。
+NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

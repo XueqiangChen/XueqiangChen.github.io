@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>bazel | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"bazel","item":"https://ahamoment.cn/tags/bazel/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html\nStep1：\n从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。\nStep2:\n运行 yum install bazel3 命令安装。\n教程 java / c++","url":"https://ahamoment.cn/posts/tool/tool-bazel/"}]}</script><meta property="og:title" content="bazel | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html\nStep1：\n从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。\nStep2:\n运行 yum install bazel3 命令安装。\n教程 java / c++\n常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options\n查询依赖关系：\nbazel query --notool_deps --noimplicit_deps \u0026quot;deps(//:ProjectRunner)\u0026quot; --output graph  可视化网站：\nhttp://www.webgraphviz.com/\n编译命令：\nbazel build //:ProjectRunner  清除命令：\nbazel clean  bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。\n输出目录 https://docs.bazel.build/versions/master/output_directories.html\n 必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。  我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。","url":"https://ahamoment.cn/posts/tool/tool-bazel/"}]}</script><meta property="og:title" content="bazel | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/bazel/">
@@ -101,6 +101,15 @@ Step1：
 Step2:
 运行 yum install bazel3 命令安装。
 教程 java / c++
+常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options
+查询依赖关系：
+bazel query --notool_deps --noimplicit_deps "deps(//:ProjectRunner)" --output graph 可视化网站：
+http://www.webgraphviz.com/
+编译命令：
+bazel build //:ProjectRunner 清除命令：
+bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。
+输出目录 https://docs.bazel.build/versions/master/output_directories.html
+必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。 我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

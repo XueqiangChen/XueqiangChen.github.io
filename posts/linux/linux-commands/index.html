@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>Linux 常用命令 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,15 +23,17 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="设置 JAVA_HOME
 export JAVA_HOME=&#34;$(dirname $(dirname $(realpath $(which javac))))&#34;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
-语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例">
+语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例
+   命令 说明     awk '{print}' c.txt 打印整个文件的内容   awk '{print $1}' c.txt 打印文本的第一列的内容   awk '{print $1, $2, $3}' c.txt 打印文本的第一列到第三列的内容   awk '{print $1 &#34;\t&#34; $2 &#34;\t&#34; $3}' c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔   awk '{print NR &#34;\t&#34; $1 &#34;\t&#34; $2 &#34;\t&#34; $3}' c.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Linux 常用命令","item":"https://ahamoment.cn/posts/linux/linux-commands/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-commands/"},"headline":"Linux 常用命令 | AhaMoment","image":"https://ahamoment.cn/uploads/linux_command.jpg","datePublished":"2021-08-13T03:54:23+00:00","dateModified":"2021-08-13T08:00:00+00:00","wordCount":91,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"设置 JAVA_HOME\nexport JAVA_HOME=\u0026quot;$(dirname $(dirname $(realpath $(which javac))))\u0026quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。\n语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例"}</script><meta property="og:title" content="Linux 常用命令 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-commands/"},"headline":"Linux 常用命令 | AhaMoment","image":"https://ahamoment.cn/uploads/linux_command.jpg","datePublished":"2021-08-13T03:54:23+00:00","dateModified":"2021-08-13T08:00:00+00:00","wordCount":91,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"设置 JAVA_HOME\nexport JAVA_HOME=\u0026quot;$(dirname $(dirname $(realpath $(which javac))))\u0026quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。\n语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例\n   命令 说明     awk \u0027{print}\u0027 c.txt 打印整个文件的内容   awk \u0027{print $1}\u0027 c.txt 打印文本的第一列的内容   awk \u0027{print $1, $2, $3}\u0027 c.txt 打印文本的第一列到第三列的内容   awk \u0027{print $1 \u0026quot;\\t\u0026quot; $2 \u0026quot;\\t\u0026quot; $3}\u0027 c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔   awk \u0027{print NR \u0026quot;\\t\u0026quot; $1 \u0026quot;\\t\u0026quot; $2 \u0026quot;\\t\u0026quot; $3}\u0027 c."}</script><meta property="og:title" content="Linux 常用命令 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-commands/">
 <meta property="og:description" content="设置 JAVA_HOME
 export JAVA_HOME=&#34;$(dirname $(dirname $(realpath $(which javac))))&#34;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
-语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例">
+语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例
+   命令 说明     awk '{print}' c.txt 打印整个文件的内容   awk '{print $1}' c.txt 打印文本的第一列的内容   awk '{print $1, $2, $3}' c.txt 打印文本的第一列到第三列的内容   awk '{print $1 &#34;\t&#34; $2 &#34;\t&#34; $3}' c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔   awk '{print NR &#34;\t&#34; $1 &#34;\t&#34; $2 &#34;\t&#34; $3}' c.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-08-13T03:54:23+00:00">

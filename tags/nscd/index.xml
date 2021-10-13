@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nscd on AhaMoment</title><link>https://ahamoment.cn/tags/nscd/</link><description>Recent content in nscd on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Sun, 27 Sep 2020 13:23:05 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/nscd/index.xml" rel="self" type="application/rss+xml"/><item><title>认识 Linux NSCD 服务缓存</title><link>https://ahamoment.cn/posts/linux/linux-nscd/</link><pubDate>Sun, 27 Sep 2020 13:23:05 +0800</pubDate><guid>https://ahamoment.cn/posts/linux/linux-nscd/</guid><description>NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装 RHEL/CentOS
 yum -y install nscd Debian/Ubuntu
-apt-get install nscd RPM</description></item></channel></rss>
+apt-get install nscd RPM
+https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。
+NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?</description></item></channel></rss>

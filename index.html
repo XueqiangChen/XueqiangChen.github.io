@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -175,6 +175,16 @@ kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文
 presto特点
 presto架构
 Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
+presto比hive快的原因
+dag结构，memory to memory
+应用场景
+etl，adhoc查询
+Docker 环境部署
+docker pull alluxio/alluxio-presto-sandbox
+docker run -d \ –shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ –name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
+docker exec -it alluxio-presto-sandbox bash
+presto –catalog hive –debug
+或者通过下面的方式部署
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -209,6 +219,18 @@ OLAP 的目标：查询和报表
 相关概念：
 维度 维的层次 维的成员 多维数组 度量 基本特征：
 快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：
+数据超立方体：三维或更多的维数，彼此垂直 分类：
+按存储类型：
+MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合 ROLAP的优势：
+没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能 缺点：
+响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大 molap的优势：
+性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题 缺点：
+增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难 ROLAP架构
+MOLAP架构
+HOLAP架构
+OLAP引擎有哪些？是属于那种类型的OLAP？
+ROLAP: hive, presto
+MOLAP: kylin，
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -269,6 +291,7 @@ OLAP 的目标：查询和报表
 设置 JAVA_HOME
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))" tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
 语法 tee [OPTION]... [FILE]... 说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入 awk 用法示例
+命令 说明 awk '{print}' c.txt 打印整个文件的内容 awk '{print $1}' c.txt 打印文本的第一列的内容 awk '{print $1, $2, $3}' c.txt 打印文本的第一列到第三列的内容 awk '{print $1 "\t" $2 "\t" $3}' c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔 awk '{print NR "\t" $1 "\t" $2 "\t" $3}' c.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -300,6 +323,8 @@ export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))" tee Linux te
 前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
 1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
 Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
+hugo new site myblog 来创建一个博客文件夹。创建后的目录如下：
+chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -366,7 +391,9 @@ QOS 的作用请参考上面的几篇文章Kubernetes的资源模型和资源管
 <div class=content>
 二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章—>传送门
 这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：
-leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2] 1.
+leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2] 1. 递归 首先我们需要了解什么是二叉树的中序遍历：按照访问左子树——根节点——右子树的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。
+定义 inorder(root) 表示当前遍历到root节点的答案，那么按照定义，我们只要递归调用 inorder(root.left) 来遍历 root 节点的左子树，然后将 root 节点的值加入答案，再递归调用 inorder(root.right) 来遍历 root 节点的右子树即可，递归终止的条件为碰到空节点。
+class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&lt;Integer> res = new ArrayList&lt;Integer>(); inorder(root, res); return res; } public void inorder(TreeNode root, List&lt;Integer> res) { if (root == null) { return; } inorder(root.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

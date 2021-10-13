@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>JDK1.8 源代码阅读环境搭建 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -22,14 +22,16 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
-二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。">
+二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。
+三、IDEA 设置  Project Structure -> Project 设置项目的 SDK (jdk8u221)，language level 选择 8 - Lambdas, type annotations etc.  Project Structure -> Dependencies 选择 Modules，SDK 选择 1.8_221  设置平台的 SDK 源代码路径为自己项目的 source 目录  调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。  IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包 到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。  四、编译调式 创建一个测试类进行调试：">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"JDK1.8 源代码阅读环境搭建","item":"https://ahamoment.cn/posts/java/java-source-code-learn/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-source-code-learn/"},"headline":"JDK1.8 源代码阅读环境搭建 | AhaMoment","datePublished":"2020-05-11T18:57:51+08:00","dateModified":"2020-05-11T18:57:51+08:00","wordCount":110,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)\n二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。"}</script><meta property="og:title" content="JDK1.8 源代码阅读环境搭建 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-source-code-learn/"},"headline":"JDK1.8 源代码阅读环境搭建 | AhaMoment","datePublished":"2020-05-11T18:57:51+08:00","dateModified":"2020-05-11T18:57:51+08:00","wordCount":110,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)\n二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。\n三、IDEA 设置  Project Structure -\u0026gt; Project 设置项目的 SDK (jdk8u221)，language level 选择 8 - Lambdas, type annotations etc.  Project Structure -\u0026gt; Dependencies 选择 Modules，SDK 选择 1.8_221  设置平台的 SDK 源代码路径为自己项目的 source 目录  调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。  IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包 到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。  四、编译调式 创建一个测试类进行调试："}</script><meta property="og:title" content="JDK1.8 源代码阅读环境搭建 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/java/java-source-code-learn/">
 <meta property="og:description" content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
-二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。">
+二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。
+三、IDEA 设置  Project Structure -> Project 设置项目的 SDK (jdk8u221)，language level 选择 8 - Lambdas, type annotations etc.  Project Structure -> Dependencies 选择 Modules，SDK 选择 1.8_221  设置平台的 SDK 源代码路径为自己项目的 source 目录  调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。  IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包 到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。  四、编译调式 创建一个测试类进行调试：">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-05-11T18:57:51+08:00">

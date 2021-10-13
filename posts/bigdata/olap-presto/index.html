@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>大数据 OLAP 引擎：Presto 概述 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -24,16 +24,36 @@
 <meta name=description content="大数据 OLAP 引擎：Presto 概述  SQL on Anything
   presto特点
   presto架构
- Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。">
+ Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
+ presto比hive快的原因
+ dag结构，memory to memory
+ 应用场景
+ etl，adhoc查询
+ Docker 环境部署
+ docker pull alluxio/alluxio-presto-sandbox
+docker run -d \ &ndash;shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ &ndash;name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
+docker exec -it alluxio-presto-sandbox bash
+presto &ndash;catalog hive &ndash;debug
+或者通过下面的方式部署">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"大数据 OLAP 引擎：Presto 概述","item":"https://ahamoment.cn/posts/bigdata/olap-presto/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/bigdata/olap-presto/"},"headline":"大数据 OLAP 引擎：Presto 概述 | AhaMoment","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","datePublished":"2021-10-09T02:35:35+00:00","dateModified":"2021-10-09T04:11:17+00:00","wordCount":72,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大数据 OLAP 引擎：Presto 概述  SQL on Anything\n  presto特点\n  presto架构\n Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。"}</script><meta property="og:title" content="大数据 OLAP 引擎：Presto 概述 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/bigdata/olap-presto/"},"headline":"大数据 OLAP 引擎：Presto 概述 | AhaMoment","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","datePublished":"2021-10-09T02:35:35+00:00","dateModified":"2021-10-09T04:11:17+00:00","wordCount":72,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大数据 OLAP 引擎：Presto 概述  SQL on Anything\n  presto特点\n  presto架构\n Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。\n presto比hive快的原因\n dag结构，memory to memory\n 应用场景\n etl，adhoc查询\n Docker 环境部署\n docker pull alluxio\/alluxio-presto-sandbox\ndocker run -d \\ \u0026ndash;shm-size 1G \\ -p 19999:19999 \\ -p 8080:8080 \\ \u0026ndash;name alluxio-presto-sandbox \\ alluxio\/alluxio-presto-sandbox\ndocker exec -it alluxio-presto-sandbox bash\npresto \u0026ndash;catalog hive \u0026ndash;debug\n或者通过下面的方式部署"}</script><meta property="og:title" content="大数据 OLAP 引擎：Presto 概述 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/bigdata/olap-presto/">
 <meta property="og:description" content="大数据 OLAP 引擎：Presto 概述  SQL on Anything
   presto特点
   presto架构
- Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。">
+ Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
+ presto比hive快的原因
+ dag结构，memory to memory
+ 应用场景
+ etl，adhoc查询
+ Docker 环境部署
+ docker pull alluxio/alluxio-presto-sandbox
+docker run -d \ &ndash;shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ &ndash;name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
+docker exec -it alluxio-presto-sandbox bash
+presto &ndash;catalog hive &ndash;debug
+或者通过下面的方式部署">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-10-09T02:35:35+00:00">

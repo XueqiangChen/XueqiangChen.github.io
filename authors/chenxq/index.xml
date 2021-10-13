@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Chenxq on AhaMoment</title><link>https://ahamoment.cn/authors/chenxq/</link><description>Recent content in Chenxq on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Mon, 11 Oct 2021 02:35:35 +0000</lastBuildDate><atom:link href="https://ahamoment.cn/authors/chenxq/index.xml" rel="self" type="application/rss+xml"/><item><title>流式处理和实时计算：Kafka</title><link>https://ahamoment.cn/posts/bigdata/kafka/</link><pubDate>Mon, 11 Oct 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/kafka/</guid><description>&lt;p>kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文主要介绍消息系统概述，kafka系统架构和原理。&lt;/p></description></item><item><title>大数据 OLAP 引擎：Presto 概述</title><link>https://ahamoment.cn/posts/bigdata/olap-presto/</link><pubDate>Sat, 09 Oct 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap-presto/</guid><description>大数据 OLAP 引擎：Presto 概述 SQL on Anything
 presto特点
 presto架构
-Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。</description></item><item><title>OLAP概述</title><link>https://ahamoment.cn/posts/bigdata/olap/</link><pubDate>Wed, 15 Sep 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap/</guid><description>OLAP OLAP vs OLTP 的差异
+Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
+presto比hive快的原因
+dag结构，memory to memory
+应用场景
+etl，adhoc查询
+Docker 环境部署
+docker pull alluxio/alluxio-presto-sandbox
+docker run -d \ &amp;ndash;shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ &amp;ndash;name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
+docker exec -it alluxio-presto-sandbox bash
+presto &amp;ndash;catalog hive &amp;ndash;debug
+或者通过下面的方式部署</description></item><item><title>OLAP概述</title><link>https://ahamoment.cn/posts/bigdata/olap/</link><pubDate>Wed, 15 Sep 2021 02:35:35 +0000</pubDate><guid>https://ahamoment.cn/posts/bigdata/olap/</guid><description>OLAP OLAP vs OLTP 的差异
 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
 OLAP 的目标：查询和报表
 相关概念：
 维度 维的层次 维的成员 多维数组 度量 基本特征：
-快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：</description></item><item><title>1. 大数据概述</title><link>https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/</guid><description>&lt;p>大数据概述&lt;/p></description></item><item><title>2. HDFS</title><link>https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/</guid><description>&lt;p>HDFS&lt;/p></description></item><item><title>大数据笔记</title><link>https://ahamoment.cn/docs/bigdata-doc/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/</guid><description>大数据训练营相关笔记。
+快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：
+数据超立方体：三维或更多的维数，彼此垂直 分类：
+按存储类型：
+MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合 ROLAP的优势：
+没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能 缺点：
+响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大 molap的优势：
+性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题 缺点：
+增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难 ROLAP架构
+MOLAP架构
+HOLAP架构
+OLAP引擎有哪些？是属于那种类型的OLAP？
+ROLAP: hive, presto
+MOLAP: kylin，</description></item><item><title>1. 大数据概述</title><link>https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/</guid><description>&lt;p>大数据概述&lt;/p></description></item><item><title>2. HDFS</title><link>https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/</guid><description>&lt;p>HDFS&lt;/p></description></item><item><title>大数据笔记</title><link>https://ahamoment.cn/docs/bigdata-doc/</link><pubDate>Tue, 10 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/bigdata-doc/</guid><description>大数据训练营相关笔记。
 大数据概述 HDFS MapReduce Yarn Hadoop扩展 HBase Hive</description></item><item><title>2. Kubernetes 集群搭建与实践</title><link>https://ahamoment.cn/docs/k8s-doc/chapter2/</link><pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter2/</guid><description>&lt;p>本章主要是使用kubeadm搭建k8s集群&lt;/p></description></item><item><title>3. 容器编排与 kubernetes 作业管理</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/</link><pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/</guid><description>&lt;p>讲解k8s中的相关对象&lt;/p></description></item><item><title>6. kubernetes 作业调度与资源管理</title><link>https://ahamoment.cn/docs/k8s-doc/chapter6/</link><pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter6/</guid><description>&lt;p>作业调度和资源管理相关内容&lt;/p></description></item><item><title>9. kubernetes 生态周边</title><link>https://ahamoment.cn/docs/k8s-doc/chapter9/</link><pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter9/</guid><description>&lt;p>kubernetes 生态周边&lt;/p></description></item><item><title>K8s 学习笔记</title><link>https://ahamoment.cn/docs/k8s-doc/</link><pubDate>Fri, 06 Aug 2021 00:00:00 +0000</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/</guid><description>K8s docs</description></item><item><title>Hugo 博客搭建</title><link>https://ahamoment.cn/posts/tool/tool-hugo-blog/</link><pubDate>Thu, 17 Jun 2021 20:28:05 +0800</pubDate><guid>https://ahamoment.cn/posts/tool/tool-hugo-blog/</guid><description>前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
 1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
-Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过</description></item></channel></rss>
+Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
+hugo new site myblog 来创建一个博客文件夹。创建后的目录如下：
+chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：</description></item></channel></rss>

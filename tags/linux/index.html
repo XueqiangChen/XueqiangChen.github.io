@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>linux | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"linux","item":"https://ahamoment.cn/tags/linux/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Linux 常用命令","description":"设置 JAVA_HOME\nexport JAVA_HOME=\u0026quot;$(dirname $(dirname $(realpath $(which javac))))\u0026quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。\n语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例","image":"https://ahamoment.cn/uploads/linux_command.jpg","url":"https://ahamoment.cn/posts/linux/linux-commands/"},{"@type":"ListItem","position":2,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM","url":"https://ahamoment.cn/posts/linux/linux-nscd/"},{"@type":"ListItem","position":3,"name":"解决setcap导致Java加载libjli.so 失败问题","description":"背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：\njava: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.","url":"https://ahamoment.cn/posts/linux/linux-cap/"}]}</script><meta property="og:title" content="linux | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Linux 常用命令","description":"设置 JAVA_HOME\nexport JAVA_HOME=\u0026quot;$(dirname $(dirname $(realpath $(which javac))))\u0026quot;  tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。\n语法 tee [OPTION]... [FILE]...  说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入  awk 用法示例\n   命令 说明     awk '{print}' c.txt 打印整个文件的内容   awk '{print $1}' c.txt 打印文本的第一列的内容   awk '{print $1, $2, $3}' c.txt 打印文本的第一列到第三列的内容   awk '{print $1 \u0026quot;\\t\u0026quot; $2 \u0026quot;\\t\u0026quot; $3}' c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔   awk '{print NR \u0026quot;\\t\u0026quot; $1 \u0026quot;\\t\u0026quot; $2 \u0026quot;\\t\u0026quot; $3}' c.","image":"https://ahamoment.cn/uploads/linux_command.jpg","url":"https://ahamoment.cn/posts/linux/linux-commands/"},{"@type":"ListItem","position":2,"name":"认识 Linux NSCD 服务缓存","description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL/CentOS\nyum -y install nscd    Debian/Ubuntu\napt-get install nscd    RPM\nhttps://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html    CentOS7 之后 NSCD 使用 systemd 进行管理。\nNSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?","url":"https://ahamoment.cn/posts/linux/linux-nscd/"},{"@type":"ListItem","position":3,"name":"解决setcap导致Java加载libjli.so 失败问题","description":"背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：\njava: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory  错误信息是说 java 应用加载不到 libjli.so 文件，我们使用 java -version 命令，同样的错误又出现了。使用 ldd 命令查看一下 java 应用是否加载了这个 so 文件，发现 java 应用加载的 so 文件中存在 libjli.so。\n$ ldd java linux-vdso.so.1 =\u0026gt; (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus.so (0x00002ac503ca8000) libz.so.1 =\u0026gt; /lib64/libz.so.1 (0x00002ac503eaa000) libjli.so =\u0026gt; /apps/svr/jdk-14.0.1/bin/./../lib/libjli.so (0x00002ac5040c0000) libpthread.so.0 =\u0026gt; /lib64/libpthread.so.0 (0x00002ac5042d1000) libdl.so.2 =\u0026gt; /lib64/libdl.so.2 (0x00002ac5044ee000) libc.so.6 =\u0026gt; /lib64/libc.so.6 (0x00002ac5046f2000) /lib64/ld-linux-x86-64.so.2 (0x00002ac503883000)  我们接着查看了 LD_LIBRARY_PATH 和 /etc/ld.","url":"https://ahamoment.cn/posts/linux/linux-cap/"}]}</script><meta property="og:title" content="linux | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/linux/">
@@ -98,6 +98,7 @@
 设置 JAVA_HOME
 export JAVA_HOME="$(dirname $(dirname $(realpath $(which javac))))" tee Linux tee命令用于读取标准输入的数据，并将其内容输出成文件。
 语法 tee [OPTION]... [FILE]... 说明 -a, --append 添加内容到指定文件，不会覆盖源文件内容 -i, --ignore-interrupts 忽略输入 awk 用法示例
+命令 说明 awk '{print}' c.txt 打印整个文件的内容 awk '{print $1}' c.txt 打印文本的第一列的内容 awk '{print $1, $2, $3}' c.txt 打印文本的第一列到第三列的内容 awk '{print $1 "\t" $2 "\t" $3}' c.txt 打印文本的第一列到第三列的内容，并按照制表符间隔 awk '{print NR "\t" $1 "\t" $2 "\t" $3}' c.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -130,6 +131,8 @@ NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装 RHEL/CentOS
 yum -y install nscd Debian/Ubuntu
 apt-get install nscd RPM
+https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。
+NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -156,7 +159,8 @@ apt-get install nscd RPM
 </div>
 <div class=content>
 背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
-java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory 错误信息是说 java 应用加载不到 libjli.
+java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory 错误信息是说 java 应用加载不到 libjli.so 文件，我们使用 java -version 命令，同样的错误又出现了。使用 ldd 命令查看一下 java 应用是否加载了这个 so 文件，发现 java 应用加载的 so 文件中存在 libjli.so。
+$ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus.so (0x00002ac503ca8000) libz.so.1 => /lib64/libz.so.1 (0x00002ac503eaa000) libjli.so => /apps/svr/jdk-14.0.1/bin/./../lib/libjli.so (0x00002ac5040c0000) libpthread.so.0 => /lib64/libpthread.so.0 (0x00002ac5042d1000) libdl.so.2 => /lib64/libdl.so.2 (0x00002ac5044ee000) libc.so.6 => /lib64/libc.so.6 (0x00002ac5046f2000) /lib64/ld-linux-x86-64.so.2 (0x00002ac503883000) 我们接着查看了 LD_LIBRARY_PATH 和 /etc/ld.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

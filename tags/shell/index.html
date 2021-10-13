@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>shell | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"shell","item":"https://ahamoment.cn/tags/shell/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Linux Shell Script 基础教程","description":"本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。\n 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。\n1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：","url":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"},{"@type":"ListItem","position":2,"name":"Linux Shell 输入/输出重定向","description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。","url":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script><meta property="og:title" content="shell | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Linux Shell Script 基础教程","description":"本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。\n 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。\n1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：\n Bourne shell - 如果使用Bourne类型的shell，默认的提示符就是$，可以通过修改环境变量PS1来更改你的提示符。 C shell - C 类型的shell，默认的提示符是%。  Bourne Shell 又有下面几种类型：\n Bourne shell (sh) Korn shell (ksh) Bourne Again shell (bash) POSIX shell (sh)  C 类型 的Shell包括以下两种：\n C shell (csh) TENEX/TOPS C shell (tcsh)  在大多数 Linux 版本中，Bourne shell 通常都安装为/bin/sh。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。\n1.2 Shell 脚本 Shell脚本的基本概念是命令列表，按执行顺序列出命令。 Shell 脚本文件以 .","url":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"},{"@type":"ListItem","position":2,"name":"Linux Shell 输入/输出重定向","description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。","url":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script><meta property="og:title" content="shell | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/shell/">
@@ -98,6 +98,10 @@
 本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
 1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
 1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：
+Bourne shell - 如果使用Bourne类型的shell，默认的提示符就是$，可以通过修改环境变量PS1来更改你的提示符。 C shell - C 类型的shell，默认的提示符是%。 Bourne Shell 又有下面几种类型：
+Bourne shell (sh) Korn shell (ksh) Bourne Again shell (bash) POSIX shell (sh) C 类型 的Shell包括以下两种：
+C shell (csh) TENEX/TOPS C shell (tcsh) 在大多数 Linux 版本中，Bourne shell 通常都安装为/bin/sh。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。
+1.2 Shell 脚本 Shell脚本的基本概念是命令列表，按执行顺序列出命令。 Shell 脚本文件以 .
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

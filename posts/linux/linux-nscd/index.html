@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>认识 Linux NSCD 服务缓存 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -24,16 +24,20 @@
 <meta name=description content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装   RHEL/CentOS
 yum -y install nscd    Debian/Ubuntu
-apt-get install nscd    RPM">
+apt-get install nscd    RPM
+https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html    CentOS7 之后 NSCD 使用 systemd 进行管理。
+NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"认识 Linux NSCD 服务缓存","item":"https://ahamoment.cn/posts/linux/linux-nscd/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-nscd/"},"headline":"认识 Linux NSCD 服务缓存 | AhaMoment","datePublished":"2020-09-27T13:23:05+08:00","dateModified":"2020-09-27T13:23:05+08:00","wordCount":490,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL\/CentOS\nyum -y install nscd    Debian\/Ubuntu\napt-get install nscd    RPM"}</script><meta property="og:title" content="认识 Linux NSCD 服务缓存 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-nscd/"},"headline":"认识 Linux NSCD 服务缓存 | AhaMoment","datePublished":"2020-09-27T13:23:05+08:00","dateModified":"2020-09-27T13:23:05+08:00","wordCount":490,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。\nNSCD 安装   RHEL\/CentOS\nyum -y install nscd    Debian\/Ubuntu\napt-get install nscd    RPM\nhttps:\/\/centos.pkgs.org\/7\/centos-x86_64\/nscd-2.17-307.el7.1.x86_64.rpm.html    CentOS7 之后 NSCD 使用 systemd 进行管理。\nNSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?"}</script><meta property="og:title" content="认识 Linux NSCD 服务缓存 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-nscd/">
 <meta property="og:description" content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。
 NSCD 安装   RHEL/CentOS
 yum -y install nscd    Debian/Ubuntu
-apt-get install nscd    RPM">
+apt-get install nscd    RPM
+https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html    CentOS7 之后 NSCD 使用 systemd 进行管理。
+NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d, --debug Do not fork and display messages on the current tty -f, --config-file=名称 从NAME中读取配置数据 -g, --statistics Print current configuration statistics -i, --invalidate=TABLE Invalidate the specified cache -K, --shutdown 关闭服务器 -t, --nthreads=NUMBER 启动 NUMBER 个线程 -?">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-09-27T13:23:05+08:00">

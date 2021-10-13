@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -144,7 +144,7 @@
 <div class=content>
 Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！
 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。
-public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, "一号窗口"); Thread windowThread2 = new Thread(ticketWindow, "二号窗口"); Thread windowThread3 = new Thread(ticketWindow, "三号窗口"); windowThread1.
+public class BankRunnable { public static void main(String[] args) { // 一个runnable实例被多个线程共享 TicketWindowRunnable ticketWindow = new TicketWindowRunnable(); Thread windowThread1 = new Thread(ticketWindow, "一号窗口"); Thread windowThread2 = new Thread(ticketWindow, "二号窗口"); Thread windowThread3 = new Thread(ticketWindow, "三号窗口"); windowThread1.start(); windowThread2.start(); windowThread3.start(); } } public class TicketWindowRunnable implements Runnable { private int index = 1; private static final int MAX = 50; @Override public void run() { while (true) { if (index > MAX) {//1 break; } try { Thread.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -172,6 +172,12 @@ public class BankRunnable { public static void main(String[] args) { // 一个ru
 <div class=content>
 本文翻译自20 Practical Examples of RPM Commands in Linux
 RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。
+这篇文章主要介绍了 20 个常用的 RPM 命令。
+关于 RPM 的一些常识 RPM 是免费的，并且遵循 GPL 开源协议
+RPM 将所有已安装软件包的信息保存在 /var/lib/rpm 数据库中。
+RPM 是在 Linux 系统下安装软件包的唯一方法，如果您使用源代码安装了软件包，则 rpm 将无法对其进行管理。
+RPM 处理 .rpm 文件，其中包含有关软件包的实际信息，例如：它是什么，它来自哪里，软件依赖信息，版本信息等。
+RPM命令的五个基本模式 Install : 使用于安装任意的 RPM 包。 Remove ：用于擦除，删除或卸载任何 RPM 软件包。 Upgrade : 用于更新已经存在的 RPM 软件包。 Verify ：用来验证 RPM 软件包。 Query：用来查询 RPM 软件包。 查找和下载 RPM 包 以下是rpm网站的列表，您可以在其中找到和下载所有RPM软件包。
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -199,6 +205,7 @@ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具�
 <div class=content>
 一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)
 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来写测试用例, 这里用不到 Main 方法。
+三、IDEA 设置 Project Structure -> Project 设置项目的 SDK (jdk8u221)，language level 选择 8 - Lambdas, type annotations etc. Project Structure -> Dependencies 选择 Modules，SDK 选择 1.8_221 设置平台的 SDK 源代码路径为自己项目的 source 目录 调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。 IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包 到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。 四、编译调式 创建一个测试类进行调试：
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -255,6 +262,14 @@ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具�
 1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
 2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea 2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。
+JDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。
+要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。
+java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test
+这些参数要做的事情就是启用远程调试和配置有效的选项：
+-Xdebug：参数启用debug调试特性 -Xrunjdwp：使用几个重要参数配置JDWP协议。 从 JDK5 开始，可以使用 -agentlib:jdwp 选项，而不是 -Xdebug 和 -Xrunjdwp。但如果连接到 JDK5 以前的 VM，只能选择 -Xdebug 和 -Xrunjdwp。
+java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test
+JDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。
+JDK 9 Realease Notes core-svc/debugger JDWP socket connector accept only local connections by default The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -281,7 +296,8 @@ RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具�
 </div>
 <div class=content>
 1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
-2. 方法 2.1 安装Git Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址 2.
+2. 方法 2.1 安装Git Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址 2.2 添加脚本 在/root/下添加.git-templates/hooks 目录，添加脚本post-checkout，脚本内容如下：
+#!/bin/bash #checkout hook to locally set user name and email based on user defined patterns #The patterns are matched against the clone url. # #Based on http://www.dvratil.cz/2015/12/git-trick-628-automatically-set-commit-author-based-on-repo-url/ function warn { echo -e "\n$1 Email and author not initialized in local config!" } email="$(git config --local user.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

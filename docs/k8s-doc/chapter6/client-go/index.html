@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -22,14 +22,20 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
-客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。">
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。
+kubernetes 官方支持的客户端有 go/python/java/dotnet/js 等，今天我们要讨论的是其中的 go 客户端。
+首先下载源代码，进入到examples目录：
+➜ git clone git@github.com:kubernetes/client-go.git ➜ ~ cd client-go/examples ➜ examples git:(master) ✗ ll total 32K -rwxr-xr-x 1 root root 2.0K Apr 6 17:33 README.md drwxr-xr-x 2 root root 4.0K Apr 6 17:46 create-update-delete-deployment drwxr-xr-x 2 root root 4.0K Apr 6 17:33 dynamic-create-update-delete-deployment drwxr-xr-x 2 root root 4.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"K8s 学习笔记","item":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":3,"name":"6. kubernetes 作业调度与资源管理","item":"https://ahamoment.cn/docs/k8s-doc/chapter6/"},{"@type":"ListItem","position":4,"name":"K8s Go 客户端浅析","item":"https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/"},"headline":"K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment","datePublished":"2021-04-06T19:58:51+08:00","dateModified":"2021-04-06T19:58:51+08:00","wordCount":663,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求\/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。\n客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。"}</script><meta property="og:title" content="K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/"},"headline":"K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment","datePublished":"2021-04-06T19:58:51+08:00","dateModified":"2021-04-06T19:58:51+08:00","wordCount":663,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求\/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。\n客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。\nkubernetes 官方支持的客户端有 go\/python\/java\/dotnet\/js 等，今天我们要讨论的是其中的 go 客户端。\n首先下载源代码，进入到examples目录：\n➜ git clone git@github.com:kubernetes\/client-go.git ➜ ~ cd client-go\/examples ➜ examples git:(master) ✗ ll total 32K -rwxr-xr-x 1 root root 2.0K Apr 6 17:33 README.md drwxr-xr-x 2 root root 4.0K Apr 6 17:46 create-update-delete-deployment drwxr-xr-x 2 root root 4.0K Apr 6 17:33 dynamic-create-update-delete-deployment drwxr-xr-x 2 root root 4."}</script><meta property="og:title" content="K8s Go 客户端浅析 | K8s 学习笔记 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/">
 <meta property="og:description" content="在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
-客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。">
+客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。
+kubernetes 官方支持的客户端有 go/python/java/dotnet/js 等，今天我们要讨论的是其中的 go 客户端。
+首先下载源代码，进入到examples目录：
+➜ git clone git@github.com:kubernetes/client-go.git ➜ ~ cd client-go/examples ➜ examples git:(master) ✗ ll total 32K -rwxr-xr-x 1 root root 2.0K Apr 6 17:33 README.md drwxr-xr-x 2 root root 4.0K Apr 6 17:46 create-update-delete-deployment drwxr-xr-x 2 root root 4.0K Apr 6 17:33 dynamic-create-update-delete-deployment drwxr-xr-x 2 root root 4.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-04-06T19:58:51+08:00">

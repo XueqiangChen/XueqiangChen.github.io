@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>堆 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -26,9 +26,14 @@
 若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
 如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
 优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
- 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &ldquo;最大堆&rdquo;，也称 &ldquo;大顶堆&rdquo;：堆顶元素是整个树的最大值 &ldquo;最小堆&rdquo;，也称&#34;小顶堆&#34;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。">
+ 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &ldquo;最大堆&rdquo;，也称 &ldquo;大顶堆&rdquo;：堆顶元素是整个树的最大值 &ldquo;最小堆&rdquo;，也称&#34;小顶堆&#34;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。
+第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。
+ 注意：堆从根结点到任意结点路径上的结点顺序都是有序的！
+ 最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。
+数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。
+public abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"堆","item":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},"headline":"堆 | AhaMoment","datePublished":"2020-09-15T11:44:06+08:00","dateModified":"2020-09-15T11:44:06+08:00","wordCount":653,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。"}</script><meta property="og:title" content="堆 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},"headline":"堆 | AhaMoment","datePublished":"2020-09-15T11:44:06+08:00","dateModified":"2020-09-15T11:44:06+08:00","wordCount":653,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。\n第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。\n 注意：堆从根结点到任意结点路径上的结点顺序都是有序的！\n 最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。\n数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。\npublic abstract class Heap { \/\/ 堆的类型定义 protected int[] data; \/\/存储元素的数组 protected int size;\/\/堆中当前元素个数 protected int capacity; \/\/堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this."}</script><meta property="og:title" content="堆 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-heap/">
@@ -37,7 +42,12 @@
 若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
 如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
 优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
- 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &ldquo;最大堆&rdquo;，也称 &ldquo;大顶堆&rdquo;：堆顶元素是整个树的最大值 &ldquo;最小堆&rdquo;，也称&#34;小顶堆&#34;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。">
+ 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  &ldquo;最大堆&rdquo;，也称 &ldquo;大顶堆&rdquo;：堆顶元素是整个树的最大值 &ldquo;最小堆&rdquo;，也称&#34;小顶堆&#34;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。
+第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。
+ 注意：堆从根结点到任意结点路径上的结点顺序都是有序的！
+ 最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。
+数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。
+public abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-09-15T11:44:06+08:00">

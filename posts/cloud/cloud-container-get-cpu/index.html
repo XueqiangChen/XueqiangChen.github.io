@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>容器内获取 CPU 核数问题 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -24,16 +24,24 @@
 <meta name=description content="现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
 但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
 int cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
-   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码">
+   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码
+怎么解决 第一种办法是使用新版本的Jdku131以上的版本1。
+另外一个办法是使用自编译上面的源代码，通过LD_PRLOAD的方式将修改后的so文件加载进去Mock掉CPU的核数
+ Java SE support for Docker CPU and memory limits
+ ">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"容器内获取 CPU 核数问题","item":"https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/"},"headline":"容器内获取 CPU 核数问题 | AhaMoment","datePublished":"2020-09-11T18:14:58+08:00","dateModified":"2020-09-11T18:14:58+08:00","wordCount":38,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。\n但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：\nint cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中\n   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码"}</script><meta property="og:title" content="容器内获取 CPU 核数问题 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/"},"headline":"容器内获取 CPU 核数问题 | AhaMoment","datePublished":"2020-09-11T18:14:58+08:00","dateModified":"2020-09-11T18:14:58+08:00","wordCount":38,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。\n但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：\nint cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中\n   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码\n怎么解决 第一种办法是使用新版本的Jdku131以上的版本1。\n另外一个办法是使用自编译上面的源代码，通过LD_PRLOAD的方式将修改后的so文件加载进去Mock掉CPU的核数\n Java SE support for Docker CPU and memory limits\n "}</script><meta property="og:title" content="容器内获取 CPU 核数问题 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/">
 <meta property="og:description" content="现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
 但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
 int cores = Runtime.getRuntime().availableProcessors();  这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
-   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码">
+   ENV Description     _SC_NPROCESSORS_CONF number of processors configured   _SC_NPROCESSORS_ONLN The number of processors currently online (available)    其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码
+怎么解决 第一种办法是使用新版本的Jdku131以上的版本1。
+另外一个办法是使用自编译上面的源代码，通过LD_PRLOAD的方式将修改后的so文件加载进去Mock掉CPU的核数
+ Java SE support for Docker CPU and memory limits
+ ">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-09-11T18:14:58+08:00">

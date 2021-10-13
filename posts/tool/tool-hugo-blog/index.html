@@ -1,7 +1,7 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
 <title>Hugo 博客搭建 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3-dev">
+<meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
 <link rel=preconnect href=https://fonts.gstatic.com crossorigin>
@@ -23,15 +23,19 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
 1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
- Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过">
+ Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
+ hugo new site myblog  来创建一个博客文件夹。创建后的目录如下：
+chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes  Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Hugo 博客搭建","item":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},"headline":"Hugo 博客搭建 | AhaMoment","image":"https://ahamoment.cn/uploads/gohugoio-card.png","datePublished":"2021-06-17T20:28:05+08:00","dateModified":"2021-08-10T03:00:00+00:00","wordCount":269,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。\n1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到\/usr\/local\/bin\/目录下即可。\n Hugo Release: https:\/\/github.com\/gohugoio\/hugo\/releases 完成 Hugo 的安装之后就可以创建博客了，通过"}</script><meta property="og:title" content="Hugo 博客搭建 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},"headline":"Hugo 博客搭建 | AhaMoment","image":"https://ahamoment.cn/uploads/gohugoio-card.png","datePublished":"2021-06-17T20:28:05+08:00","dateModified":"2021-08-10T03:00:00+00:00","wordCount":269,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。\n1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到\/usr\/local\/bin\/目录下即可。\n Hugo Release: https:\/\/github.com\/gohugoio\/hugo\/releases 完成 Hugo 的安装之后就可以创建博客了，通过\n hugo new site myblog  来创建一个博客文件夹。创建后的目录如下：\nchenxq@ubuntu   \/mnt\/hgfs\/GitRepos\/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes  Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加："}</script><meta property="og:title" content="Hugo 博客搭建 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-hugo-blog/">
 <meta property="og:description" content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
 1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
- Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过">
+ Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
+ hugo new site myblog  来创建一个博客文件夹。创建后的目录如下：
+chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes  Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-06-17T20:28:05+08:00">
