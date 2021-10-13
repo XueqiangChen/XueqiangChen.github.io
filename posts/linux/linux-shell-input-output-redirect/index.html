@@ -21,17 +21,13 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
-重定向命令列表如下：
-   命令 说明     command > file 将输出重定向到 file。   command < file 将输入重定向到 file。   command &#187; file 将输出以追加的方式重定向到 file。   n > file 将文件描述符为 n 的文件重定向到 file。   n &#187; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n >& m 将输出文件 m 和 n 合并。   n <& m 将输入文件 m 和 n 合并。   &#171; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。">
+<meta name=description content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Linux Shell 输入/输出重定向","item":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"},"headline":"Linux Shell 输入\/输出重定向 | AhaMoment","datePublished":"2019-11-26T19:54:15+08:00","dateModified":"2019-11-26T19:54:15+08:00","wordCount":329,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。\n重定向命令列表如下：\n   命令 说明     command \u0026gt; file 将输出重定向到 file。   command \u0026lt; file 将输入重定向到 file。   command \u0026raquo; file 将输出以追加的方式重定向到 file。   n \u0026gt; file 将文件描述符为 n 的文件重定向到 file。   n \u0026raquo; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n \u0026gt;\u0026amp; m 将输出文件 m 和 n 合并。   n \u0026lt;\u0026amp; m 将输入文件 m 和 n 合并。   \u0026laquo; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。"}</script><meta property="og:title" content="Linux Shell 输入/输出重定向 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"},"headline":"Linux Shell 输入\/输出重定向 | AhaMoment","datePublished":"2019-11-26T19:54:15+08:00","dateModified":"2019-11-26T19:54:15+08:00","wordCount":1999,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端"}</script><meta property="og:title" content="Linux Shell 输入/输出重定向 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/">
-<meta property="og:description" content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。
-重定向命令列表如下：
-   命令 说明     command > file 将输出重定向到 file。   command < file 将输入重定向到 file。   command &#187; file 将输出以追加的方式重定向到 file。   n > file 将文件描述符为 n 的文件重定向到 file。   n &#187; file 将文件描述符为 n 的文件以追加的方式重定向到 file。   n >& m 将输出文件 m 和 n 合并。   n <& m 将输入文件 m 和 n 合并。   &#171; tag 将开始标记 tag 和结束标记 tag 之间的内容作为输入。     需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。">
+<meta property="og:description" content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2019-11-26T19:54:15+08:00">
@@ -98,7 +94,7 @@
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

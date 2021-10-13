@@ -21,47 +21,13 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="OLAP OLAP vs OLTP 的差异
-OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
-OLAP 的目标：查询和报表
-相关概念：
- 维度 维的层次 维的成员 多维数组 度量  基本特征：
- 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：
- 数据超立方体：三维或更多的维数，彼此垂直  分类：
-按存储类型：
- MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合  ROLAP的优势：
- 没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能  缺点：
- 响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大  molap的优势：
- 性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题  缺点：
- 增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难  ROLAP架构
-MOLAP架构
-HOLAP架构
- OLAP引擎有哪些？是属于那种类型的OLAP？
- ROLAP: hive, presto
-MOLAP: kylin，">
+<meta name=description content="OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"OLAP概述","item":"https://ahamoment.cn/posts/bigdata/olap/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/bigdata/olap/"},"headline":"OLAP概述 | AhaMoment","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","datePublished":"2021-09-15T02:35:35+00:00","dateModified":"2021-09-15T12:21:20+00:00","wordCount":102,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"OLAP OLAP vs OLTP 的差异\nOLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。\nOLAP 的目标：查询和报表\n相关概念：\n 维度 维的层次 维的成员 多维数组 度量  基本特征：\n 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：\n 数据超立方体：三维或更多的维数，彼此垂直  分类：\n按存储类型：\n MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合  ROLAP的优势：\n 没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能  缺点：\n 响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大  molap的优势：\n 性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题  缺点：\n 增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难  ROLAP架构\nMOLAP架构\nHOLAP架构\n OLAP引擎有哪些？是属于那种类型的OLAP？\n ROLAP: hive, presto\nMOLAP: kylin，"}</script><meta property="og:title" content="OLAP概述 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/bigdata/olap/"},"headline":"OLAP概述 | AhaMoment","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","datePublished":"2021-09-15T02:35:35+00:00","dateModified":"2021-09-15T12:21:20+00:00","wordCount":1134,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成"}</script><meta property="og:title" content="OLAP概述 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/bigdata/olap/">
-<meta property="og:description" content="OLAP OLAP vs OLTP 的差异
-OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
-OLAP 的目标：查询和报表
-相关概念：
- 维度 维的层次 维的成员 多维数组 度量  基本特征：
- 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：
- 数据超立方体：三维或更多的维数，彼此垂直  分类：
-按存储类型：
- MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合  ROLAP的优势：
- 没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能  缺点：
- 响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大  molap的优势：
- 性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题  缺点：
- 增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难  ROLAP架构
-MOLAP架构
-HOLAP架构
- OLAP引擎有哪些？是属于那种类型的OLAP？
- ROLAP: hive, presto
-MOLAP: kylin，">
+<meta property="og:description" content="OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-09-15T02:35:35+00:00">
@@ -128,7 +94,7 @@ MOLAP: kylin，">
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

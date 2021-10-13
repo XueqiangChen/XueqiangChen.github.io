@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"堆","item":"https://ahamoment.cn/tags/%E5%A0%86/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。\n第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。\n 注意：堆从根结点到任意结点路径上的结点顺序都是有序的！\n 最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。\n数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。\npublic abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"}]}</script><meta property="og:title" content="堆 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"}]}</script><meta property="og:title" content="堆 | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/%E5%A0%86/">
@@ -95,17 +95,7 @@
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class="font-bold text-xl hover:text-eureka">堆</a>
 </div>
 <div class=content>
-什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
-若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
-若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
-如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
-优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
-结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值） “最大堆”，也称 “大顶堆”：堆顶元素是整个树的最大值 “最小堆”，也称"小顶堆"：堆顶元素是整个树的最小值 如下图所示的几个二叉树，不是堆。
-第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。
-注意：堆从根结点到任意结点路径上的结点顺序都是有序的！
-最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。
-数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。
-public abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.
+什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -114,7 +104,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

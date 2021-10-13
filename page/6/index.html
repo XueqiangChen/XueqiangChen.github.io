@@ -142,17 +142,7 @@
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class="font-bold text-xl hover:text-eureka">堆</a>
 </div>
 <div class=content>
-什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
-若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
-若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
-如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
-优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
-结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值） “最大堆”，也称 “大顶堆”：堆顶元素是整个树的最大值 “最小堆”，也称"小顶堆"：堆顶元素是整个树的最小值 如下图所示的几个二叉树，不是堆。
-第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。
-注意：堆从根结点到任意结点路径上的结点顺序都是有序的！
-最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。
-数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。
-public abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.
+什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -161,7 +151,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -178,13 +168,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 <a href=https://ahamoment.cn/posts/cloud/cloud-container-get-cpu/ class="font-bold text-xl hover:text-eureka">容器内获取 CPU 核数问题</a>
 </div>
 <div class=content>
-现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变得很重要，比如你可以根据当前机器的CPU核数得到一个较好的并发GC线程数 -XX:ParallelGCThreads，从而减少STW的时长。
-但在早期的JDK版本中，比如我们使用的Jdk1.8u102，当你使用Java的Runtime获取CPU数量时，在容器里面会返回容器所在宿主机的核数，而不是容器自身的：
-int cores = Runtime.getRuntime().availableProcessors(); 这其实是JDK的一个问题，已经trace在JDK-8140793，原因是获取CPU核数是通过读取两个环境变量，其中
-ENV Description _SC_NPROCESSORS_CONF number of processors configured _SC_NPROCESSORS_ONLN The number of processors currently online (available) 其中_SC_NPROCESSORS_CONF 就是我们需要容器真实的CPU数量。 获取CPU数量的源码
-怎么解决 第一种办法是使用新版本的Jdku131以上的版本1。
-另外一个办法是使用自编译上面的源代码，通过LD_PRLOAD的方式将修改后的so文件加载进去Mock掉CPU的核数
-Java SE support for Docker CPU and memory limits
+现在越来越多的公司将服务通过容器来部署，但这里其实对Java的应用有一个坑。很多超时敏感的应用其实对GC的要求还是比较高的，减少GC的时间变
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -210,9 +194,7 @@ Java SE support for Docker CPU and memory limits
 <a href=https://ahamoment.cn/posts/linux/linux-cap/ class="font-bold text-xl hover:text-eureka">解决setcap导致Java加载libjli.so 失败问题</a>
 </div>
 <div class=content>
-背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下：
-java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory 错误信息是说 java 应用加载不到 libjli.so 文件，我们使用 java -version 命令，同样的错误又出现了。使用 ldd 命令查看一下 java 应用是否加载了这个 so 文件，发现 java 应用加载的 so 文件中存在 libjli.so。
-$ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus.so (0x00002ac503ca8000) libz.so.1 => /lib64/libz.so.1 (0x00002ac503eaa000) libjli.so => /apps/svr/jdk-14.0.1/bin/./../lib/libjli.so (0x00002ac5040c0000) libpthread.so.0 => /lib64/libpthread.so.0 (0x00002ac5042d1000) libdl.so.2 => /lib64/libdl.so.2 (0x00002ac5044ee000) libc.so.6 => /lib64/libc.so.6 (0x00002ac5046f2000) /lib64/ld-linux-x86-64.so.2 (0x00002ac503883000) 我们接着查看了 LD_LIBRARY_PATH 和 /etc/ld.
+背景 最近碰到一个问题，有个应用在启动的时候一直报错，错误信息如下： java: error while loading shared libraries: libjli.so: cannot open shared object file: No such file or directory 错误信息是说 java 应用加载不到 libjli.so 文件，我们使
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -221,7 +203,7 @@ $ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>5 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -238,16 +220,7 @@ $ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ class="font-bold text-xl hover:text-eureka">平衡二叉树</a>
 </div>
 <div class=content>
-平衡二叉树 平衡二叉树也是一种搜索树。
-搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。
-平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|&lt;=1。
-平衡二叉树的高度能够达到 $log_2n$
-平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。
-右单旋 按照字母大小插入三个结点，Mar, May, Nov：
-如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。
-右单旋的过程如上图所示，将 B 结点调整为跟结点，$B_L$ 调整为 A 的右结点。上图所示的是插入到右子树的右子树的右边时，当插入到右子树的右子树的位置不同时怎么处理？来看个例子：
-结点插到左边和右边的时候，调整平衡后位置还是不变。
-// 右单旋 public AVLTree&lt;T> singleRightRotation(AVLTree&lt;T> a) { // 注意：A 必须有一个右子节点B // 将 A 与 B 做右单旋，更新A与B的高度，返回新的根结点B AVLTree&lt;T> b = a.right; a.right = b.left; b.left = a; a.height = Math.max(postOrderGetHight(a.left), postOrderGetHight(a.right)); b.height = Math.max(postOrderGetHight(b.right), a.height); return b; } 左单旋 左单旋与右单旋类似，麻烦结点在发现者的左子树的左边，因而叫LL插入，需要 LL 旋转（左单旋）。
+平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -256,7 +229,7 @@ $ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -273,13 +246,7 @@ $ ldd java linux-vdso.so.1 => (0x00007ffe2a9c7000) /usr/local/lib/libsysconfcpus
 <a href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ class="font-bold text-xl hover:text-eureka">Linux Shell Script 基础教程</a>
 </div>
 <div class=content>
-本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。
-1. Shell 是什么 Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。 Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。
-1.1 Shell 类型 Linux 系统中，主要有两种类型的Shell：
-Bourne shell - 如果使用Bourne类型的shell，默认的提示符就是$，可以通过修改环境变量PS1来更改你的提示符。 C shell - C 类型的shell，默认的提示符是%。 Bourne Shell 又有下面几种类型：
-Bourne shell (sh) Korn shell (ksh) Bourne Again shell (bash) POSIX shell (sh) C 类型 的Shell包括以下两种：
-C shell (csh) TENEX/TOPS C shell (tcsh) 在大多数 Linux 版本中，Bourne shell 通常都安装为/bin/sh。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。
-1.2 Shell 脚本 Shell脚本的基本概念是命令列表，按执行顺序列出命令。 Shell 脚本文件以 .
+本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。 1.
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -288,7 +255,7 @@ C shell (csh) TENEX/TOPS C shell (tcsh) 在大多数 Linux 版本中，Bourne sh
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>6 min read</span>
+<span>10 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -305,10 +272,7 @@ C shell (csh) TENEX/TOPS C shell (tcsh) 在大多数 Linux 版本中，Bourne sh
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/ class="font-bold text-xl hover:text-eureka">二叉搜索树</a>
 </div>
 <div class=content>
-1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：
-非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。 2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：
-查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。 x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。 我们用递归来实现查找过程，
-public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.out.println("树为空，查找失败！"); return null; //查找失败 } int result = x.compareTo(bst.data); if (result > 0) { // x 大于根结点的值，向右子树递归查找 return find(x, bst.right); } else if (result &lt; 0) { // x 小于根结点的值，向左子树递归查找 return find(x, bst.
+1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质： 非空左子树的所有键值小于其根结点的键值。 非空
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -317,7 +281,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -343,7 +307,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -360,11 +324,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/ class="font-bold text-xl hover:text-eureka">树的定义及表示</a>
 </div>
 <div class=content>
-这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。
-1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。
-1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。
-如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。
-public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; // 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search.
+这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -373,7 +333,7 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -390,13 +350,7 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-queue/ class="font-bold text-xl hover:text-eureka">队列及其实现</a>
 </div>
 <div class=content>
-1. 什么是队列 具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
-数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。
-2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：
-创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。 3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。
-public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; private int front, rear; } 如下图所示，用顺序存储实现队列，由于数组的元素从 0 开始，所以 front 和 rear 同时指向 -1 这个位置，添加 Job1，rear 往后移动一个位置，删除 Job1 ，front 往后移动一个位置。当队列满了的时候，就无法添加元素了，但是很明显就能发现，此时之前删除的位置还是空的，队列中还有位置，只是无法添加而已，这样的结构会造成空间浪费，我们需要用循环结构来解决。
-循环队列的机构如下图所示。循环结构中，front 和 rear 开始时同时指向 0 这个位置，之后，每一次入队，rear 向着顺时针方向移动一个位置，每一次出队列，front 向顺时针方向移动一个位置。那么这里就有个问题：队列空和满的判别条件是什么？队列空和满的时候，front=rear，那么就造成无法判断队列空还是满了。那么要如何解决呢？这里提供两个解决方法：
-使用额外标记： Size或者tag 。size 用来记录当前元素的个数，当你加入一个元素的时候，size 加 1，删除一个元素的时候，size减1，所以只要根据size是0还是n就知道是空还是满的。tag （0，1）标记，添加一个元素，tag=1，删除一个元素 tag=0，当我们想判断队列是满还是空时，只要判断 tag 的值就知道最后一次操作是添加还是删除。 仅使用n-1个数组空间。 我们采用第二种方案，使用求余函数来查看列队是否已满。
+1. 什么是队列 具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。 数据插入称之为入队(addQ)，数据删除称之为出队(del
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -405,7 +359,7 @@ public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; pr
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -422,10 +376,7 @@ public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; pr
 <a href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/ class="font-bold text-xl hover:text-eureka">Java 多线程 - 死锁问题</a>
 </div>
 <div class=content>
-锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。
-1. 什么是死锁 百度百科中对于死锁的定义：死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。
-简而言之，当线程1持有资源A，线程2持有资源B。此时线程1想要获取资源B，线程2想要获取资源A。两个线程都想要获取对方手中的资源，自己又不肯让出已有资源，一直僵持不下就形成了死锁。
-2. 死锁产生的四个条件 互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。 请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。 不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。 环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个 P1 占用的资源；P1 正在等待 P2 占用的资源，……，Pn 正在等待已被 P0 占用的资源。 3. 案例 public class DeadLock { private OtherService otherService; public void setOtherService(OtherService otherService) { this.otherService = otherService; } // DeadLock的实例的锁-资源A private final Object LOCK = new Object(); public void m1() { synchronized (LOCK) { System.out.println("********m1********"); otherService.s1(); } } public void m2() { synchronized (LOCK) { System.out.println("********m2********"); } } } public class OtherService { private DeadLock deadLock; public void setDeadLock(DeadLock deadLock) { this.
+锁是非常有用的工具，运用场景非常多，因为它使用起来非常方便，而且易于理解。但同时它也会带来一些困扰，那就是可能引起死锁。 1. 什么是死锁 百度百科
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -434,7 +385,7 @@ public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; pr
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

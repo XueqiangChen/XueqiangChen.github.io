@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Categories","item":"https://ahamoment.cn/categories/"},{"@type":"ListItem","position":2,"name":"工具","item":"https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hugo 博客搭建","description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。\n1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。\n Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过\n hugo new site myblog  来创建一个博客文件夹。创建后的目录如下：\nchenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes  Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：","image":"https://ahamoment.cn/uploads/gohugoio-card.png","url":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},{"@type":"ListItem","position":2,"name":"Mac 命令汇总","description":"常用快捷键 Overall Mac 键盘快捷键\n修饰键  Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn  在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。\n截图   全屏\nshift + command + 3\n  截取部分\nshift + command + 4\n  打开截屏工具\nshift + command + 5\n  文稿编辑  Fn-上箭头：Page Up：向上滚动一页。 Fn–下箭头：Page Down：向下滚动一页。 **Fn–左箭头：**Home：滚动到文稿开头。 Fn–右箭头：End：滚动到文稿末尾。 Command–上箭头：将插入点移至文稿开头。 Command–下箭头：将插入点移至文稿末尾。 Command–左箭头：将插入点移至当前行的行首。 Command–右箭头：将插入点移至当前行的行尾。 Option–左箭头：将插入点移至上一字词的词首。 Option–右箭头：将插入点移至下一字词的词尾。  ","url":"https://ahamoment.cn/posts/tool/tool-mac-os-commands/"},{"@type":"ListItem","position":3,"name":"Vim 折腾记","description":"\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c/p\u003e","url":"https://ahamoment.cn/posts/tool/tool-vim/"},{"@type":"ListItem","position":4,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html\nStep1：\n从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。\nStep2:\n运行 yum install bazel3 命令安装。\n教程 java / c++\n常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options\n查询依赖关系：\nbazel query --notool_deps --noimplicit_deps \u0026quot;deps(//:ProjectRunner)\u0026quot; --output graph  可视化网站：\nhttp://www.webgraphviz.com/\n编译命令：\nbazel build //:ProjectRunner  清除命令：\nbazel clean  bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。\n输出目录 https://docs.bazel.build/versions/master/output_directories.html\n 必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。  我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。","url":"https://ahamoment.cn/posts/tool/tool-bazel/"},{"@type":"ListItem","position":5,"name":"Git 常用命令汇总","description":"1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：\n commit - 分支提交错误 reset - 误删代码  1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。\n此时有两种情况:\n场景一：已经commit，但是未push到远端 使用git reset命令，可以在提交层面在私有分支舍弃一些没有提交的修改：\n# 回退到上一个版本 git reset --hard HEAD^  git reset 命令主要有三个选项： \u0026ndash;soft、\u0026ndash;mixed 、\u0026ndash;hard，默认参数为 \u0026ndash;mixed。\ngit reset \u0026ndash;soft 提交：\n--soft 这个版本的命令有“最小”影响，只改变一个符号引用的状态使其指向一个新提交，不会改变其索引和工作目录， 具体体现如下：\n# 模拟一份提交历史 git add 1.js \u0026amp;\u0026amp; git commit -m \u0026quot;update part 1\u0026quot; git add 2.js \u0026amp;\u0026amp; git commit -m \u0026quot;update part 2\u0026quot; git add 3.","url":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"},{"@type":"ListItem","position":6,"name":"自动配置Git仓库提交作者","description":"1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。\n2. 方法 2.1 安装Git  Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址  2.2 添加脚本 在/root/下添加.git-templates/hooks 目录，添加脚本post-checkout，脚本内容如下：\n#!/bin/bash #checkout hook to locally set user name and email based on user defined patterns #The patterns are matched against the clone url. # #Based on http://www.dvratil.cz/2015/12/git-trick-628-automatically-set-commit-author-based-on-repo-url/ function warn { echo -e \u0026quot;\\n$1 Email and author not initialized in local config!\u0026quot; } email=\u0026quot;$(git config --local user.","url":"https://ahamoment.cn/posts/tool/tool-git-set-config/"}]}</script><meta property="og:title" content="工具 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Hugo 博客搭建","description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu","image":"https://ahamoment.cn/uploads/gohugoio-card.png","url":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},{"@type":"ListItem","position":2,"name":"Mac 命令汇总","description":"常用快捷键 Overall Mac 键盘快捷键 修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘","url":"https://ahamoment.cn/posts/tool/tool-mac-os-commands/"},{"@type":"ListItem","position":3,"name":"Vim 折腾记","description":"\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c/p\u003e","url":"https://ahamoment.cn/posts/tool/tool-vim/"},{"@type":"ListItem","position":4,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.ht","url":"https://ahamoment.cn/posts/tool/tool-bazel/"},{"@type":"ListItem","position":5,"name":"Git 常用命令汇总","description":"1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面： commit - 分支提交错误 reset - 误删代码 1.1 分支提交错误 有时我们会遇到这种情况：","url":"https://ahamoment.cn/posts/tool/tool-git-common-operations/"},{"@type":"ListItem","position":6,"name":"自动配置Git仓库提交作者","description":"1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这","url":"https://ahamoment.cn/posts/tool/tool-git-set-config/"}]}</script><meta property="og:title" content="工具 | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/">
@@ -95,11 +95,7 @@
 <a href=https://ahamoment.cn/posts/tool/tool-hugo-blog/ class="font-bold text-xl hover:text-eureka">Hugo 博客搭建</a>
 </div>
 <div class=content>
-前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
-1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
-Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
-hugo new site myblog 来创建一个博客文件夹。创建后的目录如下：
-chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：
+前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -108,7 +104,7 @@ chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049 
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -128,15 +124,7 @@ chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049 
 <a href=https://ahamoment.cn/posts/tool/tool-mac-os-commands/ class="font-bold text-xl hover:text-eureka">Mac 命令汇总</a>
 </div>
 <div class=content>
-常用快捷键 Overall Mac 键盘快捷键
-修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。
-截图 全屏
-shift + command + 3
-截取部分
-shift + command + 4
-打开截屏工具
-shift + command + 5
-文稿编辑 Fn-上箭头：Page Up：向上滚动一页。 Fn–下箭头：Page Down：向下滚动一页。 **Fn–左箭头：**Home：滚动到文稿开头。 Fn–右箭头：End：滚动到文稿末尾。 Command–上箭头：将插入点移至文稿开头。 Command–下箭头：将插入点移至文稿末尾。 Command–左箭头：将插入点移至当前行的行首。 Command–右箭头：将插入点移至当前行的行尾。 Option–左箭头：将插入点移至上一字词的词首。 Option–右箭头：将插入点移至下一字词的词尾。
+常用快捷键 Overall Mac 键盘快捷键 修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -188,21 +176,7 @@ shift + command + 5
 <a href=https://ahamoment.cn/posts/tool/tool-bazel/ class="font-bold text-xl hover:text-eureka">bazel 外部存储库缓存</a>
 </div>
 <div class=content>
-bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
-Step1：
-从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
-Step2:
-运行 yum install bazel3 命令安装。
-教程 java / c++
-常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options
-查询依赖关系：
-bazel query --notool_deps --noimplicit_deps "deps(//:ProjectRunner)" --output graph 可视化网站：
-http://www.webgraphviz.com/
-编译命令：
-bazel build //:ProjectRunner 清除命令：
-bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。
-输出目录 https://docs.bazel.build/versions/master/output_directories.html
-必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。 我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。
+bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.ht
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -211,7 +185,7 @@ bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -228,14 +202,7 @@ bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它�
 <a href=https://ahamoment.cn/posts/tool/tool-git-common-operations/ class="font-bold text-xl hover:text-eureka">Git 常用命令汇总</a>
 </div>
 <div class=content>
-1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面：
-commit - 分支提交错误 reset - 误删代码 1.1 分支提交错误 有时我们会遇到这种情况：我们从develop 分支新建一个名为feat/home 分支去做A功能，然后由于一些其他原因A 功能需要延后，然后我们再从develop分支新建一个分支去做B功能或者C功能，在多分支多功能开发时，就容易出现做B功能时，忘记切换分支，一直等做完了提交了push之后才发现 push 错了远端的分支，并且 push 的改动与该分支需要开发的功能并没有交集，因此我们需要将已经提交错的分支内容回滚并提交push 到正确的远端分支。
-此时有两种情况:
-场景一：已经commit，但是未push到远端 使用git reset命令，可以在提交层面在私有分支舍弃一些没有提交的修改：
-# 回退到上一个版本 git reset --hard HEAD^ git reset 命令主要有三个选项： –soft、–mixed 、–hard，默认参数为 –mixed。
-git reset –soft 提交：
---soft 这个版本的命令有“最小”影响，只改变一个符号引用的状态使其指向一个新提交，不会改变其索引和工作目录， 具体体现如下：
-# 模拟一份提交历史 git add 1.js && git commit -m "update part 1" git add 2.js && git commit -m "update part 2" git add 3.
+1. 撤销提交 撤销提交属于误操作的范畴，Git 误操作的类型主要有以下两个方面： commit - 分支提交错误 reset - 误删代码 1.1 分支提交错误 有时我们会遇到这种情况：
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -244,7 +211,7 @@ git reset –soft 提交：
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>5 min read</span>
+<span>11 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -261,9 +228,7 @@ git reset –soft 提交：
 <a href=https://ahamoment.cn/posts/tool/tool-git-set-config/ class="font-bold text-xl hover:text-eureka">自动配置Git仓库提交作者</a>
 </div>
 <div class=content>
-1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这个脚本是根据repo url自动设置提交作者，避免每次手动配置。
-2. 方法 2.1 安装Git Linux 上安装Git直接使用 sudo yum install git 或者 sudo apt-get install git 命令即可。 Windows 上安装到官网下载安装软件安装即可。安装地址 2.2 添加脚本 在/root/下添加.git-templates/hooks 目录，添加脚本post-checkout，脚本内容如下：
-#!/bin/bash #checkout hook to locally set user name and email based on user defined patterns #The patterns are matched against the clone url. # #Based on http://www.dvratil.cz/2015/12/git-trick-628-automatically-set-commit-author-based-on-repo-url/ function warn { echo -e "\n$1 Email and author not initialized in local config!" } email="$(git config --local user.
+1. 背景 公司使用的代码仓库是Gitlab，个人代码仓库又是Github。每次提交代码的时候，需要切换不同的提交作者和提交邮箱，非常容易出错。 这
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">

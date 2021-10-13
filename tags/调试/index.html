@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"调试","item":"https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"IntellJ IDEA 远程调试 Java 程序","description":"1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。\n2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：\n 应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea  2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。\nJDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。\n要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。\njava -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test\n这些参数要做的事情就是启用远程调试和配置有效的选项：\n -Xdebug：参数启用debug调试特性 -Xrunjdwp：使用几个重要参数配置JDWP协议。  从 JDK5 开始，可以使用 -agentlib:jdwp 选项，而不是 -Xdebug 和 -Xrunjdwp。但如果连接到 JDK5 以前的 VM，只能选择 -Xdebug 和 -Xrunjdwp。\njava -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test\nJDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。\n JDK 9 Realease Notes core-svc/debugger JDWP socket connector accept only local connections by default The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line.","url":"https://ahamoment.cn/posts/java/java-remote-debug/"}]}</script><meta property="og:title" content="调试 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"IntellJ IDEA 远程调试 Java 程序","description":"1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易","url":"https://ahamoment.cn/posts/java/java-remote-debug/"}]}</script><meta property="og:title" content="调试 | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/">
@@ -95,17 +95,7 @@
 <a href=https://ahamoment.cn/posts/java/java-remote-debug/ class="font-bold text-xl hover:text-eureka">IntellJ IDEA 远程调试 Java 程序</a>
 </div>
 <div class=content>
-1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。
-2. 配置 在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：
-应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 java -jar test.jar 命令启动应用。 调试工具用的是IntelliJ idea 2.1 Java 启动参数配置 Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。
-JDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。
-要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。
-java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test
-这些参数要做的事情就是启用远程调试和配置有效的选项：
--Xdebug：参数启用debug调试特性 -Xrunjdwp：使用几个重要参数配置JDWP协议。 从 JDK5 开始，可以使用 -agentlib:jdwp 选项，而不是 -Xdebug 和 -Xrunjdwp。但如果连接到 JDK5 以前的 VM，只能选择 -Xdebug 和 -Xrunjdwp。
-java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test
-JDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。
-JDK 9 Realease Notes core-svc/debugger JDWP socket connector accept only local connections by default The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line.
+1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -114,7 +104,7 @@ JDK 9 Realease Notes core-svc/debugger JDWP socket connector accept only local c
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>5 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

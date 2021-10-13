@@ -22,7 +22,7 @@
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Vim 折腾记","description":"\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c/p\u003e","url":"https://ahamoment.cn/posts/tool/tool-vim/"},{"@type":"ListItem","position":2,"name":"Go 语言工作目录","description":"GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。\n工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。\nGOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。\n在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：\n# go env GO111MODULE=\u0026quot;\u0026quot; GOARCH=\u0026quot;amd64\u0026quot; GOBIN=\u0026quot;\u0026quot; GOCACHE=\u0026quot;/root/.cache/go-build\u0026quot; GOENV=\u0026quot;/root/.config/go/env\u0026quot; GOEXE=\u0026quot;\u0026quot; GOFLAGS=\u0026quot;\u0026quot; GOHOSTARCH=\u0026quot;amd64\u0026quot; GOHOSTOS=\u0026quot;linux\u0026quot; GOINSECURE=\u0026quot;\u0026quot; GOMODCACHE=\u0026quot;/root/go/pkg/mod\u0026quot; GONOPROXY=\u0026quot;\u0026quot; GONOSUMDB=\u0026quot;\u0026quot; GOOS=\u0026quot;linux\u0026quot; GOPATH=\u0026quot;/root/go\u0026quot; GOPRIVATE=\u0026quot;\u0026quot; GOPROXY=\u0026quot;https://proxy.golang.org,direct\u0026quot; GOROOT=\u0026quot;/usr/local/go\u0026quot; GOSUMDB=\u0026quot;sum.golang.org\u0026quot; GOTMPDIR=\u0026quot;\u0026quot; GOTOOLDIR=\u0026quot;/usr/local/go/pkg/tool/linux_amd64\u0026quot; GOVCS=\u0026quot;\u0026quot; GOVERSION=\u0026quot;go1.16\u0026quot; GCCGO=\u0026quot;gccgo\u0026quot; AR=\u0026quot;ar\u0026quot; CC=\u0026quot;gcc\u0026quot; CXX=\u0026quot;g++\u0026quot; CGO_ENABLED=\u0026quot;1\u0026quot; GOMOD=\u0026quot;/dev/null\u0026quot; CGO_CFLAGS=\u0026quot;-g -O2\u0026quot; CGO_CPPFLAGS=\u0026quot;\u0026quot; CGO_CXXFLAGS=\u0026quot;-g -O2\u0026quot; CGO_FFLAGS=\u0026quot;-g -O2\u0026quot; CGO_LDFLAGS=\u0026quot;-g -O2\u0026quot; PKG_CONFIG=\u0026quot;pkg-config\u0026quot; GOGCCFLAGS=\u0026quot;-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build439564896=/tmp/go-build -gno-record-gcc-switches\u0026quot;  命令行输出的说明如下：\n GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装位置 GOOS 表示目标操作系统 GOPATH 表示当前工作目录 GOROOT 表示GO开发包的安装目录  从命令行输出可以看出，当前GOPATH 的路径为： /root/go。","url":"https://ahamoment.cn/posts/go/go-project-catalogs/"},{"@type":"ListItem","position":3,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html\nStep1：\n从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。\nStep2:\n运行 yum install bazel3 命令安装。\n教程 java / c++\n常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options\n查询依赖关系：\nbazel query --notool_deps --noimplicit_deps \u0026quot;deps(//:ProjectRunner)\u0026quot; --output graph  可视化网站：\nhttp://www.webgraphviz.com/\n编译命令：\nbazel build //:ProjectRunner  清除命令：\nbazel clean  bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。\n输出目录 https://docs.bazel.build/versions/master/output_directories.html\n 必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。  我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。","url":"https://ahamoment.cn/posts/tool/tool-bazel/"},{"@type":"ListItem","position":4,"name":"MyBatis Generator 使用与原理(上)","description":"Eureka is a elegant and powerful theme for Hugo.","url":"https://ahamoment.cn/posts/java/framework-mybatis-generator/"},{"@type":"ListItem","position":5,"name":"Docker 和 Kubernetes 面试题","description":"1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。\nAUFS\nAUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：\nOverlay\nOverlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：\nDevicemapper\nDevice mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：\n详细内容请参考：\n  Docker 五种存储驱动\n  深入了解 Docker 存储驱动","url":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"},{"@type":"ListItem","position":6,"name":"面试题目录","description":"\u003cblockquote\u003e\n\u003cp\u003e面试题目录\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-questions/"},{"@type":"ListItem","position":7,"name":"分布式面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集有关分布式面试题的内容\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-distributed-system/"},{"@type":"ListItem","position":8,"name":"Spring系列面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文包含spring, spring boot, spring mvc 以及 mybatis的面试题\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-spring/"},{"@type":"ListItem","position":9,"name":"Java 基础面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集Java基础知识点相关的面试题目\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-java/"},{"@type":"ListItem","position":10,"name":"计算机网络面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文主要收集面试过程中遇到的计算机网络的面试题。\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-network/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Vim 折腾记","description":"\u003cp\u003e折腾了两天的vim，想要把它变成我的机器上默认的IDE，方便在没有环境的时候，快速查阅代码，做一些基本的开发任务，折腾过程记录在这篇博客上\u003c/p\u003e","url":"https://ahamoment.cn/posts/tool/tool-vim/"},{"@type":"ListItem","position":2,"name":"Go 语言工作目录","description":"GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。 工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码","url":"https://ahamoment.cn/posts/go/go-project-catalogs/"},{"@type":"ListItem","position":3,"name":"bazel 外部存储库缓存","description":"bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.ht","url":"https://ahamoment.cn/posts/tool/tool-bazel/"},{"@type":"ListItem","position":4,"name":"MyBatis Generator 使用与原理(上)","description":"Eureka is a elegant and powerful theme for Hugo.","url":"https://ahamoment.cn/posts/java/framework-mybatis-generator/"},{"@type":"ListItem","position":5,"name":"Docker 和 Kubernetes 面试题","description":"1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-poo","url":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"},{"@type":"ListItem","position":6,"name":"面试题目录","description":"\u003cblockquote\u003e\n\u003cp\u003e面试题目录\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-questions/"},{"@type":"ListItem","position":7,"name":"分布式面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集有关分布式面试题的内容\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-distributed-system/"},{"@type":"ListItem","position":8,"name":"Spring系列面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文包含spring, spring boot, spring mvc 以及 mybatis的面试题\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-spring/"},{"@type":"ListItem","position":9,"name":"Java 基础面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文收集Java基础知识点相关的面试题目\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-java/"},{"@type":"ListItem","position":10,"name":"计算机网络面试题","description":"\u003cblockquote\u003e\n\u003cp\u003e本文主要收集面试过程中遇到的计算机网络的面试题。\u003c/p\u003e\n\u003c/blockquote\u003e","url":"https://ahamoment.cn/posts/interview/interview-network/"}]}</script><meta property="og:title" content="Posts | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/">
@@ -121,12 +121,7 @@
 <a href=https://ahamoment.cn/posts/go/go-project-catalogs/ class="font-bold text-xl hover:text-eureka">Go 语言工作目录</a>
 </div>
 <div class=content>
-GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
-工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
-GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
-在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
-# go env GO111MODULE="" GOARCH="amd64" GOBIN="" GOCACHE="/root/.cache/go-build" GOENV="/root/.config/go/env" GOEXE="" GOFLAGS="" GOHOSTARCH="amd64" GOHOSTOS="linux" GOINSECURE="" GOMODCACHE="/root/go/pkg/mod" GONOPROXY="" GONOSUMDB="" GOOS="linux" GOPATH="/root/go" GOPRIVATE="" GOPROXY="https://proxy.golang.org,direct" GOROOT="/usr/local/go" GOSUMDB="sum.golang.org" GOTMPDIR="" GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64" GOVCS="" GOVERSION="go1.16" GCCGO="gccgo" AR="ar" CC="gcc" CXX="g++" CGO_ENABLED="1" GOMOD="/dev/null" CGO_CFLAGS="-g -O2" CGO_CPPFLAGS="" CGO_CXXFLAGS="-g -O2" CGO_FFLAGS="-g -O2" CGO_LDFLAGS="-g -O2" PKG_CONFIG="pkg-config" GOGCCFLAGS="-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build439564896=/tmp/go-build -gno-record-gcc-switches" 命令行输出的说明如下：
-GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装位置 GOOS 表示目标操作系统 GOPATH 表示当前工作目录 GOROOT 表示GO开发包的安装目录 从命令行输出可以看出，当前GOPATH 的路径为： /root/go。
+GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。 工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -135,7 +130,7 @@ GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -152,21 +147,7 @@ GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装
 <a href=https://ahamoment.cn/posts/tool/tool-bazel/ class="font-bold text-xl hover:text-eureka">bazel 外部存储库缓存</a>
 </div>
 <div class=content>
-bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.html
-Step1：
-从 Fedora COPR 下载 .repo 文件并复制到 /etc/yum.repos.d/ 目录。
-Step2:
-运行 yum install bazel3 命令安装。
-教程 java / c++
-常用命令 命令文档：https://docs.bazel.build/versions/master/command-line-reference.html#fetch-options
-查询依赖关系：
-bazel query --notool_deps --noimplicit_deps "deps(//:ProjectRunner)" --output graph 可视化网站：
-http://www.webgraphviz.com/
-编译命令：
-bazel build //:ProjectRunner 清除命令：
-bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它还会删除工作空间符号链接。 --expunge选项将清除整个outputBase。
-输出目录 https://docs.bazel.build/versions/master/output_directories.html
-必须从包含WORKSPACE文件的目录（“工作区目录”）或其子目录中调用Bazel。如果不是，它将报告错误。 outputRoot目录在Linux上默认为〜/.cache/bazel，在macOS上默认为/ private/var/tmp，在Windows上默认为％HOME％（如果设置），否则默认为％USERPROFILE％，否则调用SHGetKnownFolderPath()的结果设置了FOLDERID_Profile标志。如果设置了环境变量$ TEST_TMPDIR（如测试bazel本身），则该值将覆盖默认值。 我们将Bazel用户的构建状态保留在outputRoot/_bazel_$USER下。这称为 outputUserRoot 目录。 在outputUserRoot目录下，我们创建一个installBase目录，其名称为 install加上Bazel安装清单的MD5哈希。 在outputUserRoot目录下，我们还创建了一个outputBase目录，该目录的名称是工作区目录的路径名的MD5哈希。因此，例如，如果Bazel在工作空间目录/ home/user/src/my-project中（或在与该目录符号链接的目录中）运行，则我们将创建一个输出基本目录，名为：/home/user/.cache/bazel/ _bazel_user/7ffd56a6e4cb724ea575aba15733d113。 用户可以使用Bazel的--output_base启动选项来覆盖默认的输出基本目录。例如，bazel --output_base = /tmp/bazel/output build x/y:z。 用户还可以使用Bazel的--output_user_root启动选项来覆盖默认的安装基础目录和输出基础目录。例如：bazel --output_user_root=/tmp/bazel build x/y:z。 我们在工作区目录中放置了符号链接“bazel-”, “bazel-out”, “bazel-testlogs”, and “bazel-bin” 。这些符号链接指向输出目录内特定于目标的目录内的某些目录。这些符号链接只是为了方便用户，因为Bazel本身并不使用它们。另外，我们仅在工作空间目录可写时才这样做。
+bazel 简介 安装 centos7：https://docs.bazel.build/versions/4.0.0/install-redhat.ht
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -175,7 +156,7 @@ bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -200,7 +181,7 @@ bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -217,16 +198,7 @@ bazel clean bazel clean在 outputPath和action_cache目录上执行rm -rf。它�
 <a href=https://ahamoment.cn/posts/interview/interview-docker-k8s/ class="font-bold text-xl hover:text-eureka">Docker 和 Kubernetes 面试题</a>
 </div>
 <div class=content>
-1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
-AUFS
-AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：
-Overlay
-Overlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：
-Devicemapper
-Device mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：
-详细内容请参考：
-Docker 五种存储驱动
-深入了解 Docker 存储驱动
+1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-poo
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -235,7 +207,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>11 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -261,7 +233,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -313,7 +285,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -339,7 +311,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
+<span>10 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -365,7 +337,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>9 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

@@ -21,25 +21,13 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
-$ kubectl replace -f nginx-deployment.yaml  声明式的表达方式，使用 apply 命令：
-$ kubectl apply -f nginx-deployment.yaml  2. Pod 2.1 查询 获取 pod 的信息
-kubectl get pods -n ${namespace}  **根据 pod 的标签过滤 **
-kubectl get pods -l app=nginx  注意的是，在命令行中，所有 key-value 格式的参数，都使用“=”而非“:”表示。
-获取 pod 的描述信息
-$ kubectl describe pod <pod-name>  2.2 登录 进入到 Pod 中：">
+<meta name=description content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件： $ kubectl replace -f nginx-deployment.yaml 声明式的表达方式，使用 apply 命令： $ kubectl apply -f nginx-deployment.yaml 2. Pod 2.1 查询 获取 pod 的信息 kubectl get pods -n ${namespace} **根">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"K8s 学习笔记","item":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":3,"name":"9. kubernetes 生态周边","item":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{"@type":"ListItem","position":4,"name":"常用的k8s命令","item":"https://ahamoment.cn/docs/k8s-doc/chapter9/commands/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter9/commands/"},"headline":"常用的k8s命令 | K8s 学习笔记 | AhaMoment","datePublished":"2021-02-25T07:37:43+08:00","dateModified":"2021-02-25T07:37:43+08:00","wordCount":609,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：\n$ kubectl replace -f nginx-deployment.yaml  声明式的表达方式，使用 apply 命令：\n$ kubectl apply -f nginx-deployment.yaml  2. Pod 2.1 查询 获取 pod 的信息\nkubectl get pods -n ${namespace}  **根据 pod 的标签过滤 **\nkubectl get pods -l app=nginx  注意的是，在命令行中，所有 key-value 格式的参数，都使用“=”而非“:”表示。\n获取 pod 的描述信息\n$ kubectl describe pod \u0026lt;pod-name\u0026gt;  2.2 登录 进入到 Pod 中："}</script><meta property="og:title" content="常用的k8s命令 | K8s 学习笔记 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/k8s-doc/chapter9/commands/"},"headline":"常用的k8s命令 | K8s 学习笔记 | AhaMoment","datePublished":"2021-02-25T07:37:43+08:00","dateModified":"2021-02-25T07:37:43+08:00","wordCount":1600,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件： $ kubectl replace -f nginx-deployment.yaml 声明式的表达方式，使用 apply 命令： $ kubectl apply -f nginx-deployment.yaml 2. Pod 2.1 查询 获取 pod 的信息 kubectl get pods -n ${namespace} **根"}</script><meta property="og:title" content="常用的k8s命令 | K8s 学习笔记 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/docs/k8s-doc/chapter9/commands/">
-<meta property="og:description" content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件  1.2 修改 更新 yaml 文件：
-$ kubectl replace -f nginx-deployment.yaml  声明式的表达方式，使用 apply 命令：
-$ kubectl apply -f nginx-deployment.yaml  2. Pod 2.1 查询 获取 pod 的信息
-kubectl get pods -n ${namespace}  **根据 pod 的标签过滤 **
-kubectl get pods -l app=nginx  注意的是，在命令行中，所有 key-value 格式的参数，都使用“=”而非“:”表示。
-获取 pod 的描述信息
-$ kubectl describe pod <pod-name>  2.2 登录 进入到 Pod 中：">
+<meta property="og:description" content="1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件： $ kubectl replace -f nginx-deployment.yaml 声明式的表达方式，使用 apply 命令： $ kubectl apply -f nginx-deployment.yaml 2. Pod 2.1 查询 获取 pod 的信息 kubectl get pods -n ${namespace} **根">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2021-02-25T07:37:43+08:00">
@@ -253,7 +241,7 @@ $ kubectl describe pod <pod-name>  2.2 登录 进入到 Pod 中：">
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

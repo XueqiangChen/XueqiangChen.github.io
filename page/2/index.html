@@ -142,11 +142,7 @@
 <a href=https://ahamoment.cn/docs/k8s-doc/chapter6/client-go/ class="font-bold text-xl hover:text-eureka">K8s Go 客户端浅析</a>
 </div>
 <div class=content>
-在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。
-客户端库通常为您处理诸如身份验证之类的常见任务。 如果 API 客户端在 Kubernetes 集群中运行，大多数客户端库可以发现并使用 Kubernetes 服务帐户进行身份验证， 或者能够理解 kubeconfig 文件 格式来读取凭据和 API 服务器地址。
-kubernetes 官方支持的客户端有 go/python/java/dotnet/js 等，今天我们要讨论的是其中的 go 客户端。
-首先下载源代码，进入到examples目录：
-➜ git clone git@github.com:kubernetes/client-go.git ➜ ~ cd client-go/examples ➜ examples git:(master) ✗ ll total 32K -rwxr-xr-x 1 root root 2.0K Apr 6 17:33 README.md drwxr-xr-x 2 root root 4.0K Apr 6 17:46 create-update-delete-deployment drwxr-xr-x 2 root root 4.0K Apr 6 17:33 dynamic-create-update-delete-deployment drwxr-xr-x 2 root root 4.
+在使用 Kubernetes REST API 编写应用程序时， 您并不需要自己实现 API 调用和 “请求/响应” 类型。 您可以根据自己的编程语言需要选择使用合适的客户端库。 客户端库通常为
 </div>
 <div class="px-6 pt-4">
 <div class="pt-6 hover:text-eureka">
@@ -164,13 +160,7 @@ kubernetes 官方支持的客户端有 go/python/java/dotnet/js 等，今天我�
 <a href=https://ahamoment.cn/posts/go/go-new-vs-make/ class="font-bold text-xl hover:text-eureka">Go 语言中的 new 关键字和 make 关键字的区别</a>
 </div>
 <div class=content>
-Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为channel，map，slice分配内存。
-对于值类型的变量，我们通过var 声明，系统会默认为他分配内存空间，并赋该类型的零值。如下，我们声明一个int类型变量i，输出为0。
-package main import "fmt" func main() { var i int fmt.Println(i) } 而如果我们声明一个指针类型的变量，系统不会为他分配内存，改变量默认就是nil。此时如果你想直接使用，那么系统会抛异常。
-var j *int fmt.Println(j) *j = 10 //panic: runtime error: invalid memory address or nil pointer dereference 也就是说，空指针还没有内存分配，是不能使用的。那么要想使用，此时就需要new出场啦。
-var j *int j = new(int) fmt.Println(j) fmt.Println(*j) *j = 10 fmt.Println(*j) 0xc00000a0e0 0 10 声明指针类型变量后，通过new为他分配内存，有了内存空间，这个变量就可以自由的使用啦。
-我们来看一下new函数
-// The new built-in function allocates memory. The first argument is a type, // not a value, and the value returned is a pointer to a newly // allocated zero value of that type.
+Go 语言分配内存的函数包括 new 和 make。new 用来获取类型对应的指针类型，即要获取指针类型的内存分配。make 只用来分配引用类型，即为chan
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -196,15 +186,7 @@ var j *int j = new(int) fmt.Println(j) fmt.Println(*j) *j = 10 fmt.Println(*j) 0
 <a href=https://ahamoment.cn/posts/tool/tool-mac-os-commands/ class="font-bold text-xl hover:text-eureka">Mac 命令汇总</a>
 </div>
 <div class=content>
-常用快捷键 Overall Mac 键盘快捷键
-修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘上，请用 Alt 键代替 Option 键，用 Windows 标志键代替 Command 键。
-截图 全屏
-shift + command + 3
-截取部分
-shift + command + 4
-打开截屏工具
-shift + command + 5
-文稿编辑 Fn-上箭头：Page Up：向上滚动一页。 Fn–下箭头：Page Down：向下滚动一页。 **Fn–左箭头：**Home：滚动到文稿开头。 Fn–右箭头：End：滚动到文稿末尾。 Command–上箭头：将插入点移至文稿开头。 Command–下箭头：将插入点移至文稿末尾。 Command–左箭头：将插入点移至当前行的行首。 Command–右箭头：将插入点移至当前行的行尾。 Option–左箭头：将插入点移至上一字词的词首。 Option–右箭头：将插入点移至下一字词的词尾。
+常用快捷键 Overall Mac 键盘快捷键 修饰键 Command（或 Cmd）⌘ Shift ⇧ Option（或 Alt）⌥ Control（或 Ctrl）⌃ Caps Lock ⇪ Fn 在 Windows PC 专用键盘
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -230,15 +212,7 @@ shift + command + 5
 <a href=https://ahamoment.cn/posts/machinelearning/ml-tensorflow2.0-install/ class="font-bold text-xl hover:text-eureka">安装 Tensorflow2</a>
 </div>
 <div class=content>
-安装 Anaconda https://www.anaconda.com/products/individual
-根据系统选择下载不同的 anaconda 安装：
-这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功：
-$ conda --version conda 4.9.2 更换 conda 镜像源 查看用户目录下的 .condarc 文件：
-更换成清华大学镜像源
-channels: - defaults show_channel_urls: true default_channels: - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/r - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/msys2 custom_channels: conda-forge: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud msys2: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud bioconda: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud menpo: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud pytorch: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud simpleitk: https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud 运行 conda clean -i 清除索引缓存，保证用的是镜像站提供的索引。
-运行 conda create -n myenv numpy 测试一下吧。
-更换 pip 的镜像源 默认的 pip 下载地址速度较慢，我们将其更换成清华大学的镜像地址：
-$ pip config set global.
+安装 Anaconda https://www.anaconda.com/products/individual 根据系统选择下载不同的 anaconda 安装： 这里安装的是 MacOS 的软件包，安装完成后使用 conda 命令查看是否安装成功： $ conda --version conda 4.9.2 更换 conda 镜像源 查看用户目录下的 .condarc
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -290,12 +264,7 @@ $ pip config set global.
 <a href=https://ahamoment.cn/posts/go/go-project-catalogs/ class="font-bold text-xl hover:text-eureka">Go 语言工作目录</a>
 </div>
 <div class=content>
-GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。
-工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码，你的工位所包含的桌面、计算机及椅子就是你的工作区。工作区的概念与工作目录的概念也是类似的。如果不使用工作目录的概念，在多人开发时，每个人有一套自己的目录结构，读取配置文件的位置不统一，输出的二进制运行文件也不统一，这样会导致开发的标准不统一，影响开发效率。
-GOPATH 适合处理大量 Go语言源码、多个包组合而成的复杂工程。
-在命令行中运行 go env 来查看当前 GOPATH 路径设置情况：
-# go env GO111MODULE="" GOARCH="amd64" GOBIN="" GOCACHE="/root/.cache/go-build" GOENV="/root/.config/go/env" GOEXE="" GOFLAGS="" GOHOSTARCH="amd64" GOHOSTOS="linux" GOINSECURE="" GOMODCACHE="/root/go/pkg/mod" GONOPROXY="" GONOSUMDB="" GOOS="linux" GOPATH="/root/go" GOPRIVATE="" GOPROXY="https://proxy.golang.org,direct" GOROOT="/usr/local/go" GOSUMDB="sum.golang.org" GOTMPDIR="" GOTOOLDIR="/usr/local/go/pkg/tool/linux_amd64" GOVCS="" GOVERSION="go1.16" GCCGO="gccgo" AR="ar" CC="gcc" CXX="g++" CGO_ENABLED="1" GOMOD="/dev/null" CGO_CFLAGS="-g -O2" CGO_CPPFLAGS="" CGO_CXXFLAGS="-g -O2" CGO_FFLAGS="-g -O2" CGO_LDFLAGS="-g -O2" PKG_CONFIG="pkg-config" GOGCCFLAGS="-fPIC -m64 -pthread -fmessage-length=0 -fdebug-prefix-map=/tmp/go-build439564896=/tmp/go-build -gno-record-gcc-switches" 命令行输出的说明如下：
-GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装位置 GOOS 表示目标操作系统 GOPATH 表示当前工作目录 GOROOT 表示GO开发包的安装目录 从命令行输出可以看出，当前GOPATH 的路径为： /root/go。
+GOPATH 是 Go语言中使用的一个环境变量，它使用绝对路径提供项目的工作目录。 工作目录是一个工程开发的相对参考目录，好比当你要在公司编写一套服务器代码
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -304,7 +273,7 @@ GOARCH 表示目标处理器的架构 GOBIN 表示编译器和链接器的安装
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

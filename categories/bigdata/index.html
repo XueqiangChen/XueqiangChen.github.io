@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Categories","item":"https://ahamoment.cn/categories/"},{"@type":"ListItem","position":2,"name":"bigdata","item":"https://ahamoment.cn/categories/bigdata/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"流式处理和实时计算：Kafka","description":"\u003cp\u003ekafka不仅仅是消息系统，更可以用在流式处理的场景中。本文主要介绍消息系统概述，kafka系统架构和原理。\u003c/p\u003e","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg","url":"https://ahamoment.cn/posts/bigdata/kafka/"},{"@type":"ListItem","position":2,"name":"大数据 OLAP 引擎：Presto 概述","description":"大数据 OLAP 引擎：Presto 概述  SQL on Anything\n  presto特点\n  presto架构\n Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。\n presto比hive快的原因\n dag结构，memory to memory\n 应用场景\n etl，adhoc查询\n Docker 环境部署\n docker pull alluxio/alluxio-presto-sandbox\ndocker run -d \\ \u0026ndash;shm-size 1G \\ -p 19999:19999 \\ -p 8080:8080 \\ \u0026ndash;name alluxio-presto-sandbox \\ alluxio/alluxio-presto-sandbox\ndocker exec -it alluxio-presto-sandbox bash\npresto \u0026ndash;catalog hive \u0026ndash;debug\n或者通过下面的方式部署","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","url":"https://ahamoment.cn/posts/bigdata/olap-presto/"},{"@type":"ListItem","position":3,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异\nOLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。\nOLAP 的目标：查询和报表\n相关概念：\n 维度 维的层次 维的成员 多维数组 度量  基本特征：\n 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：\n 数据超立方体：三维或更多的维数，彼此垂直  分类：\n按存储类型：\n MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合  ROLAP的优势：\n 没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能  缺点：\n 响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大  molap的优势：\n 性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题  缺点：\n 增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难  ROLAP架构\nMOLAP架构\nHOLAP架构\n OLAP引擎有哪些？是属于那种类型的OLAP？\n ROLAP: hive, presto\nMOLAP: kylin，","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"}]}</script><meta property="og:title" content="bigdata | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"流式处理和实时计算：Kafka","description":"\u003cp\u003ekafka不仅仅是消息系统，更可以用在流式处理的场景中。本文主要介绍消息系统概述，kafka系统架构和原理。\u003c/p\u003e","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg","url":"https://ahamoment.cn/posts/bigdata/kafka/"},{"@type":"ListItem","position":2,"name":"大数据 OLAP 引擎：Presto 概述","description":"大数据 OLAP 引擎：Presto 概述 SQL on Anything presto特点 presto架构 Presto查询引擎是一个Master-Slave的架构，由一个Coor","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","url":"https://ahamoment.cn/posts/bigdata/olap-presto/"},{"@type":"ListItem","position":3,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"}]}</script><meta property="og:title" content="bigdata | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/categories/bigdata/">
@@ -104,7 +104,7 @@ kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>9 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -124,20 +124,7 @@ kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文
 <a href=https://ahamoment.cn/posts/bigdata/olap-presto/ class="font-bold text-xl hover:text-eureka">大数据 OLAP 引擎：Presto 概述</a>
 </div>
 <div class=content>
-大数据 OLAP 引擎：Presto 概述 SQL on Anything
-presto特点
-presto架构
-Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
-presto比hive快的原因
-dag结构，memory to memory
-应用场景
-etl，adhoc查询
-Docker 环境部署
-docker pull alluxio/alluxio-presto-sandbox
-docker run -d \ –shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ –name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
-docker exec -it alluxio-presto-sandbox bash
-presto –catalog hive –debug
-或者通过下面的方式部署
+大数据 OLAP 引擎：Presto 概述 SQL on Anything presto特点 presto架构 Presto查询引擎是一个Master-Slave的架构，由一个Coor
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -146,7 +133,7 @@ presto –catalog hive –debug
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>2 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -166,24 +153,7 @@ presto –catalog hive –debug
 <a href=https://ahamoment.cn/posts/bigdata/olap/ class="font-bold text-xl hover:text-eureka">OLAP概述</a>
 </div>
 <div class=content>
-OLAP OLAP vs OLTP 的差异
-OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
-OLAP 的目标：查询和报表
-相关概念：
-维度 维的层次 维的成员 多维数组 度量 基本特征：
-快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：
-数据超立方体：三维或更多的维数，彼此垂直 分类：
-按存储类型：
-MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合 ROLAP的优势：
-没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能 缺点：
-响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大 molap的优势：
-性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题 缺点：
-增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难 ROLAP架构
-MOLAP架构
-HOLAP架构
-OLAP引擎有哪些？是属于那种类型的OLAP？
-ROLAP: hive, presto
-MOLAP: kylin，
+OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -192,7 +162,7 @@ MOLAP: kylin，
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

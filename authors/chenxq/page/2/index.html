@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="90后，什么都会一点，什么都不精的工程师。">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Authors","item":"https://ahamoment.cn/authors/"},{"@type":"ListItem","position":2,"name":"Chenxq","item":"https://ahamoment.cn/authors/chenxq/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"流式处理和实时计算：Kafka","description":"\u003cp\u003ekafka不仅仅是消息系统，更可以用在流式处理的场景中。本文主要介绍消息系统概述，kafka系统架构和原理。\u003c/p\u003e","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg","url":"https://ahamoment.cn/posts/bigdata/kafka/"},{"@type":"ListItem","position":2,"name":"大数据 OLAP 引擎：Presto 概述","description":"大数据 OLAP 引擎：Presto 概述  SQL on Anything\n  presto特点\n  presto架构\n Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。\n presto比hive快的原因\n dag结构，memory to memory\n 应用场景\n etl，adhoc查询\n Docker 环境部署\n docker pull alluxio/alluxio-presto-sandbox\ndocker run -d \\ \u0026ndash;shm-size 1G \\ -p 19999:19999 \\ -p 8080:8080 \\ \u0026ndash;name alluxio-presto-sandbox \\ alluxio/alluxio-presto-sandbox\ndocker exec -it alluxio-presto-sandbox bash\npresto \u0026ndash;catalog hive \u0026ndash;debug\n或者通过下面的方式部署","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","url":"https://ahamoment.cn/posts/bigdata/olap-presto/"},{"@type":"ListItem","position":3,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异\nOLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。\nOLAP 的目标：查询和报表\n相关概念：\n 维度 维的层次 维的成员 多维数组 度量  基本特征：\n 快速性：秒级 可分析性：统计 多维性 信息性  多维数据结构：\n 数据超立方体：三维或更多的维数，彼此垂直  分类：\n按存储类型：\n MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合  ROLAP的优势：\n 没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能  缺点：\n 响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大  molap的优势：\n 性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题  缺点：\n 增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难  ROLAP架构\nMOLAP架构\nHOLAP架构\n OLAP引擎有哪些？是属于那种类型的OLAP？\n ROLAP: hive, presto\nMOLAP: kylin，","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"},{"@type":"ListItem","position":4,"name":"1. 大数据概述","description":"\u003cp\u003e大数据概述\u003c/p\u003e","url":"https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/"},{"@type":"ListItem","position":5,"name":"2. HDFS","description":"本章主要是使用kubeadm搭建k8s集群","url":"https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/"},{"@type":"ListItem","position":6,"name":"大数据笔记","description":"大数据相关笔记","url":"https://ahamoment.cn/docs/bigdata-doc/"},{"@type":"ListItem","position":7,"name":"2. Kubernetes 集群搭建与实践","description":"本章主要是使用kubeadm搭建k8s集群","url":"https://ahamoment.cn/docs/k8s-doc/chapter2/"},{"@type":"ListItem","position":8,"name":"3. 容器编排与 kubernetes 作业管理","description":"\u003cp\u003e讲解k8s中的相关对象\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter3/"},{"@type":"ListItem","position":9,"name":"6. kubernetes 作业调度与资源管理","description":"\u003cp\u003e作业调度和资源管理相关内容\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter6/"},{"@type":"ListItem","position":10,"name":"9. kubernetes 生态周边","description":"\u003cp\u003ekubernetes 生态周边\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{"@type":"ListItem","position":11,"name":"K8s 学习笔记","description":"This is a kubernetes doc","url":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":12,"name":"Hugo 博客搭建","description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。\n1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。\n Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过\n hugo new site myblog  来创建一个博客文件夹。创建后的目录如下：\nchenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes  Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：","image":"https://ahamoment.cn/uploads/gohugoio-card.png","url":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]}</script><meta property="og:title" content="Chenxq | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"流式处理和实时计算：Kafka","description":"\u003cp\u003ekafka不仅仅是消息系统，更可以用在流式处理的场景中。本文主要介绍消息系统概述，kafka系统架构和原理。\u003c/p\u003e","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/kafkalogo.jpg","url":"https://ahamoment.cn/posts/bigdata/kafka/"},{"@type":"ListItem","position":2,"name":"大数据 OLAP 引擎：Presto 概述","description":"大数据 OLAP 引擎：Presto 概述 SQL on Anything presto特点 presto架构 Presto查询引擎是一个Master-Slave的架构，由一个Coor","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/presto_YGCO9br.png","url":"https://ahamoment.cn/posts/bigdata/olap-presto/"},{"@type":"ListItem","position":3,"name":"OLAP概述","description":"OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成","image":"https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/typora/OLAP1.png","url":"https://ahamoment.cn/posts/bigdata/olap/"},{"@type":"ListItem","position":4,"name":"1. 大数据概述","description":"\u003cp\u003e大数据概述\u003c/p\u003e","url":"https://ahamoment.cn/docs/bigdata-doc/1.-bigdata-outline/"},{"@type":"ListItem","position":5,"name":"2. HDFS","description":"本章主要是使用kubeadm搭建k8s集群","url":"https://ahamoment.cn/docs/bigdata-doc/2.-hdfs/"},{"@type":"ListItem","position":6,"name":"大数据笔记","description":"大数据相关笔记","url":"https://ahamoment.cn/docs/bigdata-doc/"},{"@type":"ListItem","position":7,"name":"2. Kubernetes 集群搭建与实践","description":"本章主要是使用kubeadm搭建k8s集群","url":"https://ahamoment.cn/docs/k8s-doc/chapter2/"},{"@type":"ListItem","position":8,"name":"3. 容器编排与 kubernetes 作业管理","description":"\u003cp\u003e讲解k8s中的相关对象\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter3/"},{"@type":"ListItem","position":9,"name":"6. kubernetes 作业调度与资源管理","description":"\u003cp\u003e作业调度和资源管理相关内容\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter6/"},{"@type":"ListItem","position":10,"name":"9. kubernetes 生态周边","description":"\u003cp\u003ekubernetes 生态周边\u003c/p\u003e","url":"https://ahamoment.cn/docs/k8s-doc/chapter9/"},{"@type":"ListItem","position":11,"name":"K8s 学习笔记","description":"This is a kubernetes doc","url":"https://ahamoment.cn/docs/k8s-doc/"},{"@type":"ListItem","position":12,"name":"Hugo 博客搭建","description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu","image":"https://ahamoment.cn/uploads/gohugoio-card.png","url":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]}</script><meta property="og:title" content="Chenxq | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/authors/chenxq/">
@@ -129,7 +129,7 @@ kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>9 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -149,20 +149,7 @@ kafka不仅仅是消息系统，更可以用在流式处理的场景中。本文
 <a href=https://ahamoment.cn/posts/bigdata/olap-presto/ class="font-bold text-xl hover:text-eureka">大数据 OLAP 引擎：Presto 概述</a>
 </div>
 <div class=content>
-大数据 OLAP 引擎：Presto 概述 SQL on Anything
-presto特点
-presto架构
-Presto查询引擎是一个Master-Slave的架构，由一个Coordinator节点，一个Discovery Server节点，多个Worker节点组成，Discovery Server通常内嵌于Coordinator节点中。 Coordinator负责解析SQL语句，生成执行计划，分发执行任务给Worker节点执行。 Worker节点负责实际执行查询任务。Worker节点启动后向Discovery Server服务注册， Coordinator从Discovery Server获得可以正常工作的Worker节点。如果配置了Hive Connector，需要配置一个Hive MetaStore服务为Presto提供Hive元信息，Worker节点 与HDFS交互读取数据。
-presto比hive快的原因
-dag结构，memory to memory
-应用场景
-etl，adhoc查询
-Docker 环境部署
-docker pull alluxio/alluxio-presto-sandbox
-docker run -d \ –shm-size 1G \ -p 19999:19999 \ -p 8080:8080 \ –name alluxio-presto-sandbox \ alluxio/alluxio-presto-sandbox
-docker exec -it alluxio-presto-sandbox bash
-presto –catalog hive –debug
-或者通过下面的方式部署
+大数据 OLAP 引擎：Presto 概述 SQL on Anything presto特点 presto架构 Presto查询引擎是一个Master-Slave的架构，由一个Coor
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -171,7 +158,7 @@ presto –catalog hive –debug
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>2 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -191,24 +178,7 @@ presto –catalog hive –debug
 <a href=https://ahamoment.cn/posts/bigdata/olap/ class="font-bold text-xl hover:text-eureka">OLAP概述</a>
 </div>
 <div class=content>
-OLAP OLAP vs OLTP 的差异
-OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。
-OLAP 的目标：查询和报表
-相关概念：
-维度 维的层次 维的成员 多维数组 度量 基本特征：
-快速性：秒级 可分析性：统计 多维性 信息性 多维数据结构：
-数据超立方体：三维或更多的维数，彼此垂直 分类：
-按存储类型：
-MOLAP：多维 ROLAP：关系型，星形模型和雪花模型 HOLAP：混合 ROLAP的优势：
-没有大小限制（不需要额外存储空间，键关联） 关系数据库的技术沿用 SQL查询 优化多，提高查询性能 缺点：
-响应速度差 不支持预计算 SQL无法完成部分计算 内存需求大 molap的优势：
-性能好，响应快，不需要关联，主外键连接 专为olap设计，可以考虑olap的一些问题 缺点：
-增加系统复杂度，增加系统培训与维护成本 需要进行预计算，导致数据急剧膨胀 支持维的动态变化比较困难 ROLAP架构
-MOLAP架构
-HOLAP架构
-OLAP引擎有哪些？是属于那种类型的OLAP？
-ROLAP: hive, presto
-MOLAP: kylin，
+OLAP OLAP vs OLTP 的差异 OLAP定义：联机分析处理，数据访问和分析，多维数据，交互性，深入观察，决策。 OLAP 的目标：查询和报表 相关概念： 维度 维的层次 维的成
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -217,7 +187,7 @@ MOLAP: kylin，
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -316,9 +286,7 @@ MOLAP: kylin，
 <a href=https://ahamoment.cn/docs/k8s-doc/chapter2/kubeadm/ class="font-semibold hover:text-eureka">使用kubeadm 安装k8s集群</a>
 </div>
 <div>
-1. 准备工作 机器配置 8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制 组件信息 组件 版本 系统 Centos 7.9 Docker版本 18.09.9 k8s 版本 1.20.0 Pod 网段 10.32.0.0/ 实践目标 在所有节点上安装 Docker 和 kubeadm； 部署 Kubernetes Master； 部署容器网络插件； 部署 Kubernetes Worker； 部署 Dashboard 可视化插件； 部署容器存储插件 基本配置 开始安装之前，我们还需要对系统做一些基本的配置。
-所有节点配置 hosts
-# cat /etc/hosts 10.186.4.100 master 10.186.4.167 node1 10.
+1. 准备工作 机器配置 8核CPU、8GB内存； 40GB磁盘 centos 7.9 内网互同 外网访问不受限制 组件信息 组件 版本 系统 Centos 7.9 Docker版本 18.09.9 k8s 版本 1.20.0 Pod 网段 10.32.0.0/
 </div>
 </div>
 <div class="pt-6 hover:text-eureka">
@@ -449,13 +417,7 @@ kubernetes 生态周边
 <a href=https://ahamoment.cn/docs/k8s-doc/chapter9/commands/ class="font-semibold hover:text-eureka">常用的k8s命令</a>
 </div>
 <div>
-1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件：
-$ kubectl replace -f nginx-deployment.yaml 声明式的表达方式，使用 apply 命令：
-$ kubectl apply -f nginx-deployment.yaml 2. Pod 2.1 查询 获取 pod 的信息
-kubectl get pods -n ${namespace} **根据 pod 的标签过滤 **
-kubectl get pods -l app=nginx 注意的是，在命令行中，所有 key-value 格式的参数，都使用“=”而非“:”表示。
-获取 pod 的描述信息
-$ kubectl describe pod &lt;pod-name> 2.2 登录 进入到 Pod 中：
+1. yaml 文件 1.1 创建 $ kubectl create -f 我的配置文件 1.2 修改 更新 yaml 文件： $ kubectl replace -f nginx-deployment.yaml 声明式的表达方式，使用 apply 命令： $ kubectl apply -f nginx-deployment.yaml 2. Pod 2.1 查询 获取 pod 的信息 kubectl get pods -n ${namespace} **根
 </div>
 </div>
 <div class="pt-6 hover:text-eureka">
@@ -517,11 +479,7 @@ This is a kubernetes doc
 <a href=https://ahamoment.cn/posts/tool/tool-hugo-blog/ class="font-bold text-xl hover:text-eureka">Hugo 博客搭建</a>
 </div>
 <div class=content>
-前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eureka，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了怡红院落的改造，增加了归档、搜索的功能。 另外之前一直想用 github action 的自动化来部署博客，一直都没有时间，这次一起做了。
-1. Hugo 博客是基于Hugo来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到/usr/local/bin/目录下即可。
-Hugo Release: https://github.com/gohugoio/hugo/releases 完成 Hugo 的安装之后就可以创建博客了，通过
-hugo new site myblog 来创建一个博客文件夹。创建后的目录如下：
-chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049  11:27:58  总用量 512 drwxrwxrwx 1 root root 0 8月 10 11:27 archetypes -rwxrwxrwx 1 root root 82 8月 10 11:27 config.toml drwxrwxrwx 1 root root 0 8月 10 11:27 content drwxrwxrwx 1 root root 0 8月 10 11:27 data drwxrwxrwx 1 root root 0 8月 10 11:27 layouts drwxrwxrwx 1 root root 0 8月 10 11:27 static drwxrwxrwx 1 root root 0 8月 10 11:27 themes Hugo 的官方文档有介绍具体的目录结构用途，这里不再赘述。 接下来，我们需要添加一个主题，使用 git submodule 命令添加：
+前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -530,7 +488,7 @@ chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll    1049 
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

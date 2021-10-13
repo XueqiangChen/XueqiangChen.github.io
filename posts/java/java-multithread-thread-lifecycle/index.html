@@ -21,17 +21,13 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="线程的生命周期大体可以分为如下6个主要的阶段：
- NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：
-// Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW, /** * Thread state for a runnable thread. A thread in the runnable * state is executing in the Java virtual machine but it may * be waiting for other resources from the operating system * such as processor.">
+<meta name=description content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Java 多线程 - 线程生命周期","item":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"},"headline":"Java 多线程 - 线程生命周期 | AhaMoment","datePublished":"2020-11-11T18:23:31+08:00","dateModified":"2020-11-11T18:23:31+08:00","wordCount":383,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"线程的生命周期大体可以分为如下6个主要的阶段：\n NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：\n\/\/ Thread.State public enum State { \/** * Thread state for a thread which has not yet started. *\/ NEW, \/** * Thread state for a runnable thread. A thread in the runnable * state is executing in the Java virtual machine but it may * be waiting for other resources from the operating system * such as processor."}</script><meta property="og:title" content="Java 多线程 - 线程生命周期 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"},"headline":"Java 多线程 - 线程生命周期 | AhaMoment","datePublished":"2020-11-11T18:23:31+08:00","dateModified":"2020-11-11T18:23:31+08:00","wordCount":1742,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： \/\/ Thread.State public enum State { \/** * Thread state for a thread which has not yet started. *\/ NEW,"}</script><meta property="og:title" content="Java 多线程 - 线程生命周期 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/">
-<meta property="og:description" content="线程的生命周期大体可以分为如下6个主要的阶段：
- NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED  从 JDK 的源代码中也能看到关于线程状态的描述：
-// Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW, /** * Thread state for a runnable thread. A thread in the runnable * state is executing in the Java virtual machine but it may * be waiting for other resources from the operating system * such as processor.">
+<meta property="og:description" content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-11-11T18:23:31+08:00">
@@ -103,7 +99,7 @@
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

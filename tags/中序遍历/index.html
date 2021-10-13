@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"中序遍历","item":"https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"二叉树的中序遍历","description":"二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章\u0026mdash;\u0026gt;传送门\n这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：\nleetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \\ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2]  1. 递归 首先我们需要了解什么是二叉树的中序遍历：按照访问左子树——根节点——右子树的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。\n定义 inorder(root) 表示当前遍历到root节点的答案，那么按照定义，我们只要递归调用 inorder(root.left) 来遍历 root 节点的左子树，然后将 root 节点的值加入答案，再递归调用 inorder(root.right) 来遍历 root 节点的右子树即可，递归终止的条件为碰到空节点。\nclass Solution { public List\u0026lt;Integer\u0026gt; inorderTraversal(TreeNode root) { List\u0026lt;Integer\u0026gt; res = new ArrayList\u0026lt;Integer\u0026gt;(); inorder(root, res); return res; } public void inorder(TreeNode root, List\u0026lt;Integer\u0026gt; res) { if (root == null) { return; } inorder(root.","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/"}]}</script><meta property="og:title" content="中序遍历 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"二叉树的中序遍历","description":"二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/"}]}</script><meta property="og:title" content="中序遍历 | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86/">
@@ -95,11 +95,7 @@
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/ class="font-bold text-xl hover:text-eureka">二叉树的中序遍历</a>
 </div>
 <div class=content>
-二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章—>传送门
-这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：
-leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2] 1. 递归 首先我们需要了解什么是二叉树的中序遍历：按照访问左子树——根节点——右子树的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。
-定义 inorder(root) 表示当前遍历到root节点的答案，那么按照定义，我们只要递归调用 inorder(root.left) 来遍历 root 节点的左子树，然后将 root 节点的值加入答案，再递归调用 inorder(root.right) 来遍历 root 节点的右子树即可，递归终止的条件为碰到空节点。
-class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&lt;Integer> res = new ArrayList&lt;Integer>(); inorder(root, res); return res; } public void inorder(TreeNode root, List&lt;Integer> res) { if (root == null) { return; } inorder(root.
+二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -108,7 +104,7 @@ class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

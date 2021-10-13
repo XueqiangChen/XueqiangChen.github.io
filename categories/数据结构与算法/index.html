@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Categories","item":"https://ahamoment.cn/categories/"},{"@type":"ListItem","position":2,"name":"数据结构与算法","item":"https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"二叉树的中序遍历","description":"二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章\u0026mdash;\u0026gt;传送门\n这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：\nleetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \\ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2]  1. 递归 首先我们需要了解什么是二叉树的中序遍历：按照访问左子树——根节点——右子树的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。\n定义 inorder(root) 表示当前遍历到root节点的答案，那么按照定义，我们只要递归调用 inorder(root.left) 来遍历 root 节点的左子树，然后将 root 节点的值加入答案，再递归调用 inorder(root.right) 来遍历 root 节点的右子树即可，递归终止的条件为碰到空节点。\nclass Solution { public List\u0026lt;Integer\u0026gt; inorderTraversal(TreeNode root) { List\u0026lt;Integer\u0026gt; res = new ArrayList\u0026lt;Integer\u0026gt;(); inorder(root, res); return res; } public void inorder(TreeNode root, List\u0026lt;Integer\u0026gt; res) { if (root == null) { return; } inorder(root.","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/"},{"@type":"ListItem","position":2,"name":"散列表那些事","description":"基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？\n我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。\n这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：\n 以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。  散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。\n一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。\n散列映射法的关键问题有两个：\n 如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。  散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：\n 计算简单，以便提高转换速度 关键字对应的地址空间分不均匀，以尽量减少冲突。即对于关键字集合中的任何一个关键字，经散列函数映射到地址集合中任何一个地址的概率是基本相等的。实际应用过程中，严格的均匀分布也是不可能的，只是不要过于聚集就行了。  关键字又分为数字关键字和字符串关键字两种类型，分别有不同的散列函数的构造方法：\n数字关键字的散列函数构造   直接定址法\n取关键字的某个线性函数值为散列地址，即\nh(key) = a*key + b (a,b 为常数)    除留余数法\n散列函数为\nh(key)=key mod p  假设散列表长为 TableSize （TableSize 的选取通常由关键字集合的大小 n 和允许最大的装填因子 α 决定，一般 TableSize=n/α），选择一个正整数 p \u0026lt;= TableSize。一般选取 p 为小于或者等于散列表表长 TableSize 的某个最大素数比较好。用素数求得得余数作为散列地址，比较均匀地分布在整个地址空间上的可能性比较大，具体证明可以参考为什么一般hashtable的桶数会取一个素数。例如，TableSize=8，p=7;TableSize=16, p=13。\n  数字分析法","url":"https://ahamoment.cn/posts/algorithm/algorithm-hashtable/"},{"@type":"ListItem","position":3,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。\n若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。\n若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。\n如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。\n优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：\n 结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值）  \u0026ldquo;最大堆\u0026rdquo;，也称 \u0026ldquo;大顶堆\u0026rdquo;：堆顶元素是整个树的最大值 \u0026ldquo;最小堆\u0026rdquo;，也称\u0026quot;小顶堆\u0026quot;：堆顶元素是整个树的最小值    如下图所示的几个二叉树，不是堆。\n第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。\n 注意：堆从根结点到任意结点路径上的结点顺序都是有序的！\n 最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。\n数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。\npublic abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},{"@type":"ListItem","position":4,"name":"平衡二叉树","description":"平衡二叉树 平衡二叉树也是一种搜索树。\n搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。\n平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|\u0026lt;=1。\n平衡二叉树的高度能够达到 $log_2n$\n平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。\n右单旋 按照字母大小插入三个结点，Mar, May, Nov：\n如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。\n右单旋的过程如上图所示，将 B 结点调整为跟结点，$B_L$ 调整为 A 的右结点。上图所示的是插入到右子树的右子树的右边时，当插入到右子树的右子树的位置不同时怎么处理？来看个例子：\n结点插到左边和右边的时候，调整平衡后位置还是不变。\n// 右单旋 public AVLTree\u0026lt;T\u0026gt; singleRightRotation(AVLTree\u0026lt;T\u0026gt; a) { // 注意：A 必须有一个右子节点B // 将 A 与 B 做右单旋，更新A与B的高度，返回新的根结点B AVLTree\u0026lt;T\u0026gt; b = a.right; a.right = b.left; b.left = a; a.height = Math.max(postOrderGetHight(a.left), postOrderGetHight(a.right)); b.height = Math.max(postOrderGetHight(b.right), a.height); return b; }  左单旋 左单旋与右单旋类似，麻烦结点在发现者的左子树的左边，因而叫LL插入，需要 LL 旋转（左单旋）。","url":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"},{"@type":"ListItem","position":5,"name":"二叉搜索树","description":"1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：\n 非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。  2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：\n 查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。  x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。    我们用递归来实现查找过程，\npublic TreeNode\u0026lt;T\u0026gt; find(T x, TreeNode\u0026lt;T\u0026gt; bst) { if (bst == null) { System.out.println(\u0026quot;树为空，查找失败！\u0026quot;); return null; //查找失败 } int result = x.compareTo(bst.data); if (result \u0026gt; 0) { // x 大于根结点的值，向右子树递归查找 return find(x, bst.right); } else if (result \u0026lt; 0) { // x 小于根结点的值，向左子树递归查找 return find(x, bst.","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/"},{"@type":"ListItem","position":6,"name":"二叉树及存储结构","description":"\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c/p\u003e","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"},{"@type":"ListItem","position":7,"name":"树的定义及表示","description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。\n1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。\n1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。\n如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。\npublic int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; // 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search.","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},{"@type":"ListItem","position":8,"name":"队列及其实现","description":"1. 什么是队列  具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。\n 数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。\n2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：\n 创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。  3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。\npublic class SeqQueue\u0026lt;T\u0026gt; implements Queue\u0026lt;T\u0026gt; { private T elementData[]; private int front, rear; }  如下图所示，用顺序存储实现队列，由于数组的元素从 0 开始，所以 front 和 rear 同时指向 -1 这个位置，添加 Job1，rear 往后移动一个位置，删除 Job1 ，front 往后移动一个位置。当队列满了的时候，就无法添加元素了，但是很明显就能发现，此时之前删除的位置还是空的，队列中还有位置，只是无法添加而已，这样的结构会造成空间浪费，我们需要用循环结构来解决。\n循环队列的机构如下图所示。循环结构中，front 和 rear 开始时同时指向 0 这个位置，之后，每一次入队，rear 向着顺时针方向移动一个位置，每一次出队列，front 向顺时针方向移动一个位置。那么这里就有个问题：队列空和满的判别条件是什么？队列空和满的时候，front=rear，那么就造成无法判断队列空还是满了。那么要如何解决呢？这里提供两个解决方法：\n 使用额外标记： Size或者tag 。size 用来记录当前元素的个数，当你加入一个元素的时候，size 加 1，删除一个元素的时候，size减1，所以只要根据size是0还是n就知道是空还是满的。tag （0，1）标记，添加一个元素，tag=1，删除一个元素 tag=0，当我们想判断队列是满还是空时，只要判断 tag 的值就知道最后一次操作是添加还是删除。 仅使用n-1个数组空间。  我们采用第二种方案，使用求余函数来查看列队是否已满。","url":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"}]}</script><meta property="og:title" content="数据结构与算法 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"二叉树的中序遍历","description":"二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/"},{"@type":"ListItem","position":2,"name":"散列表那些事","description":"基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？ 我们已经知道的几种查找方法包括：顺序查找，二","url":"https://ahamoment.cn/posts/algorithm/algorithm-hashtable/"},{"@type":"ListItem","position":3,"name":"堆","description":"什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而","url":"https://ahamoment.cn/posts/algorithm/algorithm-heap/"},{"@type":"ListItem","position":4,"name":"平衡二叉树","description":"平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B","url":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"},{"@type":"ListItem","position":5,"name":"二叉搜索树","description":"1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质： 非空左子树的所有键值小于其根结点的键值。 非空","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/"},{"@type":"ListItem","position":6,"name":"二叉树及存储结构","description":"\u003cp\u003e摘要：二叉树的定义，遍历二叉树\u003c/p\u003e","url":"https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/"},{"@type":"ListItem","position":7,"name":"树的定义及表示","description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个","url":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},{"@type":"ListItem","position":8,"name":"队列及其实现","description":"1. 什么是队列 具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。 数据插入称之为入队(addQ)，数据删除称之为出队(del","url":"https://ahamoment.cn/posts/algorithm/algorithm-queue/"}]}</script><meta property="og:title" content="数据结构与算法 | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/">
@@ -95,11 +95,7 @@
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/ class="font-bold text-xl hover:text-eureka">二叉树的中序遍历</a>
 </div>
 <div class=content>
-二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是用一个队列来实现。关于这几种遍历方式和代码可以参考本博客的之前的一篇文章—>传送门
-这里我们通过一道 leetcode 题目来对二叉树的中序遍历法展开讨论。这道题的描述如下：
-leetcode 94 [https://leetcode-cn.com/problems/binary-tree-inorder-traversal/] 给定一个二叉树的根节点 root ，返回它的 中序 遍历。 示例1： 1 \ 2 / 3 输入：root = [1,null,2,3] 输出：[1,3,2] 1. 递归 首先我们需要了解什么是二叉树的中序遍历：按照访问左子树——根节点——右子树的方式遍历这棵树，而在访问左子树或者右子树的时候我们按照同样的方式遍历，直到遍历完整棵树。因此整个遍历过程天然具有递归的性质，我们可以直接用递归函数来模拟这一过程。
-定义 inorder(root) 表示当前遍历到root节点的答案，那么按照定义，我们只要递归调用 inorder(root.left) 来遍历 root 节点的左子树，然后将 root 节点的值加入答案，再递归调用 inorder(root.right) 来遍历 root 节点的右子树即可，递归终止的条件为碰到空节点。
-class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&lt;Integer> res = new ArrayList&lt;Integer>(); inorder(root, res); return res; } public void inorder(TreeNode root, List&lt;Integer> res) { if (root == null) { return; } inorder(root.
+二叉树的遍历方法分为先序遍历，中序遍历，后序遍历以及层序遍历这四种，其中先序，中序以及后序又可以用递归和非递归的方式来实现，层序遍历一般则是
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -108,7 +104,7 @@ class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -125,20 +121,7 @@ class Solution { public List&lt;Integer> inorderTraversal(TreeNode root) { List&
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-hashtable/ class="font-bold text-xl hover:text-eureka">散列表那些事</a>
 </div>
 <div class=content>
-基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？
-我们已经知道的几种查找方法包括：顺序查找，二分查找（静态查找），二叉搜索树（动态查找）。在这个场景下，如果使用二分查找的话就会面对插入和删除一个新号码要移动大量数据的问题。
-这里我们要用到散列查找的方法，散列（Hashing）的基本思想是：
-以关键字 key 为自变量，通过一个确定的**函数 h （散列函数）**计算出对应的函数值h(key)，作为数据对象的存储地址 可能不同的关键字会映射到同一个散列地址上，称为**“冲突”**，发生冲突后需要某种冲突解决策略来解决冲突。 散列查找的时间复杂度为 O(1)，即查找时间与问题规模无关。
-一般情况下，设散列表空间大小为m，填入表中的元素个数是n，则称α=n/m为散列表的”装填因子“(Loading Factor)。实用时，通常将散列表大小设计为 0.5-0.8 为宜。
-散列映射法的关键问题有两个：
-如何设计散列函数，使得发生冲突的概率尽可能小； 当冲突或溢出不可避免的时候，如何处理使得表中没有空单元被浪费，同时插入、删除、查找等操作都正确完成。 散列函数的构造方法 一个好的散列函数一般考虑下列两个因素：
-计算简单，以便提高转换速度 关键字对应的地址空间分不均匀，以尽量减少冲突。即对于关键字集合中的任何一个关键字，经散列函数映射到地址集合中任何一个地址的概率是基本相等的。实际应用过程中，严格的均匀分布也是不可能的，只是不要过于聚集就行了。 关键字又分为数字关键字和字符串关键字两种类型，分别有不同的散列函数的构造方法：
-数字关键字的散列函数构造 直接定址法
-取关键字的某个线性函数值为散列地址，即
-h(key) = a*key + b (a,b 为常数) 除留余数法
-散列函数为
-h(key)=key mod p 假设散列表长为 TableSize （TableSize 的选取通常由关键字集合的大小 n 和允许最大的装填因子 α 决定，一般 TableSize=n/α），选择一个正整数 p &lt;= TableSize。一般选取 p 为小于或者等于散列表表长 TableSize 的某个最大素数比较好。用素数求得得余数作为散列地址，比较均匀地分布在整个地址空间上的可能性比较大，具体证明可以参考为什么一般hashtable的桶数会取一个素数。例如，TableSize=8，p=7;TableSize=16, p=13。
-数字分析法
+基本概念 在登录QQ的时候，QQ服务器是如何核对你的身份？面对庞大的用户群，如何快速找到用户信息？ 我们已经知道的几种查找方法包括：顺序查找，二
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -147,7 +130,7 @@ h(key)=key mod p 假设散列表长为 TableSize （TableSize 的选取通常由
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -164,17 +147,7 @@ h(key)=key mod p 假设散列表长为 TableSize （TableSize 的选取通常由
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class="font-bold text-xl hover:text-eureka">堆</a>
 </div>
 <div class=content>
-什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而不是元素进入队列的先后顺序，这就是优先队列(Priority Queue)。
-若采用数组或者链表实现优先队列，总会有插入、删除或者查找中的一项操作的复杂度是$O(N)$ 的。
-若采用二叉搜索树实现，那么插入和删除都跟树的高度有关，也就是$O(log_2N)$ 的复杂度，但是删除的时候，由于每次都要删除最大的或者最小的，这样操作几次后，会造成搜索树失去平衡，所以不能简单的使用二叉搜索树。
-如果采用二叉树结构，我们更关注的应该是删除的操作，那么我们把最大的值放到根结点，左右两边也是最大值作为左右子树的根结点，每次删除只需要删除根结点。同时，为了保证树的平衡性，可以考虑使用完全二叉树来实现优先队列。
-优先队列使用完全二叉树表示如上图所示，数组的第 0 个元素空着，后面的按照层序遍历的顺序存放到数组中。使用完全二叉实现的优先队列，也可以称之为堆，堆的特性如下：
-结构性：用数组表示的完全二叉树。 有序性：任一结点的关键字是其子树所有结点的最大值（或最小值） “最大堆”，也称 “大顶堆”：堆顶元素是整个树的最大值 “最小堆”，也称"小顶堆"：堆顶元素是整个树的最小值 如下图所示的几个二叉树，不是堆。
-第一和第二棵二叉树虽然满足有序性，但是不是完全二叉树。第三和第四棵二叉树是完全二叉树，但是不满足有序性的特点。
-注意：堆从根结点到任意结点路径上的结点顺序都是有序的！
-最大堆的创建 堆的数据结构包括存储完全二叉树的数组 data，堆中当前元素个数 size，堆的最大容量 capacity。
-数组的元素从1开始，0的位置定义为哨兵，方便以后更快操作。
-public abstract class Heap { // 堆的类型定义 protected int[] data; //存储元素的数组 protected int size;//堆中当前元素个数 protected int capacity; //堆的最大容量 public Heap() { this.size = 0; this.capacity = 0; } public Heap(int[] data, int capacity) { this.data = data; this.size = 0; this.
+什么是堆 了解什么是堆之前，我们知道队列的概念，队列的特点是先进先出，但是有一种特殊的队列，取出元素的顺序是按照元素的优先权（关键字）大小，而
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -183,7 +156,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -200,16 +173,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ class="font-bold text-xl hover:text-eureka">平衡二叉树</a>
 </div>
 <div class=content>
-平衡二叉树 平衡二叉树也是一种搜索树。
-搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。
-平衡因子（Balance Factor）:BF(T)=hL-hR，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 |BF(T)|&lt;=1。
-平衡二叉树的高度能够达到 $log_2n$
-平衡二叉树的调整 任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。
-右单旋 按照字母大小插入三个结点，Mar, May, Nov：
-如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。
-右单旋的过程如上图所示，将 B 结点调整为跟结点，$B_L$ 调整为 A 的右结点。上图所示的是插入到右子树的右子树的右边时，当插入到右子树的右子树的位置不同时怎么处理？来看个例子：
-结点插到左边和右边的时候，调整平衡后位置还是不变。
-// 右单旋 public AVLTree&lt;T> singleRightRotation(AVLTree&lt;T> a) { // 注意：A 必须有一个右子节点B // 将 A 与 B 做右单旋，更新A与B的高度，返回新的根结点B AVLTree&lt;T> b = a.right; a.right = b.left; b.left = a; a.height = Math.max(postOrderGetHight(a.left), postOrderGetHight(a.right)); b.height = Math.max(postOrderGetHight(b.right), a.height); return b; } 左单旋 左单旋与右单旋类似，麻烦结点在发现者的左子树的左边，因而叫LL插入，需要 LL 旋转（左单旋）。
+平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -218,7 +182,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>3 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -235,10 +199,7 @@ public abstract class Heap { // 堆的类型定义 protected int[] data; //存�
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/ class="font-bold text-xl hover:text-eureka">二叉搜索树</a>
 </div>
 <div class=content>
-1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质：
-非空左子树的所有键值小于其根结点的键值。 非空右子树的所有键值大于其根结点的键值。 左，右子树都是二叉搜索树。 2. 二叉搜索树的查找 从二叉搜索树BST中查找元素X，返回其所在结点的地址。二叉搜索树的查找过程可以描述为以下步骤：
-查找从根结点开始，如果树为空，直接返回 null 若查找树非空，则根结点关键字与 X 进行比较，并进行不同的处理。 x 小于根结点的键值，在左子树中搜索； x 大于根结点的键值，在右子树中搜索； 若两者比较的结果相等，搜索完成，直接返回指向结点的指针。 我们用递归来实现查找过程，
-public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.out.println("树为空，查找失败！"); return null; //查找失败 } int result = x.compareTo(bst.data); if (result > 0) { // x 大于根结点的值，向右子树递归查找 return find(x, bst.right); } else if (result &lt; 0) { // x 小于根结点的值，向左子树递归查找 return find(x, bst.
+1. 二叉搜索树的概念 二叉搜索树，也称为二叉排序树或二叉查找树。一棵不为空的二叉搜索树满足以下性质： 非空左子树的所有键值小于其根结点的键值。 非空
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -247,7 +208,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -273,7 +234,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>6 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -290,11 +251,7 @@ public TreeNode&lt;T> find(T x, TreeNode&lt;T> bst) { if (bst == null) { System.
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/ class="font-bold text-xl hover:text-eureka">树的定义及表示</a>
 </div>
 <div class=content>
-这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。
-1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。
-1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。
-如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。
-public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; // 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search.
+这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -303,7 +260,7 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
@@ -320,13 +277,7 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 <a href=https://ahamoment.cn/posts/algorithm/algorithm-queue/ class="font-bold text-xl hover:text-eureka">队列及其实现</a>
 </div>
 <div class=content>
-1. 什么是队列 具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。
-数据插入称之为入队(addQ)，数据删除称之为出队(deleteQ)，队列最重要的特征就是先进先出(FIFO)。生活中有很多跟队列相关的例子，例如超市排队。
-2. 队列的抽象数据类型描述 与队列相关的操作主要包括以下几种：
-创建队列：生成长度为 size 的空队列。 判断队列是否满了。 判断队列是否为空。 将数据元素插入到队列中。 将数据元素从队列中删除。 3. 队列的顺序存储实现 队列的顺序存储结构通常由一个一维数组和一个记录队列头元素位置的变量front以及一个记录队列尾元素位置的变量rear组成。
-public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; private int front, rear; } 如下图所示，用顺序存储实现队列，由于数组的元素从 0 开始，所以 front 和 rear 同时指向 -1 这个位置，添加 Job1，rear 往后移动一个位置，删除 Job1 ，front 往后移动一个位置。当队列满了的时候，就无法添加元素了，但是很明显就能发现，此时之前删除的位置还是空的，队列中还有位置，只是无法添加而已，这样的结构会造成空间浪费，我们需要用循环结构来解决。
-循环队列的机构如下图所示。循环结构中，front 和 rear 开始时同时指向 0 这个位置，之后，每一次入队，rear 向着顺时针方向移动一个位置，每一次出队列，front 向顺时针方向移动一个位置。那么这里就有个问题：队列空和满的判别条件是什么？队列空和满的时候，front=rear，那么就造成无法判断队列空还是满了。那么要如何解决呢？这里提供两个解决方法：
-使用额外标记： Size或者tag 。size 用来记录当前元素的个数，当你加入一个元素的时候，size 加 1，删除一个元素的时候，size减1，所以只要根据size是0还是n就知道是空还是满的。tag （0，1）标记，添加一个元素，tag=1，删除一个元素 tag=0，当我们想判断队列是满还是空时，只要判断 tag 的值就知道最后一次操作是添加还是删除。 仅使用n-1个数组空间。 我们采用第二种方案，使用求余函数来查看列队是否已满。
+1. 什么是队列 具有一定操作约束的线性表。插入和删除操作，只能在一端插入，另一端删除。 数据插入称之为入队(addQ)，数据删除称之为出队(del
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -335,7 +286,7 @@ public class SeqQueue&lt;T> implements Queue&lt;T> { private T elementData[]; pr
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>2 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

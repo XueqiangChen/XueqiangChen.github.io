@@ -21,21 +21,13 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。
-1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。
-1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。
-如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。
-public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; // 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search.">
+<meta name=description content="这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"树的定义及表示","item":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},"headline":"树的定义及表示 | AhaMoment","datePublished":"2020-08-11T10:31:07+08:00","dateModified":"2020-08-11T10:31:07+08:00","wordCount":211,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。\n1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。\n1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。\n如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。\npublic int sequentialSearch(int[] array, int k) { int i; array[0] = k; \/\/ 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; \/\/ 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search."}</script><meta property="og:title" content="树的定义及表示 | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-tree/"},"headline":"树的定义及表示 | AhaMoment","datePublished":"2020-08-11T10:31:07+08:00","dateModified":"2020-08-11T10:31:07+08:00","wordCount":1565,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个"}</script><meta property="og:title" content="树的定义及表示 | AhaMoment">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-tree/">
-<meta property="og:description" content="这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。
-1. 查找 查找是根据某个给定关键字K ，从集合R中找出关键字与K相同的记录。查找又分为静态查找和动态查找，静态查找的集合中记录是固定的，没有插入和删除操作，只有查找，而动态查找的集合中记录是动态变化的，除了查找外，还可能发生插入和删除操作。
-1.1 静态查找 方法一：顺序查找 顺序查找就是从数组中一个一个地找，直到找到我们想要的元素为止。
-如图所示，在长度为8的数组中查找元素K，如果我们从最后一个元素找起来，查找成功就返回所在单元下表，不成功返回0。查找过程中，在第一个几点建立哨兵，哨兵的作用可以让程序知道什么时候应该停下来，同时可以少些一个判断条件。
-public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立哨兵 for (i = array.length - 1; array[i] != k; i--) ; // 查找成功返回所在单元下标，不成功返回0 return i; } public static void main(String[] args) { Search search = new Search(); int[] array = new int[9]; for (int i = array.length - 1; i != 0; i--) { array[i] = i; } int target = 7; int result = search.">
+<meta property="og:description" content="这一部分主要介绍一下数据结构中很重要的一个概念：树。那么什么是树呢？在说明这个概念之前，我们先来看看和它相关的一些内容。 1. 查找 查找是根据某个">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
 <meta property="article:published_time" content="2020-08-11T10:31:07+08:00">
@@ -102,7 +94,7 @@ public int sequentialSearch(int[] array, int k) { int i; array[0] = k; // 建立
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>4 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>

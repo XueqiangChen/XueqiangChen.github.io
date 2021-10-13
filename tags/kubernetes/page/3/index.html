@@ -23,7 +23,7 @@
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
 <meta name=description content="Eureka is a elegant and powerful theme for Hugo.">
 <script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Tags","item":"https://ahamoment.cn/tags/"},{"@type":"ListItem","position":2,"name":"kubernetes","item":"https://ahamoment.cn/tags/kubernetes/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docker 和 Kubernetes 面试题","description":"1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。\nAUFS\nAUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：\nOverlay\nOverlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：\nDevicemapper\nDevice mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：\n详细内容请参考：\n  Docker 五种存储驱动\n  深入了解 Docker 存储驱动","url":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"}]}</script><meta property="og:title" content="kubernetes | AhaMoment">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"name":"Docker 和 Kubernetes 面试题","description":"1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-poo","url":"https://ahamoment.cn/posts/interview/interview-docker-k8s/"}]}</script><meta property="og:title" content="kubernetes | AhaMoment">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
 <meta property="og:url" content="https://ahamoment.cn/tags/kubernetes/">
@@ -95,16 +95,7 @@
 <a href=https://ahamoment.cn/posts/interview/interview-docker-k8s/ class="font-bold text-xl hover:text-eureka">Docker 和 Kubernetes 面试题</a>
 </div>
 <div class=content>
-1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-pool devicemapper 来存储镜像和容器，后来面试官问我镜像分层的技术知道吗？我说知道，就是**联合文件系统，多层文件系统联合组成一个统一的文件系统视角，当需要修改文件时采用写时复制（CopyW）的技术从上往下查找，找到之后复制到可写的容器层，进行修改并保存至容器层，**说完之后面试官再问我，那每次修改文件都需要从上往下查找，层数又那么多，性能是否比较差，现在才反应回来，原先面试官想考察我aufs、overlay 或者是 devicemapper 等几种存储驱动的区别。
-AUFS
-AUFS （Another UnionFS）是一种 Union FS，是文件级的存储驱动，AUFS 简单理解就是将多层的文件系统联合挂载成统一的文件系统，这种文件系统可以一层一层地叠加修改文件，只有最上层是可写层，底下所有层都是只读层，对应到 Docker，最上层就是 container 层，底层就是 image 层，结构如下图所示：
-Overlay
-Overlay 也是一种 Union FS，和 AUFS 多层相比，Overlay 只有两层：一个 upper 文件系统和一个 lower 文件系统，分别代表 Docker 的容器层（upper）和镜像层（lower）。当需要修改一个文件时，使用 CopyW 将文件从只读的 lower 层复制到可写层 upper，结果也保存在 upper 层，结构如下图所示：
-Devicemapper
-Device mapper，提供的是一种从逻辑设备到物理设备的映射框架机制，前面讲的 AUFS 和 OverlayFS 都是文件级存储，而 Device mapper 是块级存储，所有的操作都是直接对块进行操作，而不是文件。Device mapper 驱动会先在块设备上创建一个资源池，然后在资源池上创建一个带有文件系统的基本设备，所有镜像都是这个基本设备的快照，而容器则是镜像的快照。所以在容器里看到文件系统是资源池上基本设备的文件系统的快照。当要写入一个新文件时，在容器的镜像内为其分配新的块并写入数据，这个叫用时分配。当要修改已有文件时，再使用CoW为容器快照分配块空间，将要修改的数据复制到在容器快照中新的块里再进行修改。Devicemapper 驱动默认会创建一个100G 的文件包含镜像和容器。每一个容器被限制在 10G 大小的卷内，可以自己配置调整。结构如下图所示：
-详细内容请参考：
-Docker 五种存储驱动
-深入了解 Docker 存储驱动
+1. Docker 问题 1.1. docker 后端存储驱动 devicemapper、overlay 几种的区别？ 刚开始拿到这道题我有点蒙，因为我只知道目前我们用的是vg-poo
 </div>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
@@ -113,7 +104,7 @@ Docker 五种存储驱动
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
+<span>11 min read</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-folder mr-1"></i>
