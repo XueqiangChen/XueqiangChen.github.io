@@ -1,6 +1,6 @@
 <!doctype html><html lang=en><meta charset=utf-8>
 <meta name=viewport content="width=device-width">
-<title>大数据笔记 | AhaMoment</title>
+<title>HIVE概述和HIVE基本原理 | 大数据笔记 | AhaMoment</title>
 <meta name=generator content="Hugo Eureka 0.8.3">
 <link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
 <script defer src=https://ahamoment.cn/js/eureka.min.js></script>
@@ -21,18 +21,19 @@
 <style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
 <link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
 <link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="大数据相关笔记">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"大数据笔记","item":"https://ahamoment.cn/docs/bigdata-doc/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/bigdata-doc/"},"headline":"大数据笔记 | AhaMoment","wordCount":29,"author":{"@type":"Person","name":"chenxq"},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大数据相关笔记"}</script><meta property="og:title" content="大数据笔记 | AhaMoment">
-<meta property="og:type" content="website">
+<meta name=description content="Hive是基于Hadoop的一个数据仓库工具，它可以将结构化的数据文件（TEXT,ORC,PARQUET等）映射为一张数据库表，并提供简单的">
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"文档","item":"https://ahamoment.cn/docs/"},{"@type":"ListItem","position":2,"name":"大数据笔记","item":"https://ahamoment.cn/docs/bigdata-doc/"},{"@type":"ListItem","position":3,"name":"HIVE概述和HIVE基本原理","item":"https://ahamoment.cn/docs/bigdata-doc/3.-hive/hive-hive/"}]}</script>
+<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/docs/bigdata-doc/3.-hive/hive-hive/"},"headline":"HIVE概述和HIVE基本原理 | 大数据笔记 | AhaMoment","image":"https://ahamoment.cn/uploads/hive-hadoop.png","datePublished":"2022-07-22T23:00:00+00:00","dateModified":"2022-07-22T22:57:58+00:00","wordCount":905,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"Hive是基于Hadoop的一个数据仓库工具，它可以将结构化的数据文件（TEXT,ORC,PARQUET等）映射为一张数据库表，并提供简单的"}</script><meta property="og:title" content="HIVE概述和HIVE基本原理 | 大数据笔记 | AhaMoment">
+<meta property="og:type" content="article">
 <meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/docs/bigdata-doc/">
-<meta property="og:description" content="大数据相关笔记">
+<meta property="og:url" content="https://ahamoment.cn/docs/bigdata-doc/3.-hive/hive-hive/">
+<meta property="og:description" content="Hive是基于Hadoop的一个数据仓库工具，它可以将结构化的数据文件（TEXT,ORC,PARQUET等）映射为一张数据库表，并提供简单的">
 <meta property="og:locale" content="en">
 <meta property="og:site_name" content="AhaMoment">
-<meta property="og:updated_time" content="2021-08-10T00:00:00+00:00">
+<meta property="article:published_time" content="2022-07-22T23:00:00+00:00">
+<meta property="article:modified_time" content="2022-07-22T22:57:58+00:00">
 <meta property="article:section" content="docs">
-<link rel=alternate type=application/rss+xml href=https://ahamoment.cn/docs/bigdata-doc/index.xml title=AhaMoment>
+<meta property="article:tag" content="hive">
 <body class="flex flex-col min-h-screen">
 <header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
 <div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
@@ -93,12 +94,12 @@
 </div>
 <div id=sidebar-toc class="hidden md:block overflow-y-auto mx-6 md:mx-0 pr-6 pt-2 md:max-h-doc-sidebar bg-primary-bg md:bg-transparent">
 <div class="flex flex-wrap ml-4 -mr-2 p-2 bg-secondary-bg md:bg-primary-bg rounded">
-<a class="text-eureka hover:text-eureka" href=https://ahamoment.cn/docs/bigdata-doc/>大数据笔记</a>
+<a class=hover:text-eureka href=https://ahamoment.cn/docs/bigdata-doc/>大数据笔记</a>
 </div>
 <ul class=pl-6>
 <li class=py-2>
 <div>
-<a class=hover:text-eureka href=https://ahamoment.cn/docs/bigdata-doc/3.-hive/hive-hive/>HIVE概述和HIVE基本原理</a>
+<a class="text-eureka hover:text-eureka" href=https://ahamoment.cn/docs/bigdata-doc/3.-hive/hive-hive/>HIVE概述和HIVE基本原理</a>
 </div>
 </li>
 <li class=py-2>
@@ -121,31 +122,88 @@
 </div>
 <div class="w-full md:w-3/4 lg:w-4/5 pb-8 pt-2 md:pt-8">
 <div class="w-full lg:w-3/4 pl-6 ml-0 mr-auto">
-<h1 class="font-bold text-3xl text-primary-text">大数据笔记</h1>
+<h1 class="font-bold text-3xl text-primary-text">HIVE概述和HIVE基本原理</h1>
 <div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
 <div class="mr-6 my-2">
 <i class="fas fa-calendar mr-1"></i>
-<span>2021-08-10</span>
+<span>2022-07-22</span>
 </div>
 <div class="mr-6 my-2">
 <i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
+<span>2 min read</span>
+</div>
+<div class="mr-6 my-2">
+<i class="fas fa-folder mr-1"></i>
+<a href=https://ahamoment.cn/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/ class=hover:text-eureka>大数据</a>
 </div>
 </div>
 </div>
 <div class=flex>
 <div class="w-full lg:w-3/4 px-6">
+<div class=my-4>
+<img src=https://ahamoment.cn/uploads/hive-hadoop.png class=w-full alt="Featured Image">
+</div>
 <div class=content>
-<p>大数据训练营相关笔记。</p>
-<ol>
-<li>大数据概述</li>
-<li>HDFS</li>
-<li>MapReduce</li>
-<li>Yarn</li>
-<li>Hadoop扩展</li>
-<li>HBase</li>
-<li>Hive</li>
-</ol>
+<p>Hive是基于Hadoop的一个数据仓库工具，它可以将结构化的数据文件（TEXT,ORC,PARQUET等）映射为一张数据库表，并提供简单的类SQL(HQL)查询功能，可以将HQL语句转换MapReduce任务进行运行。</p>
+<p>Hive的特点：</p>
+<ul>
+<li>简单易用。基于SQL表达式语法，兼容大部分SQL-92语义和部分SQL-2003扩展语义。</li>
+<li>可扩展。Hive基于Hadoop实现，可以自由的扩展集群的规模，一般情况下不需要重启服务。</li>
+<li>延展性。Hive支持用户自定义函数，用户可以根据自己的需求来实现自己的函数。</li>
+<li>容错性。Hadoop良好的容错性，节点出现问题SQL仍可完成执行。</li>
+</ul>
+<h2 id=hive-命令>Hive 命令</h2>
+<p><img src=/uploads/hive-command.png alt>`hive -f /home/my/hive-script.sql`</p>
+<h2 id=hive-基本原理>Hive 基本原理</h2>
+<h3 id=hive系统架构>Hive系统架构</h3>
+<p><img src=/uploads/hive-archetec.png alt></p>
+<ul>
+<li>接口
+<ul>
+<li>用户接口主要有是三个：CLI,HWI和ThriftServer</li>
+<li>最常用的CLI，CLI启动的时候，会同时启动一个Hive Driver。</li>
+<li>ThriftServer是以Thrift协议封装的Hive服务化接口，可以提供跨语言的访问如Python、C++等，并实现了JDBC/ODBC协议。</li>
+<li>HWI提供了一个基于浏览器访问Hive的途径</li>
+</ul>
+</li>
+<li>元数据存储（Metastore）
+<ul>
+<li>Hive 将元数据存储在数据库中，如MySQL，Oracle，Derby。</li>
+<li>Hive 中的元数据包括表的名字、表的列和分区及其属性、表的属性（是否为外部表等）、表的数据所在目录等。</li>
+</ul>
+</li>
+<li>驱动器（Driver）
+<ul>
+<li>编译器：完成词法分析，语法分析，将HQL查询解析成AST；AST生成逻辑执行计划；逻辑执行计划生成物理MR执行计划。</li>
+<li>优化器：对逻辑执行计划进行优化；对物理执行计划进行优化。</li>
+<li>执行器：生成的物理执行计划转变成MR Job；提交到Hadoop上面执行。</li>
+</ul>
+</li>
+<li>Hadoop
+<ul>
+<li>MapReduce计算</li>
+<li>HDFS数据存储</li>
+</ul>
+</li>
+</ul>
+<h3 id=部署方式>部署方式</h3>
+<p>内嵌模式：CLI Shell/Driver/MetaStoreCLI均在JVM内部</p>
+<p><img src=/uploads/hive-deploy-embed.png alt></p>
+<p>HiveServer2：</p>
+<ul>
+<li>Driver/MetaStoreCLI均在ThriftServer端</li>
+<li>提供JDBC/ODBC协议</li>
+<li>做Session隔离，每个Session内部共享一个Driver</li>
+</ul>
+<p><img src=/uploads/hive-deploy-hiveserver2.png alt></p>
+<p>Remote MetaStoreServer</p>
+<ul>
+<li>MetaStore作为一个独立的Thrift服务，而不是每个Driver自己维护一个瘦MetaStore访问DB</li>
+</ul>
+<p><img src=/uploads/hive-deploy-remotemetastore.png alt></p>
+</div>
+<div class=my-4>
+<a href=https://ahamoment.cn/tags/hive/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#hive</a>
 </div>
 <div class=py-2>
 <div class="flex flex-col md:flex-row items-center my-8">
@@ -161,6 +219,25 @@
 </div>
 </div>
 </div>
+</div>
+<div class="hidden lg:block lg:w-1/4">
+<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-secondary-bg pt-16 -mt-16">
+<span class="text-lg font-semibold">On This Page</span>
+</div>
+<div class="sticky-toc hidden lg:block px-6 pb-6 pt-10 -mt-10 border-l">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#hive-命令>Hive 命令</a></li>
+<li><a href=#hive-基本原理>Hive 基本原理</a>
+<ul>
+<li><a href=#hive系统架构>Hive系统架构</a></li>
+<li><a href=#部署方式>部署方式</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
 </div>
 </div>
 </div>
