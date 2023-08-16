@@ -1,291 +1,55 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>Linux Shell 输入/输出重定向 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Linux Shell 输入/输出重定向","item":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"},"headline":"Linux Shell 输入\/输出重定向 | AhaMoment","datePublished":"2019-11-26T19:54:15+08:00","dateModified":"2019-11-26T19:54:15+08:00","wordCount":1999,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端"}</script><meta property="og:title" content="Linux Shell 输入/输出重定向 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/">
-<meta property="og:description" content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2019-11-26T19:54:15+08:00">
-<meta property="article:modified_time" content="2019-11-26T19:54:15+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="shell">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">Linux Shell 输入/输出重定向</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2019-11-26</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
-</div>
-</div>
-<div class=content>
-<p>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。</p>
-<p>重定向命令列表如下：</p>
-<table>
-<thead>
-<tr>
-<th>命令</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>command > file</td>
-<td>将输出重定向到 file。</td>
-</tr>
-<tr>
-<td>command &lt; file</td>
-<td>将输入重定向到 file。</td>
-</tr>
-<tr>
-<td>command &#187; file</td>
-<td>将输出以追加的方式重定向到 file。</td>
-</tr>
-<tr>
-<td>n > file</td>
-<td>将文件描述符为 n 的文件重定向到 file。</td>
-</tr>
-<tr>
-<td>n &#187; file</td>
-<td>将文件描述符为 n 的文件以追加的方式重定向到 file。</td>
-</tr>
-<tr>
-<td>n >& m</td>
-<td>将输出文件 m 和 n 合并。</td>
-</tr>
-<tr>
-<td>n &lt;& m</td>
-<td>将输入文件 m 和 n 合并。</td>
-</tr>
-<tr>
-<td>&#171; tag</td>
-<td>将开始标记 tag 和结束标记 tag 之间的内容作为输入。</td>
-</tr>
-</tbody>
-</table>
-<blockquote>
-<p>需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p>
-</blockquote>
-<h2 id=输出重定向>输出重定向</h2>
-<p>重定向一般通过在命令间插入特定的符号来实现。特别的，这些符号的语法如下所示:</p>
-<p><code>command1 > file1</code></p>
-<p>上面这个命令执行command1然后将输出的内容存入file1。</p>
-<p>注意任何file1内的已经存在的内容将被新内容替代。如果要将新内容添加在文件末尾，请使用&#187;操作符。</p>
-<h3 id=实例>实例</h3>
-<p>执行下面的 who 命令，它将命令的完整的输出重定向在用户文件中(users):</p>
-<pre><code class=language-bash>$ who &gt; users
-</code></pre>
-<p>执行后，并没有在终端输出信息，这是因为输出已被从默认的标准输出设备（终端）重定向到指定的文件。</p>
-<p>你可以使用 cat 命令查看文件内容：</p>
-<pre><code class=language-bash>$ cat users
-_mbsetupuser console  Oct 31 17:35 
-laolan    console  Oct 31 17:35 
-laolan    ttys000  Dec  1 11:33 
-</code></pre>
-<p>输出重定向会覆盖文件内容，请看下面的例子：</p>
-<pre><code class=language-bash>$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt; users
-$ cat users
-W3Cschool教程：www.w3cschool.cn
-$
-</code></pre>
-<p>如果不希望文件内容被覆盖，可以使用 &#187; 追加到文件末尾，例如：</p>
-<pre><code class=language-bash>$ echo &quot;W3Cschool教程：www.w3cschool.cn&quot; &gt;&gt; users
-$ cat users
-W3Cschool教程：www.w3cschool.cn
-W3Cschool教程：www.w3cschool.cn
-$
-</code></pre>
-<h2 id=输入重定向>输入重定向</h2>
-<p>和输出重定向一样，Unix 命令也可以从文件获取输入，语法为：</p>
-<p><code>command1 &lt; file1</code></p>
-<p>这样，本来需要从键盘获取输入的命令会转移到文件读取内容。</p>
-<p>注意：输出重定向是大于号(>)，输入重定向是小于号(&lt;)。</p>
-<h3 id=实例-1>实例</h3>
-<p>接着以上实例，我们需要统计 users 文件的行数,执行以下命令：</p>
-<pre><code class=language-bash>$ wc -l users
-       2 users
-</code></pre>
-<p>也可以将输入重定向到 users 文件：</p>
-<pre><code class=language-bash>$  wc -l &lt; users
-       2 
-</code></pre>
-<p>注意：上面两个例子的结果不同：第一个例子，会输出文件名；第二个不会，因为它仅仅知道从标准输入读取内容。</p>
-<p><code>command1 &lt; infile > outfile</code></p>
-<p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中。</p>
-<h2 id=重定向深入讲解>重定向深入讲解</h2>
-<p>一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：</p>
-<ul>
-<li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li>
-<li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li>
-<li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。</li>
-</ul>
-<p>默认情况下，command > file 将 stdout 重定向到 file，command &lt; file 将stdin 重定向到 file。</p>
-<p>如果希望 stderr 重定向到 file，可以这样写：</p>
-<p><code>$ command 2 > file</code></p>
-<p>如果希望 stderr 追加到 file 文件末尾，可以这样写：</p>
-<p><code>$ command 2 >> file</code></p>
-<p>2 表示标准错误文件(stderr)。</p>
-<p>如果希望将 stdout 和 stderr 合并后重定向到 file，可以这样写：</p>
-<p><code>$ command > file 2>&1</code></p>
-<p>或者</p>
-<p><code>$ command >> file 2>&1</code></p>
-<p>如果希望对 stdin 和 stdout 都重定向，可以这样写：</p>
-<p><code>$ command &lt; file1 >file2</code></p>
-<p>command 命令将 stdin 重定向到 file1，将 stdout 重定向到 file2。</p>
-<h2 id=here-document>Here Document</h2>
-<p>Here Document 是 Shell 中的一种特殊的重定向方式，用来将输入重定向到一个交互式 Shell 脚本或程序。</p>
-<p>它的基本的形式如下：</p>
-<pre><code class=language-bash>command &lt;&lt; delimiter
-    document
-delimiter
-</code></pre>
-<p>它的作用是将两个 delimiter 之间的内容(document) 作为输入传递给 command。</p>
-<p>注意：</p>
-<p>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。
-开始的delimiter前后的空格会被忽略掉。</p>
-<h3 id=实例-2>实例</h3>
-<p>在命令行中通过 wc -l 命令计算 Here Document 的行数：</p>
-<pre><code class=language-bash>$ wc -l &lt;&lt; EOF
-    欢迎来到
-    W3Cschool教程
-    www.w3cschool.cn
-EOF
-3          # 输出结果为 3 行
-$
-</code></pre>
-<p>我们也可以将 Here Document 用在脚本中，例如：</p>
-<pre><code class=language-bash>#!/bin/bash
-# author:W3Cschool教程
-# url:www.w3cschool.cn
-
-cat &lt;&lt; EOF
-欢迎来到
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Linux Shell 输入/输出重定向 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="Linux Shell 输入/输出重定向"><meta property="og:description" content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-11-26T19:54:15+08:00"><meta property="article:modified_time" content="2019-11-26T19:54:15+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="Linux Shell 输入/输出重定向"><meta name=twitter:description content="大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/><link rel=prev href=https://ahamoment.cn/posts/java/java-remote-debug/><link rel=next href=https://ahamoment.cn/posts/java/java-source-code-learn/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Linux Shell 输入/输出重定向","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/linux\/linux-shell-input-output-redirect\/"},"genre":"posts","keywords":"shell","wordcount":1995,"url":"https:\/\/ahamoment.cn\/posts\/linux\/linux-shell-input-output-redirect\/","datePublished":"2019-11-26T19:54:15+08:00","dateModified":"2019-11-26T19:54:15+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linux Shell 输入/输出重定向</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/linux/><i class="far fa-folder fa-fw" aria-hidden=true></i>Linux</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2019-11-26>2019-11-26</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1995 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;4 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#输出重定向>输出重定向</a><ul><li><a href=#实例>实例</a></li></ul></li><li><a href=#输入重定向>输入重定向</a><ul><li><a href=#实例-1>实例</a></li></ul></li><li><a href=#重定向深入讲解>重定向深入讲解</a></li><li><a href=#here-document>Here Document</a><ul><li><a href=#实例-2>实例</a></li></ul></li><li><a href=#devnull-文件>/dev/null 文件</a></li></ul></nav></div></div><div class=content id=content><p>大多数 UNIX 系统命令从你的终端接受输入并将所产生的输出发送回到您的终端。一个命令通常从一个叫标准输入的地方读取输入，默认情况下，这恰好是你的终端。同样，一个命令通常将其输出写入到标准输出，默认情况下，这也是你的终端。</p><p>重定向命令列表如下：</p><table><thead><tr><th>命令</th><th>说明</th></tr></thead><tbody><tr><td>command > file</td><td>将输出重定向到 file。</td></tr><tr><td>command &lt; file</td><td>将输入重定向到 file。</td></tr><tr><td>command &#187; file</td><td>将输出以追加的方式重定向到 file。</td></tr><tr><td>n > file</td><td>将文件描述符为 n 的文件重定向到 file。</td></tr><tr><td>n &#187; file</td><td>将文件描述符为 n 的文件以追加的方式重定向到 file。</td></tr><tr><td>n >& m</td><td>将输出文件 m 和 n 合并。</td></tr><tr><td>n &lt;& m</td><td>将输入文件 m 和 n 合并。</td></tr><tr><td>&#171; tag</td><td>将开始标记 tag 和结束标记 tag 之间的内容作为输入。</td></tr></tbody></table><blockquote><p>需要注意的是文件描述符 0 通常是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p></blockquote><h2 id=输出重定向>输出重定向</h2><p>重定向一般通过在命令间插入特定的符号来实现。特别的，这些符号的语法如下所示:</p><p><code>command1 > file1</code></p><p>上面这个命令执行command1然后将输出的内容存入file1。</p><p>注意任何file1内的已经存在的内容将被新内容替代。如果要将新内容添加在文件末尾，请使用&#187;操作符。</p><h3 id=实例>实例</h3><p>执行下面的 who 命令，它将命令的完整的输出重定向在用户文件中(users):</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ who &gt; users
+</span></span></code></pre></div><p>执行后，并没有在终端输出信息，这是因为输出已被从默认的标准输出设备（终端）重定向到指定的文件。</p><p>你可以使用 cat 命令查看文件内容：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat users
+</span></span><span class=line><span class=cl>_mbsetupuser console  Oct <span class=m>31</span> 17:35 
+</span></span><span class=line><span class=cl>laolan    console  Oct <span class=m>31</span> 17:35 
+</span></span><span class=line><span class=cl>laolan    ttys000  Dec  <span class=m>1</span> 11:33 
+</span></span></code></pre></div><p>输出重定向会覆盖文件内容，请看下面的例子：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ <span class=nb>echo</span> <span class=s2>&#34;W3Cschool教程：www.w3cschool.cn&#34;</span> &gt; users
+</span></span><span class=line><span class=cl>$ cat users
+</span></span><span class=line><span class=cl>W3Cschool教程：www.w3cschool.cn
+</span></span><span class=line><span class=cl>$
+</span></span></code></pre></div><p>如果不希望文件内容被覆盖，可以使用 &#187; 追加到文件末尾，例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ <span class=nb>echo</span> <span class=s2>&#34;W3Cschool教程：www.w3cschool.cn&#34;</span> &gt;&gt; users
+</span></span><span class=line><span class=cl>$ cat users
+</span></span><span class=line><span class=cl>W3Cschool教程：www.w3cschool.cn
+</span></span><span class=line><span class=cl>W3Cschool教程：www.w3cschool.cn
+</span></span><span class=line><span class=cl>$
+</span></span></code></pre></div><h2 id=输入重定向>输入重定向</h2><p>和输出重定向一样，Unix 命令也可以从文件获取输入，语法为：</p><p><code>command1 &lt; file1</code></p><p>这样，本来需要从键盘获取输入的命令会转移到文件读取内容。</p><p>注意：输出重定向是大于号(>)，输入重定向是小于号(&lt;)。</p><h3 id=实例-1>实例</h3><p>接着以上实例，我们需要统计 users 文件的行数,执行以下命令：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ wc -l users
+</span></span><span class=line><span class=cl>       <span class=m>2</span> users
+</span></span></code></pre></div><p>也可以将输入重定向到 users 文件：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$  wc -l &lt; users
+</span></span><span class=line><span class=cl>       <span class=m>2</span> 
+</span></span></code></pre></div><p>注意：上面两个例子的结果不同：第一个例子，会输出文件名；第二个不会，因为它仅仅知道从标准输入读取内容。</p><p><code>command1 &lt; infile > outfile</code></p><p>同时替换输入和输出，执行command1，从文件infile读取内容，然后将输出写入到outfile中。</p><h2 id=重定向深入讲解>重定向深入讲解</h2><p>一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：</p><ul><li>标准输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。</li><li>标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。</li><li>标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。</li></ul><p>默认情况下，command > file 将 stdout 重定向到 file，command &lt; file 将stdin 重定向到 file。</p><p>如果希望 stderr 重定向到 file，可以这样写：</p><p><code>$ command 2 > file</code></p><p>如果希望 stderr 追加到 file 文件末尾，可以这样写：</p><p><code>$ command 2 >> file</code></p><p>2 表示标准错误文件(stderr)。</p><p>如果希望将 stdout 和 stderr 合并后重定向到 file，可以这样写：</p><p><code>$ command > file 2>&amp;1</code></p><p>或者</p><p><code>$ command >> file 2>&amp;1</code></p><p>如果希望对 stdin 和 stdout 都重定向，可以这样写：</p><p><code>$ command &lt; file1 >file2</code></p><p>command 命令将 stdin 重定向到 file1，将 stdout 重定向到 file2。</p><h2 id=here-document>Here Document</h2><p>Here Document 是 Shell 中的一种特殊的重定向方式，用来将输入重定向到一个交互式 Shell 脚本或程序。</p><p>它的基本的形式如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> <span class=s>&lt;&lt; delimiter
+</span></span></span><span class=line><span class=cl><span class=s>    document
+</span></span></span><span class=line><span class=cl><span class=s>delimiter</span>
+</span></span></code></pre></div><p>它的作用是将两个 delimiter 之间的内容(document) 作为输入传递给 command。</p><p>注意：</p><p>结尾的delimiter 一定要顶格写，前面不能有任何字符，后面也不能有任何字符，包括空格和 tab 缩进。
+开始的delimiter前后的空格会被忽略掉。</p><h3 id=实例-2>实例</h3><p>在命令行中通过 wc -l 命令计算 Here Document 的行数：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ wc -l <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>    欢迎来到
+</span></span></span><span class=line><span class=cl><span class=s>    W3Cschool教程
+</span></span></span><span class=line><span class=cl><span class=s>    www.w3cschool.cn
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span><span class=line><span class=cl><span class=m>3</span>          <span class=c1># 输出结果为 3 行</span>
+</span></span><span class=line><span class=cl>$
+</span></span></code></pre></div><p>我们也可以将 Here Document 用在脚本中，例如：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=c1># author:W3Cschool教程</span>
+</span></span><span class=line><span class=cl><span class=c1># url:www.w3cschool.cn</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat <span class=s>&lt;&lt; EOF
+</span></span></span><span class=line><span class=cl><span class=s>欢迎来到
+</span></span></span><span class=line><span class=cl><span class=s>W3Cschool教程
+</span></span></span><span class=line><span class=cl><span class=s>www.w3cschool.cn
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></div><p>执行以上脚本，输出结果：</p><pre tabindex=0><code>欢迎来到
 W3Cschool教程
 www.w3cschool.cn
-EOF
-</code></pre>
-<p>执行以上脚本，输出结果：</p>
-<pre><code>欢迎来到
-W3Cschool教程
-www.w3cschool.cn
-</code></pre>
-<h2 id=devnull-文件>/dev/null 文件</h2>
-<p>如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null：</p>
-<p><code>$ command > /dev/null</code></p>
-<p>/dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到"禁止输出"的效果。</p>
-<p>如果希望屏蔽 stdout 和 stderr，可以这样写：</p>
-<p><code>$ command > /dev/null 2>&1</code></p>
-<blockquote>
-<p>注意：0 是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p>
-</blockquote>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/shell/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#shell</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/java/java-source-code-learn/ class=block>JDK1.8 源代码阅读环境搭建</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/java/java-remote-debug/ class=block>IntellJ IDEA 远程调试 Java 程序</a>
-</div>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+</code></pre><h2 id=devnull-文件>/dev/null 文件</h2><p>如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null：</p><p><code>$ command > /dev/null</code></p><p>/dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到"禁止输出"的效果。</p><p>如果希望屏蔽 stdout 和 stderr，可以这样写：</p><p><code>$ command > /dev/null 2>&amp;1</code></p><blockquote><p>注意：0 是标准输入（STDIN），1 是标准输出（STDOUT），2 是标准错误输出（STDERR）。</p></blockquote></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2019-11-26</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-title="Linux Shell 输入/输出重定向" data-via=xueqiang_chen data-hashtags=shell><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-hashtag=shell><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-title="Linux Shell 输入/输出重定向"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-title="Linux Shell 输入/输出重定向"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-title="Linux Shell 输入/输出重定向" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ data-title="Linux Shell 输入/输出重定向"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/shell/>shell</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/java/java-remote-debug/ class=prev rel=prev title="IntellJ IDEA 远程调试 Java 程序"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>IntellJ IDEA 远程调试 Java 程序</a>
+<a href=/posts/java/java-source-code-learn/ class=next rel=next title="JDK1.8 源代码阅读环境搭建">JDK1.8 源代码阅读环境搭建<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

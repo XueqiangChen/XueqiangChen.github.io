@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>deployment on AhaMoment</title><link>https://ahamoment.cn/tags/deployment/</link><description>Recent content in deployment on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Mon, 01 Mar 2021 07:37:59 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/deployment/index.xml" rel="self" type="application/rss+xml"/><item><title>Deployment：作业副本与水平扩容</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</link><pubDate>Mon, 01 Mar 2021 07:37:59 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/deployment/</guid><description>&lt;blockquote>
-&lt;p>本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p>
-&lt;ol>
-&lt;li>作业副本&lt;/li>
-&lt;li>水平扩容&lt;/li>
-&lt;/ol>
-&lt;/blockquote></description></item></channel></rss>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>deployment - Tag - Aha Moment</title><link>https://ahamoment.cn/tags/deployment/</link><description>deployment - Tag - Aha Moment</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xueqiang.chen@foxmail..com (xueqiang.chen)</managingEditor><webMaster>xueqiang.chen@foxmail..com (xueqiang.chen)</webMaster><lastBuildDate>Mon, 01 Mar 2021 07:37:59 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/deployment/" rel="self" type="application/rss+xml"/><item><title>Deployment：作业副本与水平扩容</title><link>https://ahamoment.cn/posts/k8s-doc/chapter3/deployment/</link><pubDate>Mon, 01 Mar 2021 07:37:59 +0800</pubDate><author>xueqiang.chen</author><guid>https://ahamoment.cn/posts/k8s-doc/chapter3/deployment/</guid><description><![CDATA[<blockquote>
+<p>本文转自张磊老师的《深入剖析 Kubernetes》课程</p>
+<ol>
+<li>作业副本</li>
+<li>水平扩容</li>
+</ol>
+</blockquote>]]></description></item></channel></rss>

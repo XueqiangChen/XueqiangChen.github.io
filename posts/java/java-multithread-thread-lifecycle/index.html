@@ -1,269 +1,79 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>Java 多线程 - 线程生命周期 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Java 多线程 - 线程生命周期","item":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"},"headline":"Java 多线程 - 线程生命周期 | AhaMoment","datePublished":"2020-11-11T18:23:31+08:00","dateModified":"2020-11-11T18:23:31+08:00","wordCount":1742,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： \/\/ Thread.State public enum State { \/** * Thread state for a thread which has not yet started. *\/ NEW,"}</script><meta property="og:title" content="Java 多线程 - 线程生命周期 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/">
-<meta property="og:description" content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-11-11T18:23:31+08:00">
-<meta property="article:modified_time" content="2020-11-11T18:23:31+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="多线程">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-interview-questions/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-synchronized2/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-interrupt/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-dead-lock/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/java/java-multithread-synchronized/">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">Java 多线程 - 线程生命周期</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-11-11</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-<div class=content>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png alt></p>
-<p>线程的生命周期大体可以分为如下6个主要的阶段：</p>
-<ul>
-<li>NEW</li>
-<li>RUNNABLE</li>
-<li>WAITING</li>
-<li>TIMED_WAITING</li>
-<li>BLOCKED</li>
-<li>TERMINATED</li>
-</ul>
-<p>从 JDK 的源代码中也能看到关于线程状态的描述：</p>
-<pre><code class=language-java>// Thread.State
-public enum State {
-        /**
-         * Thread state for a thread which has not yet started.
-         */
-        NEW,
-
-        /**
-         * Thread state for a runnable thread.  A thread in the runnable
-         * state is executing in the Java virtual machine but it may
-         * be waiting for other resources from the operating system
-         * such as processor.
-         */
-        RUNNABLE,
-
-        /**
-         * Thread state for a thread blocked waiting for a monitor lock.
-         * A thread in the blocked state is waiting for a monitor lock
-         * to enter a synchronized block/method or
-         * reenter a synchronized block/method after calling
-         * {@link Object#wait() Object.wait}.
-         */
-        BLOCKED,
-
-        /**
-         * Thread state for a waiting thread.
-         * A thread is in the waiting state due to calling one of the
-         * following methods:
-         * &lt;ul&gt;
-         *   &lt;li&gt;{@link Object#wait() Object.wait} with no timeout&lt;/li&gt;
-         *   &lt;li&gt;{@link #join() Thread.join} with no timeout&lt;/li&gt;
-         *   &lt;li&gt;{@link LockSupport#park() LockSupport.park}&lt;/li&gt;
-         * &lt;/ul&gt;
-         *
-         * &lt;p&gt;A thread in the waiting state is waiting for another thread to
-         * perform a particular action.
-         *
-         * For example, a thread that has called &lt;tt&gt;Object.wait()&lt;/tt&gt;
-         * on an object is waiting for another thread to call
-         * &lt;tt&gt;Object.notify()&lt;/tt&gt; or &lt;tt&gt;Object.notifyAll()&lt;/tt&gt; on
-         * that object. A thread that has called &lt;tt&gt;Thread.join()&lt;/tt&gt;
-         * is waiting for a specified thread to terminate.
-         */
-        WAITING,
-
-        /**
-         * Thread state for a waiting thread with a specified waiting time.
-         * A thread is in the timed waiting state due to calling one of
-         * the following methods with a specified positive waiting time:
-         * &lt;ul&gt;
-         *   &lt;li&gt;{@link #sleep Thread.sleep}&lt;/li&gt;
-         *   &lt;li&gt;{@link Object#wait(long) Object.wait} with timeout&lt;/li&gt;
-         *   &lt;li&gt;{@link #join(long) Thread.join} with timeout&lt;/li&gt;
-         *   &lt;li&gt;{@link LockSupport#parkNanos LockSupport.parkNanos}&lt;/li&gt;
-         *   &lt;li&gt;{@link LockSupport#parkUntil LockSupport.parkUntil}&lt;/li&gt;
-         * &lt;/ul&gt;
-         */
-        TIMED_WAITING,
-
-        /**
-         * Thread state for a terminated thread.
-         * The thread has completed execution.
-         */
-        TERMINATED;
-    }
-</code></pre>
-<h2 id=线程的new状态>线程的NEW状态</h2>
-<p>当我们用关键字new创建一个Thread对象时，此时它并不处于执行状态，因为没有调用start方法启动该线程，那么线程的状态为NEW状态，准确地说，它只是Thread对象的状态，因为在没有start之前，该线程根本不存在，与你用关键字new创建一个普通的Java对象没什么区别。</p>
-<p>NEW状态通过start方法进入RUNNABLE状态。</p>
-<h2 id=线程的runnable状态>线程的RUNNABLE状态</h2>
-<p>操作系统隐藏 Java 虚拟机（JVM）中的 READY 和 RUNNING 状态，它只能看到 RUNNABLE 状态，所以 Java 系统一般将这两个状态统称为 <strong>RUNNABLE（运行中）</strong> 状态 。</p>
-<p>线程调用 <code>start()</code> 方法后开始运行，那么此时才是真正地在JVM进程中创建了一个线程，线程一经启动就可以立即得到执行吗？答案是否定的，线程的运行与否和进程一样都要听令于CPU的调度，线程这时候处于 <strong>READY（可运行）</strong> 状态，也就是说它具备执行的资格，但是并没有真正地执行起来而是在等待CPU的调度。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 <strong>RUNNING（运行）</strong> 状态。</p>
-<p>由于存在<strong>RUNNING</strong>状态，所以不会直接进入<strong>BLOCKED</strong>状态和<strong>TERMINATED</strong>状态，即使是在线程的执行逻辑中调用wait、sleep或者其他block的IO操作等，也必须先获得CPU的调度执行权才可以，严格来讲，RUNNABLE的线程只能意外终止或者进入RUNNING状态。</p>
-<p>在该<strong>RUNNING</strong>状态中，线程的状态可以发生如下的状态转换。</p>
-<ul>
-<li>直接进入TERMINATED状态，比如调用JDK已经不推荐使用的stop方法或者判断某个逻辑标识。</li>
-<li>进入WAITING状态，比如调用了sleep，或者wait方法而加入了waitSet中。</li>
-<li>进行某个阻塞的IO操作，比如因网络数据的读写而进入了BLOCKED状态。</li>
-<li>获取某个锁资源，从而加入到该锁的阻塞队列中而进入了BLOCKED状态。</li>
-<li>由于CPU的调度器轮询使该线程放弃执行，进入READY 状态。</li>
-<li>线程主动调用yield方法，放弃CPU执行权，进入READY状态。</li>
-</ul>
-<h2 id=线程的blocked状态>线程的BLOCKED状态</h2>
-<p>线程在BLOCKED状态中可以切换至如下几个状态。</p>
-<ul>
-<li>直接进入TERMINATED状态，比如调用JDK已经不推荐使用的stop方法或者意外死亡（JVM Crash）。</li>
-<li>线程阻塞的操作结束，比如读取了想要的数据字节进入到RUNNABLE状态。</li>
-<li>线程完成了指定时间的休眠，进入到了RUNNABLE状态。</li>
-<li>线程获取到了某个锁资源，进入RUNNABLE状态。</li>
-<li>线程在阻塞过程中被打断，比如其他线程调用了interrupt方法，进入RUNNABLE状态。</li>
-</ul>
-<h2 id=线程的-waiting-状态>线程的 WAITING 状态</h2>
-<p>线程进入<strong>WAITING</strong>状态，可能是调用了wait/join/park方法使线程进入等待状态，处在<strong>WAITING</strong> 状态的线程被其他线程调用 notify/notifyAll 唤醒之后，就会重新进入 RUNNABLE 状态。</p>
-<h2 id=线程的-timed_waiting-状态>线程的 TIMED_WAITING 状态</h2>
-<p>TIMED_WAITING 就是超时等待的意思，跟 WAITING 状态不同的是，TIMED_WAITING 会等待指定的超时时间后自动退出。</p>
-<h2 id=线程的terminated状态>线程的TERMINATED状态</h2>
-<p>TERMINATED是一个线程的最终状态，在该状态中线程将不会切换到其他任何状态，线程进入TERMINATED状态，意味着该线程的整个生命周期都结束了，下列这些情况将会使线程进入TERMINATED状态。</p>
-<ul>
-<li>线程运行正常结束，结束生命周期。</li>
-<li>线程运行出错意外结束。</li>
-<li>JVM Crash，导致所有的线程都结束。</li>
-</ul>
-<h2 id=参考>参考</h2>
-<blockquote>
-<p>【1】<a href=https://book.douban.com/subject/30255689/>《Java 高并发编程详解》-汪文君</a></p>
-</blockquote>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#多线程</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/java/java-multithread-thread-pool/ class=block>Java 多线程 - 自定义线程池</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/ class=block>Java 多线程面试题总结</a>
-</div>
-</div>
-</div>
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-<h2 class="text-lg font-semibold mb-4">See Also</h2>
-<div class=content>
-<a href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/>Java 多线程面试题总结</a>
-<br>
-<a href=https://ahamoment.cn/posts/java/java-multithread-synchronized2/>Java 多线程 - 深入理解synchronized关键字</a>
-<br>
-<a href=https://ahamoment.cn/posts/java/java-multithread-interrupt/>Java 多线程 - 线程中断 Interrupt</a>
-<br>
-<a href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/>Java 多线程 - 死锁问题</a>
-<br>
-<a href=https://ahamoment.cn/posts/java/java-multithread-synchronized/>Java 多线程 - 初识 Synchronized</a>
-<br>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Java 多线程 - 线程生命周期 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="Java 多线程 - 线程生命周期"><meta property="og:description" content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-11-11T18:23:31+08:00"><meta property="article:modified_time" content="2020-11-11T18:23:31+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="Java 多线程 - 线程生命周期"><meta name=twitter:description content="线程的生命周期大体可以分为如下6个主要的阶段： NEW RUNNABLE WAITING TIMED_WAITING BLOCKED TERMINATED 从 JDK 的源代码中也能看到关于线程状态的描述： // Thread.State public enum State { /** * Thread state for a thread which has not yet started. */ NEW,"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/><link rel=prev href=https://ahamoment.cn/posts/java/java-multithread-interview-questions/><link rel=next href=https://ahamoment.cn/posts/java/java-multithread-thread-pool/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Java 多线程 - 线程生命周期","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/java\/java-multithread-thread-lifecycle\/"},"genre":"posts","keywords":"多线程","wordcount":1742,"url":"https:\/\/ahamoment.cn\/posts\/java\/java-multithread-thread-lifecycle\/","datePublished":"2020-11-11T18:23:31+08:00","dateModified":"2020-11-11T18:23:31+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java 多线程 - 线程生命周期</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/java/><i class="far fa-folder fa-fw" aria-hidden=true></i>java</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-11-11>2020-11-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1742 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;4 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#线程的new状态>线程的NEW状态</a></li><li><a href=#线程的runnable状态>线程的RUNNABLE状态</a></li><li><a href=#线程的blocked状态>线程的BLOCKED状态</a></li><li><a href=#线程的-waiting-状态>线程的 WAITING 状态</a></li><li><a href=#线程的-timed_waiting-状态>线程的 TIMED_WAITING 状态</a></li><li><a href=#线程的terminated状态>线程的TERMINATED状态</a></li><li><a href=#参考>参考</a></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png title=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/thread-lifecycle.png></p><p>线程的生命周期大体可以分为如下6个主要的阶段：</p><ul><li>NEW</li><li>RUNNABLE</li><li>WAITING</li><li>TIMED_WAITING</li><li>BLOCKED</li><li>TERMINATED</li></ul><p>从 JDK 的源代码中也能看到关于线程状态的描述：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// Thread.State
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>enum</span> <span class=n>State</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a thread which has not yet started.
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>NEW</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a runnable thread.  A thread in the runnable
+</span></span></span><span class=line><span class=cl><span class=cm>         * state is executing in the Java virtual machine but it may
+</span></span></span><span class=line><span class=cl><span class=cm>         * be waiting for other resources from the operating system
+</span></span></span><span class=line><span class=cl><span class=cm>         * such as processor.
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>RUNNABLE</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a thread blocked waiting for a monitor lock.
+</span></span></span><span class=line><span class=cl><span class=cm>         * A thread in the blocked state is waiting for a monitor lock
+</span></span></span><span class=line><span class=cl><span class=cm>         * to enter a synchronized block/method or
+</span></span></span><span class=line><span class=cl><span class=cm>         * reenter a synchronized block/method after calling
+</span></span></span><span class=line><span class=cl><span class=cm>         * {@link Object#wait() Object.wait}.
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>BLOCKED</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a waiting thread.
+</span></span></span><span class=line><span class=cl><span class=cm>         * A thread is in the waiting state due to calling one of the
+</span></span></span><span class=line><span class=cl><span class=cm>         * following methods:
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;ul&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link Object#wait() Object.wait} with no timeout&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link #join() Thread.join} with no timeout&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link LockSupport#park() LockSupport.park}&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;/ul&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;p&gt;A thread in the waiting state is waiting for another thread to
+</span></span></span><span class=line><span class=cl><span class=cm>         * perform a particular action.
+</span></span></span><span class=line><span class=cl><span class=cm>         *
+</span></span></span><span class=line><span class=cl><span class=cm>         * For example, a thread that has called &lt;tt&gt;Object.wait()&lt;/tt&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         * on an object is waiting for another thread to call
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;tt&gt;Object.notify()&lt;/tt&gt; or &lt;tt&gt;Object.notifyAll()&lt;/tt&gt; on
+</span></span></span><span class=line><span class=cl><span class=cm>         * that object. A thread that has called &lt;tt&gt;Thread.join()&lt;/tt&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         * is waiting for a specified thread to terminate.
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>WAITING</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a waiting thread with a specified waiting time.
+</span></span></span><span class=line><span class=cl><span class=cm>         * A thread is in the timed waiting state due to calling one of
+</span></span></span><span class=line><span class=cl><span class=cm>         * the following methods with a specified positive waiting time:
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;ul&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link #sleep Thread.sleep}&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link Object#wait(long) Object.wait} with timeout&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link #join(long) Thread.join} with timeout&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link LockSupport#parkNanos LockSupport.parkNanos}&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         *   &lt;li&gt;{@link LockSupport#parkUntil LockSupport.parkUntil}&lt;/li&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         * &lt;/ul&gt;
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>TIMED_WAITING</span><span class=o>,</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=cm>/**
+</span></span></span><span class=line><span class=cl><span class=cm>         * Thread state for a terminated thread.
+</span></span></span><span class=line><span class=cl><span class=cm>         * The thread has completed execution.
+</span></span></span><span class=line><span class=cl><span class=cm>         */</span>
+</span></span><span class=line><span class=cl>        <span class=n>TERMINATED</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span></code></pre></div><h2 id=线程的new状态>线程的NEW状态</h2><p>当我们用关键字new创建一个Thread对象时，此时它并不处于执行状态，因为没有调用start方法启动该线程，那么线程的状态为NEW状态，准确地说，它只是Thread对象的状态，因为在没有start之前，该线程根本不存在，与你用关键字new创建一个普通的Java对象没什么区别。</p><p>NEW状态通过start方法进入RUNNABLE状态。</p><h2 id=线程的runnable状态>线程的RUNNABLE状态</h2><p>操作系统隐藏 Java 虚拟机（JVM）中的 READY 和 RUNNING 状态，它只能看到 RUNNABLE 状态，所以 Java 系统一般将这两个状态统称为 <strong>RUNNABLE（运行中）</strong> 状态 。</p><p>线程调用 <code>start()</code> 方法后开始运行，那么此时才是真正地在JVM进程中创建了一个线程，线程一经启动就可以立即得到执行吗？答案是否定的，线程的运行与否和进程一样都要听令于CPU的调度，线程这时候处于 <strong>READY（可运行）</strong> 状态，也就是说它具备执行的资格，但是并没有真正地执行起来而是在等待CPU的调度。可运行状态的线程获得了 CPU 时间片（timeslice）后就处于 <strong>RUNNING（运行）</strong> 状态。</p><p>由于存在<strong>RUNNING</strong>状态，所以不会直接进入<strong>BLOCKED</strong>状态和<strong>TERMINATED</strong>状态，即使是在线程的执行逻辑中调用wait、sleep或者其他block的IO操作等，也必须先获得CPU的调度执行权才可以，严格来讲，RUNNABLE的线程只能意外终止或者进入RUNNING状态。</p><p>在该<strong>RUNNING</strong>状态中，线程的状态可以发生如下的状态转换。</p><ul><li>直接进入TERMINATED状态，比如调用JDK已经不推荐使用的stop方法或者判断某个逻辑标识。</li><li>进入WAITING状态，比如调用了sleep，或者wait方法而加入了waitSet中。</li><li>进行某个阻塞的IO操作，比如因网络数据的读写而进入了BLOCKED状态。</li><li>获取某个锁资源，从而加入到该锁的阻塞队列中而进入了BLOCKED状态。</li><li>由于CPU的调度器轮询使该线程放弃执行，进入READY 状态。</li><li>线程主动调用yield方法，放弃CPU执行权，进入READY状态。</li></ul><h2 id=线程的blocked状态>线程的BLOCKED状态</h2><p>线程在BLOCKED状态中可以切换至如下几个状态。</p><ul><li>直接进入TERMINATED状态，比如调用JDK已经不推荐使用的stop方法或者意外死亡（JVM Crash）。</li><li>线程阻塞的操作结束，比如读取了想要的数据字节进入到RUNNABLE状态。</li><li>线程完成了指定时间的休眠，进入到了RUNNABLE状态。</li><li>线程获取到了某个锁资源，进入RUNNABLE状态。</li><li>线程在阻塞过程中被打断，比如其他线程调用了interrupt方法，进入RUNNABLE状态。</li></ul><h2 id=线程的-waiting-状态>线程的 WAITING 状态</h2><p>线程进入<strong>WAITING</strong>状态，可能是调用了wait/join/park方法使线程进入等待状态，处在<strong>WAITING</strong> 状态的线程被其他线程调用 notify/notifyAll 唤醒之后，就会重新进入 RUNNABLE 状态。</p><h2 id=线程的-timed_waiting-状态>线程的 TIMED_WAITING 状态</h2><p>TIMED_WAITING 就是超时等待的意思，跟 WAITING 状态不同的是，TIMED_WAITING 会等待指定的超时时间后自动退出。</p><h2 id=线程的terminated状态>线程的TERMINATED状态</h2><p>TERMINATED是一个线程的最终状态，在该状态中线程将不会切换到其他任何状态，线程进入TERMINATED状态，意味着该线程的整个生命周期都结束了，下列这些情况将会使线程进入TERMINATED状态。</p><ul><li>线程运行正常结束，结束生命周期。</li><li>线程运行出错意外结束。</li><li>JVM Crash，导致所有的线程都结束。</li></ul><h2 id=参考>参考</h2><blockquote><p>【1】<a href=https://book.douban.com/subject/30255689/ target=_blank rel="noopener noreffer">《Java 高并发编程详解》-汪文君</a></p></blockquote></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-11-11</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-title="Java 多线程 - 线程生命周期" data-via=xueqiang_chen data-hashtags=多线程><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-hashtag=多线程><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-title="Java 多线程 - 线程生命周期"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-title="Java 多线程 - 线程生命周期"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-title="Java 多线程 - 线程生命周期" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/java/java-multithread-thread-lifecycle/ data-title="Java 多线程 - 线程生命周期"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/>多线程</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/java/java-multithread-interview-questions/ class=prev rel=prev title="Java 多线程面试题总结"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Java 多线程面试题总结</a>
+<a href=/posts/java/java-multithread-thread-pool/ class=next rel=next title="Java 多线程 - 自定义线程池">Java 多线程 - 自定义线程池<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

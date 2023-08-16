@@ -1,258 +1,88 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>平衡二叉树 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"平衡二叉树","item":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"},"headline":"平衡二叉树 | AhaMoment","datePublished":"2020-08-31T18:11:54+08:00","dateModified":"2020-08-31T18:11:54+08:00","wordCount":1498,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B"}</script><meta property="og:title" content="平衡二叉树 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/">
-<meta property="og:description" content="平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-08-31T18:11:54+08:00">
-<meta property="article:modified_time" content="2020-08-31T18:11:54+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="树">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/algorithm/algorithm-tree/">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">平衡二叉树</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-08-31</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>3 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/ class=hover:text-eureka>数据结构与算法</a>
-</div>
-</div>
-<div class=content>
-<h2 id=平衡二叉树>平衡二叉树</h2>
-<p>平衡二叉树也是一种搜索树。</p>
-<p>搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。</p>
-<p>平衡因子（Balance Factor）:<code>BF(T)=hL-hR</code>，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 <code>|BF(T)|&lt;=1</code>。</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png alt=image-20200910124943682></p>
-<p>平衡二叉树的高度能够达到 <em>$log_2n$</em></p>
-<h2 id=平衡二叉树的调整>平衡二叉树的调整</h2>
-<p>任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。</p>
-<h3 id=右单旋>右单旋</h3>
-<p>按照字母大小插入三个结点，Mar, May, Nov：</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png alt=image-20200915105728847></p>
-<p>如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png alt=image-20200915110306417></p>
-<p>右单旋的过程如上图所示，将 B 结点调整为跟结点，$B_L$ 调整为 A 的右结点。上图所示的是插入到右子树的右子树的右边时，当插入到右子树的右子树的位置不同时怎么处理？来看个例子：</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png alt=image-20200915111837036></p>
-<p>结点插到左边和右边的时候，调整平衡后位置还是不变。</p>
-<pre><code class=language-java>// 右单旋
-public AVLTree&lt;T&gt; singleRightRotation(AVLTree&lt;T&gt; a) {
-    // 注意：A 必须有一个右子节点B
-    // 将 A 与 B 做右单旋，更新A与B的高度，返回新的根结点B
-    AVLTree&lt;T&gt; b = a.right;
-    a.right = b.left;
-    b.left = a;
-    a.height = Math.max(postOrderGetHight(a.left), postOrderGetHight(a.right));
-    b.height = Math.max(postOrderGetHight(b.right), a.height);
-
-    return b;
-}
-</code></pre>
-<h3 id=左单旋>左单旋</h3>
-<p>左单旋与右单旋类似，麻烦结点在发现者的左子树的左边，因而叫LL插入，需要 LL 旋转（左单旋）。</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png alt=image-20200915112201005></p>
-<p>上图是左单旋的调整过程。注意，对于调整，只需要从最下层的开始调整就行。下层平衡了，上层自然也会平衡。</p>
-<pre><code class=language-java>// 左单旋(LL旋转)
-public AVLTree&lt;T&gt; singleLeftRotation(AVLTree&lt;T&gt; a) {
-    // 注意：A必须有一个左子结点B
-    //将 A与B做左单旋，更新A与B的高度，返回新的根结点B
-    AVLTree&lt;T&gt; b = a.left;
-    a.left = b.right;
-    b.right = a;
-    a.height = Math.max(postOrderGetHight(a.left), postOrderGetHight(a.right));
-    b.height = Math.max(postOrderGetHight(b.left), a.height);
-
-    return b;
-}
-</code></pre>
-<h3 id=左右双旋>左右双旋</h3>
-<p>对于左右双旋，麻烦结点出现在左子树的右边，因而叫 LR 插入，需要做 LR 旋转。</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png alt=image-20200915112418342></p>
-<p>当插入的结点在 C 的左子树或者右子树下边时，就需要左右双旋，左右双旋可以看成做了两次单旋，目的是调整 A,B,C 这三个结点的位置。先将B和C 做一次右单旋，再将 C 和 A 做一次左单旋。</p>
-<pre><code class=language-java>public AVLTree&lt;T&gt; doubleLeftRightRotation(AVLTree&lt;T&gt; a) {
-    // 注意：A必须有一个左子节点B，且B必须有一个右子节点C
-    // 将A、B与C做两次单旋，返回新的根结点C
-
-    // 将B与C做右单旋，C被返回
-    a.left = singleLeftRotation(a.left);
-    // 将A与C做左单旋，C被返回
-    return singleLeftRotation(a);
-}
-</code></pre>
-<h3 id=右左双旋>右左双旋</h3>
-<p>右左双旋时，麻烦结点出现在右子树的左边，因而又叫 RL 插入。</p>
-<p><img src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png alt=image-20200915112912024></p>
-<p>同样的，我们也可将右左双旋看成是两次单旋，将 B 和 C 做左单旋，再将 A 与 C 做右单旋。</p>
-<pre><code class=language-java>public AVLTree&lt;T&gt; doubleRightLeftRotation(AVLTree&lt;T&gt; a) {
-    // 注意：A必须有一个右子节点B，且B必须有一个左子节点C
-    // 将A、B与C做两次单旋，返回新的根结点C
-
-    // 将B与C做左单旋，C被返回
-    a.right = singleRightRotation(a.right);
-    // 将A与C做右单旋，C被返回
-    return singleLeftRotation(a);
-}
-
-</code></pre>
-<p>注意调整时，可能节点的位置不变，但是平衡因子需要更新。</p>
-<p>最后，我们来看一下平衡二叉树的插入，每一次的插入都要判断平衡是否被破坏，如果发现树的平衡被破坏，根据插入的位置做上面的四种旋转重新调整成平衡二叉树。</p>
-<pre><code class=language-java>public AVLTree&lt;T&gt; insert(AVLTree&lt;T&gt; t, T x) {
-    /* 将X插入AVL树T中，并且返回调整后的AVL树 */
-    if (t != null) { /* 若插入空树，则新建包含一个结点的树 */
-        t = new AVLTree&lt;&gt;(x, null, null);
-        t.height = 0;
-    } /* if (插入空树) 结束 */ else if (x.compareTo(t.data) &lt; 0) {
-        /* 插入T的左子树 */
-        t.left = insert(t.left, x);
-        /* 如果需要左旋 */
-        if (postOrderGetHight(t.left) - postOrderGetHight(t.right) == 2)
-            if (x.compareTo(t.left.data) &lt; 0)
-                t = singleLeftRotation(t);      /* 左单旋 */
-        else
-            t = doubleLeftRightRotation(t); /* 左-右双旋 */
-    } /* else if (插入左子树) 结束 */ else if (x.compareTo(t.data) &gt; 0) {
-        /* 插入T的右子树 */
-        t.right = insert(t.right, x);
-        /* 如果需要右旋 */
-        if (postOrderGetHight(t.left) - postOrderGetHight(t.right) == -2)
-            if (x.compareTo(t.right.data) &gt; 0)
-                t = singleRightRotation(t);     /* 右单旋 */
-        else
-            t = doubleRightLeftRotation(t); /* 右-左双旋 */
-    } /* else if (插入右子树) 结束 */
-
-    /* else X == T-&gt;Data，无须插入 */
-
-    /* 别忘了更新树高 */
-    t.height = Math.max(postOrderGetHight(t.left), postOrderGetHight(t.right)) + 1;
-
-    return t;
-}
-</code></pre>
-<h2 id=参考>参考</h2>
-<p>【1】浙江大学陈越老师的<a href="https://www.icourse163.org/learn/ZJU-93001?tid=1207006212#/learn/announce">数据结构课程</a></p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/%E6%A0%91/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#树</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/linux/linux-cap/ class=block>解决setcap导致Java加载libjli.so 失败问题</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ class=block>Linux Shell Script 基础教程</a>
-</div>
-</div>
-</div>
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-<h2 class="text-lg font-semibold mb-4">See Also</h2>
-<div class=content>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/>二叉搜索树</a>
-<br>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-tree/>二叉树及存储结构</a>
-<br>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-tree/>树的定义及表示</a>
-<br>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>平衡二叉树 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="平衡二叉树"><meta property="og:description" content="平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-08-31T18:11:54+08:00"><meta property="article:modified_time" content="2020-08-31T18:11:54+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="平衡二叉树"><meta name=twitter:description content="平衡二叉树 平衡二叉树也是一种搜索树。 搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。 平衡因子（Balance Factor）:B"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/><link rel=prev href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/><link rel=next href=https://ahamoment.cn/posts/linux/linux-cap/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"平衡二叉树","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/algorithm\/algorithm-balanced-binary-tree\/"},"genre":"posts","keywords":"树","wordcount":1498,"url":"https:\/\/ahamoment.cn\/posts\/algorithm\/algorithm-balanced-binary-tree\/","datePublished":"2020-08-31T18:11:54+08:00","dateModified":"2020-08-31T18:11:54+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">平衡二叉树</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95/><i class="far fa-folder fa-fw" aria-hidden=true></i>数据结构与算法</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-08-31>2020-08-31</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1498 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;3 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#平衡二叉树>平衡二叉树</a></li><li><a href=#平衡二叉树的调整>平衡二叉树的调整</a><ul><li><a href=#右单旋>右单旋</a></li><li><a href=#左单旋>左单旋</a></li><li><a href=#左右双旋>左右双旋</a></li><li><a href=#右左双旋>右左双旋</a></li></ul></li><li><a href=#参考>参考</a></li></ul></nav></div></div><div class=content id=content><h2 id=平衡二叉树>平衡二叉树</h2><p>平衡二叉树也是一种搜索树。</p><p>搜索树节点不同插入次序，将导致不同的深度和平均查找长度 ASL。</p><p>平衡因子（Balance Factor）:<code>BF(T)=hL-hR</code>，其中hL和hR分别是T的左右子树的高度。平衡二叉树（Balanced Binary Tree) 又叫 AVL树，当树不为空时，在任一节点左，右子树高度差的绝对值不超过1，即 <code>|BF(T)|&lt;=1</code>。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200910124943682.png title=image-20200910124943682></p><p>平衡二叉树的高度能够达到 <em>$log_2n$</em></p><h2 id=平衡二叉树的调整>平衡二叉树的调整</h2><p>任何情况都可以归结为四种模式。根据插入节点的位置不同使用不同的查找方法，同时记住平衡二叉树是搜索树，节点小于左边大于右边。平衡二叉树的四种调整方法为：右单旋，左单旋，右左双旋，左右双旋。</p><h3 id=右单旋>右单旋</h3><p>按照字母大小插入三个结点，Mar, May, Nov：</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915105728847.png title=image-20200915105728847></p><p>如上图左边所示，在插入 Nov 结点后，二叉树的平衡被破坏，结点Mar 的平衡因子为 -2，这个时候我们称 Mar 为不平衡的发现者，麻烦节点 Nov 在发现者右子树的右边，需要RR旋转（右单旋）。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915110306417.png title=image-20200915110306417></p><p>右单旋的过程如上图所示，将 B 结点调整为跟结点，$B_L$ 调整为 A 的右结点。上图所示的是插入到右子树的右子树的右边时，当插入到右子树的右子树的位置不同时怎么处理？来看个例子：</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915111837036.png title=image-20200915111837036></p><p>结点插到左边和右边的时候，调整平衡后位置还是不变。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 右单旋
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=nf>singleRightRotation</span><span class=o>(</span><span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>a</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 注意：A 必须有一个右子节点B
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// 将 A 与 B 做右单旋，更新A与B的高度，返回新的根结点B
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>b</span> <span class=o>=</span> <span class=n>a</span><span class=o>.</span><span class=na>right</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span><span class=o>.</span><span class=na>right</span> <span class=o>=</span> <span class=n>b</span><span class=o>.</span><span class=na>left</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span><span class=o>.</span><span class=na>left</span> <span class=o>=</span> <span class=n>a</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>Math</span><span class=o>.</span><span class=na>max</span><span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>left</span><span class=o>),</span> <span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>right</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>Math</span><span class=o>.</span><span class=na>max</span><span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>b</span><span class=o>.</span><span class=na>right</span><span class=o>),</span> <span class=n>a</span><span class=o>.</span><span class=na>height</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>b</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><h3 id=左单旋>左单旋</h3><p>左单旋与右单旋类似，麻烦结点在发现者的左子树的左边，因而叫LL插入，需要 LL 旋转（左单旋）。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112201005.png title=image-20200915112201005></p><p>上图是左单旋的调整过程。注意，对于调整，只需要从最下层的开始调整就行。下层平衡了，上层自然也会平衡。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 左单旋(LL旋转)
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=nf>singleLeftRotation</span><span class=o>(</span><span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>a</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 注意：A必须有一个左子结点B
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>//将 A与B做左单旋，更新A与B的高度，返回新的根结点B
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>b</span> <span class=o>=</span> <span class=n>a</span><span class=o>.</span><span class=na>left</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span><span class=o>.</span><span class=na>left</span> <span class=o>=</span> <span class=n>b</span><span class=o>.</span><span class=na>right</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span><span class=o>.</span><span class=na>right</span> <span class=o>=</span> <span class=n>a</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=n>a</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>Math</span><span class=o>.</span><span class=na>max</span><span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>left</span><span class=o>),</span> <span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>right</span><span class=o>));</span>
+</span></span><span class=line><span class=cl>    <span class=n>b</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>Math</span><span class=o>.</span><span class=na>max</span><span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>b</span><span class=o>.</span><span class=na>left</span><span class=o>),</span> <span class=n>a</span><span class=o>.</span><span class=na>height</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>b</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><h3 id=左右双旋>左右双旋</h3><p>对于左右双旋，麻烦结点出现在左子树的右边，因而叫 LR 插入，需要做 LR 旋转。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112418342.png title=image-20200915112418342></p><p>当插入的结点在 C 的左子树或者右子树下边时，就需要左右双旋，左右双旋可以看成做了两次单旋，目的是调整 A,B,C 这三个结点的位置。先将B和C 做一次右单旋，再将 C 和 A 做一次左单旋。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=nf>doubleLeftRightRotation</span><span class=o>(</span><span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>a</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 注意：A必须有一个左子节点B，且B必须有一个右子节点C
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// 将A、B与C做两次单旋，返回新的根结点C
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将B与C做右单旋，C被返回
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>a</span><span class=o>.</span><span class=na>left</span> <span class=o>=</span> <span class=n>singleLeftRotation</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>left</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将A与C做左单旋，C被返回
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>singleLeftRotation</span><span class=o>(</span><span class=n>a</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><h3 id=右左双旋>右左双旋</h3><p>右左双旋时，麻烦结点出现在右子树的左边，因而又叫 RL 插入。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png data-srcset="https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png 1.5x, https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png 2x" data-sizes=auto alt=https://chenxqblog-1258795182.cos.ap-guangzhou.myqcloud.com/image-20200915112912024.png title=image-20200915112912024></p><p>同样的，我们也可将右左双旋看成是两次单旋，将 B 和 C 做左单旋，再将 A 与 C 做右单旋。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=nf>doubleRightLeftRotation</span><span class=o>(</span><span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>a</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 注意：A必须有一个右子节点B，且B必须有一个左子节点C
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=c1>// 将A、B与C做两次单旋，返回新的根结点C
+</span></span></span><span class=line><span class=cl><span class=c1></span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将B与C做左单旋，C被返回
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=n>a</span><span class=o>.</span><span class=na>right</span> <span class=o>=</span> <span class=n>singleRightRotation</span><span class=o>(</span><span class=n>a</span><span class=o>.</span><span class=na>right</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=c1>// 将A与C做右单旋，C被返回
+</span></span></span><span class=line><span class=cl><span class=c1></span>    <span class=k>return</span> <span class=n>singleLeftRotation</span><span class=o>(</span><span class=n>a</span><span class=o>);</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>注意调整时，可能节点的位置不变，但是平衡因子需要更新。</p><p>最后，我们来看一下平衡二叉树的插入，每一次的插入都要判断平衡是否被破坏，如果发现树的平衡被破坏，根据插入的位置做上面的四种旋转重新调整成平衡二叉树。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=nf>insert</span><span class=o>(</span><span class=n>AVLTree</span><span class=o>&lt;</span><span class=n>T</span><span class=o>&gt;</span> <span class=n>t</span><span class=o>,</span> <span class=n>T</span> <span class=n>x</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 将X插入AVL树T中，并且返回调整后的AVL树 */</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>t</span> <span class=o>!=</span> <span class=kc>null</span><span class=o>)</span> <span class=o>{</span> <span class=cm>/* 若插入空树，则新建包含一个结点的树 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>t</span> <span class=o>=</span> <span class=k>new</span> <span class=n>AVLTree</span><span class=o>&lt;&gt;(</span><span class=n>x</span><span class=o>,</span> <span class=kc>null</span><span class=o>,</span> <span class=kc>null</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>t</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>0</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=cm>/* if (插入空树) 结束 */</span> <span class=k>else</span> <span class=k>if</span> <span class=o>(</span><span class=n>x</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>data</span><span class=o>)</span> <span class=o>&lt;</span> <span class=n>0</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 插入T的左子树 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>t</span><span class=o>.</span><span class=na>left</span> <span class=o>=</span> <span class=n>insert</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>left</span><span class=o>,</span> <span class=n>x</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 如果需要左旋 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>left</span><span class=o>)</span> <span class=o>-</span> <span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>right</span><span class=o>)</span> <span class=o>==</span> <span class=n>2</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>x</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>left</span><span class=o>.</span><span class=na>data</span><span class=o>)</span> <span class=o>&lt;</span> <span class=n>0</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>t</span> <span class=o>=</span> <span class=n>singleLeftRotation</span><span class=o>(</span><span class=n>t</span><span class=o>);</span>      <span class=cm>/* 左单旋 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>t</span> <span class=o>=</span> <span class=n>doubleLeftRightRotation</span><span class=o>(</span><span class=n>t</span><span class=o>);</span> <span class=cm>/* 左-右双旋 */</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=cm>/* else if (插入左子树) 结束 */</span> <span class=k>else</span> <span class=k>if</span> <span class=o>(</span><span class=n>x</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>data</span><span class=o>)</span> <span class=o>&gt;</span> <span class=n>0</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 插入T的右子树 */</span>
+</span></span><span class=line><span class=cl>        <span class=n>t</span><span class=o>.</span><span class=na>right</span> <span class=o>=</span> <span class=n>insert</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>right</span><span class=o>,</span> <span class=n>x</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=cm>/* 如果需要右旋 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>left</span><span class=o>)</span> <span class=o>-</span> <span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>right</span><span class=o>)</span> <span class=o>==</span> <span class=o>-</span><span class=n>2</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>x</span><span class=o>.</span><span class=na>compareTo</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>right</span><span class=o>.</span><span class=na>data</span><span class=o>)</span> <span class=o>&gt;</span> <span class=n>0</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>                <span class=n>t</span> <span class=o>=</span> <span class=n>singleRightRotation</span><span class=o>(</span><span class=n>t</span><span class=o>);</span>     <span class=cm>/* 右单旋 */</span>
+</span></span><span class=line><span class=cl>        <span class=k>else</span>
+</span></span><span class=line><span class=cl>            <span class=n>t</span> <span class=o>=</span> <span class=n>doubleRightLeftRotation</span><span class=o>(</span><span class=n>t</span><span class=o>);</span> <span class=cm>/* 右-左双旋 */</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=cm>/* else if (插入右子树) 结束 */</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* else X == T-&gt;Data，无须插入 */</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=cm>/* 别忘了更新树高 */</span>
+</span></span><span class=line><span class=cl>    <span class=n>t</span><span class=o>.</span><span class=na>height</span> <span class=o>=</span> <span class=n>Math</span><span class=o>.</span><span class=na>max</span><span class=o>(</span><span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>left</span><span class=o>),</span> <span class=n>postOrderGetHight</span><span class=o>(</span><span class=n>t</span><span class=o>.</span><span class=na>right</span><span class=o>))</span> <span class=o>+</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>t</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><h2 id=参考>参考</h2><p>【1】浙江大学陈越老师的<a href="https://www.icourse163.org/learn/ZJU-93001?tid=1207006212#/learn/announce" target=_blank rel="noopener noreffer">数据结构课程</a></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-08-31</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-title=平衡二叉树 data-via=xueqiang_chen data-hashtags=树><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-hashtag=树><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-title=平衡二叉树><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-title=平衡二叉树><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-title=平衡二叉树 data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ data-title=平衡二叉树><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%A0%91/>树</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/linux/linux-bash-tutorials/ class=prev rel=prev title="Linux Shell Script 基础教程"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Linux Shell Script 基础教程</a>
+<a href=/posts/linux/linux-cap/ class=next rel=next title="解决setcap导致Java加载libjli.so 失败问题">解决setcap导致Java加载libjli.so 失败问题<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

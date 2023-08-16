@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>pod on AhaMoment</title><link>https://ahamoment.cn/tags/pod/</link><description>Recent content in pod on AhaMoment</description><generator>Hugo -- gohugo.io</generator><language>en</language><copyright>&amp;copy; 2021</copyright><lastBuildDate>Sat, 27 Feb 2021 15:55:20 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/pod/index.xml" rel="self" type="application/rss+xml"/><item><title>深入解析Pod对象(二): 使用进阶</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</link><pubDate>Sat, 27 Feb 2021 15:55:20 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept2/</guid><description>&lt;blockquote>
-&lt;p>本文转自张磊老师的《深入剖析 Kubernetes》课程&lt;/p>
-&lt;ol>
-&lt;li>ProjectedVolume: Secret, ConfigMap, DownwadAPI&lt;/li>
-&lt;li>ServiceAccount&lt;/li>
-&lt;li>容器健康检查和恢复机制&lt;/li>
-&lt;li>Pod 预设置：PodPreset&lt;/li>
-&lt;/ol>
-&lt;/blockquote></description></item><item><title>深入解析Pod对象(一)：基本概念</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</link><pubDate>Fri, 26 Feb 2021 15:14:52 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/pod-concept1/</guid><description>&lt;blockquote>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title>pod - Tag - Aha Moment</title><link>https://ahamoment.cn/tags/pod/</link><description>pod - Tag - Aha Moment</description><generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>xueqiang.chen@foxmail..com (xueqiang.chen)</managingEditor><webMaster>xueqiang.chen@foxmail..com (xueqiang.chen)</webMaster><lastBuildDate>Sat, 27 Feb 2021 15:55:20 +0800</lastBuildDate><atom:link href="https://ahamoment.cn/tags/pod/" rel="self" type="application/rss+xml"/><item><title>深入解析Pod对象(二): 使用进阶</title><link>https://ahamoment.cn/posts/k8s-doc/chapter3/pod-concept2/</link><pubDate>Sat, 27 Feb 2021 15:55:20 +0800</pubDate><author>xueqiang.chen</author><guid>https://ahamoment.cn/posts/k8s-doc/chapter3/pod-concept2/</guid><description><![CDATA[<blockquote>
+<p>本文转自张磊老师的《深入剖析 Kubernetes》课程</p>
+<ol>
+<li>ProjectedVolume: Secret, ConfigMap, DownwadAPI</li>
+<li>ServiceAccount</li>
+<li>容器健康检查和恢复机制</li>
+<li>Pod 预设置：PodPreset</li>
+</ol>
+</blockquote>]]></description></item><item><title>深入解析Pod对象(一)：基本概念</title><link>https://ahamoment.cn/posts/k8s-doc/chapter3/pod-concept1/</link><pubDate>Fri, 26 Feb 2021 15:14:52 +0800</pubDate><author>xueqiang.chen</author><guid>https://ahamoment.cn/posts/k8s-doc/chapter3/pod-concept1/</guid><description>&lt;blockquote>
 &lt;p>本文转自张磊老师的《深入剖析Kubernetes》课程，第14课时：深入解析Pod对象(一)：基本概念&lt;/p>
-&lt;/blockquote></description></item><item><title>为什么我们需要Pod</title><link>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</link><pubDate>Fri, 26 Feb 2021 09:33:05 +0800</pubDate><guid>https://ahamoment.cn/docs/k8s-doc/chapter3/why-pod/</guid><description>&lt;blockquote>
+&lt;/blockquote></description></item><item><title>为什么我们需要Pod</title><link>https://ahamoment.cn/posts/k8s-doc/chapter3/why-pod/</link><pubDate>Fri, 26 Feb 2021 09:33:05 +0800</pubDate><author>xueqiang.chen</author><guid>https://ahamoment.cn/posts/k8s-doc/chapter3/why-pod/</guid><description>&lt;blockquote>
 &lt;p>本文转自张磊老师的《深入剖析Kubernetes》课程，第13课时：为什么我们需要 Pod?&lt;/p>
 &lt;/blockquote></description></item></channel></rss>

@@ -1,706 +1,168 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>Linux Shell Script 基础教程 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。 1.">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Linux Shell Script 基础教程","item":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-bash-tutorials/"},"headline":"Linux Shell Script 基础教程 | AhaMoment","datePublished":"2020-08-27T16:03:59+08:00","dateModified":"2020-08-27T16:03:59+08:00","wordCount":4552,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https:\/\/www.tutorialspoint.com\/execute_ksh_online.php 作为shell在线demo的环境。 1."}</script><meta property="og:title" content="Linux Shell Script 基础教程 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-bash-tutorials/">
-<meta property="og:description" content="本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。 1.">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-08-27T16:03:59+08:00">
-<meta property="article:modified_time" content="2020-08-27T16:03:59+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="shell">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">Linux Shell Script 基础教程</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-08-27</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>10 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
-</div>
-</div>
-<div class=content>
-<p><img src="https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></p>
-<blockquote>
-<p>本文翻译自<a href=https://www.tutorialspoint.com/unix/unix-what-is-shell.htm>LEARN UNIX</a>，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 <strong><a href=https://www.tutorialspoint.com/execute_ksh_online.php>https://www.tutorialspoint.com/execute_ksh_online.php</a></strong> 作为shell在线demo的环境。</p>
-</blockquote>
-<h2 id=1-shell-是什么>1. Shell 是什么</h2>
-<p>Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。
-Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。</p>
-<h3 id=11-shell-类型>1.1 Shell 类型</h3>
-<p>Linux 系统中，主要有两种类型的Shell：</p>
-<ul>
-<li><strong><code>Bourne shell</code></strong> - 如果使用Bourne类型的shell，默认的提示符就是<code>$</code>，可以通过修改环境变量<code>PS1</code>来更改你的提示符。</li>
-<li><strong><code>C shell</code></strong> - C 类型的shell，默认的提示符是<code>%</code>。</li>
-</ul>
-<p><em><strong>Bourne Shell</strong></em> 又有下面几种类型：</p>
-<ul>
-<li>Bourne shell (sh)</li>
-<li>Korn shell (ksh)</li>
-<li>Bourne Again shell (bash)</li>
-<li>POSIX shell (sh)</li>
-</ul>
-<p><em><strong>C 类型</strong></em> 的Shell包括以下两种：</p>
-<ul>
-<li>C shell (csh)</li>
-<li>TENEX/TOPS C shell (tcsh)</li>
-</ul>
-<p>在大多数 Linux 版本中，Bourne shell 通常都安装为<code>/bin/sh</code>。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。</p>
-<h3 id=12-shell-脚本>1.2 Shell 脚本</h3>
-<p><strong>Shell脚本的基本概念是命令列表，按执行顺序列出命令。</strong>
-Shell 脚本文件以 <strong>.sh</strong> 结尾，例如 <strong>test.sh</strong> 。Shell 脚本的内容以 <strong><code>#!</code></strong> 开头，告诉系统接下来的命令将会被 Bourne Shell 执行。我们来创建一个Shell脚本，并往脚本中添加一点注释，注释以 <strong><code>#</code></strong> 开头：</p>
-<pre><code class=language-bash>#!/bin/bash
-
-# Author: xueqiang.chen
-# Script follows here:
-pwd
-ls
-</code></pre>
-<p>保存命令并执行脚本，可以看到以下输出内容：</p>
-<pre><code class=language-bash>$ chmod +x test.sh
-
-$ ./test.sh
-/home/centos
-go.sh  test.sh
-</code></pre>
-<p>Shell 脚本可以有很复杂的结构，毕竟，shell是一种真正的编程语言，它包括变量，控制结构等。无论脚本变得多么复杂，它仍然只是顺序执行的命令的列表。</p>
-<h2 id=2-shell-变量>2. Shell 变量</h2>
-<p>变量是我们为其分配值的字符串，变量的值包括数字，文本，文件名，设备，或是任意的数据类型。变量只是实际数据的一个指针，我们可以创建，赋值，删除变量。</p>
-<h3 id=21-变量类型>2.1 变量类型</h3>
-<p>当Shell运行时，存在三种主要类型的变量：</p>
-<ul>
-<li><strong>局部变量</strong>：局部变量是存在于Shell当前实例中的变量。它不适用于由 Shell 启动的程序。它们在命令提示符下设置。</li>
-<li><strong>环境变量</strong>：环境变量可用于Shell的任何子进程。某些程序需要环境变量才能正常运行。通常，shell脚本仅定义其运行的程序所需的那些环境变量。</li>
-<li><strong>Shell变量</strong>：Shell变量是Shell设置的特殊变量，shell要求Shell变量才能正常运行。这些变量中的一些是环境变量，而另一些是局部变量。</li>
-</ul>
-<h3 id=22-变量名>2.2 变量名</h3>
-<p>变量名称只能包含字母（a到z或A到Z），数字（0到9）或下划线字符（_）。按照约定，Unix shell变量将以大写字母命名。
-下面的例子是一些有效和无效的变量名：</p>
-<pre><code class=language-bash>#!/bin/bash
-
-# valid variable names
-_ALL
-TOKEN_A
-VAR_1
-VAR_2
-
-# invaild variable names
-2_VAR
--VARIABLE
-VAR1-VAR2
-VAR_A!
-
-</code></pre>
-<p>在shell 中，<strong><code>!, *, -</code></strong> 是含有特殊意义的，因此不能在变量名中使用。</p>
-<h3 id=23-定义变量>2.3 定义变量</h3>
-<p>变量的定义方式如下：</p>
-<pre><code class=language-bash>variable_name=variable_value
-</code></pre>
-<p><em>注意，<strong><code>=</code></strong> 号两边不能有空格。</em></p>
-<pre><code class=language-bash>#!/bin/bash
-NAME=&quot;Zara Ali&quot;
-</code></pre>
-<p>这个例子中定义了一个变量，并给这个变量赋值，这种变量的类型称为<strong>标量</strong>， 标量只一次只能有一个值。</p>
-<h3 id=24-使用变量>2.4 使用变量</h3>
-<p>Shell 中通过 <strong><code>$</code></strong> 符号获取变量的值。例如，下面的例子将获取变量<code>NAME</code>的值并将其打印在标准输出中：</p>
-<pre><code class=language-bash>#!/bin/bash
-
-NAME=&quot;Zara Ali&quot;
-echo $NAME
-</code></pre>
-<h3 id=25-只读变量>2.5 只读变量</h3>
-<p>Shell 允许通过 <strong><code>readonly</code></strong> 命令将一个变量变成只读变量。当变量成为只读变量后，它的值就不能更改了。</p>
-<pre><code class=language-bash>#!/bin/bash
-
-NAME=&quot;Zara Ali&quot;
-readonly NAME
-NAME=&quot;Qadiri&quot;
-</code></pre>
-<p>上面的脚本会发生错误。</p>
-<pre><code class=language-bash>/bin/sh: NAME: This variable is read only.
-</code></pre>
-<h3 id=26-重置变量>2.6 重置变量</h3>
-<p>重置或删除变量将指示Shell程序从其跟踪的变量列表中删除该变量。重置变量后，将无法访问该变量中的存储值。
-以下是使用 <strong><code>unset</code></strong> 命令取消定义的变量的语法：</p>
-<pre><code class=language-bash>unset variable_name
-</code></pre>
-<p>上面的命令重置定义的变量的值，下面的这个例子简单说明这个命令是如何工作的：</p>
-<pre><code class=language-bash>#!/bin/bash
-
-NAME=&quot;Zara Ali&quot;
-unset NAME
-echo $NAME
-</code></pre>
-<p>上面的例子不会打印出任何内容，你可以使用 <strong><code>unset</code></strong> 命令来重置被标记为 <strong><code>readonly</code></strong> 的变量。</p>
-<h2 id=3-特殊变量>3. 特殊变量</h2>
-<p>在上一节中，我们了解了在变量名称中使用某些非字母数字字符时应注意的事项。这是因为这些字符用在特殊的Unix变量的名称中。这些变量保留用于特定功能。</p>
-<p>下面的表格列出了可以在我们的脚本中使用的特殊变量：</p>
-<table>
-<thead>
-<tr>
-<th>变量</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><code>$0</code></strong></td>
-<td>当前脚本的文件名</td>
-</tr>
-<tr>
-<td><strong><code>$n</code></strong></td>
-<td>这个变量对应于调用脚本的参数。其中参数 <strong>n</strong> 是正整数，代表参数的位置。例如第一个参数就是 <code>$1</code> ， 第二个参数就是 <code>$2</code>， 以此类推。</td>
-</tr>
-<tr>
-<td><strong><code>$#</code></strong></td>
-<td>脚本参数的数量</td>
-</tr>
-<tr>
-<td><strong><code>$*</code></strong></td>
-<td>输出整个参数列表，将整个列表作为一个参数，且之间使用空格隔开。</td>
-</tr>
-<tr>
-<td><strong><code>$@</code></strong></td>
-<td>与<code>$*</code> 的作用是一致的，不同的是该变量输出时会将参数列表分成单独的参数。</td>
-</tr>
-<tr>
-<td><strong><code>$$</code></strong></td>
-<td>当前shell的进程号。对于Shell脚本，这是它们执行时的进程ID。</td>
-</tr>
-<tr>
-<td><strong><code>$!</code></strong></td>
-<td>最后一个后台命令的进程号。</td>
-</tr>
-<tr>
-<td>以下脚本使用与命令行相关的各种特殊变量:</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<pre><code class=language-bash>#!/bin/sh
-
-echo &quot;File Name: $0&quot;
-echo &quot;First Parameter : $1&quot;
-echo &quot;Second Parameter : $2&quot;
-echo &quot;Quoted Values: $@&quot;
-echo &quot;Quoted Values: $*&quot;
-echo &quot;Total Number of Parameters : $#&quot;
-</code></pre>
-<p>运行结果：</p>
-<pre><code class=language-bash>$./test.sh Zara Ali
-File Name : ./test.sh
-First Parameter : Zara
-Second Parameter : Ali
-Quoted Values: Zara Ali
-Quoted Values: Zara Ali
-Total Number of Parameters : 2
-</code></pre>
-<h3 id=31-错误状态>3.1 错误状态</h3>
-<p><strong><code>$?</code></strong> 变量表示上一个命令的退出状态。
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Linux Shell Script 基础教程 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="Linux Shell Script 基础教程"><meta property="og:description" content="本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。 1."><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-bash-tutorials/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-08-27T16:03:59+08:00"><meta property="article:modified_time" content="2020-08-27T16:03:59+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="Linux Shell Script 基础教程"><meta name=twitter:description content="本文翻译自LEARN UNIX，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 https://www.tutorialspoint.com/execute_ksh_online.php 作为shell在线demo的环境。 1."><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/linux/linux-bash-tutorials/><link rel=prev href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/><link rel=next href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Linux Shell Script 基础教程","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/linux\/linux-bash-tutorials\/"},"genre":"posts","keywords":"shell","wordcount":4552,"url":"https:\/\/ahamoment.cn\/posts\/linux\/linux-bash-tutorials\/","datePublished":"2020-08-27T16:03:59+08:00","dateModified":"2020-08-27T16:03:59+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Linux Shell Script 基础教程</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/linux/><i class="far fa-folder fa-fw" aria-hidden=true></i>Linux</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-08-27>2020-08-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;4552 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;10 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-shell-是什么>1. Shell 是什么</a><ul><li><a href=#11-shell-类型>1.1 Shell 类型</a></li><li><a href=#12-shell-脚本>1.2 Shell 脚本</a></li></ul></li><li><a href=#2-shell-变量>2. Shell 变量</a><ul><li><a href=#21-变量类型>2.1 变量类型</a></li><li><a href=#22-变量名>2.2 变量名</a></li><li><a href=#23-定义变量>2.3 定义变量</a></li><li><a href=#24-使用变量>2.4 使用变量</a></li><li><a href=#25-只读变量>2.5 只读变量</a></li><li><a href=#26-重置变量>2.6 重置变量</a></li></ul></li><li><a href=#3-特殊变量>3. 特殊变量</a><ul><li><a href=#31-错误状态>3.1 错误状态</a></li></ul></li><li><a href=#4-数组>4. 数组</a><ul><li><a href=#41-定义数组>4.1 定义数组</a></li><li><a href=#42-使用数组>4.2 使用数组</a></li></ul></li><li><a href=#5-运算符>5. 运算符</a><ul><li><a href=#51-算术运算符>5.1 算术运算符</a></li><li><a href=#52-关系运算符>5.2 关系运算符</a></li><li><a href=#53-布尔运算符>5.3 布尔运算符</a></li><li><a href=#54-字符串运算符>5.4 字符串运算符</a></li><li><a href=#55-文件测试运算符>5.5 文件测试运算符</a></li><li><a href=#56-其他shell的运算符>5.6 其他shell的运算符</a></li></ul></li><li><a href=#6-条件表达式>6. 条件表达式</a></li><li><a href=#7-循环>7. 循环</a><ul><li><a href=#71-嵌套循环>7.1 嵌套循环</a></li></ul></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20191206150655886.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></p><blockquote><p>本文翻译自<a href=https://www.tutorialspoint.com/unix/unix-what-is-shell.htm target=_blank rel="noopener noreffer">LEARN UNIX</a>，博主在原文的基础上添加了一些内容。如果没有Linux 机器，推荐使用该网站 <strong><a href=https://www.tutorialspoint.com/execute_ksh_online.php target=_blank rel="noopener noreffer">https://www.tutorialspoint.com/execute_ksh_online.php</a></strong> 作为shell在线demo的环境。</p></blockquote><h2 id=1-shell-是什么>1. Shell 是什么</h2><p>Shell为您提供了与Unix系统的接口。它收集您的输入，并根据该输入执行程序。程序完成执行后，将显示该程序的输出。
+Shell 是可以运行我们的命令，程序，shell 脚本的环境。Shell 有不同的类型，每种Shell都有它自己的命令和功能。</p><h3 id=11-shell-类型>1.1 Shell 类型</h3><p>Linux 系统中，主要有两种类型的Shell：</p><ul><li><strong><code>Bourne shell</code></strong> - 如果使用Bourne类型的shell，默认的提示符就是<code>$</code>，可以通过修改环境变量<code>PS1</code>来更改你的提示符。</li><li><strong><code>C shell</code></strong> - C 类型的shell，默认的提示符是<code>%</code>。</li></ul><p><em><strong>Bourne Shell</strong></em> 又有下面几种类型：</p><ul><li>Bourne shell (sh)</li><li>Korn shell (ksh)</li><li>Bourne Again shell (bash)</li><li>POSIX shell (sh)</li></ul><p><em><strong>C 类型</strong></em> 的Shell包括以下两种：</p><ul><li>C shell (csh)</li><li>TENEX/TOPS C shell (tcsh)</li></ul><p>在大多数 Linux 版本中，Bourne shell 通常都安装为<code>/bin/sh</code>。由于这个原因，它是不同版本的Linux 的首选 Shell。在本文中，我们将介绍大多数基于Bourne Shell的Shell概念。</p><h3 id=12-shell-脚本>1.2 Shell 脚本</h3><p><strong>Shell脚本的基本概念是命令列表，按执行顺序列出命令。</strong>
+Shell 脚本文件以 <strong>.sh</strong> 结尾，例如 <strong>test.sh</strong> 。Shell 脚本的内容以 <strong><code>#!</code></strong> 开头，告诉系统接下来的命令将会被 Bourne Shell 执行。我们来创建一个Shell脚本，并往脚本中添加一点注释，注释以 <strong><code>#</code></strong> 开头：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1># Author: xueqiang.chen</span>
+</span></span><span class=line><span class=cl><span class=c1># Script follows here:</span>
+</span></span><span class=line><span class=cl><span class=nb>pwd</span>
+</span></span><span class=line><span class=cl>ls
+</span></span></code></pre></div><p>保存命令并执行脚本，可以看到以下输出内容：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ chmod +x test.sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>$ ./test.sh
+</span></span><span class=line><span class=cl>/home/centos
+</span></span><span class=line><span class=cl>go.sh  test.sh
+</span></span></code></pre></div><p>Shell 脚本可以有很复杂的结构，毕竟，shell是一种真正的编程语言，它包括变量，控制结构等。无论脚本变得多么复杂，它仍然只是顺序执行的命令的列表。</p><h2 id=2-shell-变量>2. Shell 变量</h2><p>变量是我们为其分配值的字符串，变量的值包括数字，文本，文件名，设备，或是任意的数据类型。变量只是实际数据的一个指针，我们可以创建，赋值，删除变量。</p><h3 id=21-变量类型>2.1 变量类型</h3><p>当Shell运行时，存在三种主要类型的变量：</p><ul><li><strong>局部变量</strong>：局部变量是存在于Shell当前实例中的变量。它不适用于由 Shell 启动的程序。它们在命令提示符下设置。</li><li><strong>环境变量</strong>：环境变量可用于Shell的任何子进程。某些程序需要环境变量才能正常运行。通常，shell脚本仅定义其运行的程序所需的那些环境变量。</li><li><strong>Shell变量</strong>：Shell变量是Shell设置的特殊变量，shell要求Shell变量才能正常运行。这些变量中的一些是环境变量，而另一些是局部变量。</li></ul><h3 id=22-变量名>2.2 变量名</h3><p>变量名称只能包含字母（a到z或A到Z），数字（0到9）或下划线字符（_）。按照约定，Unix shell变量将以大写字母命名。
+下面的例子是一些有效和无效的变量名：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=c1># valid variable names</span>
+</span></span><span class=line><span class=cl>_ALL
+</span></span><span class=line><span class=cl>TOKEN_A
+</span></span><span class=line><span class=cl>VAR_1
+</span></span><span class=line><span class=cl>VAR_2
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># invaild variable names</span>
+</span></span><span class=line><span class=cl>2_VAR
+</span></span><span class=line><span class=cl>-VARIABLE
+</span></span><span class=line><span class=cl>VAR1-VAR2
+</span></span><span class=line><span class=cl>VAR_A!
+</span></span></code></pre></div><p>在shell 中，<strong><code>!, *, -</code></strong> 是含有特殊意义的，因此不能在变量名中使用。</p><h3 id=23-定义变量>2.3 定义变量</h3><p>变量的定义方式如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>variable_name</span><span class=o>=</span>variable_value
+</span></span></code></pre></div><p><em>注意，<strong><code>=</code></strong> 号两边不能有空格。</em></p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Zara Ali&#34;</span>
+</span></span></code></pre></div><p>这个例子中定义了一个变量，并给这个变量赋值，这种变量的类型称为<strong>标量</strong>， 标量只一次只能有一个值。</p><h3 id=24-使用变量>2.4 使用变量</h3><p>Shell 中通过 <strong><code>$</code></strong> 符号获取变量的值。例如，下面的例子将获取变量<code>NAME</code>的值并将其打印在标准输出中：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Zara Ali&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$NAME</span>
+</span></span></code></pre></div><h3 id=25-只读变量>2.5 只读变量</h3><p>Shell 允许通过 <strong><code>readonly</code></strong> 命令将一个变量变成只读变量。当变量成为只读变量后，它的值就不能更改了。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Zara Ali&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>readonly</span> NAME
+</span></span><span class=line><span class=cl><span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Qadiri&#34;</span>
+</span></span></code></pre></div><p>上面的脚本会发生错误。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>/bin/sh: NAME: This variable is <span class=nb>read</span> only.
+</span></span></code></pre></div><h3 id=26-重置变量>2.6 重置变量</h3><p>重置或删除变量将指示Shell程序从其跟踪的变量列表中删除该变量。重置变量后，将无法访问该变量中的存储值。
+以下是使用 <strong><code>unset</code></strong> 命令取消定义的变量的语法：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>unset</span> variable_name
+</span></span></code></pre></div><p>上面的命令重置定义的变量的值，下面的这个例子简单说明这个命令是如何工作的：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>NAME</span><span class=o>=</span><span class=s2>&#34;Zara Ali&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>unset</span> NAME
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=nv>$NAME</span>
+</span></span></code></pre></div><p>上面的例子不会打印出任何内容，你可以使用 <strong><code>unset</code></strong> 命令来重置被标记为 <strong><code>readonly</code></strong> 的变量。</p><h2 id=3-特殊变量>3. 特殊变量</h2><p>在上一节中，我们了解了在变量名称中使用某些非字母数字字符时应注意的事项。这是因为这些字符用在特殊的Unix变量的名称中。这些变量保留用于特定功能。</p><p>下面的表格列出了可以在我们的脚本中使用的特殊变量：</p><table><thead><tr><th>变量</th><th>说明</th></tr></thead><tbody><tr><td><strong><code>$0</code></strong></td><td>当前脚本的文件名</td></tr><tr><td><strong><code>$n</code></strong></td><td>这个变量对应于调用脚本的参数。其中参数 <strong>n</strong> 是正整数，代表参数的位置。例如第一个参数就是 <code>$1</code> ， 第二个参数就是 <code>$2</code>， 以此类推。</td></tr><tr><td><strong><code>$#</code></strong></td><td>脚本参数的数量</td></tr><tr><td><strong><code>$*</code></strong></td><td>输出整个参数列表，将整个列表作为一个参数，且之间使用空格隔开。</td></tr><tr><td><strong><code>$@</code></strong></td><td>与<code>$*</code> 的作用是一致的，不同的是该变量输出时会将参数列表分成单独的参数。</td></tr><tr><td><strong><code>$$</code></strong></td><td>当前shell的进程号。对于Shell脚本，这是它们执行时的进程ID。</td></tr><tr><td><strong><code>$!</code></strong></td><td>最后一个后台命令的进程号。</td></tr><tr><td>以下脚本使用与命令行相关的各种特殊变量:</td><td></td></tr></tbody></table><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/sh
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;File Name: </span><span class=nv>$0</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;First Parameter : </span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Second Parameter : </span><span class=nv>$2</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Quoted Values: </span><span class=nv>$@</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Quoted Values: </span><span class=nv>$*</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Total Number of Parameters : </span><span class=nv>$#</span><span class=s2>&#34;</span>
+</span></span></code></pre></div><p>运行结果：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$./test.sh Zara Ali
+</span></span><span class=line><span class=cl>File Name : ./test.sh
+</span></span><span class=line><span class=cl>First Parameter : Zara
+</span></span><span class=line><span class=cl>Second Parameter : Ali
+</span></span><span class=line><span class=cl>Quoted Values: Zara Ali
+</span></span><span class=line><span class=cl>Quoted Values: Zara Ali
+</span></span><span class=line><span class=cl>Total Number of Parameters : <span class=m>2</span>
+</span></span></code></pre></div><h3 id=31-错误状态>3.1 错误状态</h3><p><strong><code>$?</code></strong> 变量表示上一个命令的退出状态。
 退出状态是每个命令完成后返回的数值。通常，如果大多数命令成功，则返回退出状态0；如果不成功，则返回1。
-某些命令出于特殊原因会返回其他退出状态。例如，某些命令区分错误的种类，并将根据故障的特定类型返回各种退出值。</p>
-<p>下面的这个例子返回的是成功命令的状态：</p>
-<pre><code class=language-bash>$./test.sh Zara Ali
-File Name : ./test.sh
-First Parameter : Zara
-Second Parameter : Ali
-Quoted Values: Zara Ali
-Quoted Values: Zara Ali
-Total Number of Parameters : 2
-
-$echo $?
-0
-$
-</code></pre>
-<h2 id=4-数组>4. 数组</h2>
-<p>Shell变量足以容纳单个值。这些变量称为标量变量。</p>
-<p>Shell支持另一种类型的变量，称为<strong>数组变量</strong>。它可以同时保存多个值。数组提供了一种对一组变量进行分组的方法。数组的命名参考变量的命名规则。</p>
-<h3 id=41-定义数组>4.1 定义数组</h3>
-<p>数组变量和标量变量之间的差异可以解释如下。
-假设您尝试将各个学生的姓名表示为一组变量。每个单独的变量都是标量变量，如下所示：</p>
-<pre><code class=language-bash>#!/bin/bash
-NAME01=&quot;Zara&quot;
-NAME02=&quot;Qadir&quot;
-NAME03=&quot;Mahnaz&quot;
-NAME04=&quot;Ayan&quot;
-NAME05=&quot;Daisy&quot;
-</code></pre>
-<p>我们可以使用单个数组来存储所有上述名称。以下是创建数组变量的最简单方法。</p>
-<pre><code class=language-bash>array_name[index]=value
-</code></pre>
-<p>这里 <em>array_name</em> 是数组的名字，<em>index</em> 是要设置的数组中的索引， <em>value</em> 就是你要为该元素设置的值。如下所示：</p>
-<pre><code class=language-bash>#!/bin/bash
-
-NAME[0]=&quot;Zara&quot;
-NAME[1]=&quot;Qadir&quot;
-NAME[2]=&quot;Mahnaz&quot;
-NAME[3]=&quot;Ayan&quot;
-NAME[4]=&quot;Daisy&quot;
-</code></pre>
-<p>如果使用的是 <strong>bash shell</strong> ，也可以通过以下这种方法进行数组初始化：</p>
-<pre><code class=language-bash>array_name=(value1 ... valuen)
-</code></pre>
-<h3 id=42-使用数组>4.2 使用数组</h3>
-<p>为变量赋值之后，访问变量可以使用以下方式：</p>
-<pre><code class=language-bash>${array_name[index]}
-</code></pre>
-<p>这里 <em>array_name</em> 是数组名， <em>index</em> 是要访问那个数组项的索引。具体的例子如下：</p>
-<pre><code class=language-bash>#!/bin/bash
-NAME[0]=&quot;Zara&quot;
-NAME[1]=&quot;Qadir&quot;
-NAME[2]=&quot;Mahnaz&quot;
-NAME[3]=&quot;Ayan&quot;
-NAME[4]=&quot;Daisy&quot;
-echo &quot;First Index: ${NAME[0]}&quot;
-echo &quot;Second Index: ${NAME[1]}&quot;
-
-echo &quot;First Method: ${NAME[*]}&quot;
-echo &quot;Second Method: ${NAME[@]}&quot;
-</code></pre>
-<p>运行结果：</p>
-<pre><code class=language-bash>$./test.sh
-First Index: Zara
-Second Index: Qadir
-First Method: Zara Qadir Mahnaz Ayan Daisy
-Second Method: Zara Qadir Mahnaz Ayan Daisy
-</code></pre>
-<p>上面的示例中通过 <strong><code>*</code></strong> 和 <strong><code>@</code></strong> 来获取整个数组的值。</p>
-<pre><code class=language-bash>${array_name[*]}
-${array_name[@]}
-</code></pre>
-<h2 id=5-运算符>5. 运算符</h2>
-<p>每个Shell都支持不同的运算符，这里我们主要讨论的是 bash shell 的运算符。</p>
-<h3 id=51-算术运算符>5.1 算术运算符</h3>
-<p><strong>Bourne shell</strong> 最初没有任何执行简单算术运算的机制，它使用 <em>awk</em> 或 <em>expr</em> 来进行计算。如下所示：</p>
-<pre><code class=language-bash>#!/bin/sh
-
-val=`expr 2 + 2`
-echo &quot;Total value : $val&quot;
-</code></pre>
-<p>运行结果：</p>
-<pre><code class=language-bash>Total value : 4
-</code></pre>
-<p>上面的例子我们需要注意的有两点：</p>
-<ul>
-<li>表达式和运算符之间必须用空格隔开，例如 <code>2+2</code> 是错误的，应该写成 <code>2 + 2</code></li>
-<li>整个表达式要用反引号 `` 来包起来。</li>
-</ul>
-<p>假设变量 <strong>a</strong> 等于 10， 变量 <strong>b</strong> 等于 20， 我们来看一下 <strong>bash shell</strong> 支持的算术运算符是如何计算这两个值得：</p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>+</strong></td>
-<td><code>expr $a + $b</code> = 30</td>
-</tr>
-<tr>
-<td><strong>-</strong></td>
-<td><code>expr $a - $b</code> = -10</td>
-</tr>
-<tr>
-<td><strong><code>*</code></strong></td>
-<td><code>expr $a \* $b</code> = 200</td>
-</tr>
-<tr>
-<td><strong>/</strong></td>
-<td><code>expr $b / $a</code> = 2</td>
-</tr>
-<tr>
-<td><strong>%</strong></td>
-<td><code>expr $b % $a</code> = 0</td>
-</tr>
-<tr>
-<td><strong>=</strong></td>
-<td><code>a = $b</code> 将b的值赋给a</td>
-</tr>
-<tr>
-<td><strong>==</strong></td>
-<td><code>[ $a == $b ]</code> 将会返回 false</td>
-</tr>
-<tr>
-<td><strong>！=</strong></td>
-<td><code>[ $a != $b ]</code>将会返回 true</td>
-</tr>
-</tbody>
-</table>
-<p><em>注意：<code>[ $a == $b ]</code> 不能写成<code> [$a==$b]</code>。</em></p>
-<h3 id=52-关系运算符>5.2 关系运算符</h3>
-<p>Bash 支持以下特定于数值的关系运算符。
-假设变量a = 10，变量b = 20,</p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-<th>例子</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>-eq</strong></td>
-<td>检查运算符两边的值是否相等，相等返回 true</td>
-<td><code>[ $a -eq $b ] is not true.</code></td>
-</tr>
-<tr>
-<td><strong>-ne</strong></td>
-<td>检查运算符两边的值是否相等，不相等返回 true</td>
-<td><code>[ $a -ne $b ] is true</code></td>
-</tr>
-<tr>
-<td><strong>-gt</strong></td>
-<td><strong>gt</strong> 是 <strong>greater than</strong> 的缩写，检查运算符左边的值是否大于右边，是的话返回 true</td>
-<td><code>[ $a -gt $b ] is not true</code></td>
-</tr>
-<tr>
-<td><strong>-lt</strong></td>
-<td><strong>lt</strong> 是 <strong>less than</strong> 的缩写，检查运算符左边的值是否小于右边，是的话返回true</td>
-<td><code>[ $a -lt $b ] is true</code></td>
-</tr>
-<tr>
-<td><strong>-ge</strong></td>
-<td><strong>ge</strong> 是 <strong>greater than or equal</strong> 的缩写，检查运算符左边的值是否大于或等于右边的值，是的话返回true</td>
-<td><code>[ $a -ge $b ] is not true</code></td>
-</tr>
-<tr>
-<td><strong>-le</strong></td>
-<td><strong>le</strong> 是 <strong>less than or equal</strong> 的缩写，检查运算符左边的值是否小于或等于右边的值，是的话返回true</td>
-<td><code>[ $a -le $b ] is true</code></td>
-</tr>
-</tbody>
-</table>
-<p><em>注意：所有条件表达式应放在方括号内并在其周围留有空格。</em></p>
-<h3 id=53-布尔运算符>5.3 布尔运算符</h3>
-<p>Bash 支持以下布尔运算符。假设变量 <strong>a</strong> 的值是 10， 变量 <strong>b</strong> 的值是20：</p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>！</strong></td>
-<td>逻辑否。这会将真实条件转换为错误条件，反之亦然。</td>
-<td><code>[ ! false ] is true.</code></td>
-</tr>
-<tr>
-<td><strong>-o</strong></td>
-<td>逻辑或。如果运算符两边之一为真，则条件为真。</td>
-<td><code>[ $a -lt 20 -o $b -gt 100 ] is true.</code></td>
-</tr>
-<tr>
-<td><strong>-a</strong></td>
-<td>逻辑与。如果运算符两边都是真的，则条件为真。</td>
-<td><code>[ $a -lt 20 -a $b -gt 100 ] is false.</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id=54-字符串运算符>5.4 字符串运算符</h3>
-<p>Bash 运算符支持以下操作。
-假设变量 <strong>a</strong> 的值为 &ldquo;abc&rdquo;，变量<strong>b</strong>的值为 &ldquo;efg&rdquo;：</p>
-<table>
-<thead>
-<tr>
-<th>运算符</th>
-<th>描述</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>=</strong></td>
-<td>检查运算符两边的值是否相等；如果是，则条件变为真。</td>
-<td><code>[ $a = $b ] is not true.</code></td>
-</tr>
-<tr>
-<td><strong>!=</strong></td>
-<td>检查运算符两边的值是否相等；如果值不相等，则条件为真</td>
-<td><code>[ $a != $b ] is true.</code></td>
-</tr>
-<tr>
-<td><strong>-z</strong></td>
-<td>检查给定的字符串操作数大小是否为零；如果长度为零，则返回true。</td>
-<td><code>[ -z $a ] is not true.</code></td>
-</tr>
-<tr>
-<td><strong>-n</strong></td>
-<td>检查给定的字符串操作数大小是否为非零；如果长度非零，则返回true。</td>
-<td><code>[ -n $a ] is not false.</code></td>
-</tr>
-<tr>
-<td><strong>str</strong></td>
-<td>Checks if str is not the empty string; if it is empty, then it returns false.</td>
-<td><code>[ $a ] is not false.</code></td>
-</tr>
-</tbody>
-</table>
-<h3 id=55-文件测试运算符>5.5 文件测试运算符</h3>
-<p>我们有一些运算符可用于测试与文件相关的各种属性。
-假设有个文件变量 <strong>file</strong> 的值为一个存在的名为 &ldquo;test&rdquo; 的文件，该文件的大小为100bytes，并且有读写和执行的权限。</p>
-<table>
-<thead>
-<tr>
-<th style=text-align:left>运算符</th>
-<th style=text-align:center>描述</th>
-<th style=text-align:right>示例</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style=text-align:left><strong>-b file</strong></td>
-<td style=text-align:center>检查文件是否是一个块文件，如果是就返回true。</td>
-<td style=text-align:right>[ -b $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-c file</strong></td>
-<td style=text-align:center>检测文件是否是字符设备文件，如果是，则返回 true。</td>
-<td style=text-align:right>[ -c $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-d file</strong></td>
-<td style=text-align:center>检测文件是否是目录，如果是，则返回 true。</td>
-<td style=text-align:right>[ -d $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-f file</strong></td>
-<td style=text-align:center>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td>
-<td style=text-align:right>[ -f $file ] 返回 true。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-g file</strong></td>
-<td style=text-align:center>检测文件是否设置了 SGID 位，如果是，则返回 true。</td>
-<td style=text-align:right>[ -g $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-k file</strong></td>
-<td style=text-align:center>检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。</td>
-<td style=text-align:right>[ -k $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-p file</strong></td>
-<td style=text-align:center>检测文件是否是有名管道，如果是，则返回 true。</td>
-<td style=text-align:right>[ -p $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-t file</strong></td>
-<td style=text-align:center>检查文件描述符是否打开并与终端关联；如果是，则条件变为真。</td>
-<td style=text-align:right>[ -t $file ] is false.</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-u file</strong></td>
-<td style=text-align:center>检测文件是否设置了 SUID 位，如果是，则返回 true。</td>
-<td style=text-align:right>[ -u $file ] 返回 false。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-r file</strong></td>
-<td style=text-align:center>检测文件是否可读，如果是，则返回 true。</td>
-<td style=text-align:right>[ -r $file ] 返回 true。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-w file</strong></td>
-<td style=text-align:center>检测文件是否可写，如果是，则返回 true。</td>
-<td style=text-align:right>[ -w $file ] 返回 true。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-x file</strong></td>
-<td style=text-align:center>检测文件是否可执行，如果是，则返回 true。</td>
-<td style=text-align:right>[ -x $file ] 返回 true。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-s file</strong></td>
-<td style=text-align:center>检测文件是否为空（文件大小是否大于0），不为空返回 true。</td>
-<td style=text-align:right>[ -s $file ] 返回 true。</td>
-</tr>
-<tr>
-<td style=text-align:left><strong>-e file</strong></td>
-<td style=text-align:center>检测文件（包括目录）是否存在，如果是，则返回 true。</td>
-<td style=text-align:right>[ -e $file ] 返回 true。</td>
-</tr>
-</tbody>
-</table>
-<h3 id=56-其他shell的运算符>5.6 其他shell的运算符</h3>
-<ul>
-<li>C Shell 运算符：<a href=https://www.tutorialspoint.com/unix/unix-c-shell-operators.htm>C Shell Operators</a></li>
-<li>Korn Shell 运算符：<a href=https://www.tutorialspoint.com/unix/unix-korn-shell-operators.htm>Korn Shell Operators</a></li>
-</ul>
-<h2 id=6-条件表达式>6. 条件表达式</h2>
-<p>在编写shell脚本时，可能需要从给定的两个路径中采用一个路径。因此，您需要使用条件语句，这些条件语句允许您的程序做出正确的决定并执行正确的操作。</p>
-<h2 id=7-循环>7. 循环</h2>
-<p>循环是功能强大的编程工具，使您能够重复执行一组命令。在本章中，我们将研究以下可供Shell程序员使用的循环类型-</p>
-<ul>
-<li>while 循环</li>
-<li>for 循环</li>
-<li>until 循环</li>
-<li>select 循环</li>
-</ul>
-<p>您将根据情况使用不同的循环。</p>
-<h3 id=71-嵌套循环>7.1 嵌套循环</h3>
-<p>所有循环都支持嵌套概念，这意味着您可以将一个循环放入另一个类似的或不同的循环中。根据您的要求，此嵌套最多可以无限次。</p>
-<p>这是嵌套while循环的示例。其他循环可以根据编程要求以类似的方式嵌套-</p>
-<p>可以将while循环用作另一个while循环主体的一部分。
-语法：</p>
-<pre><code class=language-bash>while command1 ; # this is loop1, the outer loop
-do
-   Statement(s) to be executed if command1 is true
-
-   while command2 ; # this is loop2, the inner loop
-   do
-      Statement(s) to be executed if command2 is true
-   done
-
-   Statement(s) to be executed if command1 is true
-done
-</code></pre>
-<p>示例：</p>
-<pre><code class=language-bash>#!/bin/sh
-
-a=0
-while [ &quot;$a&quot; -lt 10 ]    # this is loop1
-do
-   b=&quot;$a&quot;
-   while [ &quot;$b&quot; -ge 0 ]  # this is loop2
-   do
-      echo -n &quot;$b &quot;
-      b=`expr $b - 1`
-   done
-   echo
-   a=`expr $a + 1`
-done
-</code></pre>
-<p>运行结果：</p>
-<pre><code class=language-bash>0
-1 0
-2 1 0
-3 2 1 0
-4 3 2 1 0
-5 4 3 2 1 0
-6 5 4 3 2 1 0
-7 6 5 4 3 2 1 0
-8 7 6 5 4 3 2 1 0
-9 8 7 6 5 4 3 2 1 0
-</code></pre>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/shell/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#shell</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-balanced-binary-tree/ class=block>平衡二叉树</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-binary-search-tree/ class=block>二叉搜索树</a>
-</div>
-</div>
-</div>
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-<h2 class="text-lg font-semibold mb-4">See Also</h2>
-<div class=content>
-<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/>Linux Shell 输入/输出重定向</a>
-<br>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+某些命令出于特殊原因会返回其他退出状态。例如，某些命令区分错误的种类，并将根据故障的特定类型返回各种退出值。</p><p>下面的这个例子返回的是成功命令的状态：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$./test.sh Zara Ali
+</span></span><span class=line><span class=cl>File Name : ./test.sh
+</span></span><span class=line><span class=cl>First Parameter : Zara
+</span></span><span class=line><span class=cl>Second Parameter : Ali
+</span></span><span class=line><span class=cl>Quoted Values: Zara Ali
+</span></span><span class=line><span class=cl>Quoted Values: Zara Ali
+</span></span><span class=line><span class=cl>Total Number of Parameters : <span class=m>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>$echo</span> <span class=nv>$?</span>
+</span></span><span class=line><span class=cl><span class=m>0</span>
+</span></span><span class=line><span class=cl>$
+</span></span></code></pre></div><h2 id=4-数组>4. 数组</h2><p>Shell变量足以容纳单个值。这些变量称为标量变量。</p><p>Shell支持另一种类型的变量，称为<strong>数组变量</strong>。它可以同时保存多个值。数组提供了一种对一组变量进行分组的方法。数组的命名参考变量的命名规则。</p><h3 id=41-定义数组>4.1 定义数组</h3><p>数组变量和标量变量之间的差异可以解释如下。
+假设您尝试将各个学生的姓名表示为一组变量。每个单独的变量都是标量变量，如下所示：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nv>NAME01</span><span class=o>=</span><span class=s2>&#34;Zara&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>NAME02</span><span class=o>=</span><span class=s2>&#34;Qadir&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>NAME03</span><span class=o>=</span><span class=s2>&#34;Mahnaz&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>NAME04</span><span class=o>=</span><span class=s2>&#34;Ayan&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>NAME05</span><span class=o>=</span><span class=s2>&#34;Daisy&#34;</span>
+</span></span></code></pre></div><p>我们可以使用单个数组来存储所有上述名称。以下是创建数组变量的最简单方法。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>array_name<span class=o>[</span>index<span class=o>]=</span>value
+</span></span></code></pre></div><p>这里 <em>array_name</em> 是数组的名字，<em>index</em> 是要设置的数组中的索引， <em>value</em> 就是你要为该元素设置的值。如下所示：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>0<span class=o>]=</span><span class=s2>&#34;Zara&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>1<span class=o>]=</span><span class=s2>&#34;Qadir&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>2<span class=o>]=</span><span class=s2>&#34;Mahnaz&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>3<span class=o>]=</span><span class=s2>&#34;Ayan&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>4<span class=o>]=</span><span class=s2>&#34;Daisy&#34;</span>
+</span></span></code></pre></div><p>如果使用的是 <strong>bash shell</strong> ，也可以通过以下这种方法进行数组初始化：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>array_name</span><span class=o>=(</span>value1 ... valuen<span class=o>)</span>
+</span></span></code></pre></div><h3 id=42-使用数组>4.2 使用数组</h3><p>为变量赋值之后，访问变量可以使用以下方式：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=si>${</span><span class=nv>array_name</span><span class=p>[index]</span><span class=si>}</span>
+</span></span></code></pre></div><p>这里 <em>array_name</em> 是数组名， <em>index</em> 是要访问那个数组项的索引。具体的例子如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>NAME<span class=o>[</span>0<span class=o>]=</span><span class=s2>&#34;Zara&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>1<span class=o>]=</span><span class=s2>&#34;Qadir&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>2<span class=o>]=</span><span class=s2>&#34;Mahnaz&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>3<span class=o>]=</span><span class=s2>&#34;Ayan&#34;</span>
+</span></span><span class=line><span class=cl>NAME<span class=o>[</span>4<span class=o>]=</span><span class=s2>&#34;Daisy&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;First Index: </span><span class=si>${</span><span class=nv>NAME</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Second Index: </span><span class=si>${</span><span class=nv>NAME</span><span class=p>[1]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;First Method: </span><span class=si>${</span><span class=nv>NAME</span><span class=p>[*]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Second Method: </span><span class=si>${</span><span class=nv>NAME</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></div><p>运行结果：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$./test.sh
+</span></span><span class=line><span class=cl>First Index: Zara
+</span></span><span class=line><span class=cl>Second Index: Qadir
+</span></span><span class=line><span class=cl>First Method: Zara Qadir Mahnaz Ayan Daisy
+</span></span><span class=line><span class=cl>Second Method: Zara Qadir Mahnaz Ayan Daisy
+</span></span></code></pre></div><p>上面的示例中通过 <strong><code>*</code></strong> 和 <strong><code>@</code></strong> 来获取整个数组的值。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=si>${</span><span class=nv>array_name</span><span class=p>[*]</span><span class=si>}</span>
+</span></span><span class=line><span class=cl><span class=si>${</span><span class=nv>array_name</span><span class=p>[@]</span><span class=si>}</span>
+</span></span></code></pre></div><h2 id=5-运算符>5. 运算符</h2><p>每个Shell都支持不同的运算符，这里我们主要讨论的是 bash shell 的运算符。</p><h3 id=51-算术运算符>5.1 算术运算符</h3><p><strong>Bourne shell</strong> 最初没有任何执行简单算术运算的机制，它使用 <em>awk</em> 或 <em>expr</em> 来进行计算。如下所示：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/sh
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>val</span><span class=o>=</span><span class=sb>`</span>expr <span class=m>2</span> + 2<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Total value : </span><span class=nv>$val</span><span class=s2>&#34;</span>
+</span></span></code></pre></div><p>运行结果：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>Total value : <span class=m>4</span>
+</span></span></code></pre></div><p>上面的例子我们需要注意的有两点：</p><ul><li>表达式和运算符之间必须用空格隔开，例如 <code>2+2</code> 是错误的，应该写成 <code>2 + 2</code></li><li>整个表达式要用反引号 `` 来包起来。</li></ul><p>假设变量 <strong>a</strong> 等于 10， 变量 <strong>b</strong> 等于 20， 我们来看一下 <strong>bash shell</strong> 支持的算术运算符是如何计算这两个值得：</p><table><thead><tr><th>运算符</th><th>示例</th></tr></thead><tbody><tr><td><strong>+</strong></td><td><code>expr $a + $b</code> = 30</td></tr><tr><td><strong>-</strong></td><td><code>expr $a - $b</code> = -10</td></tr><tr><td><strong><code>*</code></strong></td><td><code>expr $a \* $b</code> = 200</td></tr><tr><td><strong>/</strong></td><td><code>expr $b / $a</code> = 2</td></tr><tr><td><strong>%</strong></td><td><code>expr $b % $a</code> = 0</td></tr><tr><td><strong>=</strong></td><td><code>a = $b</code> 将b的值赋给a</td></tr><tr><td><strong>==</strong></td><td><code>[ $a == $b ]</code> 将会返回 false</td></tr><tr><td><strong>！=</strong></td><td><code>[ $a != $b ]</code>将会返回 true</td></tr></tbody></table><p><em>注意：<code>[ $a == $b ]</code> 不能写成<code> [$a==$b]</code>。</em></p><h3 id=52-关系运算符>5.2 关系运算符</h3><p>Bash 支持以下特定于数值的关系运算符。
+假设变量a = 10，变量b = 20,</p><table><thead><tr><th>运算符</th><th>描述</th><th>例子</th></tr></thead><tbody><tr><td><strong>-eq</strong></td><td>检查运算符两边的值是否相等，相等返回 true</td><td><code>[ $a -eq $b ] is not true.</code></td></tr><tr><td><strong>-ne</strong></td><td>检查运算符两边的值是否相等，不相等返回 true</td><td><code>[ $a -ne $b ] is true</code></td></tr><tr><td><strong>-gt</strong></td><td><strong>gt</strong> 是 <strong>greater than</strong> 的缩写，检查运算符左边的值是否大于右边，是的话返回 true</td><td><code>[ $a -gt $b ] is not true</code></td></tr><tr><td><strong>-lt</strong></td><td><strong>lt</strong> 是 <strong>less than</strong> 的缩写，检查运算符左边的值是否小于右边，是的话返回true</td><td><code>[ $a -lt $b ] is true</code></td></tr><tr><td><strong>-ge</strong></td><td><strong>ge</strong> 是 <strong>greater than or equal</strong> 的缩写，检查运算符左边的值是否大于或等于右边的值，是的话返回true</td><td><code>[ $a -ge $b ] is not true</code></td></tr><tr><td><strong>-le</strong></td><td><strong>le</strong> 是 <strong>less than or equal</strong> 的缩写，检查运算符左边的值是否小于或等于右边的值，是的话返回true</td><td><code>[ $a -le $b ] is true</code></td></tr></tbody></table><p><em>注意：所有条件表达式应放在方括号内并在其周围留有空格。</em></p><h3 id=53-布尔运算符>5.3 布尔运算符</h3><p>Bash 支持以下布尔运算符。假设变量 <strong>a</strong> 的值是 10， 变量 <strong>b</strong> 的值是20：</p><table><thead><tr><th>运算符</th><th>描述</th><th>示例</th></tr></thead><tbody><tr><td><strong>！</strong></td><td>逻辑否。这会将真实条件转换为错误条件，反之亦然。</td><td><code>[ ! false ] is true.</code></td></tr><tr><td><strong>-o</strong></td><td>逻辑或。如果运算符两边之一为真，则条件为真。</td><td><code>[ $a -lt 20 -o $b -gt 100 ] is true.</code></td></tr><tr><td><strong>-a</strong></td><td>逻辑与。如果运算符两边都是真的，则条件为真。</td><td><code>[ $a -lt 20 -a $b -gt 100 ] is false.</code></td></tr></tbody></table><h3 id=54-字符串运算符>5.4 字符串运算符</h3><p>Bash 运算符支持以下操作。
+假设变量 <strong>a</strong> 的值为 &ldquo;abc&rdquo;，变量<strong>b</strong>的值为 &ldquo;efg&rdquo;：</p><table><thead><tr><th>运算符</th><th>描述</th><th>示例</th></tr></thead><tbody><tr><td><strong>=</strong></td><td>检查运算符两边的值是否相等；如果是，则条件变为真。</td><td><code>[ $a = $b ] is not true.</code></td></tr><tr><td><strong>!=</strong></td><td>检查运算符两边的值是否相等；如果值不相等，则条件为真</td><td><code>[ $a != $b ] is true.</code></td></tr><tr><td><strong>-z</strong></td><td>检查给定的字符串操作数大小是否为零；如果长度为零，则返回true。</td><td><code>[ -z $a ] is not true.</code></td></tr><tr><td><strong>-n</strong></td><td>检查给定的字符串操作数大小是否为非零；如果长度非零，则返回true。</td><td><code>[ -n $a ] is not false.</code></td></tr><tr><td><strong>str</strong></td><td>Checks if str is not the empty string; if it is empty, then it returns false.</td><td><code>[ $a ] is not false.</code></td></tr></tbody></table><h3 id=55-文件测试运算符>5.5 文件测试运算符</h3><p>我们有一些运算符可用于测试与文件相关的各种属性。
+假设有个文件变量 <strong>file</strong> 的值为一个存在的名为 &ldquo;test&rdquo; 的文件，该文件的大小为100bytes，并且有读写和执行的权限。</p><table><thead><tr><th style=text-align:left>运算符</th><th style=text-align:center>描述</th><th style=text-align:right>示例</th></tr></thead><tbody><tr><td style=text-align:left><strong>-b file</strong></td><td style=text-align:center>检查文件是否是一个块文件，如果是就返回true。</td><td style=text-align:right>[ -b $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-c file</strong></td><td style=text-align:center>检测文件是否是字符设备文件，如果是，则返回 true。</td><td style=text-align:right>[ -c $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-d file</strong></td><td style=text-align:center>检测文件是否是目录，如果是，则返回 true。</td><td style=text-align:right>[ -d $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-f file</strong></td><td style=text-align:center>检测文件是否是普通文件（既不是目录，也不是设备文件），如果是，则返回 true。</td><td style=text-align:right>[ -f $file ] 返回 true。</td></tr><tr><td style=text-align:left><strong>-g file</strong></td><td style=text-align:center>检测文件是否设置了 SGID 位，如果是，则返回 true。</td><td style=text-align:right>[ -g $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-k file</strong></td><td style=text-align:center>检测文件是否设置了粘着位(Sticky Bit)，如果是，则返回 true。</td><td style=text-align:right>[ -k $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-p file</strong></td><td style=text-align:center>检测文件是否是有名管道，如果是，则返回 true。</td><td style=text-align:right>[ -p $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-t file</strong></td><td style=text-align:center>检查文件描述符是否打开并与终端关联；如果是，则条件变为真。</td><td style=text-align:right>[ -t $file ] is false.</td></tr><tr><td style=text-align:left><strong>-u file</strong></td><td style=text-align:center>检测文件是否设置了 SUID 位，如果是，则返回 true。</td><td style=text-align:right>[ -u $file ] 返回 false。</td></tr><tr><td style=text-align:left><strong>-r file</strong></td><td style=text-align:center>检测文件是否可读，如果是，则返回 true。</td><td style=text-align:right>[ -r $file ] 返回 true。</td></tr><tr><td style=text-align:left><strong>-w file</strong></td><td style=text-align:center>检测文件是否可写，如果是，则返回 true。</td><td style=text-align:right>[ -w $file ] 返回 true。</td></tr><tr><td style=text-align:left><strong>-x file</strong></td><td style=text-align:center>检测文件是否可执行，如果是，则返回 true。</td><td style=text-align:right>[ -x $file ] 返回 true。</td></tr><tr><td style=text-align:left><strong>-s file</strong></td><td style=text-align:center>检测文件是否为空（文件大小是否大于0），不为空返回 true。</td><td style=text-align:right>[ -s $file ] 返回 true。</td></tr><tr><td style=text-align:left><strong>-e file</strong></td><td style=text-align:center>检测文件（包括目录）是否存在，如果是，则返回 true。</td><td style=text-align:right>[ -e $file ] 返回 true。</td></tr></tbody></table><h3 id=56-其他shell的运算符>5.6 其他shell的运算符</h3><ul><li>C Shell 运算符：<a href=https://www.tutorialspoint.com/unix/unix-c-shell-operators.htm target=_blank rel="noopener noreffer">C Shell Operators</a></li><li>Korn Shell 运算符：<a href=https://www.tutorialspoint.com/unix/unix-korn-shell-operators.htm target=_blank rel="noopener noreffer">Korn Shell Operators</a></li></ul><h2 id=6-条件表达式>6. 条件表达式</h2><p>在编写shell脚本时，可能需要从给定的两个路径中采用一个路径。因此，您需要使用条件语句，这些条件语句允许您的程序做出正确的决定并执行正确的操作。</p><h2 id=7-循环>7. 循环</h2><p>循环是功能强大的编程工具，使您能够重复执行一组命令。在本章中，我们将研究以下可供Shell程序员使用的循环类型-</p><ul><li>while 循环</li><li>for 循环</li><li>until 循环</li><li>select 循环</li></ul><p>您将根据情况使用不同的循环。</p><h3 id=71-嵌套循环>7.1 嵌套循环</h3><p>所有循环都支持嵌套概念，这意味着您可以将一个循环放入另一个类似的或不同的循环中。根据您的要求，此嵌套最多可以无限次。</p><p>这是嵌套while循环的示例。其他循环可以根据编程要求以类似的方式嵌套-</p><p>可以将while循环用作另一个while循环主体的一部分。
+语法：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> command1 <span class=p>;</span> <span class=c1># this is loop1, the outer loop</span>
+</span></span><span class=line><span class=cl><span class=k>do</span>
+</span></span><span class=line><span class=cl>   Statement<span class=o>(</span>s<span class=o>)</span> to be executed <span class=k>if</span> command1 is <span class=nb>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>   <span class=k>while</span> command2 <span class=p>;</span> <span class=c1># this is loop2, the inner loop</span>
+</span></span><span class=line><span class=cl>   <span class=k>do</span>
+</span></span><span class=line><span class=cl>      Statement<span class=o>(</span>s<span class=o>)</span> to be executed <span class=k>if</span> command2 is <span class=nb>true</span>
+</span></span><span class=line><span class=cl>   <span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>   Statement<span class=o>(</span>s<span class=o>)</span> to be executed <span class=k>if</span> command1 is <span class=nb>true</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></div><p>示例：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/bin/sh
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=nv>a</span><span class=o>=</span><span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$a</span><span class=s2>&#34;</span> -lt <span class=m>10</span> <span class=o>]</span>    <span class=c1># this is loop1</span>
+</span></span><span class=line><span class=cl><span class=k>do</span>
+</span></span><span class=line><span class=cl>   <span class=nv>b</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$a</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>   <span class=k>while</span> <span class=o>[</span> <span class=s2>&#34;</span><span class=nv>$b</span><span class=s2>&#34;</span> -ge <span class=m>0</span> <span class=o>]</span>  <span class=c1># this is loop2</span>
+</span></span><span class=line><span class=cl>   <span class=k>do</span>
+</span></span><span class=line><span class=cl>      <span class=nb>echo</span> -n <span class=s2>&#34;</span><span class=nv>$b</span><span class=s2> &#34;</span>
+</span></span><span class=line><span class=cl>      <span class=nv>b</span><span class=o>=</span><span class=sb>`</span>expr <span class=nv>$b</span> - 1<span class=sb>`</span>
+</span></span><span class=line><span class=cl>   <span class=k>done</span>
+</span></span><span class=line><span class=cl>   <span class=nb>echo</span>
+</span></span><span class=line><span class=cl>   <span class=nv>a</span><span class=o>=</span><span class=sb>`</span>expr <span class=nv>$a</span> + 1<span class=sb>`</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></div><p>运行结果：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>5</span> <span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>6</span> <span class=m>5</span> <span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>7</span> <span class=m>6</span> <span class=m>5</span> <span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>8</span> <span class=m>7</span> <span class=m>6</span> <span class=m>5</span> <span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=m>9</span> <span class=m>8</span> <span class=m>7</span> <span class=m>6</span> <span class=m>5</span> <span class=m>4</span> <span class=m>3</span> <span class=m>2</span> <span class=m>1</span> <span class=m>0</span>
+</span></span></code></pre></div></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-08-27</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-title="Linux Shell Script 基础教程" data-via=xueqiang_chen data-hashtags=shell><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-hashtag=shell><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-title="Linux Shell Script 基础教程"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-title="Linux Shell Script 基础教程"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-title="Linux Shell Script 基础教程" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/linux/linux-bash-tutorials/ data-title="Linux Shell Script 基础教程"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/shell/>shell</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/algorithm/algorithm-binary-search-tree/ class=prev rel=prev title=二叉搜索树><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>二叉搜索树</a>
+<a href=/posts/algorithm/algorithm-balanced-binary-tree/ class=next rel=next title=平衡二叉树>平衡二叉树<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

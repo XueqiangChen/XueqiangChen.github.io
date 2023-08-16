@@ -1,182 +1,39 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>JDK1.8 源代码阅读环境搭建 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到) 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"JDK1.8 源代码阅读环境搭建","item":"https://ahamoment.cn/posts/java/java-source-code-learn/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-source-code-learn/"},"headline":"JDK1.8 源代码阅读环境搭建 | AhaMoment","datePublished":"2020-05-11T18:57:51+08:00","dateModified":"2020-05-11T18:57:51+08:00","wordCount":454,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到) 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来"}</script><meta property="og:title" content="JDK1.8 源代码阅读环境搭建 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/java/java-source-code-learn/">
-<meta property="og:description" content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到) 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-05-11T18:57:51+08:00">
-<meta property="article:modified_time" content="2020-05-11T18:57:51+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="源代码">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">JDK1.8 源代码阅读环境搭建</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-05-11</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>1 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-<div class=content>
-<h2 id=一准备>一、准备</h2>
-<p>Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)</p>
-<h2 id=二项目结构>二、项目结构</h2>
-<p>IDEA 创建一个普通的 java 项目
-<img src="https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>JDK1.8 源代码阅读环境搭建 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="JDK1.8 源代码阅读环境搭建"><meta property="og:description" content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到) 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/java/java-source-code-learn/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-05-11T18:57:51+08:00"><meta property="article:modified_time" content="2020-05-11T18:57:51+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="JDK1.8 源代码阅读环境搭建"><meta name=twitter:description content="一、准备 Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到) 二、项目结构 IDEA 创建一个普通的 java 项目 把解压得到的 jdk1.8 的源代码复制到 source 目录下： test 目录用来"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/java/java-source-code-learn/><link rel=prev href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/><link rel=next href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"JDK1.8 源代码阅读环境搭建","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/java\/java-source-code-learn\/"},"genre":"posts","keywords":"源代码","wordcount":454,"url":"https:\/\/ahamoment.cn\/posts\/java\/java-source-code-learn\/","datePublished":"2020-05-11T18:57:51+08:00","dateModified":"2020-05-11T18:57:51+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">JDK1.8 源代码阅读环境搭建</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/java/><i class="far fa-folder fa-fw" aria-hidden=true></i>java</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-05-11>2020-05-11</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;454 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;One minute&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#一准备>一、准备</a></li><li><a href=#二项目结构>二、项目结构</a></li><li><a href=#三idea-设置>三、IDEA 设置</a></li><li><a href=#四编译调式>四、编译调式</a></li><li><a href=#五编译问题>五、编译问题</a></li></ul></nav></div></div><div class=content id=content><h2 id=一准备>一、准备</h2><p>Itellj IDEA， jdk1.8 的源代码包(解压 jdk 目录下的 src.zip 包得到)</p><h2 id=二项目结构>二、项目结构</h2><p>IDEA 创建一个普通的 java 项目
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511113652329.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述>
 把解压得到的 jdk1.8 的源代码复制到 source 目录下：
-<img src="https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述>
-test 目录用来写测试用例, 这里用不到 Main 方法。</p>
-<h2 id=三idea-设置>三、IDEA 设置</h2>
-<ol>
-<li>Project Structure -> Project 设置项目的 SDK (jdk8u221)，language level 选择 <code>8 - Lambdas, type annotations etc.</code>
-<img src="https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></li>
-<li>Project Structure -> Dependencies 选择 Modules，SDK 选择 1.8_221
-<img src="https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></li>
-<li>设置平台的 SDK 源代码路径为自己项目的 source 目录
-<img src="https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></li>
-<li>调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。
-<img src="https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></li>
-<li>IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包
-<img src="https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述>
-到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。</li>
-</ol>
-<h2 id=四编译调式>四、编译调式</h2>
-<p>创建一个测试类进行调试：</p>
-<pre><code class=language-java>import java.util.HashMap;
-import java.util.Map;
-
-public class Test {
-
-    public static void main(String[] args) {
-        Map&lt;String, Double&gt; hashMap = new HashMap&lt;&gt;();
-
-        hashMap.put(&quot;k1&quot;, 0.1);
-        hashMap.put(&quot;k2&quot;, 0.2);
-        hashMap.put(&quot;k3&quot;, 0.3);
-        hashMap.put(&quot;k4&quot;, 0.4);
-    }
-}
-</code></pre>
-<p>进入 debug 之后，就可以在源代码里写一些笔记了。
-<img src="https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述></p>
-<h2 id=五编译问题>五、编译问题</h2>
-<p>经常碰到的几个问题：</p>
-<blockquote>
-<ol>
-<li>缺少com.sun.tools包</li>
-<li>缺少sun.awt.UNIXToolkit 和 sun.font.FontConfigManager这两个类</li>
-</ol>
-</blockquote>
-<p>解决办法可以参考这篇博客：<a href=https://www.jianshu.com/p/c00db010265b>JDK1.8源码分析03之idea搭建源码阅读环境</a></p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#源代码</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ class=block>20 常用的 RPM 命令</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class=block>Linux Shell 输入/输出重定向</a>
-</div>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511113748267.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述>
+test 目录用来写测试用例, 这里用不到 Main 方法。</p><h2 id=三idea-设置>三、IDEA 设置</h2><ol><li>Project Structure -> Project 设置项目的 SDK (jdk8u221)，language level 选择 <code>8 - Lambdas, type annotations etc.</code>
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511114245184.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></li><li>Project Structure -> Dependencies 选择 Modules，SDK 选择 1.8_221
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/2020051111442075.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></li><li>设置平台的 SDK 源代码路径为自己项目的 source 目录
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511114621171.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></li><li>调整编译线程的堆大小，避免内存不足，编译无法通过，调整到 1G 以上。
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511114759326.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></li><li>IDEA 默认调试是不会进入到 jdk 的源代码的，在 Debugger 设置中允许进入到 jdk 的包
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511115000586.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述>
+到这里，我们完成了 idea 的设置，可以开始写个测试程序编译运行。</li></ol><h2 id=四编译调式>四、编译调式</h2><p>创建一个测试类进行调试：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kn>import</span> <span class=nn>java.util.HashMap</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=nn>java.util.Map</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>Test</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Map</span><span class=o>&lt;</span><span class=n>String</span><span class=o>,</span> <span class=n>Double</span><span class=o>&gt;</span> <span class=n>hashMap</span> <span class=o>=</span> <span class=k>new</span> <span class=n>HashMap</span><span class=o>&lt;&gt;();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>hashMap</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;k1&#34;</span><span class=o>,</span> <span class=n>0</span><span class=o>.</span><span class=na>1</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>hashMap</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;k2&#34;</span><span class=o>,</span> <span class=n>0</span><span class=o>.</span><span class=na>2</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>hashMap</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;k3&#34;</span><span class=o>,</span> <span class=n>0</span><span class=o>.</span><span class=na>3</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>hashMap</span><span class=o>.</span><span class=na>put</span><span class=o>(</span><span class=s>&#34;k4&#34;</span><span class=o>,</span> <span class=n>0</span><span class=o>.</span><span class=na>4</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>进入 debug 之后，就可以在源代码里写一些笔记了。
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20200511115402489.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述></p><h2 id=五编译问题>五、编译问题</h2><p>经常碰到的几个问题：</p><blockquote><ol><li>缺少com.sun.tools包</li><li>缺少sun.awt.UNIXToolkit 和 sun.font.FontConfigManager这两个类</li></ol></blockquote><p>解决办法可以参考这篇博客：<a href=https://www.jianshu.com/p/c00db010265b target=_blank rel="noopener noreffer">JDK1.8源码分析03之idea搭建源码阅读环境</a></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-05-11</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-title="JDK1.8 源代码阅读环境搭建" data-via=xueqiang_chen data-hashtags=源代码><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-hashtag=源代码><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-title="JDK1.8 源代码阅读环境搭建"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-title="JDK1.8 源代码阅读环境搭建"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-title="JDK1.8 源代码阅读环境搭建" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/java/java-source-code-learn/ data-title="JDK1.8 源代码阅读环境搭建"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E6%BA%90%E4%BB%A3%E7%A0%81/>源代码</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/linux/linux-shell-input-output-redirect/ class=prev rel=prev title="Linux Shell 输入/输出重定向"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>Linux Shell 输入/输出重定向</a>
+<a href=/posts/linux/linux-20-rpm-command/ class=next rel=next title="20 常用的 RPM 命令">20 常用的 RPM 命令<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

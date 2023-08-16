@@ -1,370 +1,158 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>认识 Linux NSCD 服务缓存 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。 NSCD 安装 RHEL/CentOS yum -y install nscd Debian/Ubuntu apt-get install nscd RPM https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。 NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d,">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"认识 Linux NSCD 服务缓存","item":"https://ahamoment.cn/posts/linux/linux-nscd/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-nscd/"},"headline":"认识 Linux NSCD 服务缓存 | AhaMoment","datePublished":"2020-09-27T13:23:05+08:00","dateModified":"2020-09-27T13:23:05+08:00","wordCount":2666,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"NSCD(Name Service Cache Daemon)是服务缓存守护进程。 NSCD 安装 RHEL\/CentOS yum -y install nscd Debian\/Ubuntu apt-get install nscd RPM https:\/\/centos.pkgs.org\/7\/centos-x86_64\/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。 NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d,"}</script><meta property="og:title" content="认识 Linux NSCD 服务缓存 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-nscd/">
-<meta property="og:description" content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。 NSCD 安装 RHEL/CentOS yum -y install nscd Debian/Ubuntu apt-get install nscd RPM https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。 NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d,">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-09-27T13:23:05+08:00">
-<meta property="article:modified_time" content="2020-09-27T13:23:05+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="linux">
-<meta property="article:tag" content="nscd">
-<meta property="og:see_also" content="https://ahamoment.cn/posts/linux/linux-cap/">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">认识 Linux NSCD 服务缓存</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-09-27</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>6 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
-</div>
-</div>
-<div class=content>
-<p>NSCD(Name Service Cache Daemon)是服务缓存守护进程。</p>
-<h2 id=nscd-安装>NSCD 安装</h2>
-<ul>
-<li>
-<p>RHEL/CentOS</p>
-<pre><code class=language-bash>yum -y install nscd
-</code></pre>
-</li>
-<li>
-<p>Debian/Ubuntu</p>
-<pre><code class=language-bash>apt-get install nscd
-</code></pre>
-</li>
-<li>
-<p>RPM</p>
-<pre><code class=language-bash>https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
-</code></pre>
-</li>
-</ul>
-<p>CentOS7 之后 NSCD 使用 systemd 进行管理。</p>
-<h2 id=nscd-命令选项>NSCD 命令选项</h2>
-<pre><code class=language-bash>$ nscd  --help
-用法： nscd [选项...]
-Name Service Cache Daemon.
-  -d, --debug                Do not fork and display messages on the current
-                             tty
-  -f, --config-file=名称     从NAME中读取配置数据
-  -g, --statistics           Print current configuration statistics
-  -i, --invalidate=TABLE     Invalidate the specified cache
-  -K, --shutdown             关闭服务器
-  -t, --nthreads=NUMBER      启动 NUMBER 个线程
-  -?, --help                 给出该系统求助列表
-      --usage                给出简要的用法信息
-  -V, --version              打印程序版本号
-
-长选项的强制或可选参数对对应的短选项也是强制或可选的。
-</code></pre>
-<h2 id=nscd-配置文件>NSCD 配置文件</h2>
-<p>NSCD配置文件为<code>/etc/nscd.conf</code>，NSCD程序在启动的时候会读取<code>/etc/nscd.conf</code>文件，每一行指定一个属性和对应的值，或者指定一个服务和对应的值，#表示注释。有效的服务设定是：passwd, group, hosts, services, or netgroup五个。</p>
-<p>NSCD 的缓存文件路径默认为 <code>/var/db/nscd/</code>。</p>
-<p>NSCD 的配置文件相关参数</p>
-<pre><code class=language-bash>#设置日志文件
-logfile debug-file-name
-
-#设置debug记录的级别，默认是0
-debug-level value
-
-#程序启动时，等待进去请求的处理线程数，至少5个
-threads number
-
-#最大线程数，默认32
-max-threads number
-
-#nscd程序以哪个用户运行,如果设置了该选项，nscd将作为该用户运行，而不是作为root。如果每个用户都使用一个单独的缓存(-S参数)，将忽略该选项。
-server-user user
-
-#哪个用户可以请求统计用户
-stat-user user
-
-#在一个缓存项被删除之前允许使用的次数，默认值是5，代表SUCCESS的缓存在内存中会Reload5次
-reload-count unlimited | number
-
-#是否启用偏执模式，启用会导致nscd周期性重启，默认是no
-paranoia &lt;yes|no&gt;
-
-#如果启用偏执模式，设置的定期重启nscd的时间间隔，默认是3600秒
-restart-interval time
-
-#开启或者关闭服务缓存，默认是no
-enable-cache service &lt;yes|no&gt;
-
-#为成功请求的元素设置缓存TTL，单位是秒，值越大缓存命中率越高，降低平均响应时间，但会增加缓存的一致性问题
-positive-time-to-live service value
-
-#为失败查询元素设置缓存TTL，单位是秒，应保持小值，减小缓存一致性问题
-negative-time-to-live service value
-
-#内部的散列表大小，value应该保持一个素数以达到优化效果。默认值是211
-suggested-size service value
-
-#启用或者禁用检查文件是否属于指定的服务，这些文件是/etc/passwd、/etc/group、/etc/hosts、/etc/services、/etc/netgroup等
-check-files service &lt;yes|no&gt;
-
-#设置缓存在服务器重启后，仍旧能提供缓存服务，在使用偏执模式时有用，默认是no
-persistent service &lt;yes|no&gt;
-
-#为客户端共享nscd数据库在内存中做的映射，使客户端可以直接搜索，而不用每次都查询守护进行，默认是no
-shared service &lt;yes|no&gt;
-
-#该数据库的最大大小，单位是bytes，默认是33554432
-max-db-size service bytes
-
-#此选项仅使用于passwd和group服务
-auto-propagate service &lt;yes|no&gt;
-</code></pre>
-<h2 id=nscd-使用示例对dns进行缓存>NSCD 使用示例：对DNS进行缓存</h2>
-<h3 id=dns缓存在服务器上的作用>DNS缓存在服务器上的作用</h3>
-<p>在需要通过域名与外界进行数据交互的时候,dns缓存就派上用场了,它可以减少域名解析的时间,提高效率。例如以下情况</p>
-<ul>
-<li>使用爬虫采集网络上的页面数据,</li>
-<li>使用auth2.0协议从其他平台(如微博或QQ)获取用户数据,</li>
-<li>使用第三方支付接口,</li>
-<li>使用短信通道下发短信等.</li>
-</ul>
-<h3 id=开启nscd-dns-缓存服务的优缺点>开启NSCD DNS 缓存服务的优缺点</h3>
-<ul>
-<li>优点：
-<ul>
-<li>本地缓存DNS解析信息，提供解析速度。</li>
-<li>DNS服务挂了也没有问题，在缓存服务时间范围内，解析依旧正常。</li>
-</ul>
-</li>
-<li>缺点：
-<ul>
-<li>DNS解析信息会滞后，如域名解析更改需要手动刷新缓存，NSCD不适合做实时的切换的应用</li>
-<li>多条RR的情况下失去轮询功能，导致缓存周期内单机的负载均衡失效</li>
-<li>域名变更生效可能持续一个TTL+15s，对于一部分讲究变更快速生效的域名而言有一定的变更生效延误</li>
-<li>对于一部分异常导致解析错误的域名，有可能被NSCD缓存导致一段时间内解析都异常</li>
-</ul>
-</li>
-</ul>
-<h3 id=配置dns缓存>配置DNS缓存</h3>
-<p>通过编辑<code>/etc/nscd.conf</code>文件，在其中增加如下一行可以开启本地DNS Cache</p>
-<pre><code class=language-bash>enable-cache hosts yes #这个服务除了dns缓存之外还可以缓存passwd,group,servers
-</code></pre>
-<p>完整配置如下：</p>
-<pre><code class=language-bash>$ cat /etc/nscd.conf
-
-logfile                 /var/log/nscd.log
-threads                 5
-max-threads             32
-server-user             nscd
-debug-level             0
-paranoia                no
-reload-count 			5
-enable-cache            hosts           yes
-enable-cache            passwd          no
-enable-cache            group           no
-positive-time-to-live   hosts           60
-negative-time-to-live   hosts           20
-suggested-size          hosts           211
-check-files             hosts           yes
-persistent              hosts           yes
-shared                  hosts           yes
-max-db-size             hosts           33554432
-</code></pre>
-<h4 id=关于主动刷新>关于主动刷新</h4>
-<pre><code class=language-bash>reload-count 5    默认值是5，代表SUCCESS的缓存在内存中会Reload  5次
-</code></pre>
-<p>reload的time是DNS应答<code>TTL</code>+<code>CACHE_PRUNE_INTERVAL</code>，reload过程中NSCD会主动发起DNS请求（非客户端发起），如果期间发生解析结果变更会将结果主动更新至NSCD缓存。这里的CACHE_PRUNE_INTERVAL来自于相关的宏定义：</p>
-<pre><code class=language-text>#define CACHE_PRUNE_INTERVAL    15
-</code></pre>
-<h4 id=关于非success域名的缓存>关于非success域名的缓存</h4>
-<p>查看代码发现对于非success域名的缓存，NSCD会读取配置中的negative-time-to-live hosts，将缓存一个negative-time-to-live hosts+CACHE_PRUNE_INTERVAL的时间</p>
-<pre><code class=language-text>dataset-&gt;head.ttl = ttl == INT32_MAX ? db-&gt;negtimeout : ttl;
-  timeout = dataset-&gt;head.timeout = t + dataset-&gt;head.ttl;
-</code></pre>
-<h4 id=关于缓存的rr轮询>关于缓存的RR轮询</h4>
-<p>NSCD是直接缓存了GETHOSTBYNAME/GETHOSTBYADD的应答结果，如果存在多条RR的情况下，将只会读取应答结果中的第一条结果作为函数的返回值。多条RR在NSCD的缓存中并没有RR轮询的效果，直到下一次reload更新缓存结果。这里可能导致域名原本的负载均衡机制失效。</p>
-<h4 id=关于cnamea的结果>关于CNAME+A的结果</h4>
-<p>GLIBC的GETHOSTBYNAME/GETHOSTBYADD返回的TTL中直接读取的是A类型的TTL，代码中并没有针对CNAME的TTL做特殊处理，因此在有CNAME+A的级联应答结果中，缓存的timeout将只会读取对应的A记录的TTL。
-当DNS应答结果只有CNAME时，DNS请求将被判定为失败，这时CNAME的TTL将不起作用，缓存的时间将遵循非success域名的timeout计算。</p>
-<pre><code class=language-text>return ((qtype == T_A || qtype == T_AAAA) &amp;&amp; ap != host_data-&gt;aliases
-           ? NSS_STATUS_NOTFOUND : NSS_STATUS_TRYAGAIN);
-</code></pre>
-<h3 id=启动-nscd-进程>启动 NSCD 进程</h3>
-<p>默认该服务在Redhat或Centos下是关闭的，可以通过以下指令开启</p>
-<pre><code>$ systemctl start nscd
-</code></pre>
-<p>查看进程，如下所示</p>
-<pre><code>$ ps aux | grep nscd
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>认识 Linux NSCD 服务缓存 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="认识 Linux NSCD 服务缓存"><meta property="og:description" content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。 NSCD 安装 RHEL/CentOS yum -y install nscd Debian/Ubuntu apt-get install nscd RPM https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。 NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d,"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-nscd/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-09-27T13:23:05+08:00"><meta property="article:modified_time" content="2020-09-27T13:23:05+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="认识 Linux NSCD 服务缓存"><meta name=twitter:description content="NSCD(Name Service Cache Daemon)是服务缓存守护进程。 NSCD 安装 RHEL/CentOS yum -y install nscd Debian/Ubuntu apt-get install nscd RPM https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html CentOS7 之后 NSCD 使用 systemd 进行管理。 NSCD 命令选项 $ nscd --help 用法： nscd [选项...] Name Service Cache Daemon. -d,"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/linux/linux-nscd/><link rel=prev href=https://ahamoment.cn/posts/algorithm/algorithm-heap/><link rel=next href=https://ahamoment.cn/posts/algorithm/algorithm-hashtable/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"认识 Linux NSCD 服务缓存","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/linux\/linux-nscd\/"},"genre":"posts","keywords":"linux, nscd","wordcount":2666,"url":"https:\/\/ahamoment.cn\/posts\/linux\/linux-nscd\/","datePublished":"2020-09-27T13:23:05+08:00","dateModified":"2020-09-27T13:23:05+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">认识 Linux NSCD 服务缓存</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/linux/><i class="far fa-folder fa-fw" aria-hidden=true></i>Linux</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-09-27>2020-09-27</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;2666 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;6 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#nscd-安装>NSCD 安装</a></li><li><a href=#nscd-命令选项>NSCD 命令选项</a></li><li><a href=#nscd-配置文件>NSCD 配置文件</a></li><li><a href=#nscd-使用示例对dns进行缓存>NSCD 使用示例：对DNS进行缓存</a><ul><li><a href=#dns缓存在服务器上的作用>DNS缓存在服务器上的作用</a></li><li><a href=#开启nscd-dns-缓存服务的优缺点>开启NSCD DNS 缓存服务的优缺点</a></li><li><a href=#配置dns缓存>配置DNS缓存</a></li><li><a href=#启动-nscd-进程>启动 NSCD 进程</a></li><li><a href=#nscd服务查看和清除>NSCD服务查看和清除</a></li><li><a href=#清除指定类型缓存>清除指定类型缓存</a></li><li><a href=#关闭服务>关闭服务</a></li></ul></li><li><a href=#参考文章>参考文章</a></li></ul></nav></div></div><div class=content id=content><p>NSCD(Name Service Cache Daemon)是服务缓存守护进程。</p><h2 id=nscd-安装>NSCD 安装</h2><ul><li><p>RHEL/CentOS</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>yum -y install nscd
+</span></span></code></pre></div></li><li><p>Debian/Ubuntu</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>apt-get install nscd
+</span></span></code></pre></div></li><li><p>RPM</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>https://centos.pkgs.org/7/centos-x86_64/nscd-2.17-307.el7.1.x86_64.rpm.html
+</span></span></code></pre></div></li></ul><p>CentOS7 之后 NSCD 使用 systemd 进行管理。</p><h2 id=nscd-命令选项>NSCD 命令选项</h2><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nscd  --help
+</span></span><span class=line><span class=cl>用法： nscd <span class=o>[</span>选项...<span class=o>]</span>
+</span></span><span class=line><span class=cl>Name Service Cache Daemon.
+</span></span><span class=line><span class=cl>  -d, --debug                Do not fork and display messages on the current
+</span></span><span class=line><span class=cl>                             tty
+</span></span><span class=line><span class=cl>  -f, --config-file<span class=o>=</span>名称     从NAME中读取配置数据
+</span></span><span class=line><span class=cl>  -g, --statistics           Print current configuration statistics
+</span></span><span class=line><span class=cl>  -i, --invalidate<span class=o>=</span>TABLE     Invalidate the specified cache
+</span></span><span class=line><span class=cl>  -K, --shutdown             关闭服务器
+</span></span><span class=line><span class=cl>  -t, --nthreads<span class=o>=</span>NUMBER      启动 NUMBER 个线程
+</span></span><span class=line><span class=cl>  -?, --help                 给出该系统求助列表
+</span></span><span class=line><span class=cl>      --usage                给出简要的用法信息
+</span></span><span class=line><span class=cl>  -V, --version              打印程序版本号
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>长选项的强制或可选参数对对应的短选项也是强制或可选的。
+</span></span></code></pre></div><h2 id=nscd-配置文件>NSCD 配置文件</h2><p>NSCD配置文件为<code>/etc/nscd.conf</code>，NSCD程序在启动的时候会读取<code>/etc/nscd.conf</code>文件，每一行指定一个属性和对应的值，或者指定一个服务和对应的值，#表示注释。有效的服务设定是：passwd, group, hosts, services, or netgroup五个。</p><p>NSCD 的缓存文件路径默认为 <code>/var/db/nscd/</code>。</p><p>NSCD 的配置文件相关参数</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1>#设置日志文件</span>
+</span></span><span class=line><span class=cl>logfile debug-file-name
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#设置debug记录的级别，默认是0</span>
+</span></span><span class=line><span class=cl>debug-level value
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#程序启动时，等待进去请求的处理线程数，至少5个</span>
+</span></span><span class=line><span class=cl>threads number
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#最大线程数，默认32</span>
+</span></span><span class=line><span class=cl>max-threads number
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#nscd程序以哪个用户运行,如果设置了该选项，nscd将作为该用户运行，而不是作为root。如果每个用户都使用一个单独的缓存(-S参数)，将忽略该选项。</span>
+</span></span><span class=line><span class=cl>server-user user
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#哪个用户可以请求统计用户</span>
+</span></span><span class=line><span class=cl>stat-user user
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#在一个缓存项被删除之前允许使用的次数，默认值是5，代表SUCCESS的缓存在内存中会Reload5次</span>
+</span></span><span class=line><span class=cl>reload-count unlimited <span class=p>|</span> number
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#是否启用偏执模式，启用会导致nscd周期性重启，默认是no</span>
+</span></span><span class=line><span class=cl>paranoia &lt;yes<span class=p>|</span>no&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#如果启用偏执模式，设置的定期重启nscd的时间间隔，默认是3600秒</span>
+</span></span><span class=line><span class=cl>restart-interval <span class=nb>time</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#开启或者关闭服务缓存，默认是no</span>
+</span></span><span class=line><span class=cl>enable-cache service &lt;yes<span class=p>|</span>no&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#为成功请求的元素设置缓存TTL，单位是秒，值越大缓存命中率越高，降低平均响应时间，但会增加缓存的一致性问题</span>
+</span></span><span class=line><span class=cl>positive-time-to-live service value
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#为失败查询元素设置缓存TTL，单位是秒，应保持小值，减小缓存一致性问题</span>
+</span></span><span class=line><span class=cl>negative-time-to-live service value
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#内部的散列表大小，value应该保持一个素数以达到优化效果。默认值是211</span>
+</span></span><span class=line><span class=cl>suggested-size service value
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#启用或者禁用检查文件是否属于指定的服务，这些文件是/etc/passwd、/etc/group、/etc/hosts、/etc/services、/etc/netgroup等</span>
+</span></span><span class=line><span class=cl>check-files service &lt;yes<span class=p>|</span>no&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#设置缓存在服务器重启后，仍旧能提供缓存服务，在使用偏执模式时有用，默认是no</span>
+</span></span><span class=line><span class=cl>persistent service &lt;yes<span class=p>|</span>no&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#为客户端共享nscd数据库在内存中做的映射，使客户端可以直接搜索，而不用每次都查询守护进行，默认是no</span>
+</span></span><span class=line><span class=cl>shared service &lt;yes<span class=p>|</span>no&gt;
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#该数据库的最大大小，单位是bytes，默认是33554432</span>
+</span></span><span class=line><span class=cl>max-db-size service bytes
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>#此选项仅使用于passwd和group服务</span>
+</span></span><span class=line><span class=cl>auto-propagate service &lt;yes<span class=p>|</span>no&gt;
+</span></span></code></pre></div><h2 id=nscd-使用示例对dns进行缓存>NSCD 使用示例：对DNS进行缓存</h2><h3 id=dns缓存在服务器上的作用>DNS缓存在服务器上的作用</h3><p>在需要通过域名与外界进行数据交互的时候,dns缓存就派上用场了,它可以减少域名解析的时间,提高效率。例如以下情况</p><ul><li>使用爬虫采集网络上的页面数据,</li><li>使用auth2.0协议从其他平台(如微博或QQ)获取用户数据,</li><li>使用第三方支付接口,</li><li>使用短信通道下发短信等.</li></ul><h3 id=开启nscd-dns-缓存服务的优缺点>开启NSCD DNS 缓存服务的优缺点</h3><ul><li>优点：<ul><li>本地缓存DNS解析信息，提供解析速度。</li><li>DNS服务挂了也没有问题，在缓存服务时间范围内，解析依旧正常。</li></ul></li><li>缺点：<ul><li>DNS解析信息会滞后，如域名解析更改需要手动刷新缓存，NSCD不适合做实时的切换的应用</li><li>多条RR的情况下失去轮询功能，导致缓存周期内单机的负载均衡失效</li><li>域名变更生效可能持续一个TTL+15s，对于一部分讲究变更快速生效的域名而言有一定的变更生效延误</li><li>对于一部分异常导致解析错误的域名，有可能被NSCD缓存导致一段时间内解析都异常</li></ul></li></ul><h3 id=配置dns缓存>配置DNS缓存</h3><p>通过编辑<code>/etc/nscd.conf</code>文件，在其中增加如下一行可以开启本地DNS Cache</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>enable-cache hosts yes <span class=c1>#这个服务除了dns缓存之外还可以缓存passwd,group,servers</span>
+</span></span></code></pre></div><p>完整配置如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ cat /etc/nscd.conf
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>logfile                 /var/log/nscd.log
+</span></span><span class=line><span class=cl>threads                 <span class=m>5</span>
+</span></span><span class=line><span class=cl>max-threads             <span class=m>32</span>
+</span></span><span class=line><span class=cl>server-user             nscd
+</span></span><span class=line><span class=cl>debug-level             <span class=m>0</span>
+</span></span><span class=line><span class=cl>paranoia                no
+</span></span><span class=line><span class=cl>reload-count 			<span class=m>5</span>
+</span></span><span class=line><span class=cl>enable-cache            hosts           yes
+</span></span><span class=line><span class=cl>enable-cache            passwd          no
+</span></span><span class=line><span class=cl>enable-cache            group           no
+</span></span><span class=line><span class=cl>positive-time-to-live   hosts           <span class=m>60</span>
+</span></span><span class=line><span class=cl>negative-time-to-live   hosts           <span class=m>20</span>
+</span></span><span class=line><span class=cl>suggested-size          hosts           <span class=m>211</span>
+</span></span><span class=line><span class=cl>check-files             hosts           yes
+</span></span><span class=line><span class=cl>persistent              hosts           yes
+</span></span><span class=line><span class=cl>shared                  hosts           yes
+</span></span><span class=line><span class=cl>max-db-size             hosts           <span class=m>33554432</span>
+</span></span></code></pre></div><h4 id=关于主动刷新>关于主动刷新</h4><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>reload-count <span class=m>5</span>    默认值是5，代表SUCCESS的缓存在内存中会Reload  5次
+</span></span></code></pre></div><p>reload的time是DNS应答<code>TTL</code>+<code>CACHE_PRUNE_INTERVAL</code>，reload过程中NSCD会主动发起DNS请求（非客户端发起），如果期间发生解析结果变更会将结果主动更新至NSCD缓存。这里的CACHE_PRUNE_INTERVAL来自于相关的宏定义：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>#define CACHE_PRUNE_INTERVAL    15
+</span></span></code></pre></div><h4 id=关于非success域名的缓存>关于非success域名的缓存</h4><p>查看代码发现对于非success域名的缓存，NSCD会读取配置中的negative-time-to-live hosts，将缓存一个negative-time-to-live hosts+CACHE_PRUNE_INTERVAL的时间</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>dataset-&gt;head.ttl = ttl == INT32_MAX ? db-&gt;negtimeout : ttl;
+</span></span><span class=line><span class=cl>  timeout = dataset-&gt;head.timeout = t + dataset-&gt;head.ttl;
+</span></span></code></pre></div><h4 id=关于缓存的rr轮询>关于缓存的RR轮询</h4><p>NSCD是直接缓存了GETHOSTBYNAME/GETHOSTBYADD的应答结果，如果存在多条RR的情况下，将只会读取应答结果中的第一条结果作为函数的返回值。多条RR在NSCD的缓存中并没有RR轮询的效果，直到下一次reload更新缓存结果。这里可能导致域名原本的负载均衡机制失效。</p><h4 id=关于cnamea的结果>关于CNAME+A的结果</h4><p>GLIBC的GETHOSTBYNAME/GETHOSTBYADD返回的TTL中直接读取的是A类型的TTL，代码中并没有针对CNAME的TTL做特殊处理，因此在有CNAME+A的级联应答结果中，缓存的timeout将只会读取对应的A记录的TTL。
+当DNS应答结果只有CNAME时，DNS请求将被判定为失败，这时CNAME的TTL将不起作用，缓存的时间将遵循非success域名的timeout计算。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>return ((qtype == T_A || qtype == T_AAAA) &amp;&amp; ap != host_data-&gt;aliases
+</span></span><span class=line><span class=cl>           ? NSS_STATUS_NOTFOUND : NSS_STATUS_TRYAGAIN);
+</span></span></code></pre></div><h3 id=启动-nscd-进程>启动 NSCD 进程</h3><p>默认该服务在Redhat或Centos下是关闭的，可以通过以下指令开启</p><pre tabindex=0><code>$ systemctl start nscd
+</code></pre><p>查看进程，如下所示</p><pre tabindex=0><code>$ ps aux | grep nscd
 nscd       1284  0.1  0.3 708056  1580 ?        Ssl  23:37   0:00 /usr/sbin/nscd
-</code></pre>
-<p>说明已经正常运行了。</p>
-<h3 id=nscd服务查看和清除>NSCD服务查看和清除</h3>
-<p>NSCD缓存DB文件在<code>/var/db/nscd</code>下。可以通过<code>nscd -g</code>查看统计的信息，这里列出部分：</p>
-<pre><code class=language-bash>$ nscd -g
-
-nscd 配置：
-
-              0  服务器调试级别
-             4s  server runtime
-              5  current number of threads
-             32  maximum number of threads
-              0  number of times clients had to wait
-             no  paranoia mode enabled
-           3600  restart internal
-              5  reload count
-
-... 省略输出信息若干 ...
-
-hosts cache:
-
-            yes  cache is enabled
-            yes  cache is persistent
-            yes  cache is shared
-            211  suggested size
-         216064  total data pool size
-              0  used data pool size
-             60  seconds time to live for positive entries
-             20  seconds time to live for negative entries
-              0  cache hits on positive entries
-              0  cache hits on negative entries
-              0  cache misses on positive entries
-              0  cache misses on negative entries
-              0% cache hit rate
-              0  current number of cached values
-              0  maximum number of cached values
-              0  maximum chain length searched
-              0  number of delays on rdlock
-              0  number of delays on wrlock
-              0  memory allocations failed
-            yes  check /etc/hosts for changes
-
-... 省略输出信息若干 ...
-</code></pre>
-<h3 id=清除指定类型缓存>清除指定类型缓存</h3>
-<pre><code class=language-bash>$ nscd -i passwd
-$ nscd -i group
-$ nscd -i hosts
-</code></pre>
-<h3 id=关闭服务>关闭服务</h3>
-<pre><code class=language-bash>$ nscd -K
-</code></pre>
-<h2 id=参考文章>参考文章</h2>
-<p>【1】<a href=https://www.hi-linux.com/posts/9461.html>Linux 下开启缓存服务 NSCD</a></p>
-<p>【2】<a href=https://zhuanlan.zhihu.com/p/44556919>阿里DNS: NSCD-DNS缓存详解</a></p>
-<p>【3】<a href=https://linux.die.net/man/8/nscd>Linux man page</a></p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/linux/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#linux</a>
-<a href=https://ahamoment.cn/tags/nscd/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#nscd</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-hashtable/ class=block>散列表那些事</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-heap/ class=block>堆</a>
-</div>
-</div>
-</div>
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded p-6">
-<h2 class="text-lg font-semibold mb-4">See Also</h2>
-<div class=content>
-<a href=https://ahamoment.cn/posts/linux/linux-cap/>解决setcap导致Java加载libjli.so 失败问题</a>
-<br>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+</code></pre><p>说明已经正常运行了。</p><h3 id=nscd服务查看和清除>NSCD服务查看和清除</h3><p>NSCD缓存DB文件在<code>/var/db/nscd</code>下。可以通过<code>nscd -g</code>查看统计的信息，这里列出部分：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nscd -g
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>nscd 配置：
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  服务器调试级别
+</span></span><span class=line><span class=cl>             4s  server runtime
+</span></span><span class=line><span class=cl>              <span class=m>5</span>  current number of threads
+</span></span><span class=line><span class=cl>             <span class=m>32</span>  maximum number of threads
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  number of <span class=nb>times</span> clients had to <span class=nb>wait</span>
+</span></span><span class=line><span class=cl>             no  paranoia mode enabled
+</span></span><span class=line><span class=cl>           <span class=m>3600</span>  restart internal
+</span></span><span class=line><span class=cl>              <span class=m>5</span>  reload count
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>... 省略输出信息若干 ...
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>hosts cache:
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            yes  cache is enabled
+</span></span><span class=line><span class=cl>            yes  cache is persistent
+</span></span><span class=line><span class=cl>            yes  cache is shared
+</span></span><span class=line><span class=cl>            <span class=m>211</span>  suggested size
+</span></span><span class=line><span class=cl>         <span class=m>216064</span>  total data pool size
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  used data pool size
+</span></span><span class=line><span class=cl>             <span class=m>60</span>  seconds <span class=nb>time</span> to live <span class=k>for</span> positive entries
+</span></span><span class=line><span class=cl>             <span class=m>20</span>  seconds <span class=nb>time</span> to live <span class=k>for</span> negative entries
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  cache hits on positive entries
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  cache hits on negative entries
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  cache misses on positive entries
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  cache misses on negative entries
+</span></span><span class=line><span class=cl>              0% cache hit rate
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  current number of cached values
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  maximum number of cached values
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  maximum chain length searched
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  number of delays on rdlock
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  number of delays on wrlock
+</span></span><span class=line><span class=cl>              <span class=m>0</span>  memory allocations failed
+</span></span><span class=line><span class=cl>            yes  check /etc/hosts <span class=k>for</span> changes
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>... 省略输出信息若干 ...
+</span></span></code></pre></div><h3 id=清除指定类型缓存>清除指定类型缓存</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nscd -i passwd
+</span></span><span class=line><span class=cl>$ nscd -i group
+</span></span><span class=line><span class=cl>$ nscd -i hosts
+</span></span></code></pre></div><h3 id=关闭服务>关闭服务</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>$ nscd -K
+</span></span></code></pre></div><h2 id=参考文章>参考文章</h2><p>【1】<a href=https://www.hi-linux.com/posts/9461.html target=_blank rel="noopener noreffer">Linux 下开启缓存服务 NSCD</a></p><p>【2】<a href=https://zhuanlan.zhihu.com/p/44556919 target=_blank rel="noopener noreffer">阿里DNS: NSCD-DNS缓存详解</a></p><p>【3】<a href=https://linux.die.net/man/8/nscd target=_blank rel="noopener noreffer">Linux man page</a></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-09-27</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-title="认识 Linux NSCD 服务缓存" data-via=xueqiang_chen data-hashtags=linux,nscd><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-hashtag=linux><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-title="认识 Linux NSCD 服务缓存"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-title="认识 Linux NSCD 服务缓存"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-title="认识 Linux NSCD 服务缓存" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/linux/linux-nscd/ data-title="认识 Linux NSCD 服务缓存"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/linux/>linux</a>,&nbsp;<a href=/tags/nscd/>nscd</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/algorithm/algorithm-heap/ class=prev rel=prev title=堆><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>堆</a>
+<a href=/posts/algorithm/algorithm-hashtable/ class=next rel=next title=散列表那些事>散列表那些事<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

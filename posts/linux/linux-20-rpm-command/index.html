@@ -1,492 +1,259 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>20 常用的 RPM 命令 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="本文翻译自20 Practical Examples of RPM Commands in Linux RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"20 常用的 RPM 命令","item":"https://ahamoment.cn/posts/linux/linux-20-rpm-command/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/linux/linux-20-rpm-command/"},"headline":"20 常用的 RPM 命令 | AhaMoment","datePublished":"2020-06-02T18:51:23+08:00","dateModified":"2020-06-02T18:51:23+08:00","wordCount":3078,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"本文翻译自20 Practical Examples of RPM Commands in Linux RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件"}</script><meta property="og:title" content="20 常用的 RPM 命令 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-20-rpm-command/">
-<meta property="og:description" content="本文翻译自20 Practical Examples of RPM Commands in Linux RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-06-02T18:51:23+08:00">
-<meta property="article:modified_time" content="2020-06-02T18:51:23+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="RPM">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">20 常用的 RPM 命令</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-06-02</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>7 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/linux/ class=hover:text-eureka>Linux</a>
-</div>
-</div>
-<div class=content>
-<blockquote>
-<p>本文翻译自<a href=https://www.tecmint.com/20-practical-examples-of-rpm-commands-in-linux/>20 Practical Examples of RPM Commands in Linux</a></p>
-</blockquote>
-<p>RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。</p>
-<p>这篇文章主要介绍了 20 个常用的 RPM 命令。</p>
-<h3 id=关于-rpm-的一些常识>关于 RPM 的一些常识</h3>
-<ul>
-<li>
-<p>RPM 是免费的，并且遵循 GPL 开源协议</p>
-</li>
-<li>
-<p>RPM 将所有已安装软件包的信息保存在 <code>/var/lib/rpm</code> 数据库中。</p>
-</li>
-<li>
-<p>RPM 是在 Linux 系统下安装软件包的唯一方法，如果您使用源代码安装了软件包，则 rpm 将无法对其进行管理。</p>
-</li>
-<li>
-<p>RPM 处理 .rpm 文件，其中包含有关软件包的实际信息，例如：它是什么，它来自哪里，软件依赖信息，版本信息等。</p>
-</li>
-</ul>
-<h3 id=rpm命令的五个基本模式>RPM命令的五个基本模式</h3>
-<ul>
-<li><strong>Install</strong> : 使用于安装任意的 RPM 包。</li>
-<li><strong>Remove</strong> ：用于擦除，删除或卸载任何 RPM 软件包。</li>
-<li><strong>Upgrade</strong> : 用于更新已经存在的 RPM 软件包。</li>
-<li><strong>Verify</strong> ：用来验证 RPM 软件包。</li>
-<li><strong>Query</strong>：用来查询 RPM 软件包。</li>
-</ul>
-<h3 id=查找和下载-rpm-包>查找和下载 RPM 包</h3>
-<p>以下是rpm网站的列表，您可以在其中找到和下载所有RPM软件包。</p>
-<ul>
-<li><a href=https://rpmfind.net/>http://rpmfind.net</a></li>
-<li><a href=https://www.redhat.com/>http://www.redhat.com</a></li>
-<li><a href=http://freshrpms.net/>http://freshrpms.net/</a></li>
-<li><a href=http://rpm.pbone.net/>http://rpm.pbone.net/</a></li>
-</ul>
-<h3 id=1-检查-rpm-包的签名>1. 检查 RPM 包的签名</h3>
-<p>在将软件包安装在Linux系统上之前，先检查软件包的 PGP 签名，并确保其完整性和来源是正确的。使用 <strong>–-checksig</strong> (<strong>check signature</strong>) 命令检查 RPM 包的签名。</p>
-<pre><code class=language-bash>[root@tecmint]# rpm --checksig pidgin-2.7.9-5.el6.2.i686.rpm
-
-pidgin-2.7.9-5.el6.2.i686.rpm: rsa sha1 (md5) pgp md5 OK
-</code></pre>
-<h3 id=2-安装-rpm-包>2. 安装 RPM 包</h3>
-<p>使用 <strong>-i</strong> 选项安装 RPM 包</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -ivh tree-1.6.0-10.el7.x86_64.rpm
-准备中...                          ################################# [100%]
-正在升级/安装...
-   1:tree-1.6.0-10.el7                ################################# [100%]
-</code></pre>
-<p>RPM 命令和选项</p>
-<ul>
-<li>
-<p><strong>-i</strong> : 安装包</p>
-</li>
-<li>
-<p><strong>-v :</strong> 详细显示</p>
-</li>
-<li>
-<p><strong>-h</strong> 在打包归档文件解压缩时打印哈希标记。</p>
-</li>
-</ul>
-<h3 id=3-安装-rpm-包之前检查包依赖>3. 安装 RPM 包之前检查包依赖</h3>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qpR tree-1.6.0-10.el7.x86_64.rpm
-libc.so.6()(64bit)
-libc.so.6(GLIBC_2.14)(64bit)
-libc.so.6(GLIBC_2.2.5)(64bit)
-libc.so.6(GLIBC_2.3)(64bit)
-libc.so.6(GLIBC_2.3.4)(64bit)
-libc.so.6(GLIBC_2.4)(64bit)
-rpmlib(CompressedFileNames) &lt;= 3.0.4-1
-rpmlib(FileDigests) &lt;= 4.6.0-1
-rpmlib(PayloadFilesHavePrefix) &lt;= 4.0-1
-rtld(GNU_HASH)
-rpmlib(PayloadIsXz) &lt;= 5.2-1
-</code></pre>
-<p>命令和选项说明：</p>
-<ul>
-<li><strong>-q :</strong> 查询一个包</li>
-<li><strong>-p:</strong> 列出此软件包提供的功能。</li>
-<li><strong>-R:</strong> 列出此程序包所依赖的功能。</li>
-</ul>
-<h3 id=4-忽略依赖安装-rpm-包>4. 忽略依赖安装 RPM 包</h3>
-<p>如果已经知道所有必需的软件包都已安装，那么可以在安装软件包之前使用 <strong>-–nodeps(no dependencies check)</strong> 选项来忽略那些依赖项。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -ivh --nodeps tree-1.6.0-10.el7.x86_64.rpm
-准备中...                          ################################# [100%]
-        软件包 tree-1.6.0-10.el7.x86_64 已经安装
-</code></pre>
-<p>上面的命令通过忽略依赖项错误来强制安装rpm软件包，但是如果缺少那些依赖项文件会导致程序将无法运行。</p>
-<h3 id=5-查找一个已经安装的-rpm-包>5. 查找一个已经安装的 RPM 包</h3>
-<p>在软件包名称中使用 <strong>-q</strong> 选项，将显示是否已安装 rpm 包。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -q tree
-tree-1.6.0-10.el7.x86_64
-</code></pre>
-<h3 id=6-列出已安装的rpm软件包的所有文件>6. 列出已安装的RPM软件包的所有文件</h3>
-<p>要查看已安装的rpm软件包的所有文件，请使用 <strong>-ql（query list）</strong> rpm 命令。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -ql tree
-/usr/bin/tree
-/usr/share/doc/tree-1.6.0
-/usr/share/doc/tree-1.6.0/LICENSE
-/usr/share/doc/tree-1.6.0/README
-/usr/share/man/man1/tree.1.gz
-</code></pre>
-<h3 id=7-列出最近安装的-rpm-包>7. 列出最近安装的 RPM 包</h3>
-<p>使用 <strong>-qa(query all)</strong> 命令，会列出最近安装的所有 RPM 包</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qa --last
-tree-1.6.0-10.el7.x86_64                      2020年06月01日 星期一 19时04分28秒
-perl-Git-1.8.3.1-22.el7_8.noarch              2020年06月01日 星期一 14时18分37秒
-git-1.8.3.1-22.el7_8.x86_64                   2020年06月01日 星期一 14时18分36秒
-perl-TermReadKey-2.30-20.el7.x86_64           2020年06月01日 星期一 14时18分34秒
-rsync-3.1.2-10.el7.x86_64                     2020年06月01日 星期一 14时18分33秒
-perl-Error-0.17020-2.el7.noarch               2020年06月01日 星期一 14时18分33秒
-nux-dextop-release-0-5.el7.nux.noarch         2020年05月22日 星期五 19时40分35秒
-gpg-pubkey-85c6cd8a-4e060c35                  2020年05月22日 星期五 19时40分19秒
-epel-release-7-11.noarch                      2020年05月22日 星期五 19时39分27秒
-libtirpc-0.2.4-0.16.el7.x86_64                2020年05月22日 星期五 18时58分40秒
-vim-enhanced-7.4.629-6.el7.x86_64             2020年05月22日 星期五 17时48分48秒
-vim-common-7.4.629-6.el7.x86_64               2020年05月22日 星期五 17时48分48秒
-vim-filesystem-7.4.629-6.el7.x86_64           2020年05月22日 星期五 17时48分44秒
-...
-</code></pre>
-<h3 id=8-列出所有已安装的-rpm-包>8. 列出所有已安装的 RPM 包</h3>
-<p>键入以下命令以打印Linux系统上已安装软件包的所有名称。该命令和 grep 一起使用，即可搜索到我们是否安装过某个包，例如 <code>rpm -qa | grep git</code>，查看我们是否安装过 git 。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qa
-kexec-tools-2.0.15-43.el7.x86_64
-grub2-common-2.02-0.81.el7.centos.noarch
-openssh-clients-7.4p1-21.el7.x86_64
-setup-2.8.71-11.el7.noarch
-authconfig-6.2.8-30.el7.x86_64
-basesystem-10.0-7.el7.centos.noarch
-postfix-2.10.1-9.el7.x86_64
-ncurses-base-5.9-14.20130511.el7_4.noarch
-kbd-1.15.5-15.el7.x86_64
-kbd-misc-1.15.5-15.el7.noarch
-qemu-guest-agent-2.12.0-3.el7.x86_64
-...
-</code></pre>
-<h3 id=9-更新-rpm-包>9. 更新 RPM 包</h3>
-<p>使用 <strong>-U(upgrade)</strong> 选项来升级 RPM 包。该命令不仅会将某个 rpm 包升级到最新版本，而且还会维护旧软件包的备份，以便在新的升级软件包不能使用的时候还能使用旧的 RPM 包。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -Uvh tree-1.6.0-10.el7.x86_64.rpm
-准备中...                          ################################# [100%]
-        软件包 tree-1.6.0-10.el7.x86_64 已经安装
-</code></pre>
-<h3 id=10-删除-rpm-包>10. 删除 RPM 包</h3>
-<p>使用 <strong>-e (erase)</strong> 命令来移除已安装的 rpm 包。如果要移除的 RPM 包不存在，就会有错误提示。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -evv tree
-D: loading keyring from pubkeys in /var/lib/rpm/pubkeys/*.key
-D: couldn't find any keys in /var/lib/rpm/pubkeys/*.key
-D: loading keyring from rpmdb
-D: opening  db environment /var/lib/rpm cdb:0x401
-D: opening  db index       /var/lib/rpm/Packages 0x400 mode=0x0
-D: locked   db index       /var/lib/rpm/Packages
-D: opening  db index       /var/lib/rpm/Name 0x400 mode=0x0
-D:  read h#     302 头 SHA1 摘要： OK (489efff35e604042709daf46fb78611fe90a75aa)
-D: added key gpg-pubkey-f4a80eb5-53a7ff4b to keyring
-D:  read h#     371 头 SHA1 摘要： OK (052c9c3b53cea0014763d9f82c173a87dc743eea)
-D: added key gpg-pubkey-85c6cd8a-4e060c35 to keyring
-D: Using legacy gpg-pubkey(s) from rpmdb
-D:  read h#     380 头V3 RSA/SHA256 Signature, 密钥 ID f4a80eb5: OK
-D: opening  db index       /var/lib/rpm/Conflictname 0x400 mode=0x0
-D: ========== --- tree-1.6.0-10.el7 x86_64/linux 0x2
-D: opening  db index       /var/lib/rpm/Requirename 0x400 mode=0x0
-D: ========== recording tsort relations
-D: ========== tsorting packages (order, #predecessors, #succesors, depth)
-D:     0    0    0    1   -tree-1.6.0-10.el7.x86_64
-D: erasing packages
-D: closed   db index       /var/lib/rpm/Conflictname
-D: closed   db index       /var/lib/rpm/Requirename
-D: closed   db index       /var/lib/rpm/Name
-D: closed   db index       /var/lib/rpm/Packages
-D: closed   db environment /var/lib/rpm
-D: opening  db environment /var/lib/rpm cdb:0x401
-D: opening  db index       /var/lib/rpm/Packages (none) mode=0x42
-D: sanity checking 1 elements
-D: running pre-transaction scripts
-D: computing 5 file fingerprints
-D: opening  db index       /var/lib/rpm/Name (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Basenames (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Group (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Requirename (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Providename (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Conflictname (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Obsoletename (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Triggername (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Dirnames (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Installtid (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Sigmd5 (none) mode=0x42
-D: opening  db index       /var/lib/rpm/Sha1header (none) mode=0x42
-软件包准备中...
-D: computing file dispositions
-D: 0x0000fd00     4096      9228841     19356493 /
-D: ========== +++ tree-1.6.0-10.el7 x86_64-linux 0x2
-D:  read h#     380 头V3 RSA/SHA256 Signature, 密钥 ID f4a80eb5: OK
-D:     erase: tree-1.6.0-10.el7 has 5 files
-tree-1.6.0-10.el7.x86_64
-D: erase      100644  1 (   0,   0)  4100 /usr/share/man/man1/tree.1.gz
-D: erase      100644  1 (   0,   0)  4628 /usr/share/doc/tree-1.6.0/README
-D: erase      100644  1 (   0,   0) 18009 /usr/share/doc/tree-1.6.0/LICENSE
-D: erase      040755  2 (   0,   0)     6 /usr/share/doc/tree-1.6.0
-D: erase      100755  1 (   0,   0) 62768 /usr/bin/tree
-D:   --- h#     380 tree-1.6.0-10.el7.x86_64
-D: removing &quot;tree&quot; from Name index.
-D: removing 5 entries from Basenames index.
-D: removing &quot;Applications/File&quot; from Group index.
-D: removing 11 entries from Requirename index.
-D: removing 2 entries from Providename index.
-D: removing 4 entries from Dirnames index.
-D: removing 1 entries from Installtid index.
-D: removing 1 entries from Sigmd5 index.
-D: removing &quot;a09f99f73ee3fe352489e734c63c32fa41b1be56&quot; from Sha1header index.
-D: running post-transaction scripts
-D: closed   db index       /var/lib/rpm/Sha1header
-D: closed   db index       /var/lib/rpm/Sigmd5
-D: closed   db index       /var/lib/rpm/Installtid
-D: closed   db index       /var/lib/rpm/Dirnames
-D: closed   db index       /var/lib/rpm/Triggername
-D: closed   db index       /var/lib/rpm/Obsoletename
-D: closed   db index       /var/lib/rpm/Conflictname
-D: closed   db index       /var/lib/rpm/Providename
-D: closed   db index       /var/lib/rpm/Requirename
-D: closed   db index       /var/lib/rpm/Group
-D: closed   db index       /var/lib/rpm/Basenames
-D: closed   db index       /var/lib/rpm/Name
-D: closed   db index       /var/lib/rpm/Packages
-D: closed   db environment /var/lib/rpm
-[root@localhost ~]# echo $?
-0
-[root@localhost ~]# rpm -e tree
-错误：未安装软件包 tree
-</code></pre>
-<h3 id=11-忽略依赖地删除rpm-包>11. 忽略依赖地删除RPM 包</h3>
-<p>使用 <strong>&ndash;nodeps (Do not check dependencies)</strong> 命令项强制从系统中删除 RPM 包。需要注意的是，删除特定的软件包可能会破坏其他正在运行的应用程序。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -ev --nodeps tree
-</code></pre>
-<h3 id=12-查看一个文件属于哪个-rpm-包>12. 查看一个文件属于哪个 RPM 包</h3>
-<p>假设有一个文件列表，并且想找出这些文件属于哪个 RPM 包的，那么可以使用 <strong>-qf (query file)</strong> 命令。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qf /usr/bin/tree
-tree-1.6.0-10.el7.x86_64
-</code></pre>
-<h3 id=13-查看已安装的-rpm-包的信息>13. 查看已安装的 RPM 包的信息</h3>
-<p>使用 <strong>-qi (query info)</strong> 命令查询想要知道的 rpm 包的信息。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qi tree
-Name        : tree
-Version     : 1.6.0
-Release     : 10.el7
-Architecture: x86_64
-Install Date: 2020年06月02日 星期二 19时05分24秒
-Group       : Applications/File
-Size        : 89505
-License     : GPLv2+
-Signature   : RSA/SHA256, 2014年07月04日 星期五 13时36分46秒, Key ID 24c6a8a7f4a80eb5
-Source RPM  : tree-1.6.0-10.el7.src.rpm
-Build Date  : 2014年06月10日 星期二 03时28分53秒
-Build Host  : worker1.bsys.centos.org
-Relocations : (not relocatable)
-Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
-Vendor      : CentOS
-URL         : http://mama.indstate.edu/users/ice/tree/
-Summary     : File system tree viewer
-Description :
-The tree utility recursively displays the contents of directories in a
-tree-like format.  Tree is basically a UNIX port of the DOS tree
-utility.
-</code></pre>
-<h3 id=14-在安装之前获取-rpm-包的信息>14. 在安装之前获取 RPM 包的信息</h3>
-<p>假设你从网上下载了一个 rpm 包，并且想要在安装之前知道这个 rpm 包的信息，那么可以使用 <strong>-qip (query info package)</strong> 这个命令来打印软件包的信息。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qip python3-3.6.8-13.el7.x86_64.rpm
-Name        : python3
-Version     : 3.6.8
-Release     : 13.el7
-Architecture: x86_64
-Install Date: (not installed)
-Group       : Unspecified
-Size        : 39904
-License     : Python
-Signature   : RSA/SHA256, 2020年04月04日 星期六 05时06分11秒, Key ID 24c6a8a7f4a80eb5
-Source RPM  : python3-3.6.8-13.el7.src.rpm
-Build Date  : 2020年04月02日 星期四 22时17分47秒
-Build Host  : x86-01.bsys.centos.org
-Relocations : (not relocatable)
-Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
-Vendor      : CentOS
-URL         : https://www.python.org/
-Summary     : Interpreter of the Python programming language
-Description :
-Python is an accessible, high-level, dynamically typed, interpreted programming
-language, designed with an emphasis on code readability.
-It includes an extensive standard library, and has a vast ecosystem of
-third-party libraries.
-
-The python3 package provides the &quot;python3&quot; executable: the reference
-interpreter for the Python language, version 3.
-The majority of its standard library is provided in the python3-libs package,
-which should be installed automatically along with python3.
-The remaining parts of the Python standard library are broken out into the
-python3-tkinter and python3-test packages, which may need to be installed
-separately.
-
-Documentation for Python is provided in the python3-docs package.
-
-Packages containing additional libraries for Python are generally named with
-the &quot;python3-&quot; prefix.
-</code></pre>
-<h3 id=15-查看-rpm-包安装了哪些目录>15. 查看 RPM 包安装了哪些目录</h3>
-<p>要获取已安装软件包的文件列表，使用选项 <strong>-qdf（query document file)</strong> 的命令。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -qdf /usr/bin/tree
-/usr/share/doc/tree-1.6.0/LICENSE
-/usr/share/doc/tree-1.6.0/README
-/usr/share/man/man1/tree.1.gz
-</code></pre>
-<h3 id=16-验证一个-rpm-包>16. 验证一个 RPM 包</h3>
-<p>验证软件包会将软件包已安装文件的信息与rpm数据库进行比较。使用 <strong>-Vp (verify package)</strong> 命令来验证一个软件包。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm -Vp python3-3.6.8-13.el7.x86_64.rpm
-未满足的依赖关系 python3-3.6.8-13.el7.x86_64：
-        libpython3.6m.so.1.0()(64bit) 被 python3-3.6.8-13.el7.x86_64 需要
-        python3-libs(x86-64) = 3.6.8-13.el7 被 python3-3.6.8-13.el7.x86_64 需要
-        python3-pip 被 python3-3.6.8-13.el7.x86_64 需要
-        python3-setuptools 被 python3-3.6.8-13.el7.x86_64 需要
-遗漏     /usr/bin/pydoc3
-遗漏     /usr/bin/pydoc3.6
-遗漏     /usr/bin/python3
-遗漏     /usr/bin/python3.6
-遗漏     /usr/bin/python3.6m
-遗漏     /usr/bin/pyvenv
-遗漏     /usr/bin/pyvenv-3.6
-遗漏     /usr/share/doc/python3-3.6.8
-遗漏   d /usr/share/doc/python3-3.6.8/README.rst
-遗漏     /usr/share/licenses/python3-3.6.8
-遗漏   l /usr/share/licenses/python3-3.6.8/LICENSE
-遗漏   d /usr/share/man/man1/python3.1.gz
-遗漏   d /usr/share/man/man1/python3.6.1.gz
-</code></pre>
-<h3 id=17-验证所有的-rpm-包>17. 验证所有的 RPM 包</h3>
-<pre><code class=language-bash>[root@tecmint]# rpm -Va
-
-S.5....T.  c /etc/rc.d/rc.local
-.......T.  c /etc/dnsmasq.conf
-.......T.    /etc/ld.so.conf.d/kernel-2.6.32-279.5.2.el6.i686.conf
-S.5....T.  c /etc/yum.conf
-S.5....T.  c /etc/yum.repos.d/epel.repo
-</code></pre>
-<h3 id=18-导入-gpg-key>18. 导入 GPG key</h3>
-<p>要验证 RHEL / CentOS / Fedora 软件包，必须导入 GPG 密钥。为此，执行以下命令，它将导入CentOS 6 GPG密钥。</p>
-<pre><code class=language-bash>[root@localhost ~]# rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-</code></pre>
-<h3 id=19-列出所有导入的-rpm-gpg-key>19. 列出所有导入的 RPM GPG key</h3>
-<pre><code>[root@localhost ~]# rpm -qa gpg-pubkey*
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>20 常用的 RPM 命令 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="20 常用的 RPM 命令"><meta property="og:description" content="本文翻译自20 Practical Examples of RPM Commands in Linux RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/linux/linux-20-rpm-command/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-06-02T18:51:23+08:00"><meta property="article:modified_time" content="2020-06-02T18:51:23+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="20 常用的 RPM 命令"><meta name=twitter:description content="本文翻译自20 Practical Examples of RPM Commands in Linux RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/><link rel=prev href=https://ahamoment.cn/posts/java/java-source-code-learn/><link rel=next href=https://ahamoment.cn/posts/java/java-multithread-synchronized/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"20 常用的 RPM 命令","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/linux\/linux-20-rpm-command\/"},"genre":"posts","keywords":"RPM","wordcount":3078,"url":"https:\/\/ahamoment.cn\/posts\/linux\/linux-20-rpm-command\/","datePublished":"2020-06-02T18:51:23+08:00","dateModified":"2020-06-02T18:51:23+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">20 常用的 RPM 命令</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/linux/><i class="far fa-folder fa-fw" aria-hidden=true></i>Linux</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-06-02>2020-06-02</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;3078 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;7 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><ul><li><a href=#关于-rpm-的一些常识>关于 RPM 的一些常识</a></li><li><a href=#rpm命令的五个基本模式>RPM命令的五个基本模式</a></li><li><a href=#查找和下载-rpm-包>查找和下载 RPM 包</a></li><li><a href=#1-检查-rpm-包的签名>1. 检查 RPM 包的签名</a></li><li><a href=#2-安装-rpm-包>2. 安装 RPM 包</a></li><li><a href=#3-安装-rpm-包之前检查包依赖>3. 安装 RPM 包之前检查包依赖</a></li><li><a href=#4-忽略依赖安装-rpm-包>4. 忽略依赖安装 RPM 包</a></li><li><a href=#5-查找一个已经安装的-rpm-包>5. 查找一个已经安装的 RPM 包</a></li><li><a href=#6-列出已安装的rpm软件包的所有文件>6. 列出已安装的RPM软件包的所有文件</a></li><li><a href=#7-列出最近安装的-rpm-包>7. 列出最近安装的 RPM 包</a></li><li><a href=#8-列出所有已安装的-rpm-包>8. 列出所有已安装的 RPM 包</a></li><li><a href=#9-更新-rpm-包>9. 更新 RPM 包</a></li><li><a href=#10-删除-rpm-包>10. 删除 RPM 包</a></li><li><a href=#11-忽略依赖地删除rpm-包>11. 忽略依赖地删除RPM 包</a></li><li><a href=#12-查看一个文件属于哪个-rpm-包>12. 查看一个文件属于哪个 RPM 包</a></li><li><a href=#13-查看已安装的-rpm-包的信息>13. 查看已安装的 RPM 包的信息</a></li><li><a href=#14-在安装之前获取-rpm-包的信息>14. 在安装之前获取 RPM 包的信息</a></li><li><a href=#15-查看-rpm-包安装了哪些目录>15. 查看 RPM 包安装了哪些目录</a></li><li><a href=#16-验证一个-rpm-包>16. 验证一个 RPM 包</a></li><li><a href=#17-验证所有的-rpm-包>17. 验证所有的 RPM 包</a></li><li><a href=#18-导入-gpg-key>18. 导入 GPG key</a></li><li><a href=#19-列出所有导入的-rpm-gpg-key>19. 列出所有导入的 RPM GPG key</a></li><li><a href=#20-重建损坏的rpm数据库>20. 重建损坏的RPM数据库</a></li><li><a href=#21-查看-rpm-的脚本>21. 查看 RPM 的脚本</a></li></ul></li></ul></nav></div></div><div class=content id=content><blockquote><p>本文翻译自<a href=https://www.tecmint.com/20-practical-examples-of-rpm-commands-in-linux/ target=_blank rel="noopener noreffer">20 Practical Examples of RPM Commands in Linux</a></p></blockquote><p>RMP (Red Hat Package Manager) 是一款 Red Hat 系统的开源包管理工具，支持安装、更新、卸载、查询、验证和管理系统软件包。RPM以前称为 .rpm 文件，文件内包含编译好的软件和包所需要的库。</p><p>这篇文章主要介绍了 20 个常用的 RPM 命令。</p><h3 id=关于-rpm-的一些常识>关于 RPM 的一些常识</h3><ul><li><p>RPM 是免费的，并且遵循 GPL 开源协议</p></li><li><p>RPM 将所有已安装软件包的信息保存在 <code>/var/lib/rpm</code> 数据库中。</p></li><li><p>RPM 是在 Linux 系统下安装软件包的唯一方法，如果您使用源代码安装了软件包，则 rpm 将无法对其进行管理。</p></li><li><p>RPM 处理 .rpm 文件，其中包含有关软件包的实际信息，例如：它是什么，它来自哪里，软件依赖信息，版本信息等。</p></li></ul><h3 id=rpm命令的五个基本模式>RPM命令的五个基本模式</h3><ul><li><strong>Install</strong> : 使用于安装任意的 RPM 包。</li><li><strong>Remove</strong> ：用于擦除，删除或卸载任何 RPM 软件包。</li><li><strong>Upgrade</strong> : 用于更新已经存在的 RPM 软件包。</li><li><strong>Verify</strong> ：用来验证 RPM 软件包。</li><li><strong>Query</strong>：用来查询 RPM 软件包。</li></ul><h3 id=查找和下载-rpm-包>查找和下载 RPM 包</h3><p>以下是rpm网站的列表，您可以在其中找到和下载所有RPM软件包。</p><ul><li><a href=https://rpmfind.net/ target=_blank rel="noopener noreffer">http://rpmfind.net</a></li><li><a href=https://www.redhat.com/ target=_blank rel="noopener noreffer">http://www.redhat.com</a></li><li><a href=http://freshrpms.net/ target=_blank rel="noopener noreffer">http://freshrpms.net/</a></li><li><a href=http://rpm.pbone.net/ target=_blank rel="noopener noreffer">http://rpm.pbone.net/</a></li></ul><h3 id=1-检查-rpm-包的签名>1. 检查 RPM 包的签名</h3><p>在将软件包安装在Linux系统上之前，先检查软件包的 PGP 签名，并确保其完整性和来源是正确的。使用 <strong>–-checksig</strong> (<strong>check signature</strong>) 命令检查 RPM 包的签名。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># rpm --checksig pidgin-2.7.9-5.el6.2.i686.rpm</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>pidgin-2.7.9-5.el6.2.i686.rpm: rsa sha1 <span class=o>(</span>md5<span class=o>)</span> pgp md5 OK
+</span></span></code></pre></div><h3 id=2-安装-rpm-包>2. 安装 RPM 包</h3><p>使用 <strong>-i</strong> 选项安装 RPM 包</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -ivh tree-1.6.0-10.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>准备中...                          <span class=c1>################################# [100%]</span>
+</span></span><span class=line><span class=cl>正在升级/安装...
+</span></span><span class=line><span class=cl>   1:tree-1.6.0-10.el7                <span class=c1>################################# [100%]</span>
+</span></span></code></pre></div><p>RPM 命令和选项</p><ul><li><p><strong>-i</strong> : 安装包</p></li><li><p><strong>-v :</strong> 详细显示</p></li><li><p><strong>-h</strong> 在打包归档文件解压缩时打印哈希标记。</p></li></ul><h3 id=3-安装-rpm-包之前检查包依赖>3. 安装 RPM 包之前检查包依赖</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qpR tree-1.6.0-10.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>()(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>(</span>GLIBC_2.14<span class=o>)(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>(</span>GLIBC_2.2.5<span class=o>)(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>(</span>GLIBC_2.3<span class=o>)(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>(</span>GLIBC_2.3.4<span class=o>)(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>libc.so.6<span class=o>(</span>GLIBC_2.4<span class=o>)(</span>64bit<span class=o>)</span>
+</span></span><span class=line><span class=cl>rpmlib<span class=o>(</span>CompressedFileNames<span class=o>)</span> &lt;<span class=o>=</span> 3.0.4-1
+</span></span><span class=line><span class=cl>rpmlib<span class=o>(</span>FileDigests<span class=o>)</span> &lt;<span class=o>=</span> 4.6.0-1
+</span></span><span class=line><span class=cl>rpmlib<span class=o>(</span>PayloadFilesHavePrefix<span class=o>)</span> &lt;<span class=o>=</span> 4.0-1
+</span></span><span class=line><span class=cl>rtld<span class=o>(</span>GNU_HASH<span class=o>)</span>
+</span></span><span class=line><span class=cl>rpmlib<span class=o>(</span>PayloadIsXz<span class=o>)</span> &lt;<span class=o>=</span> 5.2-1
+</span></span></code></pre></div><p>命令和选项说明：</p><ul><li><strong>-q :</strong> 查询一个包</li><li><strong>-p:</strong> 列出此软件包提供的功能。</li><li><strong>-R:</strong> 列出此程序包所依赖的功能。</li></ul><h3 id=4-忽略依赖安装-rpm-包>4. 忽略依赖安装 RPM 包</h3><p>如果已经知道所有必需的软件包都已安装，那么可以在安装软件包之前使用 <strong>-–nodeps(no dependencies check)</strong> 选项来忽略那些依赖项。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -ivh --nodeps tree-1.6.0-10.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>准备中...                          <span class=c1>################################# [100%]</span>
+</span></span><span class=line><span class=cl>        软件包 tree-1.6.0-10.el7.x86_64 已经安装
+</span></span></code></pre></div><p>上面的命令通过忽略依赖项错误来强制安装rpm软件包，但是如果缺少那些依赖项文件会导致程序将无法运行。</p><h3 id=5-查找一个已经安装的-rpm-包>5. 查找一个已经安装的 RPM 包</h3><p>在软件包名称中使用 <strong>-q</strong> 选项，将显示是否已安装 rpm 包。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -q tree</span>
+</span></span><span class=line><span class=cl>tree-1.6.0-10.el7.x86_64
+</span></span></code></pre></div><h3 id=6-列出已安装的rpm软件包的所有文件>6. 列出已安装的RPM软件包的所有文件</h3><p>要查看已安装的rpm软件包的所有文件，请使用 <strong>-ql（query list）</strong> rpm 命令。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -ql tree</span>
+</span></span><span class=line><span class=cl>/usr/bin/tree
+</span></span><span class=line><span class=cl>/usr/share/doc/tree-1.6.0
+</span></span><span class=line><span class=cl>/usr/share/doc/tree-1.6.0/LICENSE
+</span></span><span class=line><span class=cl>/usr/share/doc/tree-1.6.0/README
+</span></span><span class=line><span class=cl>/usr/share/man/man1/tree.1.gz
+</span></span></code></pre></div><h3 id=7-列出最近安装的-rpm-包>7. 列出最近安装的 RPM 包</h3><p>使用 <strong>-qa(query all)</strong> 命令，会列出最近安装的所有 RPM 包</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qa --last</span>
+</span></span><span class=line><span class=cl>tree-1.6.0-10.el7.x86_64                      2020年06月01日 星期一 19时04分28秒
+</span></span><span class=line><span class=cl>perl-Git-1.8.3.1-22.el7_8.noarch              2020年06月01日 星期一 14时18分37秒
+</span></span><span class=line><span class=cl>git-1.8.3.1-22.el7_8.x86_64                   2020年06月01日 星期一 14时18分36秒
+</span></span><span class=line><span class=cl>perl-TermReadKey-2.30-20.el7.x86_64           2020年06月01日 星期一 14时18分34秒
+</span></span><span class=line><span class=cl>rsync-3.1.2-10.el7.x86_64                     2020年06月01日 星期一 14时18分33秒
+</span></span><span class=line><span class=cl>perl-Error-0.17020-2.el7.noarch               2020年06月01日 星期一 14时18分33秒
+</span></span><span class=line><span class=cl>nux-dextop-release-0-5.el7.nux.noarch         2020年05月22日 星期五 19时40分35秒
+</span></span><span class=line><span class=cl>gpg-pubkey-85c6cd8a-4e060c35                  2020年05月22日 星期五 19时40分19秒
+</span></span><span class=line><span class=cl>epel-release-7-11.noarch                      2020年05月22日 星期五 19时39分27秒
+</span></span><span class=line><span class=cl>libtirpc-0.2.4-0.16.el7.x86_64                2020年05月22日 星期五 18时58分40秒
+</span></span><span class=line><span class=cl>vim-enhanced-7.4.629-6.el7.x86_64             2020年05月22日 星期五 17时48分48秒
+</span></span><span class=line><span class=cl>vim-common-7.4.629-6.el7.x86_64               2020年05月22日 星期五 17时48分48秒
+</span></span><span class=line><span class=cl>vim-filesystem-7.4.629-6.el7.x86_64           2020年05月22日 星期五 17时48分44秒
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></div><h3 id=8-列出所有已安装的-rpm-包>8. 列出所有已安装的 RPM 包</h3><p>键入以下命令以打印Linux系统上已安装软件包的所有名称。该命令和 grep 一起使用，即可搜索到我们是否安装过某个包，例如 <code>rpm -qa | grep git</code>，查看我们是否安装过 git 。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qa</span>
+</span></span><span class=line><span class=cl>kexec-tools-2.0.15-43.el7.x86_64
+</span></span><span class=line><span class=cl>grub2-common-2.02-0.81.el7.centos.noarch
+</span></span><span class=line><span class=cl>openssh-clients-7.4p1-21.el7.x86_64
+</span></span><span class=line><span class=cl>setup-2.8.71-11.el7.noarch
+</span></span><span class=line><span class=cl>authconfig-6.2.8-30.el7.x86_64
+</span></span><span class=line><span class=cl>basesystem-10.0-7.el7.centos.noarch
+</span></span><span class=line><span class=cl>postfix-2.10.1-9.el7.x86_64
+</span></span><span class=line><span class=cl>ncurses-base-5.9-14.20130511.el7_4.noarch
+</span></span><span class=line><span class=cl>kbd-1.15.5-15.el7.x86_64
+</span></span><span class=line><span class=cl>kbd-misc-1.15.5-15.el7.noarch
+</span></span><span class=line><span class=cl>qemu-guest-agent-2.12.0-3.el7.x86_64
+</span></span><span class=line><span class=cl>...
+</span></span></code></pre></div><h3 id=9-更新-rpm-包>9. 更新 RPM 包</h3><p>使用 <strong>-U(upgrade)</strong> 选项来升级 RPM 包。该命令不仅会将某个 rpm 包升级到最新版本，而且还会维护旧软件包的备份，以便在新的升级软件包不能使用的时候还能使用旧的 RPM 包。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -Uvh tree-1.6.0-10.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>准备中...                          <span class=c1>################################# [100%]</span>
+</span></span><span class=line><span class=cl>        软件包 tree-1.6.0-10.el7.x86_64 已经安装
+</span></span></code></pre></div><h3 id=10-删除-rpm-包>10. 删除 RPM 包</h3><p>使用 <strong>-e (erase)</strong> 命令来移除已安装的 rpm 包。如果要移除的 RPM 包不存在，就会有错误提示。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -evv tree</span>
+</span></span><span class=line><span class=cl>D: loading keyring from pubkeys in /var/lib/rpm/pubkeys/*.key
+</span></span><span class=line><span class=cl>D: couldn<span class=err>&#39;</span>t find any keys in /var/lib/rpm/pubkeys/*.key
+</span></span><span class=line><span class=cl>D: loading keyring from rpmdb
+</span></span><span class=line><span class=cl>D: opening  db environment /var/lib/rpm cdb:0x401
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Packages 0x400 <span class=nv>mode</span><span class=o>=</span>0x0
+</span></span><span class=line><span class=cl>D: locked   db index       /var/lib/rpm/Packages
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Name 0x400 <span class=nv>mode</span><span class=o>=</span>0x0
+</span></span><span class=line><span class=cl>D:  <span class=nb>read</span> h#     <span class=m>302</span> 头 SHA1 摘要： OK <span class=o>(</span>489efff35e604042709daf46fb78611fe90a75aa<span class=o>)</span>
+</span></span><span class=line><span class=cl>D: added key gpg-pubkey-f4a80eb5-53a7ff4b to keyring
+</span></span><span class=line><span class=cl>D:  <span class=nb>read</span> h#     <span class=m>371</span> 头 SHA1 摘要： OK <span class=o>(</span>052c9c3b53cea0014763d9f82c173a87dc743eea<span class=o>)</span>
+</span></span><span class=line><span class=cl>D: added key gpg-pubkey-85c6cd8a-4e060c35 to keyring
+</span></span><span class=line><span class=cl>D: Using legacy gpg-pubkey<span class=o>(</span>s<span class=o>)</span> from rpmdb
+</span></span><span class=line><span class=cl>D:  <span class=nb>read</span> h#     <span class=m>380</span> 头V3 RSA/SHA256 Signature, 密钥 ID f4a80eb5: OK
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Conflictname 0x400 <span class=nv>mode</span><span class=o>=</span>0x0
+</span></span><span class=line><span class=cl>D: <span class=o>==========</span> --- tree-1.6.0-10.el7 x86_64/linux 0x2
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Requirename 0x400 <span class=nv>mode</span><span class=o>=</span>0x0
+</span></span><span class=line><span class=cl>D: <span class=o>==========</span> recording tsort relations
+</span></span><span class=line><span class=cl>D: <span class=o>==========</span> tsorting packages <span class=o>(</span>order, <span class=c1>#predecessors, #succesors, depth)</span>
+</span></span><span class=line><span class=cl>D:     <span class=m>0</span>    <span class=m>0</span>    <span class=m>0</span>    <span class=m>1</span>   -tree-1.6.0-10.el7.x86_64
+</span></span><span class=line><span class=cl>D: erasing packages
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Conflictname
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Requirename
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Name
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Packages
+</span></span><span class=line><span class=cl>D: closed   db environment /var/lib/rpm
+</span></span><span class=line><span class=cl>D: opening  db environment /var/lib/rpm cdb:0x401
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Packages <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: sanity checking <span class=m>1</span> elements
+</span></span><span class=line><span class=cl>D: running pre-transaction scripts
+</span></span><span class=line><span class=cl>D: computing <span class=m>5</span> file fingerprints
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Name <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Basenames <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Group <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Requirename <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Providename <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Conflictname <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Obsoletename <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Triggername <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Dirnames <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Installtid <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Sigmd5 <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>D: opening  db index       /var/lib/rpm/Sha1header <span class=o>(</span>none<span class=o>)</span> <span class=nv>mode</span><span class=o>=</span>0x42
+</span></span><span class=line><span class=cl>软件包准备中...
+</span></span><span class=line><span class=cl>D: computing file dispositions
+</span></span><span class=line><span class=cl>D: 0x0000fd00     <span class=m>4096</span>      <span class=m>9228841</span>     <span class=m>19356493</span> /
+</span></span><span class=line><span class=cl>D: <span class=o>==========</span> +++ tree-1.6.0-10.el7 x86_64-linux 0x2
+</span></span><span class=line><span class=cl>D:  <span class=nb>read</span> h#     <span class=m>380</span> 头V3 RSA/SHA256 Signature, 密钥 ID f4a80eb5: OK
+</span></span><span class=line><span class=cl>D:     erase: tree-1.6.0-10.el7 has <span class=m>5</span> files
+</span></span><span class=line><span class=cl>tree-1.6.0-10.el7.x86_64
+</span></span><span class=line><span class=cl>D: erase      <span class=m>100644</span>  <span class=m>1</span> <span class=o>(</span>   0,   0<span class=o>)</span>  <span class=m>4100</span> /usr/share/man/man1/tree.1.gz
+</span></span><span class=line><span class=cl>D: erase      <span class=m>100644</span>  <span class=m>1</span> <span class=o>(</span>   0,   0<span class=o>)</span>  <span class=m>4628</span> /usr/share/doc/tree-1.6.0/README
+</span></span><span class=line><span class=cl>D: erase      <span class=m>100644</span>  <span class=m>1</span> <span class=o>(</span>   0,   0<span class=o>)</span> <span class=m>18009</span> /usr/share/doc/tree-1.6.0/LICENSE
+</span></span><span class=line><span class=cl>D: erase      <span class=m>040755</span>  <span class=m>2</span> <span class=o>(</span>   0,   0<span class=o>)</span>     <span class=m>6</span> /usr/share/doc/tree-1.6.0
+</span></span><span class=line><span class=cl>D: erase      <span class=m>100755</span>  <span class=m>1</span> <span class=o>(</span>   0,   0<span class=o>)</span> <span class=m>62768</span> /usr/bin/tree
+</span></span><span class=line><span class=cl>D:   --- h#     <span class=m>380</span> tree-1.6.0-10.el7.x86_64
+</span></span><span class=line><span class=cl>D: removing <span class=s2>&#34;tree&#34;</span> from Name index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>5</span> entries from Basenames index.
+</span></span><span class=line><span class=cl>D: removing <span class=s2>&#34;Applications/File&#34;</span> from Group index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>11</span> entries from Requirename index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>2</span> entries from Providename index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>4</span> entries from Dirnames index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>1</span> entries from Installtid index.
+</span></span><span class=line><span class=cl>D: removing <span class=m>1</span> entries from Sigmd5 index.
+</span></span><span class=line><span class=cl>D: removing <span class=s2>&#34;a09f99f73ee3fe352489e734c63c32fa41b1be56&#34;</span> from Sha1header index.
+</span></span><span class=line><span class=cl>D: running post-transaction scripts
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Sha1header
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Sigmd5
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Installtid
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Dirnames
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Triggername
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Obsoletename
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Conflictname
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Providename
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Requirename
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Group
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Basenames
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Name
+</span></span><span class=line><span class=cl>D: closed   db index       /var/lib/rpm/Packages
+</span></span><span class=line><span class=cl>D: closed   db environment /var/lib/rpm
+</span></span><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># echo $?</span>
+</span></span><span class=line><span class=cl><span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -e tree</span>
+</span></span><span class=line><span class=cl>错误：未安装软件包 tree
+</span></span></code></pre></div><h3 id=11-忽略依赖地删除rpm-包>11. 忽略依赖地删除RPM 包</h3><p>使用 <strong>&ndash;nodeps (Do not check dependencies)</strong> 命令项强制从系统中删除 RPM 包。需要注意的是，删除特定的软件包可能会破坏其他正在运行的应用程序。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -ev --nodeps tree</span>
+</span></span></code></pre></div><h3 id=12-查看一个文件属于哪个-rpm-包>12. 查看一个文件属于哪个 RPM 包</h3><p>假设有一个文件列表，并且想找出这些文件属于哪个 RPM 包的，那么可以使用 <strong>-qf (query file)</strong> 命令。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qf /usr/bin/tree</span>
+</span></span><span class=line><span class=cl>tree-1.6.0-10.el7.x86_64
+</span></span></code></pre></div><h3 id=13-查看已安装的-rpm-包的信息>13. 查看已安装的 RPM 包的信息</h3><p>使用 <strong>-qi (query info)</strong> 命令查询想要知道的 rpm 包的信息。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qi tree</span>
+</span></span><span class=line><span class=cl>Name        : tree
+</span></span><span class=line><span class=cl>Version     : 1.6.0
+</span></span><span class=line><span class=cl>Release     : 10.el7
+</span></span><span class=line><span class=cl>Architecture: x86_64
+</span></span><span class=line><span class=cl>Install Date: 2020年06月02日 星期二 19时05分24秒
+</span></span><span class=line><span class=cl>Group       : Applications/File
+</span></span><span class=line><span class=cl>Size        : <span class=m>89505</span>
+</span></span><span class=line><span class=cl>License     : GPLv2+
+</span></span><span class=line><span class=cl>Signature   : RSA/SHA256, 2014年07月04日 星期五 13时36分46秒, Key ID 24c6a8a7f4a80eb5
+</span></span><span class=line><span class=cl>Source RPM  : tree-1.6.0-10.el7.src.rpm
+</span></span><span class=line><span class=cl>Build Date  : 2014年06月10日 星期二 03时28分53秒
+</span></span><span class=line><span class=cl>Build Host  : worker1.bsys.centos.org
+</span></span><span class=line><span class=cl>Relocations : <span class=o>(</span>not relocatable<span class=o>)</span>
+</span></span><span class=line><span class=cl>Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
+</span></span><span class=line><span class=cl>Vendor      : CentOS
+</span></span><span class=line><span class=cl>URL         : http://mama.indstate.edu/users/ice/tree/
+</span></span><span class=line><span class=cl>Summary     : File system tree viewer
+</span></span><span class=line><span class=cl>Description :
+</span></span><span class=line><span class=cl>The tree utility recursively displays the contents of directories in a
+</span></span><span class=line><span class=cl>tree-like format.  Tree is basically a UNIX port of the DOS tree
+</span></span><span class=line><span class=cl>utility.
+</span></span></code></pre></div><h3 id=14-在安装之前获取-rpm-包的信息>14. 在安装之前获取 RPM 包的信息</h3><p>假设你从网上下载了一个 rpm 包，并且想要在安装之前知道这个 rpm 包的信息，那么可以使用 <strong>-qip (query info package)</strong> 这个命令来打印软件包的信息。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qip python3-3.6.8-13.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>Name        : python3
+</span></span><span class=line><span class=cl>Version     : 3.6.8
+</span></span><span class=line><span class=cl>Release     : 13.el7
+</span></span><span class=line><span class=cl>Architecture: x86_64
+</span></span><span class=line><span class=cl>Install Date: <span class=o>(</span>not installed<span class=o>)</span>
+</span></span><span class=line><span class=cl>Group       : Unspecified
+</span></span><span class=line><span class=cl>Size        : <span class=m>39904</span>
+</span></span><span class=line><span class=cl>License     : Python
+</span></span><span class=line><span class=cl>Signature   : RSA/SHA256, 2020年04月04日 星期六 05时06分11秒, Key ID 24c6a8a7f4a80eb5
+</span></span><span class=line><span class=cl>Source RPM  : python3-3.6.8-13.el7.src.rpm
+</span></span><span class=line><span class=cl>Build Date  : 2020年04月02日 星期四 22时17分47秒
+</span></span><span class=line><span class=cl>Build Host  : x86-01.bsys.centos.org
+</span></span><span class=line><span class=cl>Relocations : <span class=o>(</span>not relocatable<span class=o>)</span>
+</span></span><span class=line><span class=cl>Packager    : CentOS BuildSystem &lt;http://bugs.centos.org&gt;
+</span></span><span class=line><span class=cl>Vendor      : CentOS
+</span></span><span class=line><span class=cl>URL         : https://www.python.org/
+</span></span><span class=line><span class=cl>Summary     : Interpreter of the Python programming language
+</span></span><span class=line><span class=cl>Description :
+</span></span><span class=line><span class=cl>Python is an accessible, high-level, dynamically typed, interpreted programming
+</span></span><span class=line><span class=cl>language, designed with an emphasis on code readability.
+</span></span><span class=line><span class=cl>It includes an extensive standard library, and has a vast ecosystem of
+</span></span><span class=line><span class=cl>third-party libraries.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>The python3 package provides the <span class=s2>&#34;python3&#34;</span> executable: the reference
+</span></span><span class=line><span class=cl>interpreter <span class=k>for</span> the Python language, version 3.
+</span></span><span class=line><span class=cl>The majority of its standard library is provided in the python3-libs package,
+</span></span><span class=line><span class=cl>which should be installed automatically along with python3.
+</span></span><span class=line><span class=cl>The remaining parts of the Python standard library are broken out into the
+</span></span><span class=line><span class=cl>python3-tkinter and python3-test packages, which may need to be installed
+</span></span><span class=line><span class=cl>separately.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Documentation <span class=k>for</span> Python is provided in the python3-docs package.
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>Packages containing additional libraries <span class=k>for</span> Python are generally named with
+</span></span><span class=line><span class=cl>the <span class=s2>&#34;python3-&#34;</span> prefix.
+</span></span></code></pre></div><h3 id=15-查看-rpm-包安装了哪些目录>15. 查看 RPM 包安装了哪些目录</h3><p>要获取已安装软件包的文件列表，使用选项 <strong>-qdf（query document file)</strong> 的命令。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -qdf /usr/bin/tree</span>
+</span></span><span class=line><span class=cl>/usr/share/doc/tree-1.6.0/LICENSE
+</span></span><span class=line><span class=cl>/usr/share/doc/tree-1.6.0/README
+</span></span><span class=line><span class=cl>/usr/share/man/man1/tree.1.gz
+</span></span></code></pre></div><h3 id=16-验证一个-rpm-包>16. 验证一个 RPM 包</h3><p>验证软件包会将软件包已安装文件的信息与rpm数据库进行比较。使用 <strong>-Vp (verify package)</strong> 命令来验证一个软件包。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm -Vp python3-3.6.8-13.el7.x86_64.rpm</span>
+</span></span><span class=line><span class=cl>未满足的依赖关系 python3-3.6.8-13.el7.x86_64：
+</span></span><span class=line><span class=cl>        libpython3.6m.so.1.0<span class=o>()(</span>64bit<span class=o>)</span> 被 python3-3.6.8-13.el7.x86_64 需要
+</span></span><span class=line><span class=cl>        python3-libs<span class=o>(</span>x86-64<span class=o>)</span> <span class=o>=</span> 3.6.8-13.el7 被 python3-3.6.8-13.el7.x86_64 需要
+</span></span><span class=line><span class=cl>        python3-pip 被 python3-3.6.8-13.el7.x86_64 需要
+</span></span><span class=line><span class=cl>        python3-setuptools 被 python3-3.6.8-13.el7.x86_64 需要
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/pydoc3
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/pydoc3.6
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/python3
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/python3.6
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/python3.6m
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/pyvenv
+</span></span><span class=line><span class=cl>遗漏     /usr/bin/pyvenv-3.6
+</span></span><span class=line><span class=cl>遗漏     /usr/share/doc/python3-3.6.8
+</span></span><span class=line><span class=cl>遗漏   d /usr/share/doc/python3-3.6.8/README.rst
+</span></span><span class=line><span class=cl>遗漏     /usr/share/licenses/python3-3.6.8
+</span></span><span class=line><span class=cl>遗漏   l /usr/share/licenses/python3-3.6.8/LICENSE
+</span></span><span class=line><span class=cl>遗漏   d /usr/share/man/man1/python3.1.gz
+</span></span><span class=line><span class=cl>遗漏   d /usr/share/man/man1/python3.6.1.gz
+</span></span></code></pre></div><h3 id=17-验证所有的-rpm-包>17. 验证所有的 RPM 包</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># rpm -Va</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>S.5....T.  c /etc/rc.d/rc.local
+</span></span><span class=line><span class=cl>.......T.  c /etc/dnsmasq.conf
+</span></span><span class=line><span class=cl>.......T.    /etc/ld.so.conf.d/kernel-2.6.32-279.5.2.el6.i686.conf
+</span></span><span class=line><span class=cl>S.5....T.  c /etc/yum.conf
+</span></span><span class=line><span class=cl>S.5....T.  c /etc/yum.repos.d/epel.repo
+</span></span></code></pre></div><h3 id=18-导入-gpg-key>18. 导入 GPG key</h3><p>要验证 RHEL / CentOS / Fedora 软件包，必须导入 GPG 密钥。为此，执行以下命令，它将导入CentOS 6 GPG密钥。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@localhost ~<span class=o>]</span><span class=c1># rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7</span>
+</span></span></code></pre></div><h3 id=19-列出所有导入的-rpm-gpg-key>19. 列出所有导入的 RPM GPG key</h3><pre tabindex=0><code>[root@localhost ~]# rpm -qa gpg-pubkey*
 gpg-pubkey-85c6cd8a-4e060c35
 gpg-pubkey-f4a80eb5-53a7ff4b
-</code></pre>
-<h3 id=20-重建损坏的rpm数据库>20. 重建损坏的RPM数据库</h3>
-<p>有时rpm数据库损坏并停止rpm和系统上其他应用程序的所有功能。因此，当时我们需要重建rpm数据库并在以下命令的帮助下将其还原。</p>
-<pre><code class=language-bash>[root@tecmint]# cd /var/lib
-[root@tecmint]# rm __db*
-[root@tecmint]# rpm --rebuilddb
-[root@tecmint]# rpmdb_verify Packages
-</code></pre>
-<h3 id=21-查看-rpm-的脚本>21. 查看 RPM 的脚本</h3>
-<pre><code class=language-bash>rpm -qp --scripts &lt;rpm file name&gt;
-</code></pre>
-<p>export LD_LIBRARY_PATH=/apps/svr/python3/lib:$LD_LIBRARY_PATH；</p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/rpm/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#RPM</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/java/java-multithread-synchronized/ class=block>Java 多线程 - 初识 Synchronized</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/java/java-source-code-learn/ class=block>JDK1.8 源代码阅读环境搭建</a>
-</div>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+</code></pre><h3 id=20-重建损坏的rpm数据库>20. 重建损坏的RPM数据库</h3><p>有时rpm数据库损坏并停止rpm和系统上其他应用程序的所有功能。因此，当时我们需要重建rpm数据库并在以下命令的帮助下将其还原。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># cd /var/lib</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># rm __db*</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># rpm --rebuilddb</span>
+</span></span><span class=line><span class=cl><span class=o>[</span>root@tecmint<span class=o>]</span><span class=c1># rpmdb_verify Packages</span>
+</span></span></code></pre></div><h3 id=21-查看-rpm-的脚本>21. 查看 RPM 的脚本</h3><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>rpm -qp --scripts &lt;rpm file name&gt;
+</span></span></code></pre></div><p>export LD_LIBRARY_PATH=/apps/svr/python3/lib:$LD_LIBRARY_PATH；</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-06-02</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-title="20 常用的 RPM 命令" data-via=xueqiang_chen data-hashtags=RPM><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-hashtag=RPM><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-title="20 常用的 RPM 命令"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-title="20 常用的 RPM 命令"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-title="20 常用的 RPM 命令" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ data-title="20 常用的 RPM 命令"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/rpm/>RPM</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/java/java-source-code-learn/ class=prev rel=prev title="JDK1.8 源代码阅读环境搭建"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>JDK1.8 源代码阅读环境搭建</a>
+<a href=/posts/java/java-multithread-synchronized/ class=next rel=next title="Java 多线程 - 初识 Synchronized">Java 多线程 - 初识 Synchronized<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

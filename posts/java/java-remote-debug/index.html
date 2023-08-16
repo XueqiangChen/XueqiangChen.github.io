@@ -1,221 +1,27 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>IntellJ IDEA 远程调试 Java 程序 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"IntellJ IDEA 远程调试 Java 程序","item":"https://ahamoment.cn/posts/java/java-remote-debug/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-remote-debug/"},"headline":"IntellJ IDEA 远程调试 Java 程序 | AhaMoment","datePublished":"2019-11-21T20:04:16+08:00","dateModified":"2019-11-21T20:04:16+08:00","wordCount":2305,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易"}</script><meta property="og:title" content="IntellJ IDEA 远程调试 Java 程序 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/java/java-remote-debug/">
-<meta property="og:description" content="1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2019-11-21T20:04:16+08:00">
-<meta property="article:modified_time" content="2019-11-21T20:04:16+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="调试">
-<meta property="article:tag" content="IDEA">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">IntellJ IDEA 远程调试 Java 程序</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2019-11-21</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>5 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-<div class=content>
-<p><img src="https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_20,color_FFFFFF,t_70" alt="java remote debug"></p>
-<h2 id=1-前言>1. 前言</h2>
-<p>当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。</p>
-<h2 id=2-配置>2. 配置</h2>
-<p>在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：</p>
-<ul>
-<li>应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 <code>java -jar test.jar</code> 命令启动应用。</li>
-<li>调试工具用的是IntelliJ idea</li>
-</ul>
-<h3 id=21-java-启动参数配置>2.1 Java 启动参数配置</h3>
-<p>Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</p>
-<p>JDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。</p>
-<p>要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。</p>
-<p><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test</code></p>
-<p>这些参数要做的事情就是启用远程调试和配置有效的选项：</p>
-<ul>
-<li><code>-Xdebug</code>：参数启用debug调试特性</li>
-<li><code>-Xrunjdwp</code>：使用几个重要参数配置JDWP协议。</li>
-</ul>
-<p>从 JDK5 开始，可以使用 <code>-agentlib:jdwp</code> 选项，而不是 <code>-Xdebug</code> 和 <code>-Xrunjdwp</code>。但如果连接到 JDK5 以前的 VM，只能选择 <code>-Xdebug</code> 和 <code>-Xrunjdwp</code>。</p>
-<p><code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test</code></p>
-<p>JDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。</p>
-<blockquote>
-<p><a href=https://www.oracle.com/technetwork/java/javase/9-notes-3745703.html#JDK-8041435>JDK 9 Realease Notes</a>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>IntellJ IDEA 远程调试 Java 程序 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="IntellJ IDEA 远程调试 Java 程序"><meta property="og:description" content="1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/java/java-remote-debug/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2019-11-21T20:04:16+08:00"><meta property="article:modified_time" content="2019-11-21T20:04:16+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="IntellJ IDEA 远程调试 Java 程序"><meta name=twitter:description content="1. 前言 当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/java/java-remote-debug/><link rel=prev href=https://ahamoment.cn/posts/tool/tool-git-set-config/><link rel=next href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"IntellJ IDEA 远程调试 Java 程序","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/java\/java-remote-debug\/"},"genre":"posts","keywords":"调试, IDEA","wordcount":2305,"url":"https:\/\/ahamoment.cn\/posts\/java\/java-remote-debug\/","datePublished":"2019-11-21T20:04:16+08:00","dateModified":"2019-11-21T20:04:16+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">IntellJ IDEA 远程调试 Java 程序</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/java/><i class="far fa-folder fa-fw" aria-hidden=true></i>java</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2019-11-21>2019-11-21</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;2305 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;5 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#1-前言>1. 前言</a></li><li><a href=#2-配置>2. 配置</a><ul><li><a href=#21-java-启动参数配置>2.1 Java 启动参数配置</a></li><li><a href=#22-intellij-idea-配置>2.2 IntelliJ idea 配置</a></li></ul></li><li><a href=#3-远程-jvm-调试的工作原理>3. 远程 JVM 调试的工作原理</a></li><li><a href=#4-总结>4. 总结</a></li><li><a href=#参考文档>参考文档</a></li></ul></nav></div></div><div class=content id=content><p><img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_20,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_20%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_20%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_20%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20191120184024931.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_20,color_FFFFFF,t_70" title="java remote debug"></p><h2 id=1-前言>1. 前言</h2><p>当我们发现服务器上的应用发生某些故障，并且没有足够的日志来定位问题的时候，就会觉得非常头疼，尤其是在生产环境中想要对应用进行调试并非易事。在本文中，我们使用Java平台提供的标准功能来配置正在运行的Web服务器和调试应用程序。</p><h2 id=2-配置>2. 配置</h2><p>在开始之前，我们有必要介绍一下本文的示例工程所用的工具和环境：</p><ul><li>应用使用spring boot框架，部署在linux中，由于 spring boot 内置tomcat服务器，因此部署的时通过maven/gradle打包后，直接用 <code>java -jar test.jar</code> 命令启动应用。</li><li>调试工具用的是IntelliJ idea</li></ul><h3 id=21-java-启动参数配置>2.1 Java 启动参数配置</h3><p>Java Platform Debugging Architecture（JPDA）是一组可扩展的API，其中一部分是称为JDWP（Java Debug Wire Protocol）的特殊调试协议。</p><p>JDWP是用于在应用程序和调试器进程之间进行通信的协议，可用于对正在运行的Java应用程序进行远程故障排除。</p><p>要配置远程应用程序进行调试，您必须在Java应用的启动参数中为此协议指定参数。</p><p><code>java -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=y Test</code></p><p>这些参数要做的事情就是启用远程调试和配置有效的选项：</p><ul><li><code>-Xdebug</code>：参数启用debug调试特性</li><li><code>-Xrunjdwp</code>：使用几个重要参数配置JDWP协议。</li></ul><p>从 JDK5 开始，可以使用 <code>-agentlib:jdwp</code> 选项，而不是 <code>-Xdebug</code> 和 <code>-Xrunjdwp</code>。但如果连接到 JDK5 以前的 VM，只能选择 <code>-Xdebug</code> 和 <code>-Xrunjdwp</code>。</p><p><code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=8001 Test</code></p><p>JDK 9 之后， 由于Java 9 JDWP代理默认情况下仅侦听本地网络接口，因此将拒绝远程连接。</p><blockquote><p><a href=https://www.oracle.com/technetwork/java/javase/9-notes-3745703.html#JDK-8041435 target=_blank rel="noopener noreffer">JDK 9 Realease Notes</a>
 core-svc/debugger
 JDWP socket connector accept only local connections by default
-The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line. A hostname of asterisk (*) may be used to achieve the old behavior which is to bind the JDWP socket connector to all available interfaces; this is not secure and not recommended.</p>
-</blockquote>
-<p>因此对于 JDK 9 及更高的版本，启动debug的命令如下：</p>
-<p><code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 Test</code></p>
-<p>下面介绍一下jdwp提供的一些子选项参数：</p>
-<ul>
-<li>
-<p><code>transport</code>：指定运行的被调试应用和调试者之间的通信协议。这里通常使用套接字传输。但是在 Windows 平台上也可以使用共享内存传输。</p>
-</li>
-<li>
-<p><code>server</code>：如果值为 y，目标应用程序监听将要连接的调试器应用程序。否则，它将连接到特定地址上的调试器应用程序。</p>
-</li>
-<li>
-<p><code>suspend</code>：如果值为 n 用来告知 JVM 立即执行，不要等待未来将要附着上/连上（attached）的调试者。如果设成 y, 则应用将暂停不运行，直到有调试者连接上</p>
-<blockquote>
-<p>suspend=y的一个比较适用的场景是，当debug一个会阻止应用成功启动的问题时， 通过suspend=y可以确保调试者连上来之后再启动应用，否则应用已经启动报错了再调试也没意义了。</p>
-</blockquote>
-</li>
-<li>
-<p><code>address</code>：远程被调试应用开通的端口，可定义其他端口。</p>
-</li>
-</ul>
-<p>服务端使用jdwp的调试参数成功启动后，我们可以看到java进程如下所示：</p>
-<pre><code class=language-bash>[root@test]$ ps -ef | grep java
-root 1323 0 99 11:36 ? 00:00:30 java -Dspring.profiles.active=default -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=2222 -jar ./test.jar
-</code></pre>
-<h3 id=22-intellij-idea-配置>2.2 IntelliJ idea 配置</h3>
-<p>首先保证 IDEA 里面已经打开了需要远程调试的代码，注意代码要与线上的代码一致，这里也可以用war/jar包来调。
+The JDWP socket connector has been changed to bind to localhost only if no ip address or hostname is specified on the agent command line. A hostname of asterisk (*) may be used to achieve the old behavior which is to bind the JDWP socket connector to all available interfaces; this is not secure and not recommended.</p></blockquote><p>因此对于 JDK 9 及更高的版本，启动debug的命令如下：</p><p><code>java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:8001 Test</code></p><p>下面介绍一下jdwp提供的一些子选项参数：</p><ul><li><p><code>transport</code>：指定运行的被调试应用和调试者之间的通信协议。这里通常使用套接字传输。但是在 Windows 平台上也可以使用共享内存传输。</p></li><li><p><code>server</code>：如果值为 y，目标应用程序监听将要连接的调试器应用程序。否则，它将连接到特定地址上的调试器应用程序。</p></li><li><p><code>suspend</code>：如果值为 n 用来告知 JVM 立即执行，不要等待未来将要附着上/连上（attached）的调试者。如果设成 y, 则应用将暂停不运行，直到有调试者连接上</p><blockquote><p>suspend=y的一个比较适用的场景是，当debug一个会阻止应用成功启动的问题时， 通过suspend=y可以确保调试者连上来之后再启动应用，否则应用已经启动报错了再调试也没意义了。</p></blockquote></li><li><p><code>address</code>：远程被调试应用开通的端口，可定义其他端口。</p></li></ul><p>服务端使用jdwp的调试参数成功启动后，我们可以看到java进程如下所示：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[</span>root@test<span class=o>]</span>$ ps -ef <span class=p>|</span> grep java
+</span></span><span class=line><span class=cl>root <span class=m>1323</span> <span class=m>0</span> <span class=m>99</span> 11:36 ? 00:00:30 java -Dspring.profiles.active<span class=o>=</span>default -agentlib:jdwp<span class=o>=</span><span class=nv>transport</span><span class=o>=</span>dt_socket,server<span class=o>=</span>y,suspend<span class=o>=</span>n,address<span class=o>=</span><span class=m>2222</span> -jar ./test.jar
+</span></span></code></pre></div><h3 id=22-intellij-idea-配置>2.2 IntelliJ idea 配置</h3><p>首先保证 IDEA 里面已经打开了需要远程调试的代码，注意代码要与线上的代码一致，这里也可以用war/jar包来调。
 然后点击 Run ➝ Edit Configurations ➝ **+ **按钮 ➝ Remote
-<img src=https://img-blog.csdnimg.cn/20191121114403417.png alt=在这里插入图片描述>
-<img src="https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述>
+<img class=lazyload src=/svg/loading.min.svg data-src=https://img-blog.csdnimg.cn/20191121114403417.png data-srcset="https://img-blog.csdnimg.cn/20191121114403417.png, https://img-blog.csdnimg.cn/20191121114403417.png 1.5x, https://img-blog.csdnimg.cn/20191121114403417.png 2x" data-sizes=auto alt=https://img-blog.csdnimg.cn/20191121114403417.png title=在这里插入图片描述>
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20191121114516147.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述>
 这里只需要填好服务器的地址和debug端口后，点击"debug"按钮启动即可。
-<img src="https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt=在这里插入图片描述>
-当我们看到打印出这行信息时，就可以对需要调试的代码打断点调试了。</p>
-<h2 id=3-远程-jvm-调试的工作原理>3. 远程 JVM 调试的工作原理</h2>
-<p>一切源于被称作 Agents 的东西。</p>
-<p>运行着各种编译过的 .class 文件的JVM， 有一种特性，可以允许外部的库（Java或C++写的libraries）在运行时注入到 JVM 中。这些外部的库就称作 Agents, 他们有能力修改运行中 .class 文件的内容。</p>
-<p>这些 Agents 拥有的这些 JVM 的功能权限， 是在 JVM 内运行的 Java Code 所无法获取的， 他们能用来做一些有趣的事情，比如修改运行中的源码， 性能分析等。 像 JRebel 工具就是用了这些功能达到魔术般的效果。</p>
-<p>传递一个 Agent Lib 给 JVM, 通过添加 <code>agentlib:libname[=options]</code> 格式的启动参数即可办到。像上面的远程调试我们用的就是
-<code>-agentlib:jdwp=transport=dt_socket,address=1043,server=y,suspend=n</code>来引入 jdwp 这个 Agent 的。</p>
-<p>jdwp 是一个 JVM 特定的 JDWP（Java Debug Wire Protocol） 可选实现，用来定义调试者与运行JVM之间的通讯，它的是通过 JVM 本地库的 jdwp.so 或者 jdwp.dll 支持实现的。</p>
-<p>JPDA 由两个接口（分别是 JVM Tool Interface 和 JDI）、一个协议（Java Debug Wire Protocol）和两个用于合并它们的软件组件（后端和前端）组成。
-<img src="https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" alt="Java 调试平台架构"></p>
-<ul>
-<li>JVM TI-Java VM工具接口。JVM TI是J2SE 5.0中引入的新接口，它替代了JVMDI。它定义了VM提供的调试服务。</li>
-<li>JDWP-Java调试线协议。定义调试对象和调试器进程之间的通信。</li>
-<li>JDI-Java调试接口。定义高级Java语言界面，工具开发人员可以轻松地使用该界面来编写远程调试器应用程序。</li>
-</ul>
-<p>简单来说， jdwp agent 会建立运行应用的 JVM 和调试者（本地或者远程）之间的桥梁。既然他是一个Agent Library, 它就有能力拦截运行的代码。</p>
-<p>在 JVM 架构里， debugging 功能在 JVM 本身的内部是找不到的，它是一种抽象到外部工具的方式（也称作调试者 debugger）。这些调试工具或者运行在 JVM 的本地 或者在远程。这是一种解耦，模块化的架构。</p>
-<p>概述此模块化体系结构的所有规范都包含在Java平台中，调试器体系结构，JPDA，您可以在此处阅读其详细介绍： <a href=https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html>Java Platform Debugger Architecture Overview.</a></p>
-<h2 id=4-总结>4. 总结</h2>
-<p>在本文中，我们简单介绍了如何配置Java服务器以进行远程调试，以及如何使用简单的控制台工具来调试应用程序。但是需要注意的是，调试模式会降低服务器的速度，因为它会禁用一些JVM优化。另外，调试模式可能会带来潜在的安全风险。您需要通过特定端口向调试器提供对服务器的访问权限，这对于用心不良的人来说是另一个潜在的安全漏洞。所以并不建议长期开着调试模式跑应用。</p>
-<h2 id=参考文档>参考文档</h2>
-<p>[1] <a href=https://www.jianshu.com/p/d168ecdce022>Java远程调试（Remote Debugging）的那些事</a></p>
-<p>[2] <a href=https://blog.trifork.com/2014/07/14/how-to-remotely-debug-application-running-on-tomcat-from-within-intellij-idea/>How to Remotely Debug Application Running on Tomcat From Within Intellij IDEA</a></p>
-<p>[3] <a href=https://stackify.com/java-remote-debugging/>A Practical Guide to Java Remote Debugging</a></p>
-<p>[4] <a href=https://www.ibm.com/developerworks/cn/opensource/os-eclipse-javadebug/index.html>使用 Eclipse 远程调试 Java 应用程序</a></p>
-<p>[5] <a href=https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html>JPDA</a></p>
-<p>[6] <a href=https://www.ibm.com/developerworks/cn/java/j-lo-jpda1/index.html>深入 Java 调试体系</a></p>
-<p>[7] <a href=http://dev-aux.com/java/java-local-and-remote-jvm-debugging-jdk-8-and-later>Java: local and remote JVM debugging — JDK 8, 9 and later</a></p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/%E8%B0%83%E8%AF%95/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#调试</a>
-<a href=https://ahamoment.cn/tags/idea/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#IDEA</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/linux/linux-shell-input-output-redirect/ class=block>Linux Shell 输入/输出重定向</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/tool/tool-git-set-config/ class=block>自动配置Git仓库提交作者</a>
-</div>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20191121114850859.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title=在这里插入图片描述>
+当我们看到打印出这行信息时，就可以对需要调试的代码打断点调试了。</p><h2 id=3-远程-jvm-调试的工作原理>3. 远程 JVM 调试的工作原理</h2><p>一切源于被称作 Agents 的东西。</p><p>运行着各种编译过的 .class 文件的JVM， 有一种特性，可以允许外部的库（Java或C++写的libraries）在运行时注入到 JVM 中。这些外部的库就称作 Agents, 他们有能力修改运行中 .class 文件的内容。</p><p>这些 Agents 拥有的这些 JVM 的功能权限， 是在 JVM 内运行的 Java Code 所无法获取的， 他们能用来做一些有趣的事情，比如修改运行中的源码， 性能分析等。 像 JRebel 工具就是用了这些功能达到魔术般的效果。</p><p>传递一个 Agent Lib 给 JVM, 通过添加 <code>agentlib:libname[=options]</code> 格式的启动参数即可办到。像上面的远程调试我们用的就是
+<code>-agentlib:jdwp=transport=dt_socket,address=1043,server=y,suspend=n</code>来引入 jdwp 这个 Agent 的。</p><p>jdwp 是一个 JVM 特定的 JDWP（Java Debug Wire Protocol） 可选实现，用来定义调试者与运行JVM之间的通讯，它的是通过 JVM 本地库的 jdwp.so 或者 jdwp.dll 支持实现的。</p><p>JPDA 由两个接口（分别是 JVM Tool Interface 和 JDI）、一个协议（Java Debug Wire Protocol）和两个用于合并它们的软件组件（后端和前端）组成。
+<img class=lazyload src=/svg/loading.min.svg data-src="https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" data-srcset="https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70, https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 1.5x, https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark%2ctype_ZmFuZ3poZW5naGVpdGk%2cshadow_10%2ctext_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=%2csize_16%2ccolor_FFFFFF%2ct_70 2x" data-sizes=auto alt="https://img-blog.csdnimg.cn/20191121120557909.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2N4cTIxMTE1MDQxMDQ=,size_16,color_FFFFFF,t_70" title="Java 调试平台架构"></p><ul><li>JVM TI-Java VM工具接口。JVM TI是J2SE 5.0中引入的新接口，它替代了JVMDI。它定义了VM提供的调试服务。</li><li>JDWP-Java调试线协议。定义调试对象和调试器进程之间的通信。</li><li>JDI-Java调试接口。定义高级Java语言界面，工具开发人员可以轻松地使用该界面来编写远程调试器应用程序。</li></ul><p>简单来说， jdwp agent 会建立运行应用的 JVM 和调试者（本地或者远程）之间的桥梁。既然他是一个Agent Library, 它就有能力拦截运行的代码。</p><p>在 JVM 架构里， debugging 功能在 JVM 本身的内部是找不到的，它是一种抽象到外部工具的方式（也称作调试者 debugger）。这些调试工具或者运行在 JVM 的本地 或者在远程。这是一种解耦，模块化的架构。</p><p>概述此模块化体系结构的所有规范都包含在Java平台中，调试器体系结构，JPDA，您可以在此处阅读其详细介绍： <a href=https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html target=_blank rel="noopener noreffer">Java Platform Debugger Architecture Overview.</a></p><h2 id=4-总结>4. 总结</h2><p>在本文中，我们简单介绍了如何配置Java服务器以进行远程调试，以及如何使用简单的控制台工具来调试应用程序。但是需要注意的是，调试模式会降低服务器的速度，因为它会禁用一些JVM优化。另外，调试模式可能会带来潜在的安全风险。您需要通过特定端口向调试器提供对服务器的访问权限，这对于用心不良的人来说是另一个潜在的安全漏洞。所以并不建议长期开着调试模式跑应用。</p><h2 id=参考文档>参考文档</h2><p>[1] <a href=https://www.jianshu.com/p/d168ecdce022 target=_blank rel="noopener noreffer">Java远程调试（Remote Debugging）的那些事</a></p><p>[2] <a href=https://blog.trifork.com/2014/07/14/how-to-remotely-debug-application-running-on-tomcat-from-within-intellij-idea/ target=_blank rel="noopener noreffer">How to Remotely Debug Application Running on Tomcat From Within Intellij IDEA</a></p><p>[3] <a href=https://stackify.com/java-remote-debugging/ target=_blank rel="noopener noreffer">A Practical Guide to Java Remote Debugging</a></p><p>[4] <a href=https://www.ibm.com/developerworks/cn/opensource/os-eclipse-javadebug/index.html target=_blank rel="noopener noreffer">使用 Eclipse 远程调试 Java 应用程序</a></p><p>[5] <a href=https://docs.oracle.com/javase/7/docs/technotes/guides/jpda/architecture.html target=_blank rel="noopener noreffer">JPDA</a></p><p>[6] <a href=https://www.ibm.com/developerworks/cn/java/j-lo-jpda1/index.html target=_blank rel="noopener noreffer">深入 Java 调试体系</a></p><p>[7] <a href=http://dev-aux.com/java/java-local-and-remote-jvm-debugging-jdk-8-and-later target=_blank rel="noopener noreffer">Java: local and remote JVM debugging — JDK 8, 9 and later</a></p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2019-11-21</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-title="IntellJ IDEA 远程调试 Java 程序" data-via=xueqiang_chen data-hashtags=调试,IDEA><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-hashtag=调试><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-title="IntellJ IDEA 远程调试 Java 程序"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-title="IntellJ IDEA 远程调试 Java 程序"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-title="IntellJ IDEA 远程调试 Java 程序" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/java/java-remote-debug/ data-title="IntellJ IDEA 远程调试 Java 程序"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E8%B0%83%E8%AF%95/>调试</a>,&nbsp;<a href=/tags/idea/>IDEA</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/tool/tool-git-set-config/ class=prev rel=prev title=自动配置Git仓库提交作者><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>自动配置Git仓库提交作者</a>
+<a href=/posts/linux/linux-shell-input-output-redirect/ class=next rel=next title="Linux Shell 输入/输出重定向">Linux Shell 输入/输出重定向<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

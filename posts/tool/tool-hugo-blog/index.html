@@ -1,257 +1,76 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>Hugo 博客搭建 | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Hugo 博客搭建","item":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/tool/tool-hugo-blog/"},"headline":"Hugo 博客搭建 | AhaMoment","image":"https://ahamoment.cn/uploads/gohugoio-card.png","datePublished":"2021-06-17T20:28:05+08:00","dateModified":"2021-08-10T03:00:00+00:00","wordCount":1606,"author":{"@type":"Person","name":["chenxq"]},"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu"}</script><meta property="og:title" content="Hugo 博客搭建 | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-hugo-blog/">
-<meta property="og:description" content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2021-06-17T20:28:05+08:00">
-<meta property="article:modified_time" content="2021-08-10T03:00:00+00:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="hugo">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">Hugo 博客搭建</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2021-06-17</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>4 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/%E5%B7%A5%E5%85%B7/ class=hover:text-eureka>工具</a>
-</div>
-</div>
-<div class=my-4>
-<img src=https://ahamoment.cn/uploads/gohugoio-card.png class=w-full alt="Featured Image">
-</div>
-<div class=content>
-<h2 id=前言>前言</h2>
-<p>原先的博客主题 <a href=https://github.com/olOwOlo/hugo-theme-even>even</a> 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是<a href=https://github.com/wangchucheng/hugo-eureka>eureka</a>，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了<a href=https://imnerd.org/>怡红院落</a>的改造，增加了归档、搜索的功能。
-另外之前一直想用 <code>github action</code> 的自动化来部署博客，一直都没有时间，这次一起做了。</p>
-<h2 id=1-hugo>1. Hugo</h2>
-<p>博客是基于<a href=https://gohugo.io/documentation/>Hugo</a>来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到<code>/usr/local/bin/</code>目录下即可。</p>
-<blockquote>
-<p>Hugo Release: <a href=https://github.com/gohugoio/hugo/releases>https://github.com/gohugoio/hugo/releases</a>
-完成 Hugo 的安装之后就可以创建博客了，通过</p>
-</blockquote>
-<pre><code class=language-sh>hugo new site myblog
-</code></pre>
-<p>来创建一个博客文件夹。创建后的目录如下：</p>
-<pre><code class=language-sh>chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll                                                                    1049  11:27:58  
-总用量 512
-drwxrwxrwx 1 root root  0 8月  10 11:27 archetypes
--rwxrwxrwx 1 root root 82 8月  10 11:27 config.toml
-drwxrwxrwx 1 root root  0 8月  10 11:27 content
-drwxrwxrwx 1 root root  0 8月  10 11:27 data
-drwxrwxrwx 1 root root  0 8月  10 11:27 layouts
-drwxrwxrwx 1 root root  0 8月  10 11:27 static
-drwxrwxrwx 1 root root  0 8月  10 11:27 themes
-</code></pre>
-<p>Hugo 的<a href=https://gohugo.io/getting-started/directory-structure/>官方文档</a>有介绍具体的目录结构用途，这里不再赘述。
-接下来，我们需要添加一个主题，使用 git submodule 命令添加：</p>
-<pre><code class=language-sh>git submodule add https://github.com/wangchucheng/hugo-eureka.git themes/eureka
-</code></pre>
-<p>添加之后删除掉config.toml文件并将<code>themes/eureka/exampleSite/</code>目录下的<code>config</code>和<code>content</code>复制到我们的博客根目录下。
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Hugo 博客搭建 - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="Hugo 博客搭建"><meta property="og:description" content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/tool/tool-hugo-blog/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2021-06-17T20:28:05+08:00"><meta property="article:modified_time" content="2021-08-10T03:00:00+00:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="Hugo 博客搭建"><meta name=twitter:description content="前言 原先的博客主题 even 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是eu"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/tool/tool-hugo-blog/><link rel=prev href=https://ahamoment.cn/posts/k8s-doc/chapter6/default-scheduler/><link rel=next href=https://ahamoment.cn/posts/linux/linux-commands/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Hugo 博客搭建","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/tool\/tool-hugo-blog\/"},"genre":"posts","keywords":"hugo","wordcount":1606,"url":"https:\/\/ahamoment.cn\/posts\/tool\/tool-hugo-blog\/","datePublished":"2021-06-17T20:28:05+08:00","dateModified":"2021-08-10T03:00:00+00:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Hugo 博客搭建</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/%E5%B7%A5%E5%85%B7/><i class="far fa-folder fa-fw" aria-hidden=true></i>工具</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2021-06-17>2021-06-17</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;1606 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;4 minutes&nbsp;</div></div><div class=featured-image><img class=lazyload src=/svg/loading.min.svg data-src=/uploads/gohugoio-card.png data-srcset="/uploads/gohugoio-card.png, /uploads/gohugoio-card.png 1.5x, /uploads/gohugoio-card.png 2x" data-sizes=auto alt=/uploads/gohugoio-card.png title=/uploads/gohugoio-card.png></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#前言>前言</a></li><li><a href=#1-hugo>1. Hugo</a></li><li><a href=#2-github-action>2. github action</a></li><li><a href=#3-后台管理>3. 后台管理</a></li><li><a href=#总结>总结</a></li></ul></nav></div></div><div class=content id=content><h2 id=前言>前言</h2><p>原先的博客主题 <a href=https://github.com/olOwOlo/hugo-theme-even target=_blank rel="noopener noreffer">even</a> 用了一段时间，由于想把博客内的一些系列文章整理成一个独立的笔记链接，索性就一起更换了博客的主题，现在使用的这款主题是<a href=https://github.com/wangchucheng/hugo-eureka target=_blank rel="noopener noreffer">eureka</a>，这款主题配色简洁，文档丰富，基本的功能都有，在这款主题的基础上，作者参考了<a href=https://imnerd.org/ target=_blank rel="noopener noreffer">怡红院落</a>的改造，增加了归档、搜索的功能。
+另外之前一直想用 <code>github action</code> 的自动化来部署博客，一直都没有时间，这次一起做了。</p><h2 id=1-hugo>1. Hugo</h2><p>博客是基于<a href=https://gohugo.io/documentation/ target=_blank rel="noopener noreffer">Hugo</a>来构建的。Hugo 的安装十分简单，只要下载 hugo 的二进制文件，解压后放到<code>/usr/local/bin/</code>目录下即可。</p><blockquote><p>Hugo Release: <a href=https://github.com/gohugoio/hugo/releases target=_blank rel="noopener noreffer">https://github.com/gohugoio/hugo/releases</a>
+完成 Hugo 的安装之后就可以创建博客了，通过</p></blockquote><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>hugo new site myblog
+</span></span></code></pre></div><p>来创建一个博客文件夹。创建后的目录如下：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>chenxq@ubuntu   /mnt/hgfs/GitRepos/exampleblog  ll                                                                    <span class=m>1049</span>  11:27:58  
+</span></span><span class=line><span class=cl>总用量 <span class=m>512</span>
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 archetypes
+</span></span><span class=line><span class=cl>-rwxrwxrwx <span class=m>1</span> root root <span class=m>82</span> 8月  <span class=m>10</span> 11:27 config.toml
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 content
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 data
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 layouts
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 static
+</span></span><span class=line><span class=cl>drwxrwxrwx <span class=m>1</span> root root  <span class=m>0</span> 8月  <span class=m>10</span> 11:27 themes
+</span></span></code></pre></div><p>Hugo 的<a href=https://gohugo.io/getting-started/directory-structure/ target=_blank rel="noopener noreffer">官方文档</a>有介绍具体的目录结构用途，这里不再赘述。
+接下来，我们需要添加一个主题，使用 git submodule 命令添加：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>git submodule add https://github.com/wangchucheng/hugo-eureka.git themes/eureka
+</span></span></code></pre></div><p>添加之后删除掉config.toml文件并将<code>themes/eureka/exampleSite/</code>目录下的<code>config</code>和<code>content</code>复制到我们的博客根目录下。
 eureka 主题使用的配置是放到config文件夹中的，并且按照不同的功能分开，我们修改<code>config/_default/config.yaml</code>文件的<code>baseURL</code>为我们的域名<code>https://ahamoment.cn</code>，其他的配置可根据需要进行修改。
-eureka 主题可以自定义主页，不过作者偏向于传统的左右分栏的博客页面，就按照<a href=https://imnerd.org/custom-hugo-theme-eureka.html>Hugo 主题 Eureka 自定义</a>这篇博客的内容，做了定制。代码沿用了怡红公子的源代码，文件上做了一点调整，例如搜索功能，需要在<code>content/</code>文件夹下创建目录，在目录里面添加<code>_index.md</code>文件，在文件的meta中声明layout为<code>search</code>。</p>
-<pre><code class=language-md>---
-title: 搜索
-layout: search
----
-</code></pre>
-<p>在<code>layouts/_default/</code>中增加搜索的页面<code>search.html</code>。
-最后我们添加一个文章</p>
-<pre><code class=language-sh>hugo new posts/hello-world.md
-</code></pre>
-<p>这样，就会在<code>content/posts/</code>文件夹下增加一篇文章。
-完成了博客的主题和内容之后，我们需要把githug pages上，这个过程是用hugo命令生成静态文件<code>public</code>，然后将<code>public</code>文件中的内容push到github的<code>yourusername.github.io</code>这个仓库。这里就是我们在前言说的，可以通过 github action 来完成自动化部署的工作。</p>
-<h2 id=2-github-action>2. github action</h2>
-<p>github action 是Github官方提供的CI/CD工具。可以直接从 GitHub 构建、测试和部署我们的代码。要使用github action，我们需要在博客的根目录下创建 <code>.github/workflows/gh-pages.yml</code> 文件。</p>
-<pre><code class=language-yaml>name: github pages
-
-on:
-  push:
-    branches:
-      - master  # Set a branch to deploy
-  pull_request:
-
-jobs:
-  deploy:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: true  # Fetch Hugo themes (true OR recursive)
-          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
-
-      - name: Setup Hugo
-        uses: peaceiris/actions-hugo@v2
-        with:
-          hugo-version: 'latest'
-          extended: false
-
-      - name: Build
-        run: hugo --minify
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          external_repository: XueqiangChen/XueqiangChen.github.io
-          publish_branch: master  # default: gh-pages
-          publish_dir: ./public
-          user_name: 'XueqiangChen'
-          user_email: '569503960@qq.com'
-</code></pre>
-<p>该文件的内容可以参考hugo的文档<a href=https://gohugo.io/hosting-and-deployment/hosting-on-github/>Build Hugo With GitHub Action</a>。
-这里需要注意的是 <code>ACTIONS_DEPLOY_KEY</code>, 我们需要在两个地方添加这个key，首先生成ssh key：</p>
-<pre><code class=language-sh>sh-keygen -t rsa -b 4096 -C &quot;$(git config user.email)&quot; -f gh-pages -N &quot;&quot;
-</code></pre>
-<p>将生成的私钥放到当前的博客仓库的settings-secrets中，将公钥放到<code>xueqiangchen.github.io</code>仓库的settings-deploy keys中。
-至此，我们完成了自动化部署的配置，后续提交代码到exampleblog中就会触发github action构建和部署我们的代码。</p>
-<p><img src=/uploads/github-action1.png alt></p>
-<p><img src=/uploads/github-action-2.png alt></p>
-<h2 id=3-后台管理>3. 后台管理</h2>
-<p>后台管理采用的是 forestry.io 提供的 CMS 博客管理功能，可以在线编辑。
-引入后台管理的目的是为了偶尔不在自己的电脑上写文章，可以快速完成，不需要搭建typora+picgo的环境。</p>
-<h2 id=总结>总结</h2>
-<p>作者的博客样式调整了多次，可以说是生命不息，折腾不止。当初选择脱离CSDN也是因为在CSDN发文章要经过审核乱七八糟的流程，然后页面定制还要付费，干脆就自己动手搞一个。这些年也明白了一个博客的核心还是内容，这一次折腾之后，回归到内容，多输出一些好文章。</p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/hugo/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#hugo</a>
-</div>
-<div class=py-2>
-<div class="flex flex-col md:flex-row items-center my-8">
-<a href=https://ahamoment.cn/authors/chenxq/ class="w-24 h-24 md:mr-4">
-<img src=https://ahamoment.cn/images/icon.png class="w-full bg-primary-bg rounded-full" alt=Avatar>
-</a>
-<div class="w-full md:w-auto mt-4 md:mt-0">
-<a href=https://ahamoment.cn/authors/chenxq/ class="block font-bold text-lg pb-1 mb-2 border-b">Chenxq</a>
-<span class="block pb-2"></span>
-<a href=https://github.com/XueqiangChen class=mr-1>
-<i class="fab fa-github"></i>
-</a>
-</div>
-</div>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/linux/linux-commands/ class=block>Linux 常用命令</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/algorithm/algorithm-tree-inorder/ class=block>二叉树的中序遍历</a>
-</div>
-</div>
-</div>
-<div class=col-span-2>
-<div class="sticky top-16 z-10 hidden lg:block px-6 py-4 bg-primary-bg">
-<span class="text-lg font-semibold">On This Page</span>
-</div>
-<div class="sticky-toc hidden lg:block px-6 pb-6">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#前言>前言</a></li>
-<li><a href=#1-hugo>1. Hugo</a></li>
-<li><a href=#2-github-action>2. github action</a></li>
-<li><a href=#3-后台管理>3. 后台管理</a></li>
-<li><a href=#总结>总结</a></li>
-</ul>
-</nav>
-</div>
-<script>window.addEventListener('DOMContentLoaded',()=>{enableStickyToc()})</script>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+eureka 主题可以自定义主页，不过作者偏向于传统的左右分栏的博客页面，就按照<a href=https://imnerd.org/custom-hugo-theme-eureka.html target=_blank rel="noopener noreffer">Hugo 主题 Eureka 自定义</a>这篇博客的内容，做了定制。代码沿用了怡红公子的源代码，文件上做了一点调整，例如搜索功能，需要在<code>content/</code>文件夹下创建目录，在目录里面添加<code>_index.md</code>文件，在文件的meta中声明layout为<code>search</code>。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-md data-lang=md><span class=line><span class=cl>---
+</span></span><span class=line><span class=cl>title: 搜索
+</span></span><span class=line><span class=cl>layout: search
+</span></span><span class=line><span class=cl>---
+</span></span></code></pre></div><p>在<code>layouts/_default/</code>中增加搜索的页面<code>search.html</code>。
+最后我们添加一个文章</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>hugo new posts/hello-world.md
+</span></span></code></pre></div><p>这样，就会在<code>content/posts/</code>文件夹下增加一篇文章。
+完成了博客的主题和内容之后，我们需要把githug pages上，这个过程是用hugo命令生成静态文件<code>public</code>，然后将<code>public</code>文件中的内容push到github的<code>yourusername.github.io</code>这个仓库。这里就是我们在前言说的，可以通过 github action 来完成自动化部署的工作。</p><h2 id=2-github-action>2. github action</h2><p>github action 是Github官方提供的CI/CD工具。可以直接从 GitHub 构建、测试和部署我们的代码。要使用github action，我们需要在博客的根目录下创建 <code>.github/workflows/gh-pages.yml</code> 文件。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>github pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>master </span><span class=w> </span><span class=c># Set a branch to deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-18.04</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>submodules</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>  </span><span class=c># Fetch Hugo themes (true OR recursive)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>fetch-depth</span><span class=p>:</span><span class=w> </span><span class=m>0</span><span class=w>    </span><span class=c># Fetch all history for .GitInfo and .Lastmod</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Hugo</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-hugo@v2</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>hugo-version</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;latest&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>extended</span><span class=p>:</span><span class=w> </span><span class=kc>false</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>hugo --minify</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>peaceiris/actions-gh-pages@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>deploy_key</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.ACTIONS_DEPLOY_KEY }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>external_repository</span><span class=p>:</span><span class=w> </span><span class=l>XueqiangChen/XueqiangChen.github.io</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_branch: master  # default</span><span class=p>:</span><span class=w> </span><span class=l>gh-pages</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>publish_dir</span><span class=p>:</span><span class=w> </span><span class=l>./public</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>user_name</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;XueqiangChen&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>user_email</span><span class=p>:</span><span class=w> </span><span class=s1>&#39;569503960@qq.com&#39;</span><span class=w>
+</span></span></span></code></pre></div><p>该文件的内容可以参考hugo的文档<a href=https://gohugo.io/hosting-and-deployment/hosting-on-github/ target=_blank rel="noopener noreffer">Build Hugo With GitHub Action</a>。
+这里需要注意的是 <code>ACTIONS_DEPLOY_KEY</code>, 我们需要在两个地方添加这个key，首先生成ssh key：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-sh data-lang=sh><span class=line><span class=cl>sh-keygen -t rsa -b <span class=m>4096</span> -C <span class=s2>&#34;</span><span class=k>$(</span>git config user.email<span class=k>)</span><span class=s2>&#34;</span> -f gh-pages -N <span class=s2>&#34;&#34;</span>
+</span></span></code></pre></div><p>将生成的私钥放到当前的博客仓库的settings-secrets中，将公钥放到<code>xueqiangchen.github.io</code>仓库的settings-deploy keys中。
+至此，我们完成了自动化部署的配置，后续提交代码到exampleblog中就会触发github action构建和部署我们的代码。</p><p><img class=lazyload src=/svg/loading.min.svg data-src=/uploads/github-action1.png data-srcset="/uploads/github-action1.png, /uploads/github-action1.png 1.5x, /uploads/github-action1.png 2x" data-sizes=auto alt=/uploads/github-action1.png title=/uploads/github-action1.png></p><p><img class=lazyload src=/svg/loading.min.svg data-src=/uploads/github-action-2.png data-srcset="/uploads/github-action-2.png, /uploads/github-action-2.png 1.5x, /uploads/github-action-2.png 2x" data-sizes=auto alt=/uploads/github-action-2.png title=/uploads/github-action-2.png></p><h2 id=3-后台管理>3. 后台管理</h2><p>后台管理采用的是 forestry.io 提供的 CMS 博客管理功能，可以在线编辑。
+引入后台管理的目的是为了偶尔不在自己的电脑上写文章，可以快速完成，不需要搭建typora+picgo的环境。</p><h2 id=总结>总结</h2><p>作者的博客样式调整了多次，可以说是生命不息，折腾不止。当初选择脱离CSDN也是因为在CSDN发文章要经过审核乱七八糟的流程，然后页面定制还要付费，干脆就自己动手搞一个。这些年也明白了一个博客的核心还是内容，这一次折腾之后，回归到内容，多输出一些好文章。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2021-08-10</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-title="Hugo 博客搭建" data-via=xueqiang_chen data-hashtags=hugo><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-hashtag=hugo><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-title="Hugo 博客搭建"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-title="Hugo 博客搭建"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-title="Hugo 博客搭建" data-image=/uploads/gohugoio-card.png data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/tool/tool-hugo-blog/ data-title="Hugo 博客搭建"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/hugo/>hugo</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/k8s-doc/chapter6/default-scheduler/ class=prev rel=prev title=十字路口上的Kubernetes默认调度器><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>十字路口上的Kubernetes默认调度器</a>
+<a href=/posts/linux/linux-commands/ class=next rel=next title="Linux 常用命令">Linux 常用命令<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>

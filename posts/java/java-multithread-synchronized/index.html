@@ -1,383 +1,223 @@
-<!doctype html><html lang=en><meta charset=utf-8>
-<meta name=viewport content="width=device-width">
-<title>Java 多线程 - 初识 Synchronized | AhaMoment</title>
-<meta name=generator content="Hugo Eureka 0.8.3">
-<link rel=stylesheet href=https://ahamoment.cn/css/eureka.min.css>
-<script defer src=https://ahamoment.cn/js/eureka.min.js></script>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link rel=preload href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" as=style onload="this.onload=null,this.rel='stylesheet'">
-<link rel=stylesheet href=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/styles/solarized-light.min.css media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/highlight.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.0/build/languages/dart.min.js crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/js/all.min.js integrity="sha256-uNYoXefWRqv+PsIF/OflNmwtKM4lStn9yrz2gVl6ymo=" crossorigin></script>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css integrity=sha384-AfEj0r4/OFrOo5t7NnNe46zW/tFgW6x/bCJG8FqQCEo3+Aro6EYUG4+cU+KJWu/X media=print onload="this.media='all',this.onload=null" crossorigin>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.js integrity=sha384-g7c+Jr9ZivxKLnZTDUhnkOnsh30B4H0rpLUpJ4jAIKs4fnJI+sEnkvrMWph2EDg4 crossorigin></script>
-<script defer src=https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/contrib/auto-render.min.js integrity=sha384-mll67QQFJfxn0IYznZYonOWZ644AWYC+Pt2cHqMaRhXVrursRwvLnLaebdGIlYNa crossorigin></script>
-<script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1},{left:"\\(",right:"\\)",display:!1},{left:"\\[",right:"\\]",display:!0}]})})</script>
-<script defer src=https://cdn.jsdelivr.net/npm/mermaid@8.9.2/dist/mermaid.min.js integrity="sha256-Zmpaaj+GXFsPF5WdPArSrnW3b30dovldeKsW00xBVwE=" crossorigin></script>
-<link rel=preconnect href=https://www.google-analytics.com crossorigin>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-80D5T229MJ"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date),gtag('config','G-80D5T229MJ')</script>
-<style type=text/css>.widget+.widget{margin-top:1rem}.widget-title{font-weight:700;margin-bottom:1rem}.widget-list li{font-size:.9rem}.bg-cover img{opacity:1;transition:all .5s ease-in-out}.bg-cover img.dark{opacity:0;height:0}.dark .bg-cover img.day{opacity:0;height:0}.dark .bg-cover img.dark{opacity:1;height:auto}.search-container{margin-top:-.3rem;margin-right:1rem}.search-container .search{border:1px solid #e2e8f0;border-radius:4px}.search-container input{padding-left:1rem;line-height:2rem;outline:none;background:0 0}.search-container button{font-size:.8rem;margin-right:.5rem;color:#e2e8f0}</style>
-<link rel=icon type=image/png sizes=32x32 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_32x32_fill_box_center_3.png>
-<link rel=apple-touch-icon sizes=180x180 href=https://ahamoment.cn/images/icon_hudefd788b34d9017ea35c49e86618f3e1_134481_180x180_fill_box_center_3.png>
-<meta name=description content="Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜">
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://ahamoment.cn/posts/"},{"@type":"ListItem","position":2,"name":"Java 多线程 - 初识 Synchronized","item":"https://ahamoment.cn/posts/java/java-multithread-synchronized/"}]}</script>
-<script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://ahamoment.cn/posts/java/java-multithread-synchronized/"},"headline":"Java 多线程 - 初识 Synchronized | AhaMoment","datePublished":"2020-06-10T19:16:24+08:00","dateModified":"2020-06-10T19:16:24+08:00","wordCount":2115,"publisher":{"@type":"Person","name":"Chenxueqiang","logo":{"@type":"ImageObject","url":"https://ahamoment.cn/images/icon.png"}},"description":"Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜"}</script><meta property="og:title" content="Java 多线程 - 初识 Synchronized | AhaMoment">
-<meta property="og:type" content="article">
-<meta property="og:image" content="https://ahamoment.cn/images/icon.png">
-<meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-synchronized/">
-<meta property="og:description" content="Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜">
-<meta property="og:locale" content="en">
-<meta property="og:site_name" content="AhaMoment">
-<meta property="article:published_time" content="2020-06-10T19:16:24+08:00">
-<meta property="article:modified_time" content="2020-06-10T19:16:24+08:00">
-<meta property="article:section" content="posts">
-<meta property="article:tag" content="多线程">
-<body class="flex flex-col min-h-screen">
-<header class="fixed flex items-center w-full min-h-16 pl-scrollbar z-50 bg-secondary-bg shadow-sm">
-<div class="w-full max-w-screen-xl mx-auto"><script>let storageColorScheme=localStorage.getItem("lightDarkMode");((storageColorScheme=='Auto'||storageColorScheme==null)&&window.matchMedia("(prefers-color-scheme: dark)").matches||storageColorScheme=="Dark")&&document.getElementsByTagName('html')[0].classList.add('dark')</script>
-<nav class="flex items-center justify-between flex-wrap px-4 py-4 md:py-0">
-<a href=/ class="mr-6 text-primary-text text-xl font-bold">AhaMoment</a>
-<button id=navbar-btn class="md:hidden flex items-center px-3 py-2" aria-label="Open Navbar">
-<i class="fas fa-bars"></i>
-</button>
-<div id=target class="hidden block md:flex md:flex-grow md:justify-between md:items-center w-full md:w-auto text-primary-text z-20">
-<div class="md:flex md:h-16 text-sm md:flex-grow pb-4 md:pb-0 border-b md:border-b-0">
-<a href=/docs/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">文档</a>
-<a href=/archive/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">归档</a>
-<a href=/authors/chenxq/ class="block mt-4 md:inline-block md:mt-0 md:h-(16-4px) md:leading-(16-4px) box-border md:border-t-2 md:border-b-2 border-transparent mr-4">关于我</a>
-</div>
-<div class=flex>
-<div class="search-container relative pt-4 md:pt-0">
-<div class=search>
-<form role=search class=search-form action=/search/index.html method=get>
-<label>
-<input name=q type=text placeholder="搜索 ..." class=search-field>
-</label>
-<button>
-<i class="fas fa-search"></i>
-</button>
-</form>
-</div>
-</div>
-<div class="relative pt-4 md:pt-0">
-<div class="cursor-pointer hover:text-eureka" id=lightDarkMode>
-<i class="fas fa-adjust"></i>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-30" id=is-open>
-</div>
-<div class="absolute flex flex-col left-0 md:left-auto right-auto md:right-0 hidden bg-secondary-bg w-48 rounded py-2 border border-tertiary-bg cursor-pointer z-40" id=lightDarkOptions>
-<span class="px-4 py-1 hover:text-eureka" name=Light>Light</span>
-<span class="px-4 py-1 hover:text-eureka" name=Dark>Dark</span>
-<span class="px-4 py-1 hover:text-eureka" name=Auto>Auto</span>
-</div>
-</div>
-</div>
-</div>
-<div class="fixed hidden inset-0 opacity-0 h-full w-full cursor-default z-0" id=is-open-mobile>
-</div>
-</nav>
-<script>let element=document.getElementById('lightDarkMode');storageColorScheme==null||storageColorScheme=='Auto'?document.addEventListener('DOMContentLoaded',()=>{window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change',switchDarkMode)}):storageColorScheme=="Light"?(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'sun'),element.firstElementChild.classList.add('fa-sun')):storageColorScheme=="Dark"&&(element.firstElementChild.classList.remove('fa-adjust'),element.firstElementChild.setAttribute("data-icon",'moon'),element.firstElementChild.classList.add('fa-moon')),document.addEventListener('DOMContentLoaded',()=>{getcolorscheme(),switchBurger()})</script>
-</div>
-</header>
-<main class="flex-grow pt-16">
-<div class=pl-scrollbar>
-<div class="w-full max-w-screen-xl lg:px-4 xl:px-8 mx-auto">
-<div class="grid grid-cols-2 lg:grid-cols-8 gap-4 lg:pt-12">
-<div class="col-span-2 lg:col-start-2 lg:col-span-6 bg-secondary-bg rounded px-6 py-8">
-<h1 class="font-bold text-3xl text-primary-text">Java 多线程 - 初识 Synchronized</h1>
-<div class="flex flex-wrap flex-row items-center mt-2 text-tertiary-text">
-<div class="mr-6 my-2">
-<i class="fas fa-calendar mr-1"></i>
-<span>2020-06-10</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-clock mr-1"></i>
-<span>5 min read</span>
-</div>
-<div class="mr-6 my-2">
-<i class="fas fa-folder mr-1"></i>
-<a href=https://ahamoment.cn/categories/java/ class=hover:text-eureka>java</a>
-</div>
-</div>
-<div class=content>
-<h2 id=synchronized-简介>Synchronized 简介</h2>
-<blockquote>
-<p>本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！</p>
-</blockquote>
-<p>先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。</p>
-<pre><code class=language-java>public class BankRunnable {
-    public static void main(String[] args) {
-        // 一个runnable实例被多个线程共享
-        TicketWindowRunnable ticketWindow = new TicketWindowRunnable();
-
-        Thread windowThread1 = new Thread(ticketWindow, &quot;一号窗口&quot;);
-        Thread windowThread2 = new Thread(ticketWindow, &quot;二号窗口&quot;);
-        Thread windowThread3 = new Thread(ticketWindow, &quot;三号窗口&quot;);
-        windowThread1.start();
-        windowThread2.start();
-        windowThread3.start();
-    }
-}
-
-public class TicketWindowRunnable implements Runnable {
-    private int index = 1;
-    private static final int MAX = 50;
-
-    @Override
-    public void run() {
-        while (true) {
-            if (index &gt; MAX) {//1
-                break;
-            }
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(Thread.currentThread().getName()+&quot; 的号码是：&quot;+(index++));//2
-        }
-    }
-}
-</code></pre>
-<p>多运行几遍程序，就会出现下面这个问题：</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format,png" alt=image-20200603192220517></p>
-<p>在一号窗口拿完最后一个号码之后，二号窗口和三号窗口又后续拿到了 52 和 51 号。为什么会出现这种现象呢？</p>
-<p>首先当 <code>index=499</code> 的时候，三个线程均不满足 <code>index > MAX</code>，都会向下执行。三个线程都可以向下执行，将 index 加 1。</p>
-<p>为了解决这个问题，这里引入了 synchronized 。</p>
-<h2 id=什么是-synchronized>什么是 synchronized</h2>
-<blockquote>
-<p>synchronized关键字可以实现一个简单的策略来防止线程干扰和内存一致性错误，如果一个对象对多个线程是可见的，那么对该对象的所有读或者写都将通过同步的方式来进行。</p>
-</blockquote>
-<p>上面这段话是oracle官网对synchronized关键字的解释，具体表现如下：</p>
-<ul>
-<li>synchronized关键字提供了一种锁的机制，能够确保共享变量的互斥访问，从而防止数据不一致问题的出现。</li>
-<li>synchronized关键字包括monitor enter和monitor exit两个JVM指令，它能够保证在任何时候任何线程执行到monitor enter成功之前都必须从主内存中获取数据，而不是从缓存中，在monitor exit运行成功之后，共享变量被更新后的值必须刷入主内存（在本书的第三部分会重点介绍）。</li>
-<li>synchronized的指令严格遵守java happens-before规则，一个monitor exit指令之前必定要有一个monitor enter。</li>
-</ul>
-<h2 id=synchronized关键字的用法>synchronized关键字的用法</h2>
-<p>Java通过 synchronized 对共享数据的线程访问提供了一种避免竞争条件的机制。synchronized 可以修饰方法或者代码块，被修饰的方法或者代码块同一时间只会允许一个线程执行，这条执行的线程持有同步部分的锁。synchronized 方法不能用于对class及其变量进行修饰。</p>
-<p>synchronized 关键字可以修饰方法或者代码块，那么这两者有什么区别呢？</p>
-<pre><code class=language-java>// 同步代码块
-public class TicketWindowRunnable implements Runnable {
-    private int index = 1;
-    private static final int MAX = 500;
-
-    private final Object MONITOR = new Object();
-
-    @Override
-    public void run() {
-        while (true) {
-            synchronized (MONITOR) {
-                if (index &gt; MAX) {
-                    break;
-                }
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-                System.out.println(Thread.currentThread().getName() + &quot; 的号码是：&quot; + (index++));
-            }
-        }
-    }
-}
-</code></pre>
-<p>synchronized 方法修饰代码块的时候，使用的是 monitor 锁。再来用 synchronized 修饰一下同步方法：</p>
-<pre><code class=language-java>@Override
-public synchronized void run() {
-    while (true) {
-        if (index &gt; MAX) {
-            break;
-        }
-        try {
-            Thread.sleep(5);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(Thread.currentThread().getName() + &quot; 的号码是：&quot; + (index++));
-    }
-}
-</code></pre>
-<p>运行之后发现都是同一个线程在跑，另外两个线程无法执行。这是因为 synchronized 在修饰方法的时候使用的是 this 锁，当其中一个线程拿到锁进到 while 循环之后，就一直去做事情，直到满足条件退出为止。将 while 里面的代码抽出来放到一个方法里，用 synchronized 来修饰该方法就可以解决这个问题。</p>
-<pre><code class=language-java>@Override
-public void run() {
-    while (true) {
-        if (ticket()) {
-            break;
-        }
-    }
-}
-
-private synchronized boolean ticket() {
-    if (index &gt; MAX) {
-        return true;
-    }
-    try {
-        Thread.sleep(5);
-    } catch (InterruptedException e) {
-        e.printStackTrace();
-    }
-    System.out.println(Thread.currentThread().getName() + &quot; 的号码是：&quot; + (index++));
-    return false;
-}
-</code></pre>
-<p>synchronized 修饰方法时默认是使用的 this 锁，修饰代码块时使用的是对象锁。synchronized 关键字还可以用来修饰静态方法和静态代码块。</p>
-<pre><code class=language-java>public class SynchronizedStatic {
-
-    public synchronized static void m1() {
-        System.out.println(&quot;m1 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public synchronized static void m2() {
-        System.out.println(&quot;m2 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-public class SynchronizedStaticTest {
-    public static void main(String[] args) {
-        new Thread(&quot;T1&quot;) {
-            @Override
-            public void run() {
-                SynchronizedStatic.m1();
-            }
-        }.start();
-
-        new Thread(&quot;T2&quot;) {
-            @Override
-            public void run() {
-                SynchronizedStatic.m2();
-            }
-        }.start();
-    }
-}
-
-// output
-m1 T1
-m2 T2
-</code></pre>
-<p>静态方法 m1 和 m2 同时被 synchronized 修饰，这个时候线程 T2 会等到线程 T1 执行完再执行，说明这两个方法使用的是同一把锁，这就是 Class 锁。我们把 sleep 的时间变长一点来观察一下是不是 Class 锁。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format,png" alt=image-20200609191557455></p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format,png" alt=image-20200609191629867></p>
-<p>可以看到，线程 T1 执行的时候，持有的是 Class 锁，此时线程 T2 在等待 T1 执行完释放锁，当 T1 执行完之后，T2 拿到 Class 锁执行代码。</p>
-<p><img src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format,png" alt=image-20200609191812086></p>
-<p>了解了 synchronized 修饰静态方法使用的是 Class 锁之后，我们再来验证一下当它修饰静态方法的时候是不是也是使用 Class 锁？</p>
-<pre><code class=language-java>public class SynchronizedStatic {
-    public synchronized static void m1() {
-        System.out.println(&quot;m1 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(100_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public static void m3() {
-        System.out.println(&quot;m3 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-public class SynchronizedStaticTest {
-    public static void main(String[] args) {
-        new Thread(&quot;T1&quot;) {
-            @Override
-            public void run() {
-                SynchronizedStatic.m1();
-            }
-        }.start();
-
-        new Thread(&quot;T3&quot;) {
-            @Override
-            public void run() {
-                SynchronizedStatic.m3();
-            }
-        }.start();
-    }
-}
-</code></pre>
-<p>这里加了一个没有 synchronized 修饰的静态方法 m3，运行之后很容易知道，这两个线程是同时运行的。我们在 SynchronizedStatic 开始的地方加一个静态代码块，静态代码块内部使用 synchronized 锁。</p>
-<pre><code class=language-java>public class SynchronizedStatic {
-    static {
-        synchronized (SynchronizedStatic.class) {
-            System.out.println(&quot;static &quot; + Thread.currentThread().getName());
-            try {
-                Thread.sleep(10_000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public synchronized static void m1() {
-        System.out.println(&quot;m1 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(100_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void m3() {
-        System.out.println(&quot;m3 &quot; + Thread.currentThread().getName());
-        try {
-            Thread.sleep(10_000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-}
-
-//output
-static T1
-m1 T1
-m3 T3
-</code></pre>
-<p>可以发现，T1 线程要先执行静态代码块才能往下走，说明静态代码块使用的锁和静态方法是一样的，另外这个时候没有用 synchronized 修饰的 m3 也要等静态代码块执行实例化才行。</p>
-<p>总结一下，synchronized 关键字能够避免多线程竞争导致的数据不一致，被 synchronized 修饰的方法或者代码块同一时间只会允许一个线程执行，这条执行的线程持有同步部分的锁。synchronized 关键字修饰普通方法时，使用的是 this 锁，修饰静态方法和静态代码块时，使用 Class 锁，修饰代码块时，使用 LOCK 锁。</p>
-</div>
-<div class=my-4>
-<a href=https://ahamoment.cn/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/ class="inline-block bg-tertiary-bg text-sm rounded px-3 py-1 my-1 mr-2 hover:text-eureka">#多线程</a>
-</div>
-<div class="flex flex-col md:flex-row md:justify-between -mx-2 mt-4 px-2 pt-4 border-t">
-<div>
-<span class="block font-bold">Previous</span>
-<a href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/ class=block>Java 多线程 - 死锁问题</a>
-</div>
-<div class="md:text-right mt-4 md:mt-0">
-<span class="block font-bold">Next</span>
-<a href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/ class=block>20 常用的 RPM 命令</a>
-</div>
-</div>
-</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{hljs.initHighlightingOnLoad()})</script>
-</div>
-</div>
-</main>
-<footer class=pl-scrollbar>
-<div class="w-full max-w-screen-xl mx-auto"><div class="text-center p-6 pin-b">
-<p class="text-sm text-tertiary-text">&copy; 2021
-&#183; Powered by the <a href=https://github.com/wangchucheng/hugo-eureka class=hover:text-eureka>Eureka</a> theme for <a href=https://gohugo.io class=hover:text-eureka>Hugo</a></p>
-</div></div>
-</footer>
-</body>
-</html>
+<!doctype html><html lang=zh-CN><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=robots content="noodp"><title>Java 多线程 - 初识 Synchronized - Aha Moment</title><meta name=Description content="软件工程师"><meta property="og:title" content="Java 多线程 - 初识 Synchronized"><meta property="og:description" content="Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜"><meta property="og:type" content="article"><meta property="og:url" content="https://ahamoment.cn/posts/java/java-multithread-synchronized/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2020-06-10T19:16:24+08:00"><meta property="article:modified_time" content="2020-06-10T19:16:24+08:00"><meta property="og:site_name" content="Aha Moment"><meta name=twitter:card content="summary"><meta name=twitter:title content="Java 多线程 - 初识 Synchronized"><meta name=twitter:description content="Synchronized 简介 本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！ 先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜"><meta name=application-name content="Aha Moment!"><meta name=apple-mobile-web-app-title content="Aha Moment!"><meta name=theme-color content="#ffffff"><meta name=msapplication-TileColor content="#da532c"><link rel="shortcut icon" type=image/x-icon href=/favicon.ico><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link rel=manifest href=/site.webmanifest><link rel=canonical href=https://ahamoment.cn/posts/java/java-multithread-synchronized/><link rel=prev href=https://ahamoment.cn/posts/linux/linux-20-rpm-command/><link rel=next href=https://ahamoment.cn/posts/java/java-multithread-dead-lock/><link rel=stylesheet href=/css/style.min.css><link rel=preload href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css></noscript><link rel=preload href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css as=style onload='this.onload=null,this.rel="stylesheet"'><noscript><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css></noscript><script type=application/ld+json>{"@context":"http://schema.org","@type":"BlogPosting","headline":"Java 多线程 - 初识 Synchronized","inLanguage":"zh-CN","mainEntityOfPage":{"@type":"WebPage","@id":"https:\/\/ahamoment.cn\/posts\/java\/java-multithread-synchronized\/"},"genre":"posts","keywords":"多线程","wordcount":2105,"url":"https:\/\/ahamoment.cn\/posts\/java\/java-multithread-synchronized\/","datePublished":"2020-06-10T19:16:24+08:00","dateModified":"2020-06-10T19:16:24+08:00","publisher":{"@type":"Organization","name":""},"author":{"@type":"Person","name":"xueqiang.chen"},"description":""}</script></head><body data-header-desktop=auto data-header-mobile=auto><script type=text/javascript>(window.localStorage&&localStorage.getItem("theme")?localStorage.getItem("theme")==="dark":"auto"==="auto"?window.matchMedia("(prefers-color-scheme: dark)").matches:"auto"==="dark")&&document.body.setAttribute("theme","dark")</script><div id=mask></div><div class=wrapper><header class=desktop id=header-desktop><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu><div class=menu-inner><a class=menu-item href=/posts/>文章 </a><a class=menu-item href=/tags/>标签 </a><a class=menu-item href=/categories/>分类 </a><span class="menu-item delimiter"></span><span class="menu-item search" id=search-desktop>
+<input type=text placeholder=搜索文章标题或内容 id=search-input-desktop>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-desktop title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-desktop title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-desktop><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span>
+</span><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme"><i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></div></header><header class=mobile id=header-mobile><div class=header-container><div class=header-wrapper><div class=header-title><a href=/ title="Aha Moment">Aha Moment!</a></div><div class=menu-toggle id=menu-toggle-mobile><span></span><span></span><span></span></div></div><div class=menu id=menu-mobile><div class=search-wrapper><div class="search mobile" id=search-mobile><input type=text placeholder=搜索文章标题或内容 id=search-input-mobile>
+<a href=javascript:void(0); class="search-button search-toggle" id=search-toggle-mobile title=Search><i class="fas fa-search fa-fw" aria-hidden=true></i></a>
+<a href=javascript:void(0); class="search-button search-clear" id=search-clear-mobile title=Clear><i class="fas fa-times-circle fa-fw" aria-hidden=true></i></a>
+<span class="search-button search-loading" id=search-loading-mobile><i class="fas fa-spinner fa-fw fa-spin" aria-hidden=true></i></span></div><a href=javascript:void(0); class=search-cancel id=search-cancel-mobile>Cancel</a></div><a class=menu-item href=/posts/ title>文章</a><a class=menu-item href=/tags/ title>标签</a><a class=menu-item href=/categories/ title>分类</a><a href=javascript:void(0); class="menu-item theme-switch" title="Switch Theme">
+<i class="fas fa-adjust fa-fw" aria-hidden=true></i></a></div></div></header><div class="search-dropdown desktop"><div id=search-dropdown-desktop></div></div><div class="search-dropdown mobile"><div id=search-dropdown-mobile></div></div><main class=main><div class=container><div class=toc id=toc-auto><h2 class=toc-title>Contents</h2><div class=toc-content id=toc-content-auto></div></div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">Java 多线程 - 初识 Synchronized</h1><div class=post-meta><div class=post-meta-line><span class=post-author><a href=https://ahamoment.cn title=Author target=_blank rel="noopener noreffer author" class=author><i class="fas fa-user-circle fa-fw" aria-hidden=true></i>xueqiang.chen</a></span>&nbsp;<span class=post-category>included in <a href=/categories/java/><i class="far fa-folder fa-fw" aria-hidden=true></i>java</a></span></div><div class=post-meta-line><i class="far fa-calendar-alt fa-fw" aria-hidden=true></i>&nbsp;<time datetime=2020-06-10>2020-06-10</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden=true></i>&nbsp;2105 words&nbsp;
+<i class="far fa-clock fa-fw" aria-hidden=true></i>&nbsp;5 minutes&nbsp;</div></div><div class="details toc" id=toc-static data-kept><div class="details-summary toc-title"><span>Contents</span>
+<span><i class="details-icon fas fa-angle-right" aria-hidden=true></i></span></div><div class="details-content toc-content" id=toc-content-static><nav id=TableOfContents><ul><li><a href=#synchronized-简介>Synchronized 简介</a></li><li><a href=#什么是-synchronized>什么是 synchronized</a></li><li><a href=#synchronized关键字的用法>synchronized关键字的用法</a></li></ul></nav></div></div><div class=content id=content><h2 id=synchronized-简介>Synchronized 简介</h2><blockquote><p>本文出自汪文君老师的《Java 并发编程》课程，如需转载，请注明源出处！</p></blockquote><p>先来看一个例子，这个例子是模拟银行叫号的，使用三个线程模拟三个柜台一起叫号，总共50个号。在不加 synchronized 的关键字的情况下，很容易就会出现并发问题。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>BankRunnable</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=c1>// 一个runnable实例被多个线程共享
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=n>TicketWindowRunnable</span> <span class=n>ticketWindow</span> <span class=o>=</span> <span class=k>new</span> <span class=n>TicketWindowRunnable</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>Thread</span> <span class=n>windowThread1</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=n>ticketWindow</span><span class=o>,</span> <span class=s>&#34;一号窗口&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>Thread</span> <span class=n>windowThread2</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=n>ticketWindow</span><span class=o>,</span> <span class=s>&#34;二号窗口&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>Thread</span> <span class=n>windowThread3</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=n>ticketWindow</span><span class=o>,</span> <span class=s>&#34;三号窗口&#34;</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=n>windowThread1</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>windowThread2</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=n>windowThread3</span><span class=o>.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TicketWindowRunnable</span> <span class=kd>implements</span> <span class=n>Runnable</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kt>int</span> <span class=n>index</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=kt>int</span> <span class=n>MAX</span> <span class=o>=</span> <span class=n>50</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=o>(</span><span class=n>index</span> <span class=o>&gt;</span> <span class=n>MAX</span><span class=o>)</span> <span class=o>{</span><span class=c1>//1
+</span></span></span><span class=line><span class=cl><span class=c1></span>                <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>            <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>5</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>()+</span><span class=s>&#34; 的号码是：&#34;</span><span class=o>+(</span><span class=n>index</span><span class=o>++));</span><span class=c1>//2
+</span></span></span><span class=line><span class=cl><span class=c1></span>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>多运行几遍程序，就会出现下面这个问题：</p><p><img class=lazyload src=/svg/loading.min.svg data-src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format,png" data-srcset="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format%2cpng, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format%2cpng 1.5x, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format%2cpng 2x" data-sizes=auto alt="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDMxOTIyMjA1MTcucG5n?x-oss-process=image/format,png" title=image-20200603192220517></p><p>在一号窗口拿完最后一个号码之后，二号窗口和三号窗口又后续拿到了 52 和 51 号。为什么会出现这种现象呢？</p><p>首先当 <code>index=499</code> 的时候，三个线程均不满足 <code>index > MAX</code>，都会向下执行。三个线程都可以向下执行，将 index 加 1。</p><p>为了解决这个问题，这里引入了 synchronized 。</p><h2 id=什么是-synchronized>什么是 synchronized</h2><blockquote><p>synchronized关键字可以实现一个简单的策略来防止线程干扰和内存一致性错误，如果一个对象对多个线程是可见的，那么对该对象的所有读或者写都将通过同步的方式来进行。</p></blockquote><p>上面这段话是oracle官网对synchronized关键字的解释，具体表现如下：</p><ul><li>synchronized关键字提供了一种锁的机制，能够确保共享变量的互斥访问，从而防止数据不一致问题的出现。</li><li>synchronized关键字包括monitor enter和monitor exit两个JVM指令，它能够保证在任何时候任何线程执行到monitor enter成功之前都必须从主内存中获取数据，而不是从缓存中，在monitor exit运行成功之后，共享变量被更新后的值必须刷入主内存（在本书的第三部分会重点介绍）。</li><li>synchronized的指令严格遵守java happens-before规则，一个monitor exit指令之前必定要有一个monitor enter。</li></ul><h2 id=synchronized关键字的用法>synchronized关键字的用法</h2><p>Java通过 synchronized 对共享数据的线程访问提供了一种避免竞争条件的机制。synchronized 可以修饰方法或者代码块，被修饰的方法或者代码块同一时间只会允许一个线程执行，这条执行的线程持有同步部分的锁。synchronized 方法不能用于对class及其变量进行修饰。</p><p>synchronized 关键字可以修饰方法或者代码块，那么这两者有什么区别呢？</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=c1>// 同步代码块
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>public</span> <span class=kd>class</span> <span class=nc>TicketWindowRunnable</span> <span class=kd>implements</span> <span class=n>Runnable</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kt>int</span> <span class=n>index</span> <span class=o>=</span> <span class=n>1</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=kt>int</span> <span class=n>MAX</span> <span class=o>=</span> <span class=n>500</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>private</span> <span class=kd>final</span> <span class=n>Object</span> <span class=n>MONITOR</span> <span class=o>=</span> <span class=k>new</span> <span class=n>Object</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=kd>synchronized</span> <span class=o>(</span><span class=n>MONITOR</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=k>if</span> <span class=o>(</span><span class=n>index</span> <span class=o>&gt;</span> <span class=n>MAX</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>                <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>5</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                    <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>                <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>                <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>()</span> <span class=o>+</span> <span class=s>&#34; 的号码是：&#34;</span> <span class=o>+</span> <span class=o>(</span><span class=n>index</span><span class=o>++));</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>synchronized 方法修饰代码块的时候，使用的是 monitor 锁。再来用 synchronized 修饰一下同步方法：</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Override</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>synchronized</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>index</span> <span class=o>&gt;</span> <span class=n>MAX</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>5</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>()</span> <span class=o>+</span> <span class=s>&#34; 的号码是：&#34;</span> <span class=o>+</span> <span class=o>(</span><span class=n>index</span><span class=o>++));</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>运行之后发现都是同一个线程在跑，另外两个线程无法执行。这是因为 synchronized 在修饰方法的时候使用的是 this 锁，当其中一个线程拿到锁进到 while 循环之后，就一直去做事情，直到满足条件退出为止。将 while 里面的代码抽出来放到一个方法里，用 synchronized 来修饰该方法就可以解决这个问题。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=nd>@Override</span>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>while</span> <span class=o>(</span><span class=kc>true</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>if</span> <span class=o>(</span><span class=n>ticket</span><span class=o>())</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=k>break</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>private</span> <span class=kd>synchronized</span> <span class=kt>boolean</span> <span class=nf>ticket</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>(</span><span class=n>index</span> <span class=o>&gt;</span> <span class=n>MAX</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=kc>true</span><span class=o>;</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>5</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>()</span> <span class=o>+</span> <span class=s>&#34; 的号码是：&#34;</span> <span class=o>+</span> <span class=o>(</span><span class=n>index</span><span class=o>++));</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=kc>false</span><span class=o>;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>synchronized 修饰方法时默认是使用的 this 锁，修饰代码块时使用的是对象锁。synchronized 关键字还可以用来修饰静态方法和静态代码块。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SynchronizedStatic</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>synchronized</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m1</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m1 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>10_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>synchronized</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m2</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m2 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>10_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SynchronizedStaticTest</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=s>&#34;T1&#34;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>SynchronizedStatic</span><span class=o>.</span><span class=na>m1</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=s>&#34;T2&#34;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>SynchronizedStatic</span><span class=o>.</span><span class=na>m2</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// output
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=n>m1</span> <span class=n>T1</span>
+</span></span><span class=line><span class=cl><span class=n>m2</span> <span class=n>T2</span>
+</span></span></code></pre></div><p>静态方法 m1 和 m2 同时被 synchronized 修饰，这个时候线程 T2 会等到线程 T1 执行完再执行，说明这两个方法使用的是同一把锁，这就是 Class 锁。我们把 sleep 的时间变长一点来观察一下是不是 Class 锁。</p><p><img class=lazyload src=/svg/loading.min.svg data-src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format,png" data-srcset="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format%2cpng, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format%2cpng 1.5x, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format%2cpng 2x" data-sizes=auto alt="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE1NTc0NTUucG5n?x-oss-process=image/format,png" title=image-20200609191557455></p><p><img class=lazyload src=/svg/loading.min.svg data-src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format,png" data-srcset="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format%2cpng, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format%2cpng 1.5x, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format%2cpng 2x" data-sizes=auto alt="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE2Mjk4NjcucG5n?x-oss-process=image/format,png" title=image-20200609191629867></p><p>可以看到，线程 T1 执行的时候，持有的是 Class 锁，此时线程 T2 在等待 T1 执行完释放锁，当 T1 执行完之后，T2 拿到 Class 锁执行代码。</p><p><img class=lazyload src=/svg/loading.min.svg data-src="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format,png" data-srcset="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format%2cpng, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format%2cpng 1.5x, https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format%2cpng 2x" data-sizes=auto alt="https://imgconvert.csdnimg.cn/aHR0cDovL3Fha2dsNmVueC5ia3QuY2xvdWRkbi5jb20vcGljZ28vaW1hZ2UtMjAyMDA2MDkxOTE4MTIwODYucG5n?x-oss-process=image/format,png" title=image-20200609191812086></p><p>了解了 synchronized 修饰静态方法使用的是 Class 锁之后，我们再来验证一下当它修饰静态方法的时候是不是也是使用 Class 锁？</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SynchronizedStatic</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>synchronized</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m1</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m1 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>100_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>    
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m3</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m3 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>10_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SynchronizedStaticTest</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>main</span><span class=o>(</span><span class=n>String</span><span class=o>[]</span> <span class=n>args</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=s>&#34;T1&#34;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>SynchronizedStatic</span><span class=o>.</span><span class=na>m1</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=k>new</span> <span class=n>Thread</span><span class=o>(</span><span class=s>&#34;T3&#34;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=nd>@Override</span>
+</span></span><span class=line><span class=cl>            <span class=kd>public</span> <span class=kt>void</span> <span class=nf>run</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>SynchronizedStatic</span><span class=o>.</span><span class=na>m3</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}.</span><span class=na>start</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></div><p>这里加了一个没有 synchronized 修饰的静态方法 m3，运行之后很容易知道，这两个线程是同时运行的。我们在 SynchronizedStatic 开始的地方加一个静态代码块，静态代码块内部使用 synchronized 锁。</p><div class=highlight><pre tabindex=0 class=chroma><code class=language-java data-lang=java><span class=line><span class=cl><span class=kd>public</span> <span class=kd>class</span> <span class=nc>SynchronizedStatic</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=kd>static</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=kd>synchronized</span> <span class=o>(</span><span class=n>SynchronizedStatic</span><span class=o>.</span><span class=na>class</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;static &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>            <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>10_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>synchronized</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m1</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m1 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>100_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kd>public</span> <span class=kd>static</span> <span class=kt>void</span> <span class=nf>m3</span><span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>System</span><span class=o>.</span><span class=na>out</span><span class=o>.</span><span class=na>println</span><span class=o>(</span><span class=s>&#34;m3 &#34;</span> <span class=o>+</span> <span class=n>Thread</span><span class=o>.</span><span class=na>currentThread</span><span class=o>().</span><span class=na>getName</span><span class=o>());</span>
+</span></span><span class=line><span class=cl>        <span class=k>try</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>Thread</span><span class=o>.</span><span class=na>sleep</span><span class=o>(</span><span class=n>10_000</span><span class=o>);</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span> <span class=k>catch</span> <span class=o>(</span><span class=n>InterruptedException</span> <span class=n>e</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>e</span><span class=o>.</span><span class=na>printStackTrace</span><span class=o>();</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>//output
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>static</span> <span class=n>T1</span>
+</span></span><span class=line><span class=cl><span class=n>m1</span> <span class=n>T1</span>
+</span></span><span class=line><span class=cl><span class=n>m3</span> <span class=n>T3</span>
+</span></span></code></pre></div><p>可以发现，T1 线程要先执行静态代码块才能往下走，说明静态代码块使用的锁和静态方法是一样的，另外这个时候没有用 synchronized 修饰的 m3 也要等静态代码块执行实例化才行。</p><p>总结一下，synchronized 关键字能够避免多线程竞争导致的数据不一致，被 synchronized 修饰的方法或者代码块同一时间只会允许一个线程执行，这条执行的线程持有同步部分的锁。synchronized 关键字修饰普通方法时，使用的是 this 锁，修饰静态方法和静态代码块时，使用 Class 锁，修饰代码块时，使用 LOCK 锁。</p></div><div class=post-footer id=post-footer><div class=post-info><div class=post-info-line><div class=post-info-mod><span>Updated on 2020-06-10</span></div></div><div class=post-info-line><div class=post-info-md></div><div class=post-info-share><span><a href=javascript:void(0); title="Share on Twitter" data-sharer=twitter data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-title="Java 多线程 - 初识 Synchronized" data-via=xueqiang_chen data-hashtags=多线程><i class="fab fa-twitter fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Facebook" data-sharer=facebook data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-hashtag=多线程><i class="fab fa-facebook-square fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Hacker News" data-sharer=hackernews data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-title="Java 多线程 - 初识 Synchronized"><i class="fab fa-hacker-news fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Line" data-sharer=line data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-title="Java 多线程 - 初识 Synchronized"><i data-svg-src=https://cdn.jsdelivr.net/npm/simple-icons@7.3.0/icons/line.svg aria-hidden=true></i></a><a href=javascript:void(0); title="Share on 微博" data-sharer=weibo data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-title="Java 多线程 - 初识 Synchronized" data-ralateuid=陈先森cxq><i class="fab fa-weibo fa-fw" aria-hidden=true></i></a><a href=javascript:void(0); title="Share on Evernote" data-sharer=evernote data-url=https://ahamoment.cn/posts/java/java-multithread-synchronized/ data-title="Java 多线程 - 初识 Synchronized"><i class="fab fa-evernote fa-fw" aria-hidden=true></i></a></span></div></div></div><div class=post-info-more><section class=post-tags><i class="fas fa-tags fa-fw" aria-hidden=true></i>&nbsp;<a href=/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/>多线程</a></section><section><span><a href=javascript:void(0); onclick=window.history.back()>Back</a></span>&nbsp;|&nbsp;<span><a href=/>Home</a></span></section></div><div class=post-nav><a href=/posts/linux/linux-20-rpm-command/ class=prev rel=prev title="20 常用的 RPM 命令"><i class="fas fa-angle-left fa-fw" aria-hidden=true></i>20 常用的 RPM 命令</a>
+<a href=/posts/java/java-multithread-dead-lock/ class=next rel=next title="Java 多线程 - 死锁问题">Java 多线程 - 死锁问题<i class="fas fa-angle-right fa-fw" aria-hidden=true></i></a></div></div><div id=comments><div id=utterances class=comment></div><noscript>Please enable JavaScript to view the comments powered by <a href=https://utteranc.es/>utterances</a>.</noscript></div></article></div></main><footer class=footer><div class=footer-container><div class=footer-line itemscope itemtype=http://schema.org/CreativeWork><i class="far fa-copyright fa-fw" aria-hidden=true></i><span itemprop=copyrightYear>2019 - 2023</span>&nbsp;|&nbsp;<span class=license><a rel="license external nofollow noopener noreffer" href=https://creativecommons.org/licenses/by-nc/4.0/ target=_blank>CC BY-NC 4.0</a></span></div></div></footer></div><div id=fixed-buttons><a href=# id=back-to-top class=fixed-button title="Back to Top"><i class="fas fa-arrow-up fa-fw" aria-hidden=true></i>
+</a><a href=# id=view-comments class=fixed-button title="View Comments"><i class="fas fa-comment fa-fw" aria-hidden=true></i></a></div><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css><script type=text/javascript src=https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lunr@2.3.9/lunr.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/copy-tex.min.js></script><script type=text/javascript src=https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/mhchem.min.js></script><script type=text/javascript>window.config={code:{copyTitle:"Copy to clipboard",maxShownLines:50},comment:{utterances:{darkTheme:"github-dark",issueTerm:"pathname",label:"",lightTheme:"github-light",repo:"XueqiangChen/hugo-comments"}},math:{delimiters:[{display:!0,left:"$$",right:"$$"},{display:!0,left:"\\[",right:"\\]"},{display:!0,left:"\\begin{equation}",right:"\\end{equation}"},{display:!0,left:"\\begin{equation*}",right:"\\end{equation*}"},{display:!0,left:"\\begin{align}",right:"\\end{align}"},{display:!0,left:"\\begin{align*}",right:"\\end{align*}"},{display:!0,left:"\\begin{alignat}",right:"\\end{alignat}"},{display:!0,left:"\\begin{alignat*}",right:"\\end{alignat*}"},{display:!0,left:"\\begin{gather}",right:"\\end{gather}"},{display:!0,left:"\\begin{CD}",right:"\\end{CD}"},{display:!1,left:"$",right:"$"},{display:!1,left:"\\(",right:"\\)"}],strict:!1},search:{highlightTag:"em",maxResultLength:10,noResultsFound:"No results found",snippetLength:50},twemoji:!0}</script><script type=text/javascript src=/js/theme.min.js></script></body></html>
